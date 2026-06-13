@@ -1,0 +1,5 @@
+# Optional: version source decks with Git LFS instead of ignoring them.
+# To use, remove source/*.key and source/*.pptx from .gitignore, then:
+#   git lfs install && git add .gitattributes
+*.key filter=lfs diff=lfs merge=lfs -text
+*.pptx filter=lfs diff=lfs merge=lfs -text
