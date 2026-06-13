@@ -94,9 +94,13 @@ def build(data_dir, outp):
                    .replace("__DATA__", json.dumps(items, ensure_ascii=False)) \
                    .replace("__CATS__", json.dumps(cats, ensure_ascii=False))
     open(outp, "w", encoding="utf-8").write(html)
-    # embeddable single-chart player + one small JSON per chart
+    # embeddable single-chart player (iframe) + full-view page (chart.html)
     open(os.path.join(site_dir, "embed.html"), "w", encoding="utf-8").write(
         EMBED_TEMPLATE.replace("__CORE__", CORE_JS))
+    open(os.path.join(site_dir, "chart.html"), "w", encoding="utf-8").write(
+        VIEW_TEMPLATE.replace("__CORE__", CORE_JS))
+    json.dump(cats, open(os.path.join(site_dir, "cats.json"), "w", encoding="utf-8"),
+              ensure_ascii=False)
     embdir = os.path.join(site_dir, "embed")
     os.makedirs(embdir, exist_ok=True)
     current = set()
@@ -134,7 +138,19 @@ main{flex:1;padding:24px 28px;}
 .toolbar{display:flex;gap:12px;align-items:center;margin-bottom:20px;flex-wrap:wrap;}
 #search{flex:1;min-width:220px;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;outline:none;}
 #search:focus{border-color:var(--blue);} .count{color:#999;font-size:13px;}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:20px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(440px,100%),1fr));gap:20px;}
+.menu-btn{display:none;background:none;border:1px solid var(--line);border-radius:7px;padding:4px 11px;font-size:16px;cursor:pointer;line-height:1;}
+.scrim{display:none;}
+@media(max-width:820px){
+  header{position:sticky;top:0;z-index:30;padding:14px 16px;}
+  .menu-btn{display:inline-block;}
+  .layout{display:block;}
+  aside{position:fixed;top:0;left:0;height:100vh;z-index:40;transform:translateX(-100%);transition:transform .2s ease;box-shadow:2px 0 14px rgba(0,0,0,.18);}
+  body.nav-open aside{transform:translateX(0);}
+  body.nav-open .scrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:35;}
+  main{padding:16px;}
+  .grid{grid-template-columns:1fr;}
+}
 .card{position:relative;background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 22px 18px;box-shadow:0 1px 3px rgba(0,0,0,.03);}
 .embed-btn{position:absolute;top:16px;right:16px;font-size:11px;color:#999;background:#f4f4f4;border:1px solid #e4e4e4;border-radius:6px;padding:3px 9px;cursor:pointer;}
 .embed-btn:hover{color:var(--blue);border-color:var(--blue);}
@@ -152,8 +168,9 @@ main{flex:1;padding:24px 28px;}
 .empty-state{color:#aaa;padding:60px;text-align:center;font-size:15px;}
 footer{padding:18px 28px;color:#aaa;font-size:12px;border-top:1px solid var(--line);background:#fff;}
 </style></head><body>
-<header><h1>슬로우팩트북<span style="color:var(--blue)">.</span></h1>
+<header><button class="menu-btn" id="menuBtn" aria-label="목차 열기">☰</button><h1>슬로우팩트북<span style="color:var(--blue)">.</span></h1>
 <span class="sub">데이터 인포그래픽 · 검색 가능한 인터랙티브 아카이브</span></header>
+<div class="scrim" id="scrim"></div>
 <div class="layout"><aside id="sidebar"></aside>
 <main><div class="toolbar"><input id="search" type="text" placeholder="제목·출처로 검색"><span class="count" id="count"></span></div>
 <div class="grid" id="grid"></div></main></div>
@@ -169,10 +186,10 @@ function filtered(){return ITEMS.filter(it=>(!activeCat||it.category===activeCat
 function renderSidebar(){
   sidebar.innerHTML="";
   const all=document.createElement("div");all.className="cat"+(activeCat===null?" active":"");
-  all.innerHTML=`전체 <span class="cnt">${ITEMS.length}</span>`;all.onclick=()=>{activeCat=null;render();};sidebar.appendChild(all);
+  all.innerHTML=`전체 <span class="cnt">${ITEMS.length}</span>`;all.onclick=()=>{activeCat=null;render();closeNav();};sidebar.appendChild(all);
   CATEGORIES.forEach(c=>{const n=ITEMS.filter(it=>it.category===c).length;const el=document.createElement("div");
     el.className="cat"+(activeCat===c?" active":"")+(n===0?" empty":"");
-    el.innerHTML=`${dot(c)} <span class="cnt">${n||""}</span>`;el.onclick=()=>{activeCat=c;render();};sidebar.appendChild(el);});
+    el.innerHTML=`${dot(c)} <span class="cnt">${n||""}</span>`;el.onclick=()=>{activeCat=c;render();closeNav();};sidebar.appendChild(el);});
 }
 let observer=null;
 function render(){
@@ -194,7 +211,7 @@ function render(){
   items.forEach((it,i)=>{
     const card=document.createElement("div");card.className="card";
     const meta=[it.source,it.slide].filter(Boolean).join(" · ");
-    card.innerHTML=`<button class="embed-btn" onclick="copyEmbed('${it.id}')">임베드</button><div class="tag">${dot(it.category)}</div><h2><a href="embed.html?id=${it.id}" target="_blank" title="크게 보기">${dot(it.title)}</a></h2><div class="meta">${meta}</div><div class="legendbar">${legendHTML(it)}</div><div class="chartbox"><canvas data-idx="${i}"></canvas></div>`;
+    card.innerHTML=`<button class="embed-btn" onclick="copyEmbed('${it.id}')">임베드</button><div class="tag">${dot(it.category)}</div><h2><a href="chart.html?id=${it.id}" title="크게 보기">${dot(it.title)}</a></h2><div class="meta">${meta}</div><div class="legendbar">${legendHTML(it)}</div><div class="chartbox"><canvas data-idx="${i}"></canvas></div>`;
     grid.appendChild(card);observer.observe(card);
   });
 }
@@ -207,6 +224,13 @@ function copyEmbed(id){
     .catch(()=>{window.prompt("임베드 코드:",code);});
 }
 searchEl.addEventListener("input",e=>{query=e.target.value;render();});
+function closeNav(){document.body.classList.remove("nav-open");}
+document.getElementById("menuBtn").onclick=()=>document.body.classList.toggle("nav-open");
+document.getElementById("scrim").onclick=closeNav;
+// deep-link from chart pages: ?cat=...&q=...
+const _p=new URLSearchParams(location.search);
+if(_p.get("cat")&&CATEGORIES.includes(_p.get("cat")))activeCat=_p.get("cat");
+if(_p.get("q")){query=_p.get("q");searchEl.value=query;}
 document.getElementById("foot").textContent=`총 ${ITEMS.length}개 인포그래픽 · ${CATEGORIES.length}개 카테고리`;
 render();
 </script></body></html>"""
@@ -289,6 +313,77 @@ html,body{margin:0;height:100%;background:transparent;
 __CORE__
 const id=new URLSearchParams(location.search).get("id");
 fetch("embed/"+id+".json").then(r=>r.json()).then(it=>{
+  document.getElementById("title").textContent=dot(it.title);
+  document.getElementById("meta").textContent=it.source||"";
+  document.getElementById("legend").innerHTML=legendHTML(it);
+  buildChart(document.getElementById("cv"),it);
+  document.title=it.title+" — 슬로우팩트북";
+}).catch(()=>{document.getElementById("title").textContent="차트를 불러올 수 없습니다.";});
+</script></body></html>"""
+
+VIEW_TEMPLATE = r"""<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>슬로우팩트북</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--blue:#2f5e8e;--ink:#1a1a1a;--line:#e6e6e6;}
+*{box-sizing:border-box;} body{margin:0;font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",-apple-system,sans-serif;color:var(--ink);background:#fafafa;}
+header{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:14px;padding:14px 22px;border-bottom:1px solid var(--line);background:#fff;}
+.toc-handle{font-size:14px;color:#555;border:1px solid var(--line);border-radius:7px;padding:5px 12px;cursor:pointer;background:none;}
+.toc-handle:hover{color:var(--blue);border-color:var(--blue);}
+a.home{font-size:20px;font-weight:800;text-decoration:none;color:var(--ink);letter-spacing:-.4px;}
+a.home span{color:var(--blue);}
+#toc{position:fixed;top:0;left:0;height:100vh;width:250px;background:#fff;border-right:1px solid var(--line);padding:62px 0 16px;overflow-y:auto;transform:translateX(-100%);transition:transform .2s ease;z-index:40;box-shadow:2px 0 14px rgba(0,0,0,.12);}
+#toc.open{transform:translateX(0);}
+#toc h3{font-size:12px;color:#aaa;margin:4px 22px 8px;font-weight:600;}
+#toc a{display:block;padding:8px 22px;font-size:14px;color:#444;text-decoration:none;}
+#toc a:hover{background:#f2f5f9;color:var(--blue);}
+.scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:35;}
+.scrim.open{display:block;}
+main{max-width:1100px;margin:0 auto;padding:26px 28px;}
+.tag{display:inline-block;font-size:12px;color:var(--blue);background:#eaf1f9;padding:3px 10px;border-radius:20px;margin-bottom:12px;}
+h1.title{font-size:30px;font-weight:800;margin:0 0 4px;letter-spacing:-.5px;}
+.meta{font-size:13px;color:#999;margin-bottom:14px;}
+.legendbar{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:4px 14px;margin:0 0 6px;}
+.legendbar .lg{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#555;white-space:nowrap;}
+.legendbar .lg i{width:12px;height:12px;border-radius:2px;flex:0 0 auto;}
+.chartbox{position:relative;width:100%;aspect-ratio:16/9;background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;}
+.back{display:inline-block;margin-top:18px;font-size:13px;color:#888;text-decoration:none;}
+.back:hover{color:var(--blue);}
+@media(max-width:820px){ main{padding:18px 16px;} h1.title{font-size:23px;} .chartbox{aspect-ratio:4/3;} }
+</style></head><body>
+<header>
+  <button class="toc-handle" id="tocBtn">☰ 목차</button>
+  <a class="home" href="index.html">슬로우팩트북<span>.</span></a>
+</header>
+<nav id="toc"><h3>카테고리</h3></nav>
+<div class="scrim" id="scrim"></div>
+<main>
+  <div class="tag" id="tag"></div>
+  <h1 class="title" id="title">불러오는 중…</h1>
+  <div class="meta" id="meta"></div>
+  <div class="legendbar" id="legend"></div>
+  <div class="chartbox"><canvas id="cv"></canvas></div>
+  <a class="back" href="index.html">← 전체 보기</a>
+</main>
+<script>
+__CORE__
+const id=new URLSearchParams(location.search).get("id");
+const toc=document.getElementById("toc"),scrim=document.getElementById("scrim"),tocBtn=document.getElementById("tocBtn");
+const wide=()=>window.innerWidth>820;
+function openToc(){toc.classList.add("open");scrim.classList.add("open");}
+function closeToc(){toc.classList.remove("open");scrim.classList.remove("open");}
+tocBtn.onclick=()=>toc.classList.contains("open")?closeToc():openToc();
+tocBtn.onmouseenter=()=>{if(wide())openToc();};
+toc.addEventListener("mouseleave",()=>{if(wide())closeToc();});
+scrim.onclick=closeToc;
+document.addEventListener("mousemove",e=>{if(wide()&&e.clientX<6)openToc();});
+fetch("cats.json").then(r=>r.json()).then(cats=>{
+  cats.forEach(c=>{const a=document.createElement("a");a.textContent=dot(c);a.href="index.html?cat="+encodeURIComponent(c);toc.appendChild(a);});
+}).catch(()=>{});
+fetch("embed/"+id+".json").then(r=>r.json()).then(it=>{
+  document.getElementById("tag").textContent=dot(it.category);
   document.getElementById("title").textContent=dot(it.title);
   document.getElementById("meta").textContent=it.source||"";
   document.getElementById("legend").innerHTML=legendHTML(it);
