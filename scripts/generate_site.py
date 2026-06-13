@@ -93,10 +93,18 @@ def build(data_dir, outp):
         EMBED_TEMPLATE.replace("__CORE__", CORE_JS))
     embdir = os.path.join(site_dir, "embed")
     os.makedirs(embdir, exist_ok=True)
+    current = set()
     for it in items:
-        json.dump(it, open(os.path.join(embdir, it["id"] + ".json"), "w", encoding="utf-8"),
+        fn = it["id"] + ".json"
+        current.add(fn)
+        json.dump(it, open(os.path.join(embdir, fn), "w", encoding="utf-8"),
                   ensure_ascii=False)
-    print(f"items={len(items)} -> {outp}  (+{len(items)} embed pages)")
+    # prune embeds for charts that were deleted/renamed in the source deck
+    removed = 0
+    for old in glob.glob(os.path.join(embdir, "*.json")):
+        if os.path.basename(old) not in current:
+            os.remove(old); removed += 1
+    print(f"items={len(items)} -> {outp}  (+{len(items)} embeds, {removed} pruned)")
     return items
 
 TEMPLATE = r"""<!DOCTYPE html>
