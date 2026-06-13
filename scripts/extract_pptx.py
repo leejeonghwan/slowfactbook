@@ -26,10 +26,15 @@ CT_MAP = {
 UNIT_RE = re.compile(r"단위|출처|통계청|국가데이터처|데이터처|노동부|고용노동부|보건복지부|"
                      r"기획재정부|행정안전부|한국은행|OECD|World Bank|World|기준|조사")
 URL_RE = re.compile(r"https?://")
+# a bare value / axis label like "1500만 명.", "500만 명.", "2024", "12.3%" — NOT a title
+VALUE_RE = re.compile(r"^[\d][\d,.\s]*\s*(만|억|천|조)?\s*"
+                      r"(명|원|개|건|가구|채|세대|시간|년|개월|배|달러|톤|%|p)?\s*\.?$")
 
 def pick_title_source(slide):
     """Choose title/source by on-slide position, not shape order.
-    Source = line matching UNIT_RE/URL. Title = top-most remaining text box."""
+    Source = line matching UNIT_RE/URL. Title = top-most remaining text box,
+    after dropping bare numeric/axis labels (which are often placed above an
+    out-of-format title sitting at the bottom of the slide)."""
     cand = []
     for sh in slide.shapes:
         if sh.has_text_frame and sh.text_frame.text.strip():
@@ -37,8 +42,9 @@ def pick_title_source(slide):
             cand.append((top, " ".join(sh.text_frame.text.split())))
     cand.sort(key=lambda x: x[0])
     srcs = [t for _, t in cand if UNIT_RE.search(t)]
-    nonsrc = [t for _, t in cand if not UNIT_RE.search(t) and not URL_RE.search(t)]
-    title = nonsrc[0] if nonsrc else (cand[0][1] if cand else "")
+    titles = [t for _, t in cand
+              if not UNIT_RE.search(t) and not URL_RE.search(t) and not VALUE_RE.match(t)]
+    title = titles[0] if titles else (cand[0][1] if cand else "")
     source = srcs[0] if srcs else ""
     return title, source
 

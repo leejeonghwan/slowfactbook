@@ -24,10 +24,16 @@ def clean(values):
 def load_items(data_dir):
     items = []
     seen = set()  # drop exact-duplicate charts (same title + data), even non-adjacent
+    # optional manual corrections, keyed by slide id (e.g. {"slide-735": {"title": "...", "category": "..."}})
+    ov_path = os.path.join(data_dir, "overrides.json")
+    overrides = json.load(open(ov_path, encoding="utf-8")) if os.path.exists(ov_path) else {}
     for f in sorted(glob.glob(os.path.join(data_dir, "*.json"))):
         doc = json.load(open(f, encoding="utf-8"))
         fallback = doc.get("category") or os.path.splitext(os.path.basename(f))[0]
         for it in doc.get("items", []):
+            ov = overrides.get(it.get("slide"), {})
+            if ov:
+                it = {**it, **ov}
             cat = it.get("category") or fallback
             if not it.get("vizType"):
                 continue
@@ -135,6 +141,8 @@ main{flex:1;padding:24px 28px;}
 #toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50;}
 #toast.show{opacity:.95;}
 .card h2{font-size:20px;margin:0 0 2px;font-weight:800;letter-spacing:-.4px;}
+.card h2 a{color:inherit;text-decoration:none;}
+.card h2 a:hover{color:var(--blue);text-decoration:underline;}
 .card .meta{font-size:12px;color:#999;margin-bottom:14px;}
 .card .tag{display:inline-block;font-size:11px;color:var(--blue);background:#eaf1f9;padding:2px 8px;border-radius:20px;margin-bottom:10px;}
 .chartbox{position:relative;width:100%;aspect-ratio:16/9;}
@@ -186,7 +194,7 @@ function render(){
   items.forEach((it,i)=>{
     const card=document.createElement("div");card.className="card";
     const meta=[it.source,it.slide].filter(Boolean).join(" · ");
-    card.innerHTML=`<button class="embed-btn" onclick="copyEmbed('${it.id}')">임베드</button><div class="tag">${dot(it.category)}</div><h2>${dot(it.title)}</h2><div class="meta">${meta}</div><div class="legendbar">${legendHTML(it)}</div><div class="chartbox"><canvas data-idx="${i}"></canvas></div>`;
+    card.innerHTML=`<button class="embed-btn" onclick="copyEmbed('${it.id}')">임베드</button><div class="tag">${dot(it.category)}</div><h2><a href="embed.html?id=${it.id}" target="_blank" title="크게 보기">${dot(it.title)}</a></h2><div class="meta">${meta}</div><div class="legendbar">${legendHTML(it)}</div><div class="chartbox"><canvas data-idx="${i}"></canvas></div>`;
     grid.appendChild(card);observer.observe(card);
   });
 }
