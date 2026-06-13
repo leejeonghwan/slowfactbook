@@ -1,0 +1,111 @@
+{
+  "files": [
+    {
+      "file": "full.pptx .pptx",
+      "category": "full.pptx ",
+      "charts": 1550,
+      "failed_or_image": 23
+    }
+  ],
+  "total_charts": 1550,
+  "needs_attention": [
+    {
+      "file": "full.pptx .pptx",
+      "items": [
+        {
+          "slide": 297,
+          "title": "상대적 빈곤율."
+        },
+        {
+          "slide": 488,
+          "title": "커피 가격."
+        },
+        {
+          "slide": 542,
+          "title": "2022년."
+        },
+        {
+          "slide": 561,
+          "title": ""
+        },
+        {
+          "slide": 562,
+          "title": ""
+        },
+        {
+          "slide": 563,
+          "title": "2006년 오세훈."
+        },
+        {
+          "slide": 667,
+          "title": "트럼프 연설 전후 브렌트유 가격."
+        },
+        {
+          "slide": 668,
+          "title": "트럼프 연설 전후 코스피 지수."
+        },
+        {
+          "slide": 705,
+          "title": "브라질."
+        },
+        {
+          "slide": 891,
+          "title": ""
+        },
+        {
+          "slide": 1290,
+          "title": "신재생 에너지 균등화 발전 비용(LCOE) 가중 평균."
+        },
+        {
+          "slide": 1313,
+          "title": "사과 10개가 필요합니다."
+        },
+        {
+          "slide": 1314,
+          "title": "같은 맛의 사과라면,"
+        },
+        {
+          "slide": 1374,
+          "title": ""
+        },
+        {
+          "slide": 1626,
+          "title": "삼성그룹 지배구조."
+        },
+        {
+          "slide": 1816,
+          "title": ""
+        },
+        {
+          "slide": 1842,
+          "title": "검색엔진."
+        },
+        {
+          "slide": 1887,
+          "title": ""
+        },
+        {
+          "slide": 1892,
+          "title": ""
+        },
+        {
+          "slide": 1971,
+          "title": ""
+        },
+        {
+          "slide": 1972,
+          "title": "We offer a completely new perspective on the world."
+        },
+        {
+          "slide": 1973,
+          "title": ""
+        },
+        {
+          "slide": 1974,
+          "title": "슬로우뉴스는,"
+        }
+      ]
+    }
+  ],
+  "site_items": 1510
+}
