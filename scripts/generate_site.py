@@ -113,7 +113,10 @@ def build(data_dir, outp):
     removed = 0
     for old in glob.glob(os.path.join(embdir, "*.json")):
         if os.path.basename(old) not in current:
-            os.remove(old); removed += 1
+            try:
+                os.remove(old); removed += 1
+            except OSError:
+                pass
     print(f"items={len(items)} -> {outp}  (+{len(items)} embeds, {removed} pruned)")
     return items
 

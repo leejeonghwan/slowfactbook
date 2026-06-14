@@ -1,111 +1,111 @@
 {
   "files": [
     {
-      "file": "full.pptx .pptx",
-      "category": "full.pptx ",
-      "charts": 1550,
+      "file": "full.pptx",
+      "category": "full",
+      "charts": 1652,
       "failed_or_image": 23
     }
   ],
-  "total_charts": 1550,
+  "total_charts": 1652,
   "needs_attention": [
     {
-      "file": "full.pptx .pptx",
+      "file": "full.pptx",
       "items": [
         {
-          "slide": 297,
+          "slide": 314,
           "title": "상대적 빈곤율."
         },
         {
-          "slide": 488,
+          "slide": 505,
           "title": "커피 가격."
         },
         {
-          "slide": 542,
+          "slide": 559,
           "title": "2022년."
         },
         {
-          "slide": 561,
+          "slide": 578,
           "title": ""
         },
         {
-          "slide": 562,
+          "slide": 579,
           "title": ""
         },
         {
-          "slide": 563,
+          "slide": 580,
           "title": "2006년 오세훈."
         },
         {
-          "slide": 667,
+          "slide": 684,
           "title": "트럼프 연설 전후 브렌트유 가격."
         },
         {
-          "slide": 668,
+          "slide": 685,
           "title": "트럼프 연설 전후 코스피 지수."
         },
         {
-          "slide": 705,
+          "slide": 722,
           "title": "브라질."
         },
         {
-          "slide": 891,
+          "slide": 908,
           "title": ""
         },
         {
-          "slide": 1290,
+          "slide": 1307,
           "title": "신재생 에너지 균등화 발전 비용(LCOE) 가중 평균."
         },
         {
-          "slide": 1313,
+          "slide": 1330,
           "title": "사과 10개가 필요합니다."
         },
         {
-          "slide": 1314,
+          "slide": 1331,
           "title": "같은 맛의 사과라면,"
         },
         {
-          "slide": 1374,
+          "slide": 1391,
           "title": ""
         },
         {
-          "slide": 1626,
+          "slide": 1643,
           "title": "삼성그룹 지배구조."
         },
         {
-          "slide": 1816,
+          "slide": 1833,
           "title": ""
         },
         {
-          "slide": 1842,
+          "slide": 1859,
           "title": "검색엔진."
         },
         {
-          "slide": 1887,
+          "slide": 1904,
           "title": ""
         },
         {
-          "slide": 1892,
+          "slide": 1909,
           "title": ""
         },
         {
-          "slide": 1971,
+          "slide": 1988,
           "title": ""
         },
         {
-          "slide": 1972,
+          "slide": 1989,
           "title": "We offer a completely new perspective on the world."
         },
         {
-          "slide": 1973,
+          "slide": 1990,
           "title": ""
         },
         {
-          "slide": 1974,
+          "slide": 1991,
           "title": "슬로우뉴스는,"
         }
       ]
     }
   ],
-  "site_items": 1510
+  "site_items": 1605
 }

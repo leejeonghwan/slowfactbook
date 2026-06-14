@@ -160,9 +160,16 @@ def extract(inp, outp, start=1, end=None, dedup=True):
             ch = sh.chart
             ct = str(ch.chart_type).split()[0] if ch.chart_type else ""
             names, labels, series = parse_chart_xml(ch)
+            # multiple charts on one slide share the slide title; distinguish them
+            # by the chart's own series name (e.g. "...영업이익 — 반도체") when it has
+            # a single meaningful series, else fall back to a numeric suffix.
+            suffix = ""
+            if len(charts) > 1:
+                distinct = [n.strip().rstrip(".") for n in names if n and n.strip()]
+                suffix = " — " + distinct[0] if len(distinct) == 1 else f" ({ci+1})"
             items.append({
                 "slide": f"slide-{si}",
-                "title": title + (f" ({ci+1})" if len(charts) > 1 else ""),
+                "title": title + suffix,
                 "source": source,
                 "category": current_section,
                 "vizType": CT_MAP.get(ct, ct.lower()),
