@@ -70,6 +70,7 @@ def main():
                                 "charts": charts, "failed_or_image": len(failed)})
         if failed:
             report["needs_attention"].append({"file": os.path.basename(src), "items": failed})
+        report.setdefault("title_review", []).extend(doc.get("_title_review", []))
 
     # build site from everything in data/
     sys.path.insert(0, SCRIPTS)
@@ -78,9 +79,13 @@ def main():
     report["site_items"] = len(items)
     json.dump(report, open(os.path.join(DATA, "_report.json"), "w", encoding="utf-8"),
               ensure_ascii=False, indent=2)
+    # standalone list of slides whose title looks uncertain (review / override these)
+    review = report.get("title_review", [])
+    json.dump(review, open(os.path.join(DATA, "_title_review.json"), "w", encoding="utf-8"),
+              ensure_ascii=False, indent=2)
     print(f"\nDONE. charts={report['total_charts']} site_items={len(items)} "
-          f"needs_attention={len(report['needs_attention'])}")
-    print("See data/_report.json for slides needing a manual/vision pass.")
+          f"needs_attention={len(report['needs_attention'])} title_review={len(review)}")
+    print("See data/_report.json (charts) and data/_title_review.json (uncertain titles).")
 
 if __name__ == "__main__":
     main()

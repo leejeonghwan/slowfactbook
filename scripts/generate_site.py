@@ -29,6 +29,8 @@ def load_items(data_dir):
     overrides = json.load(open(ov_path, encoding="utf-8")) if os.path.exists(ov_path) else {}
     for f in sorted(glob.glob(os.path.join(data_dir, "*.json"))):
         doc = json.load(open(f, encoding="utf-8"))
+        if not isinstance(doc, dict) or "items" not in doc:
+            continue  # skip ids.json / _report.json / _title_review.json / overrides.json
         fallback = doc.get("category") or os.path.splitext(os.path.basename(f))[0]
         for it in doc.get("items", []):
             ov = overrides.get(it.get("slide"), {})
@@ -215,7 +217,9 @@ function render(){
   items.forEach((it,i)=>{
     const card=document.createElement("div");card.className="card";
     const meta=[it.source,it.slide].filter(Boolean).join(" · ");
-    card.innerHTML=`<div class="tag" data-cat="${String(it.category).replace(/"/g,'&quot;')}" title="이 카테고리 보기">${dot(it.category)}</div><h2><a href="chart.html?id=${it.id}" title="크게 보기">${dot(it.title)}</a></h2><div class="meta">${meta}</div><div class="legendbar">${legendHTML(it)}</div><div class="chartbox"><canvas data-idx="${i}"></canvas></div>`;
+    const horiz=(it.vizType==="bar"||it.vizType==="stacked_bar_h");
+    const boxStyle=horiz?`style="height:${Math.max(240,it.labels.length*26)}px;aspect-ratio:auto;"`:"";
+    card.innerHTML=`<div class="tag" data-cat="${String(it.category).replace(/"/g,'&quot;')}" title="이 카테고리 보기">${dot(it.category)}</div><h2><a href="chart.html?id=${it.id}" title="크게 보기">${dot(it.title)}</a></h2><div class="meta">${meta}</div><div class="legendbar">${legendHTML(it)}</div><div class="chartbox" ${boxStyle}><canvas data-idx="${i}"></canvas></div>`;
     grid.appendChild(card);observer.observe(card);
   });
 }
@@ -274,10 +278,11 @@ function buildChart(canvas,it){
       options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
         scales:{x:{grid:{display:false},ticks:{autoSkip:true,autoSkipPadding:6,maxRotation:0,callback:sparseTick(it),font:{size:10}}},y:{stacked:stackY,ticks:{font:{size:10}}}}}});
   }
-  if(t==="bar"){ds.forEach(d=>d.borderWidth=0);
+  if(t==="bar"||t==="stacked_bar_h"){
+    const st=(t==="stacked_bar_h");ds.forEach(d=>d.borderWidth=0);
     return new Chart(canvas,{type:"bar",data:{labels,datasets:ds},
-      options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,interaction:{mode:"nearest",intersect:true},plugins:{legend:{display:false},tooltip:tip},
-        scales:{x:{ticks:{font:{size:10}}},y:{grid:{display:false},ticks:{font:{size:9},autoSkip:false}}}}});
+      options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
+        scales:{x:{stacked:st,ticks:{font:{size:10}}},y:{stacked:st,grid:{display:false},ticks:{font:{size:9},autoSkip:false}}}}});
   }
   if(t==="pie"){
     const pieTip={callbacks:{label:c=>`${c.label}: ${c.formattedValue} ${unit}`.trim()}};
