@@ -37,7 +37,8 @@ VALUE_RE = re.compile(r"^[\d][\d,.\s]*\s*(만|억|천|조)?\s*"
 # title — e.g. "60세 이전.", "60세 이후.", "65세 이상.", "남성.", "여성." — NOT a title
 LABEL_RE = re.compile(r"(이전|이후|이상|미만|초과|이내|이하)\s*\.?$"
                       r"|^\d+\s*세\s*\.?$"
-                      r"|^(남성|여성|남자|여자|남|여)\s*\.?$")
+                      r"|^(남성|여성|남자|여자|남|여)\s*\.?$"
+                      r"|^\S{1,6}\s+-?\d[\d,.]*\s*%?\s*\.?$")  # data callout like "한국 4.3"
 
 def title_placeholder(slide):
     """If the slide uses a real Title placeholder, return its text — the most

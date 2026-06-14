@@ -16,8 +16,7 @@
       "2877+83",
       "고용률 =",
       "2877+83+1616",
-      "= 2.8%",
-      "= 62.9%"
+      "실업률과 고용률의 차이."
     ],
     "slide": "slide-61"
   },
@@ -30,15 +29,6 @@
       "떨어짐 사고 사망."
     ],
     "slide": "slide-131"
-  },
-  {
-    "reason": "ambiguous",
-    "chosen": "한국 4.3",
-    "candidates": [
-      "산재 사망률 비교.",
-      "한국 4.3"
-    ],
-    "slide": "slide-132"
   },
   {
     "reason": "ambiguous",
@@ -1339,22 +1329,12 @@
     "reason": "ambiguous",
     "chosen": "국민연금.",
     "candidates": [
-      "금융자산 100.",
       "KIC.",
       "국민연금.",
       "사우디국부펀드.",
       "UAE 국부펀드."
     ],
     "slide": "slide-724"
-  },
-  {
-    "reason": "ambiguous",
-    "chosen": "9조+5조 달러.",
-    "candidates": [
-      "국부펀드 100.",
-      "9조+5조 달러."
-    ],
-    "slide": "slide-725"
   },
   {
     "reason": "ambiguous",
@@ -1492,16 +1472,6 @@
       "농촌기본소득 도입 발표."
     ],
     "slide": "slide-835"
-  },
-  {
-    "reason": "ambiguous",
-    "chosen": "대구 동별 인구소멸지수.",
-    "candidates": [
-      "대구 동별 인구소멸지수.",
-      "소멸위험 0.5",
-      "소멸우려 1.0"
-    ],
-    "slide": "slide-837"
   },
   {
     "reason": "ambiguous",
