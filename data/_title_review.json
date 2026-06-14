@@ -120,6 +120,14 @@
     "slide": "slide-228"
   },
   {
+    "reason": "no_title",
+    "candidates": [
+      "ILO Stat. ｢Gender Equality and Non-Discrimination Indicators (GEND)-Labourforce participation rate by sex and age(%)｣.",
+      "OECD와 비교한 연령대별 고용률."
+    ],
+    "slide": "slide-231"
+  },
+  {
     "reason": "ambiguous",
     "chosen": "현대자동차 생산과 판매 현황.",
     "candidates": [
@@ -186,6 +194,18 @@
     "slide": "slide-301"
   },
   {
+    "reason": "no_title",
+    "candidates": [
+      "남여 임금 차이(월급 기준).",
+      "단위: 만 원.",
+      "남여 임금 차이(시급 기준).",
+      "단위: 원.",
+      "64.8%.",
+      "70.9%."
+    ],
+    "slide": "slide-305"
+  },
+  {
     "reason": "ambiguous",
     "chosen": "한국. 프랑스.",
     "candidates": [
@@ -193,6 +213,38 @@
       "한국. 프랑스."
     ],
     "slide": "slide-309"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "통계청.",
+      "노인빈곤율 시장소득 기준."
+    ],
+    "slide": "slide-315"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "통계청.",
+      "노인빈곤율 시장소득 기준."
+    ],
+    "slide": "slide-316"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "노인 빈곤율 가처분 소득 기준.",
+      "통계청."
+    ],
+    "slide": "slide-317"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "노인 빈곤율 시장 소득 기준.",
+      "통계청."
+    ],
+    "slide": "slide-318"
   },
   {
     "reason": "ambiguous",
@@ -284,6 +336,54 @@
       "프랑스."
     ],
     "slide": "slide-338"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "OECD, 단위: 세.",
+      "한국인의 기대수명과 OECD 평균."
+    ],
+    "slide": "slide-342"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "건강보험료율.",
+      "건강보험공단. 단위: %."
+    ],
+    "slide": "slide-344"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "건강보험료 재정 전망.",
+      "국가데이터처. 단위: 조 원."
+    ],
+    "slide": "slide-345"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "건강보험료 재정 전망.",
+      "국민건강보험공단. 단위: 조 원."
+    ],
+    "slide": "slide-346"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "건강보험료-건강보험 지출 추이.",
+      "국가데이터처. 단위: 조 원."
+    ],
+    "slide": "slide-347"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "기준 중위소득.",
+      "단위: 만 원."
+    ],
+    "slide": "slide-348"
   },
   {
     "reason": "ambiguous",
@@ -385,6 +485,14 @@
   },
   {
     "reason": "no_title",
+    "candidates": [
+      "OECD 평균과 비교한 GDP 대비 부동산 세금 비중.",
+      "2018년 기준 OECD, 단위: %."
+    ],
+    "slide": "slide-438"
+  },
+  {
+    "reason": "no_title",
     "candidates": [],
     "slide": "slide-442"
   },
@@ -481,6 +589,14 @@
     "slide": "slide-486"
   },
   {
+    "reason": "no_title",
+    "candidates": [
+      "한국과 일본의 쌀 단위 면적당 생산량.",
+      "농촌경제연구원, 단위: kg/ha."
+    ],
+    "slide": "slide-490"
+  },
+  {
     "reason": "ambiguous",
     "chosen": "커피 가격.",
     "candidates": [
@@ -529,6 +645,28 @@
       "윤석열 당선."
     ],
     "slide": "slide-523"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "방송 3사 출구조사."
+    ],
+    "slide": "slide-532"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "방송 3사 출구조사."
+    ],
+    "slide": "slide-533"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "NBS 전국 지표조사, 3월 둘째 주.",
+      "전국 1000명 대상, 휴대전화 전화 면접 조사, 95% 신뢰 수준에 ±3.1%포인트.)"
+    ],
+    "slide": "slide-534"
   },
   {
     "reason": "ambiguous",
@@ -616,6 +754,30 @@
       "갤럽리포트, 월간 평균."
     ],
     "slide": "slide-558"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "대구시장 선거 출구 조사.",
+      "방송 3사, 단위: %."
+    ],
+    "slide": "slide-560"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "서울시장 선거 출구 조사.",
+      "방송 3사, 단위: %."
+    ],
+    "slide": "slide-561"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "서울시장 선거 출구 조사(수정).",
+      "방송 3사, 단위: %."
+    ],
+    "slide": "slide-562"
   },
   {
     "reason": "ambiguous",
@@ -859,6 +1021,13 @@
     "slide": "slide-607"
   },
   {
+    "reason": "no_title",
+    "candidates": [
+      "한국갤럽 응답률. 국제 기준(AAPOR)"
+    ],
+    "slide": "slide-608"
+  },
+  {
     "reason": "ambiguous",
     "chosen": "정당 지지율.",
     "candidates": [
@@ -867,6 +1036,13 @@
       "득표율."
     ],
     "slide": "slide-615"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "21대 대선 방송 3사 출구 조사."
+    ],
+    "slide": "slide-618"
   },
   {
     "reason": "ambiguous",
@@ -878,6 +1054,14 @@
     "slide": "slide-620"
   },
   {
+    "reason": "no_title",
+    "candidates": [
+      "21대 대선 방송 3사 출구 조사.",
+      "방송 3사 출구조사, MBC 추정 투표율에 선거인수를 곱한 결과."
+    ],
+    "slide": "slide-626"
+  },
+  {
     "reason": "ambiguous",
     "chosen": "연령대별 민주당 후보 지지율.",
     "candidates": [
@@ -887,6 +1071,14 @@
       "2022년. 이재명."
     ],
     "slide": "slide-627"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "21대 대선 출구조사 성별 연령별 득표율.",
+      "21대 대선 방송 3사 출구 조사 결과, 단위: %."
+    ],
+    "slide": "slide-629"
   },
   {
     "reason": "ambiguous",
@@ -955,6 +1147,22 @@
       "당비 내는 당원 수."
     ],
     "slide": "slide-644"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "성동구 구정 만족도 조사.",
+      "단위: %. 성동구."
+    ],
+    "slide": "slide-653"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "성동구 구정 만족도 조사.",
+      "단위: %. 성동구."
+    ],
+    "slide": "slide-654"
   },
   {
     "reason": "ambiguous",
@@ -1103,6 +1311,14 @@
     "slide": "slide-698"
   },
   {
+    "reason": "no_title",
+    "candidates": [
+      "갤럽 국가 호감도 조사.",
+      "단위: %."
+    ],
+    "slide": "slide-702"
+  },
+  {
     "reason": "ambiguous",
     "chosen": "해외 순자산 추이.",
     "candidates": [
@@ -1111,6 +1327,13 @@
       "한국."
     ],
     "slide": "slide-715"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "미국 기준금리."
+    ],
+    "slide": "slide-716"
   },
   {
     "reason": "ambiguous",
@@ -1294,6 +1517,14 @@
     "slide": "slide-863"
   },
   {
+    "reason": "no_title",
+    "candidates": [
+      "은행 총자산과 당기순이익.",
+      "금융감독원 금융통계정보시스템. 단위: 조 원."
+    ],
+    "slide": "slide-864"
+  },
+  {
     "reason": "ambiguous",
     "chosen": "가상 자산 거래소 점유율.",
     "candidates": [
@@ -1312,6 +1543,30 @@
     "slide": "slide-871"
   },
   {
+    "reason": "no_title",
+    "candidates": [
+      "지방 정부 금고, 지역은행과 농협은행 분포.",
+      "행정안전부, 12개월 장기 금리 기준, 단위: 개."
+    ],
+    "slide": "slide-875"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "4대 은행 이자이익.",
+      "금융감독원 금융통계시스템, 단위: 억 원."
+    ],
+    "slide": "slide-877"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "은행 점포 수.",
+      "금융감독원 금융통계시스템, 단위: 개."
+    ],
+    "slide": "slide-878"
+  },
+  {
     "reason": "ambiguous",
     "chosen": "GDP 대비 가계부채 비율.",
     "candidates": [
@@ -1319,6 +1574,62 @@
       "2025년 말 88.6%. 2030년 목표 80%."
     ],
     "slide": "slide-880"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "4대 은행 이자순수익.",
+      "금융감독원 금융통계시스템, 단위: 조 원."
+    ],
+    "slide": "slide-881"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "4대 은행 순이자이익.",
+      "금융감독원 금융통계시스템, 단위: 억 원."
+    ],
+    "slide": "slide-882"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "4대 은행 이자순수익.",
+      "금융감독원 금융통계시스템, 단위: 억 원."
+    ],
+    "slide": "slide-883"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "4대 은행 이자수익과 이자비용.",
+      "금융감독원 금융통계시스템, 단위: 조 원."
+    ],
+    "slide": "slide-884"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "4대 은행 이자수익과 이자비용.",
+      "금융감독원 금융통계시스템, 단위: 조 원."
+    ],
+    "slide": "slide-885"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "시중은행 이자수익과 이자비용.",
+      "금융감독원 금융통계시스템, 단위: 조 원."
+    ],
+    "slide": "slide-886"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "4대 은행 이자순수익.",
+      "금융감독원 금융통계시스템, 단위: 조 원."
+    ],
+    "slide": "slide-887"
   },
   {
     "reason": "ambiguous",
@@ -1564,6 +1875,22 @@
     "slide": "slide-1001"
   },
   {
+    "reason": "no_title",
+    "candidates": [
+      "보험료율과 소득대체율.",
+      "단위: %."
+    ],
+    "slide": "slide-1026"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "보험료율과 소득대체율.",
+      "단위: 10억 원."
+    ],
+    "slide": "slide-1027"
+  },
+  {
     "reason": "ambiguous",
     "chosen": "국민연금 자산 비중.",
     "candidates": [
@@ -1574,6 +1901,30 @@
       "해외 채권."
     ],
     "slide": "slide-1029"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "연령대별 국민연금 기준소득 월액.",
+      "단위: %."
+    ],
+    "slide": "slide-1034"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "연령대별 국민연금 기준소득 월액.",
+      "단위: 명."
+    ],
+    "slide": "slide-1035"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "연령대별 국민연금 기준소득 월액.",
+      "단위: 명."
+    ],
+    "slide": "slide-1037"
   },
   {
     "reason": "ambiguous",
@@ -1737,6 +2088,22 @@
     "reason": "no_title",
     "candidates": [],
     "slide": "slide-1095"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "단위: 억 달러.",
+      "증권투자 유출과 유입."
+    ],
+    "slide": "slide-1114"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "단위: 억 달러.",
+      "증권투자 유출과 유입."
+    ],
+    "slide": "slide-1115"
   },
   {
     "reason": "ambiguous",
@@ -1996,6 +2363,14 @@
     "slide": "slide-1254"
   },
   {
+    "reason": "no_title",
+    "candidates": [
+      "OECD 에너지원별 발전 비중.",
+      "단위: %."
+    ],
+    "slide": "slide-1267"
+  },
+  {
     "reason": "ambiguous",
     "chosen": "한국 에너지원별 발전 비중.",
     "candidates": [
@@ -2012,6 +2387,14 @@
       "재생 에너지 45%."
     ],
     "slide": "slide-1271"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "한국과 OECD 저탄소 에너지 비율.",
+      "단위: %, 아워월드데이터."
+    ],
+    "slide": "slide-1276"
   },
   {
     "reason": "ambiguous",
@@ -2106,6 +2489,38 @@
       "정산 단가."
     ],
     "slide": "slide-1334"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "연료원별 정산 단가와 계통 한계가격(2025년 11월 기준).",
+      "전력통계정보시스템, 단위: 원/kWh."
+    ],
+    "slide": "slide-1335"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "발전원별 입찰량과 거래량(여름: 2025년 7월 기준).",
+      "전력통계정보시스템, 단위: GWh."
+    ],
+    "slide": "slide-1337"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "발전원별 입찰량과 거래량(2025년 1월 기준).",
+      "전력통계정보시스템, 단위: GWh."
+    ],
+    "slide": "slide-1338"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "발전원별 입찰량과 거래량(겨울: 2025년 1월 기준).",
+      "전력통계정보시스템, 단위: GWh."
+    ],
+    "slide": "slide-1339"
   },
   {
     "reason": "ambiguous",
@@ -2341,6 +2756,20 @@
       "Harman(가전)."
     ],
     "slide": "slide-1449"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "삼성전자와 SK하이닉스 영업이익 추이. (단위: 조 원.)"
+    ],
+    "slide": "slide-1453"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "삼성전자와 SK하이닉스 영업이익 추이. (단위: 조 원.)"
+    ],
+    "slide": "slide-1454"
   },
   {
     "reason": "ambiguous",
@@ -2586,6 +3015,22 @@
     "slide": "slide-1618"
   },
   {
+    "reason": "no_title",
+    "candidates": [
+      "갤럽, 2012-2023 스마트폰 사용률 & 브랜드. / 2022년 지방선거 출구 조사.",
+      "2023년."
+    ],
+    "slide": "slide-1622"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "갤럽, 2012-2023 스마트폰 사용률 & 브랜드. / 2022년 지방선거 출구 조사.",
+      "2023년."
+    ],
+    "slide": "slide-1625"
+  },
+  {
     "reason": "ambiguous",
     "chosen": "첫 스마트폰으로 뭘 썼나요?",
     "candidates": [
@@ -2804,6 +3249,22 @@
     "slide": "slide-1714"
   },
   {
+    "reason": "no_title",
+    "candidates": [
+      "가해자 연령대별 자동차 보험 손해액.",
+      "경찰청: 단위 억 원."
+    ],
+    "slide": "slide-1717"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "연령대별 자동차보험 계약자 수.",
+      "보험통계조회서비스, 단위: 만 명."
+    ],
+    "slide": "slide-1719"
+  },
+  {
     "reason": "ambiguous",
     "chosen": "형사 사건 기소율.",
     "candidates": [
@@ -2833,6 +3294,14 @@
       "대한제국."
     ],
     "slide": "slide-1732"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "한국은행이 기준금리를 0.25%포인트 내릴 경우, 진단적 기대의 상대적 효과.",
+      "한국은행."
+    ],
+    "slide": "slide-1733"
   },
   {
     "reason": "ambiguous",
@@ -2980,6 +3449,14 @@
     "slide": "slide-1762"
   },
   {
+    "reason": "no_title",
+    "candidates": [
+      "The Richest Cities in the World.",
+      "CEO월드, 단위: 10억 달러."
+    ],
+    "slide": "slide-1765"
+  },
+  {
     "reason": "ambiguous",
     "chosen": "AI 수능 테스트 결과.",
     "candidates": [
@@ -3095,6 +3572,16 @@
     "slide": "slide-1837"
   },
   {
+    "reason": "no_title",
+    "candidates": [
+      "유튜브와 신문, TV 보는 시간.",
+      "한국언론진흥재단, 유튜브는 와이즈앱리테일. 단위: 분/ 월.",
+      "언론수용자 조사는 2022년 자료 없음. 주당 이용 시간에 4.3주 곱해서 환산.",
+      "2022년 조사 없음."
+    ],
+    "slide": "slide-1838"
+  },
+  {
     "reason": "ambiguous",
     "chosen": "수도권에 폭우가 내렸을 때.",
     "candidates": [
@@ -3115,8 +3602,131 @@
   },
   {
     "reason": "no_title",
+    "candidates": [
+      "종이신문 열독률.",
+      "언론진흥재단, 단위: %."
+    ],
+    "slide": "slide-1866"
+  },
+  {
+    "reason": "no_title",
     "candidates": [],
     "slide": "slide-1869"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "주요 방송사 매출 추이.",
+      "금융감독원 전자공시, 단위: 억 원."
+    ],
+    "slide": "slide-1870"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "주요 방송사 매출 추이.",
+      "금융감독원 전자공시, 단위: 억 원."
+    ],
+    "slide": "slide-1871"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "2024년 주요 20개 신문사 매출 추이.",
+      "금융감독원 전자공시. 단위: 억 원."
+    ],
+    "slide": "slide-1872"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "2025년 주요 신문사 매출 추이.",
+      "금융감독원 전자공시. 단위: 억 원."
+    ],
+    "slide": "slide-1873"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "2024년 주요 방송사 매출 추이.",
+      "금융감독원 전자공시. 단위: 억 원."
+    ],
+    "slide": "slide-1874"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "주요 17개 신문사 매출 추이.",
+      "금융감독원 전자공시. 단위: 억 원."
+    ],
+    "slide": "slide-1876"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "종이신문과 인터넷신문 매출 합계.",
+      "한국언론진흥재단 신문산업 실태 조사."
+    ],
+    "slide": "slide-1877"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "종이신문과 인터넷신문 매출 합계.",
+      "한국언론진흥재단 신문산업 실태 조사와 금융감독원 전자공시 교차 분석, 단위: 억 원."
+    ],
+    "slide": "slide-1878"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "주요 신문사 매출 추이."
+    ],
+    "slide": "slide-1879"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "주요 신문사 매출 추이."
+    ],
+    "slide": "slide-1880"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "주요 신문사 매출 추이."
+    ],
+    "slide": "slide-1881"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "주요 경제신문 매출 추이.",
+      "금융감독원 전자공시, 단위: 억 원."
+    ],
+    "slide": "slide-1882"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "2025년 주요 18개 신문사 매출 규모."
+    ],
+    "slide": "slide-1883"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "주요 20개 신문사 매출 추이.",
+      "금융감독원 전자공시, 서울경제신문은 2023년. 단위: 억 원."
+    ],
+    "slide": "slide-1888"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "주요 20개 신문사 매출 추이."
+    ],
+    "slide": "slide-1889"
   },
   {
     "reason": "no_title",
@@ -3210,6 +3820,54 @@
     "slide": "slide-1911"
   },
   {
+    "reason": "no_title",
+    "candidates": [
+      "페이지뷰. (단위 : 1000뷰.)",
+      "김위근, 한국 언론과 포털 뉴스 서비스, 한국언론진흥재단, 2020년 11월30일. 2024년은 이정환 추산.",
+      "7.6%",
+      "5.3%",
+      "3.0%"
+    ],
+    "slide": "slide-1912"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "페이지뷰. (단위 : 1000뷰.)",
+      "김위근, 한국 언론과 포털 뉴스 서비스, 한국언론진흥재단, 2020년 11월30일. 2024년은 이정환 추산.",
+      "7.6%",
+      "5.3%",
+      "3.0%"
+    ],
+    "slide": "slide-1913"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "페이지뷰. (단위 : 1000뷰.)",
+      "김위근, 한국 언론과 포털 뉴스 서비스, 한국언론진흥재단, 2020년 11월30일. 2024년은 이정환 추산."
+    ],
+    "slide": "slide-1914"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "페이지뷰. (단위 : 억뷰.)",
+      "김위근, 한국 언론과 포털 뉴스 서비스, 한국언론진흥재단, 2020년 11월30일. 2024년은 이정환 추산."
+    ],
+    "slide": "slide-1915"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "한국의 뉴스 페이지뷰. (단위 : 억 뷰/일.)",
+      "김위근, 한국 언론과 포털 뉴스 서비스, 한국언론진흥재단, 2020년 11월30일. 2020년과 2025년은 이정환 추산.",
+      "83",
+      "14"
+    ],
+    "slide": "slide-1916"
+  },
+  {
     "reason": "ambiguous",
     "chosen": "미디어 소비.",
     "candidates": [
@@ -3217,6 +3875,13 @@
       "미디어 소비."
     ],
     "slide": "slide-1917"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "2024년 국가데이터처 생활시간조사, 단위: 시간."
+    ],
+    "slide": "slide-1918"
   },
   {
     "reason": "ambiguous",
@@ -3237,6 +3902,16 @@
     "slide": "slide-1920"
   },
   {
+    "reason": "no_title",
+    "candidates": [
+      "https://www.pewresearch.org/journalism/fact-sheet/newspapers/",
+      "미국 신문 산업 광고 매출 추이.",
+      "퓨리서치, 단위: 억 달러. (신문산업 2013년부터는 추정치.)",
+      "신문."
+    ],
+    "slide": "slide-1921"
+  },
+  {
     "reason": "ambiguous",
     "chosen": "구글.",
     "candidates": [
@@ -3245,6 +3920,37 @@
       "아마존."
     ],
     "slide": "slide-1922"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "미국의 종이신문 구독자 수.",
+      "https://www.journalism.org/fact-sheet/newspapers/",
+      "퓨리서치센터, 단위: 100만 명."
+    ],
+    "slide": "slide-1923"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "250억 달러.",
+      "500억 달러.",
+      "https://www.pewresearch.org/journalism/fact-sheet/newspapers/",
+      "미국 신문 산업 광고와 구독 매출 추이.",
+      "퓨리서치, 단위: 억 달러. (2013년부터는 추정치.)"
+    ],
+    "slide": "slide-1924"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "250억 달러.",
+      "500억 달러.",
+      "https://www.pewresearch.org/journalism/fact-sheet/newspapers/",
+      "미국 신문 산업 광고와 구독 매출 추이.",
+      "퓨리처치, 단위: 억 달러."
+    ],
+    "slide": "slide-1925"
   },
   {
     "reason": "no_title",
@@ -3308,6 +4014,29 @@
     "slide": "slide-1966"
   },
   {
+    "reason": "no_title",
+    "candidates": [
+      "종이신문 열독률과 구독률.",
+      "한국언론진흥재단, 단위: %."
+    ],
+    "slide": "slide-1974"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "신문용지 산업.",
+      "한국제지연합회, 단위: 만 톤."
+    ],
+    "slide": "slide-1975"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "2017년."
+    ],
+    "slide": "slide-1977"
+  },
+  {
     "reason": "ambiguous",
     "chosen": "조국 청문회.",
     "candidates": [
@@ -3334,6 +4063,14 @@
     "slide": "slide-1982"
   },
   {
+    "reason": "no_title",
+    "candidates": [
+      "2017년.",
+      "단위 : %. 로이터저널리즘연구소."
+    ],
+    "slide": "slide-1983"
+  },
+  {
     "reason": "ambiguous",
     "chosen": "한국인이 가장 즐겨 보는 뉴스 채널.",
     "candidates": [
@@ -3357,5 +4094,13 @@
       "SBS."
     ],
     "slide": "slide-1985"
+  },
+  {
+    "reason": "no_title",
+    "candidates": [
+      "세계 신문사 구독과 광고 추이.",
+      "PwC+WAN-IFRA, 단위 억 달러."
+    ],
+    "slide": "slide-1986"
   }
 ]

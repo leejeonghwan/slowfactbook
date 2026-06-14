@@ -64,16 +64,20 @@ def pick_title_source(slide):
             top = sh.top if sh.top is not None else 10**9
             cand.append((top, " ".join(sh.text_frame.text.split())))
     cand.sort(key=lambda x: x[0])
+    urls = [t for _, t in cand if URL_RE.search(t)]
+    url = urls[0] if urls else ""
     srcs = [t for _, t in cand if UNIT_RE.search(t)]
     source = srcs[0] if srcs else ""
     ph = title_placeholder(slide)
     if ph:
-        return ph, source
+        return ph, source, url
     base = [t for _, t in cand
             if not UNIT_RE.search(t) and not URL_RE.search(t) and not VALUE_RE.match(t)]
     strong = [t for t in base if not LABEL_RE.search(t)]   # drop chart annotations
-    title = (strong or base or [c[1] for c in cand] or [""])[0]
-    return title, source
+    # never fall back to a URL/source as the title — leave it empty so the chart's
+    # own title (e.g. doughnut center) can take over.
+    title = (strong or base or [""])[0]
+    return title, source, url
 
 def review_title(slide, chosen):
     """Flag slides whose title is uncertain, so they can be reviewed/overridden
@@ -205,7 +209,7 @@ def extract(inp, outp, start=1, end=None, dedup=True):
     for si in range(start, end + 1):
         slide = all_slides[si - 1]
         layout = slide.slide_layout.name
-        title, source = pick_title_source(slide)
+        title, source, surl = pick_title_source(slide)
         charts = [sh for sh in slide.shapes if sh.has_chart]
         pics = [sh for sh in slide.shapes if sh.shape_type == 13]  # PICTURE
         if not charts:
@@ -214,7 +218,7 @@ def extract(inp, outp, start=1, end=None, dedup=True):
             if pics:
                 image_only.append({"slide": si, "title": title})
             items.append({"slide": f"slide-{si}", "title": title, "source": source,
-                          "vizType": None, "layout": layout,
+                          "sourceUrl": surl, "vizType": None, "layout": layout,
                           "category": current_section, "note": "no native chart"})
             continue
         weak = is_weak_title(title, source)
@@ -226,10 +230,13 @@ def extract(inp, outp, start=1, end=None, dedup=True):
         for ci, sh in enumerate(charts):
             ch = sh.chart
             ct = str(ch.chart_type).split()[0] if ch.chart_type else ""
+            viz = CT_MAP.get(ct, ct.lower())
             names, labels, series = parse_chart_xml(ch)
             cht = chart_title(ch)
-            if weak and cht:
-                full_title = cht        # chart's own title (e.g. doughnut center)
+            # RULE: pie/doughnut -> always use the chart's own (center) title first.
+            # Other types -> use the chart title only when the slide title is weak.
+            if cht and (viz == "pie" or weak):
+                full_title = cht
             else:
                 # multiple charts share the slide title; distinguish by series name
                 # ("...영업이익 — 반도체"), else a numeric suffix.
@@ -242,8 +249,9 @@ def extract(inp, outp, start=1, end=None, dedup=True):
                 "slide": f"slide-{si}",
                 "title": full_title,
                 "source": source,
+                "sourceUrl": surl,
                 "category": current_section,
-                "vizType": CT_MAP.get(ct, ct.lower()),
+                "vizType": viz,
                 "chartType_raw": ct,
                 "seriesNames": names,
                 "labels": [str(c).strip().rstrip(".") for c in labels],
