@@ -41,21 +41,6 @@
     "slide": "slide-132"
   },
   {
-    "reason": "no_title",
-    "candidates": [],
-    "slide": "slide-135"
-  },
-  {
-    "reason": "no_title",
-    "candidates": [],
-    "slide": "slide-136"
-  },
-  {
-    "reason": "no_title",
-    "candidates": [],
-    "slide": "slide-138"
-  },
-  {
     "reason": "ambiguous",
     "chosen": "남성 미혼자 비율.",
     "candidates": [
@@ -301,11 +286,6 @@
     "slide": "slide-338"
   },
   {
-    "reason": "no_title",
-    "candidates": [],
-    "slide": "slide-375"
-  },
-  {
     "reason": "ambiguous",
     "chosen": "스토킹 처벌법 시행 이후 1심 선고 비율.",
     "candidates": [
@@ -406,11 +386,6 @@
   {
     "reason": "no_title",
     "candidates": [],
-    "slide": "slide-440"
-  },
-  {
-    "reason": "no_title",
-    "candidates": [],
     "slide": "slide-442"
   },
   {
@@ -430,41 +405,6 @@
     "reason": "no_title",
     "candidates": [],
     "slide": "slide-444"
-  },
-  {
-    "reason": "no_title",
-    "candidates": [],
-    "slide": "slide-446"
-  },
-  {
-    "reason": "no_title",
-    "candidates": [],
-    "slide": "slide-447"
-  },
-  {
-    "reason": "no_title",
-    "candidates": [],
-    "slide": "slide-448"
-  },
-  {
-    "reason": "no_title",
-    "candidates": [],
-    "slide": "slide-449"
-  },
-  {
-    "reason": "no_title",
-    "candidates": [],
-    "slide": "slide-450"
-  },
-  {
-    "reason": "no_title",
-    "candidates": [],
-    "slide": "slide-451"
-  },
-  {
-    "reason": "no_title",
-    "candidates": [],
-    "slide": "slide-452"
   },
   {
     "reason": "ambiguous",
@@ -2168,11 +2108,6 @@
     "slide": "slide-1334"
   },
   {
-    "reason": "no_title",
-    "candidates": [],
-    "slide": "slide-1344"
-  },
-  {
     "reason": "ambiguous",
     "chosen": "5개 한국 전력 발전 자회사. 28%, 25억 톤.",
     "candidates": [
@@ -2469,11 +2404,6 @@
     "slide": "slide-1487"
   },
   {
-    "reason": "no_title",
-    "candidates": [],
-    "slide": "slide-1491"
-  },
-  {
     "reason": "ambiguous",
     "chosen": "쿠팡 영업이익.",
     "candidates": [
@@ -2523,11 +2453,6 @@
     "reason": "no_title",
     "candidates": [],
     "slide": "slide-1568"
-  },
-  {
-    "reason": "no_title",
-    "candidates": [],
-    "slide": "slide-1572"
   },
   {
     "reason": "ambiguous",
@@ -2707,16 +2632,6 @@
     "slide": "slide-1635"
   },
   {
-    "reason": "no_title",
-    "candidates": [],
-    "slide": "slide-1637"
-  },
-  {
-    "reason": "no_title",
-    "candidates": [],
-    "slide": "slide-1639"
-  },
-  {
     "reason": "ambiguous",
     "chosen": "제일모직+삼성물산 합병의 일등공신.",
     "candidates": [
@@ -2758,11 +2673,6 @@
       "삼성바이오로직스가 평가한 삼성바이오에피스 기업 가치."
     ],
     "slide": "slide-1651"
-  },
-  {
-    "reason": "no_title",
-    "candidates": [],
-    "slide": "slide-1652"
   },
   {
     "reason": "ambiguous",
@@ -3070,11 +2980,6 @@
     "slide": "slide-1762"
   },
   {
-    "reason": "no_title",
-    "candidates": [],
-    "slide": "slide-1763"
-  },
-  {
     "reason": "ambiguous",
     "chosen": "AI 수능 테스트 결과.",
     "candidates": [
@@ -3212,11 +3117,6 @@
     "reason": "no_title",
     "candidates": [],
     "slide": "slide-1869"
-  },
-  {
-    "reason": "no_title",
-    "candidates": [],
-    "slide": "slide-1884"
   },
   {
     "reason": "no_title",
@@ -3362,11 +3262,6 @@
     "slide": "slide-1936"
   },
   {
-    "reason": "no_title",
-    "candidates": [],
-    "slide": "slide-1939"
-  },
-  {
     "reason": "ambiguous",
     "chosen": "뉴욕타임스 유료 구독자 현황.",
     "candidates": [
@@ -3398,11 +3293,6 @@
       "뉴욕타임스 유료 구독자 현황."
     ],
     "slide": "slide-1951"
-  },
-  {
-    "reason": "no_title",
-    "candidates": [],
-    "slide": "slide-1962"
   },
   {
     "reason": "ambiguous",

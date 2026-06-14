@@ -142,6 +142,23 @@ def _to_num(s):
     except ValueError:
         return None
 
+def chart_title(chart):
+    """The chart's own title (often shown in a doughnut's center). Many slides
+    put the real title here instead of in a text box."""
+    try:
+        if chart.has_title:
+            return " ".join(chart.chart_title.text_frame.text.split())
+    except Exception:
+        pass
+    return ""
+
+def is_weak_title(title, source):
+    """True when the slide text-box title isn't a real title (missing, equals the
+    source line, or is just a unit/value/annotation) — then use the chart title."""
+    t = (title or "").strip()
+    return (not t) or t == (source or "").strip() or bool(UNIT_RE.search(t)) \
+        or bool(VALUE_RE.match(t)) or bool(LABEL_RE.search(t))
+
 def parse_chart_xml(chart):
     """Fast chart extraction via raw XML. Avoids python-pptx's slow
     categories/series.values, which hang on charts with tens of thousands
@@ -200,24 +217,30 @@ def extract(inp, outp, start=1, end=None, dedup=True):
                           "vizType": None, "layout": layout,
                           "category": current_section, "note": "no native chart"})
             continue
+        weak = is_weak_title(title, source)
+        any_chart_title = any(chart_title(sh.chart) for sh in charts)
         rv = review_title(slide, title)
-        if rv:
+        if rv and not (weak and any_chart_title):   # chart title rescues it
             rv["slide"] = f"slide-{si}"
             title_review.append(rv)
         for ci, sh in enumerate(charts):
             ch = sh.chart
             ct = str(ch.chart_type).split()[0] if ch.chart_type else ""
             names, labels, series = parse_chart_xml(ch)
-            # multiple charts on one slide share the slide title; distinguish them
-            # by the chart's own series name (e.g. "...영업이익 — 반도체") when it has
-            # a single meaningful series, else fall back to a numeric suffix.
-            suffix = ""
-            if len(charts) > 1:
-                distinct = [n.strip().rstrip(".") for n in names if n and n.strip()]
-                suffix = " — " + distinct[0] if len(distinct) == 1 else f" ({ci+1})"
+            cht = chart_title(ch)
+            if weak and cht:
+                full_title = cht        # chart's own title (e.g. doughnut center)
+            else:
+                # multiple charts share the slide title; distinguish by series name
+                # ("...영업이익 — 반도체"), else a numeric suffix.
+                suffix = ""
+                if len(charts) > 1:
+                    distinct = [n.strip().rstrip(".") for n in names if n and n.strip()]
+                    suffix = " — " + distinct[0] if len(distinct) == 1 else f" ({ci+1})"
+                full_title = title + suffix
             items.append({
                 "slide": f"slide-{si}",
-                "title": title + suffix,
+                "title": full_title,
                 "source": source,
                 "category": current_section,
                 "vizType": CT_MAP.get(ct, ct.lower()),
