@@ -42,22 +42,29 @@ def load_items(data_dir):
             labels = it.get("labels") or []
             if len(labels) < 2:
                 continue
-            series = [clean(s) for s in (it.get("series") or []) if any(v is not None for v in s)]
+            raw = it.get("series") or []
+            rnames, rkinds, raxes = it.get("seriesNames") or [], it.get("seriesKinds") or [], it.get("seriesAxes") or []
+            keep = [i for i, s in enumerate(raw) if any(v is not None for v in s)]
+            series = [clean(raw[i]) for i in keep]
             if not series:
                 continue
-            names = it.get("seriesNames") or []
-            names = (names + [None] * len(series))[:len(series)]
+            names = [(rnames[i] if i < len(rnames) else None) for i in keep]
+            kinds = [(rkinds[i] if i < len(rkinds) else None) for i in keep]
+            axes = [(raxes[i] if i < len(raxes) else None) for i in keep]
             title = it["title"].strip().rstrip(".")
             sig = (title, it["vizType"], len(labels), repr(series))
             if sig in seen:
                 continue
             seen.add(sig)
-            items.append({
+            item = {
                 "category": cat, "title": title,
                 "source": it.get("source", ""), "sourceUrl": it.get("sourceUrl", ""),
                 "vizType": it["vizType"], "labels": labels,
                 "seriesNames": names, "series": series, "slide": it.get("slide"),
-            })
+            }
+            if it["vizType"] == "combo":
+                item["seriesKinds"], item["seriesAxes"] = kinds, axes
+            items.append(item)
     return items
 
 def assign_ids(items, idpath):
@@ -265,6 +272,18 @@ function buildChart(canvas,it){
   const tip={callbacks:{label:c=>(ds.length>1?`${c.dataset.label}: `:"")+`${c.formattedValue} ${unit}`.trim()}};
   const interaction={mode:"index",intersect:false};
   const multi=ds.length>1;
+  if(t==="combo"){
+    const kinds=it.seriesKinds||[],axes=it.seriesAxes||[];
+    const dsets=it.series.map((vals,i)=>{const k=kinds[i]||"line",ax=(axes[i]||0),col=PALETTE[i%PALETTE.length];
+      const d={type:(k==="area"?"line":k),label:it.seriesNames[i]||("계열 "+(i+1)),data:vals,borderColor:col,backgroundColor:(k==="bar"?col:hexA(col,0.5)),yAxisID:ax===1?"y1":"y"};
+      if(k!=="bar"){d.borderWidth=2;d.pointRadius=0;d.pointHoverRadius=4;d.tension=.25;d.fill=(k==="area");}else{d.borderWidth=0;}
+      return d;});
+    return new Chart(canvas,{type:"bar",data:{labels,datasets:dsets},
+      options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
+        scales:{x:{grid:{display:false},ticks:{autoSkip:true,autoSkipPadding:6,maxRotation:0,callback:sparseTick(it),font:{size:10}}},
+          y:{position:"left",ticks:{font:{size:10}}},
+          y1:{position:"right",grid:{display:false},ticks:{font:{size:10}}}}}});
+  }
   if(t==="line"||t==="area"||t==="two_axis"){
     const isArea=(t==="area");
     ds.forEach((d,i)=>{const col=PALETTE[i%PALETTE.length];

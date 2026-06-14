@@ -198,6 +198,27 @@ def parse_chart_xml(chart):
         out_series = [[s[i] for i in keep] for s in out_series]
     return names, labels, out_series
 
+def series_axes_kinds(chart):
+    """For combo/dual-axis charts: per series (in the same order as parse_chart_xml),
+    return its kind ('bar'/'line'/'area') and value-axis index (0=left, 1=right)."""
+    from pptx.oxml.ns import qn
+    cs = chart._chartSpace
+    valax_ids = []
+    for ax in cs.findall(".//" + qn("c:valAx")):
+        a = ax.find(qn("c:axId"))
+        if a is not None:
+            valax_ids.append(a.get("val"))
+    kinds, axes = [], []
+    for ser in cs.iter(qn("c:ser")):
+        grp = ser.getparent()
+        gtag = grp.tag.split("}")[1].lower() if grp is not None else ""
+        kind = "bar" if "bar" in gtag else ("area" if "area" in gtag else "line")
+        axids = [a.get("val") for a in grp.findall(qn("c:axId"))] if grp is not None else []
+        val_axid = next((a for a in axids if a in valax_ids), None)
+        axes.append(valax_ids.index(val_axid) if val_axid in valax_ids else 0)
+        kinds.append(kind)
+    return kinds, axes
+
 def extract(inp, outp, start=1, end=None, dedup=True):
     from pptx import Presentation
     prs = Presentation(inp)
@@ -232,6 +253,9 @@ def extract(inp, outp, start=1, end=None, dedup=True):
             ct = str(ch.chart_type).split()[0] if ch.chart_type else ""
             viz = CT_MAP.get(ct, ct.lower())
             names, labels, series = parse_chart_xml(ch)
+            kinds, axes = series_axes_kinds(ch)
+            if (len(set(kinds)) > 1) or (axes and max(axes) > 0):
+                viz = "combo"   # mixed bar+line and/or dual value axis
             cht = chart_title(ch)
             # RULE: pie/doughnut -> always use the chart's own (center) title first.
             # Other types -> use the chart title only when the slide title is weak.
@@ -245,7 +269,7 @@ def extract(inp, outp, start=1, end=None, dedup=True):
                     distinct = [n.strip().rstrip(".") for n in names if n and n.strip()]
                     suffix = " — " + distinct[0] if len(distinct) == 1 else f" ({ci+1})"
                 full_title = title + suffix
-            items.append({
+            item = {
                 "slide": f"slide-{si}",
                 "title": full_title,
                 "source": source,
@@ -256,7 +280,11 @@ def extract(inp, outp, start=1, end=None, dedup=True):
                 "seriesNames": names,
                 "labels": [str(c).strip().rstrip(".") for c in labels],
                 "series": series,
-            })
+            }
+            if viz == "combo":
+                item["seriesKinds"] = kinds
+                item["seriesAxes"] = axes
+            items.append(item)
     raw_count = sum(1 for i in items if i.get("vizType"))
     if dedup:
         items = dedup_builds(items)
