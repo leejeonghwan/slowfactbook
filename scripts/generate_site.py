@@ -163,7 +163,8 @@ main{flex:1;padding:24px 28px;}
 .card h2 a{color:inherit;text-decoration:none;}
 .card h2 a:hover{color:var(--blue);text-decoration:underline;}
 .card .meta{font-size:12px;color:#999;margin-bottom:14px;}
-.card .tag{display:inline-block;font-size:11px;color:var(--blue);background:#eaf1f9;padding:2px 8px;border-radius:20px;margin-bottom:10px;}
+.card .tag{display:inline-block;font-size:11px;color:var(--blue);background:#eaf1f9;padding:2px 8px;border-radius:20px;margin-bottom:10px;cursor:pointer;}
+.card .tag:hover{background:#d7e6fa;}
 .chartbox{position:relative;width:100%;aspect-ratio:16/9;}
 .legendbar{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:3px 12px;height:22px;overflow:hidden;margin:2px 0 6px;}
 .legendbar .lg{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#555;white-space:nowrap;}
@@ -214,7 +215,7 @@ function render(){
   items.forEach((it,i)=>{
     const card=document.createElement("div");card.className="card";
     const meta=[it.source,it.slide].filter(Boolean).join(" · ");
-    card.innerHTML=`<button class="embed-btn" onclick="copyEmbed('${it.id}')">임베드</button><div class="tag">${dot(it.category)}</div><h2><a href="chart.html?id=${it.id}" title="크게 보기">${dot(it.title)}</a></h2><div class="meta">${meta}</div><div class="legendbar">${legendHTML(it)}</div><div class="chartbox"><canvas data-idx="${i}"></canvas></div>`;
+    card.innerHTML=`<div class="tag" data-cat="${String(it.category).replace(/"/g,'&quot;')}" title="이 카테고리 보기">${dot(it.category)}</div><h2><a href="chart.html?id=${it.id}" title="크게 보기">${dot(it.title)}</a></h2><div class="meta">${meta}</div><div class="legendbar">${legendHTML(it)}</div><div class="chartbox"><canvas data-idx="${i}"></canvas></div>`;
     grid.appendChild(card);observer.observe(card);
   });
 }
@@ -227,6 +228,8 @@ function copyEmbed(id){
     .catch(()=>{window.prompt("임베드 코드:",code);});
 }
 searchEl.addEventListener("input",e=>{query=e.target.value;render();});
+// click a card's category chip -> filter to that category
+grid.addEventListener("click",e=>{const t=e.target.closest(".tag");if(t&&t.dataset.cat){activeCat=t.dataset.cat;query="";searchEl.value="";render();window.scrollTo({top:0});}});
 function closeNav(){document.body.classList.remove("nav-open");}
 document.getElementById("menuBtn").onclick=()=>document.body.classList.toggle("nav-open");
 document.getElementById("scrim").onclick=closeNav;
@@ -352,8 +355,15 @@ h1.title{font-size:30px;font-weight:800;margin:0 0 4px;letter-spacing:-.5px;}
 .legendbar .lg{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#555;white-space:nowrap;}
 .legendbar .lg i{width:12px;height:12px;border-radius:2px;flex:0 0 auto;}
 .chartbox{position:relative;width:100%;aspect-ratio:16/9;background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;}
-.back{display:inline-block;margin-top:18px;font-size:13px;color:#888;text-decoration:none;}
+.tag a{color:inherit;text-decoration:none;}
+.tag a:hover{text-decoration:underline;}
+.actions{margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+.back{font-size:13px;color:#888;text-decoration:none;}
 .back:hover{color:var(--blue);}
+.embed-btn{font-size:13px;color:#555;border:1px solid var(--line);border-radius:7px;padding:6px 12px;cursor:pointer;background:#fff;}
+.embed-btn:hover{color:var(--blue);border-color:var(--blue);}
+#toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50;}
+#toast.show{opacity:.95;}
 @media(max-width:820px){ main{padding:18px 16px;} h1.title{font-size:23px;} .chartbox{aspect-ratio:4/3;} }
 </style></head><body>
 <header>
@@ -368,7 +378,10 @@ h1.title{font-size:30px;font-weight:800;margin:0 0 4px;letter-spacing:-.5px;}
   <div class="meta" id="meta"></div>
   <div class="legendbar" id="legend"></div>
   <div class="chartbox"><canvas id="cv"></canvas></div>
-  <a class="back" href="index.html">← 전체 보기</a>
+  <div class="actions">
+    <a class="back" href="index.html">← 전체 보기</a>
+    <button class="embed-btn" id="embedBtn">⧉ 임베드 코드 복사</button>
+  </div>
 </main>
 <script>
 __CORE__
@@ -382,11 +395,17 @@ tocBtn.onmouseenter=()=>{if(wide())openToc();};
 toc.addEventListener("mouseleave",()=>{if(wide())closeToc();});
 scrim.onclick=closeToc;
 document.addEventListener("mousemove",e=>{if(wide()&&e.clientX<6)openToc();});
+function toast(m){let t=document.getElementById("toast");if(!t){t=document.createElement("div");t.id="toast";document.body.appendChild(t);}t.textContent=m;t.className="show";clearTimeout(t._t);t._t=setTimeout(()=>t.className="",1800);}
+document.getElementById("embedBtn").onclick=()=>{
+  const url=new URL("embed.html?id="+id, location.href).href;
+  const code='<iframe src="'+url+'" style="border:0;width:100%;max-width:680px;aspect-ratio:16/10" loading="lazy"></iframe>';
+  (navigator.clipboard?navigator.clipboard.writeText(code):Promise.reject()).then(()=>toast("임베드 코드가 복사되었습니다")).catch(()=>window.prompt("임베드 코드:",code));
+};
 fetch("cats.json").then(r=>r.json()).then(cats=>{
   cats.forEach(c=>{const a=document.createElement("a");a.textContent=dot(c);a.href="index.html?cat="+encodeURIComponent(c);toc.appendChild(a);});
 }).catch(()=>{});
 fetch("embed/"+id+".json").then(r=>r.json()).then(it=>{
-  document.getElementById("tag").textContent=dot(it.category);
+  document.getElementById("tag").innerHTML='<a href="index.html?cat='+encodeURIComponent(it.category)+'">'+dot(it.category)+'</a>';
   document.getElementById("title").textContent=dot(it.title);
   document.getElementById("meta").textContent=it.source||"";
   document.getElementById("legend").innerHTML=legendHTML(it);
