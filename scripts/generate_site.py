@@ -130,11 +130,11 @@ TEMPLATE = r"""<!DOCTYPE html>
 <style>
 :root{--blue:#2f5e8e;--red:#c0322f;--gray:#b3b3b3;--orange:#f5a623;--ink:#1a1a1a;--line:#e6e6e6;}
 *{box-sizing:border-box;} body{margin:0;font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",-apple-system,sans-serif;color:var(--ink);background:#fafafa;}
-header{padding:22px 28px;border-bottom:1px solid var(--line);background:#fff;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;}
+header{padding:22px 28px;border-bottom:1px solid var(--line);background:#fff;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;position:sticky;top:0;z-index:40;}
 header h1{font-size:24px;margin:0;font-weight:800;letter-spacing:-.5px;}
 header .sub{color:#888;font-size:13px;}
 .layout{display:flex;min-height:calc(100vh - 67px);}
-aside{width:240px;flex-shrink:0;border-right:1px solid var(--line);background:#fff;padding:16px 0;overflow-y:auto;position:sticky;top:0;height:calc(100vh - 67px);}
+aside{width:240px;flex-shrink:0;border-right:1px solid var(--line);background:#fff;padding:16px 0;overflow-y:auto;position:sticky;top:67px;height:calc(100vh - 67px);}
 aside .cat{padding:9px 22px;font-size:14px;cursor:pointer;color:#444;border-left:3px solid transparent;}
 aside .cat:hover{background:#f2f5f9;}
 aside .cat.active{border-left-color:var(--blue);color:var(--blue);font-weight:700;background:#f2f5f9;}
@@ -175,7 +175,7 @@ main{flex:1;padding:24px 28px;}
 footer{padding:18px 28px;color:#aaa;font-size:12px;border-top:1px solid var(--line);background:#fff;}
 </style></head><body>
 <header><button class="menu-btn" id="menuBtn" aria-label="목차 열기">☰</button><h1>슬로우팩트북<span style="color:var(--blue)">.</span></h1>
-<span class="sub">데이터 인포그래픽 · 검색 가능한 인터랙티브 아카이브</span></header>
+<span class="sub">슬로우뉴스의 데이터 아카이브입니다. 임베드하거나 다운로드 받아서 자유롭게 이용할 수 있습니다.</span></header>
 <div class="scrim" id="scrim"></div>
 <div class="layout"><aside id="sidebar"></aside>
 <main><div class="toolbar"><input id="search" type="text" placeholder="제목·출처로 검색"><span class="count" id="count"></span></div>
@@ -383,6 +383,8 @@ h1.title{font-size:30px;font-weight:800;margin:0 0 4px;letter-spacing:-.5px;}
   <div class="chartbox"><canvas id="cv"></canvas></div>
   <div class="actions">
     <a class="back" href="index.html">← 전체 보기</a>
+    <button class="embed-btn" id="pngBtn">⬇ 이미지(PNG)</button>
+    <button class="embed-btn" id="csvBtn">⬇ 데이터(CSV)</button>
     <button class="embed-btn" id="embedBtn">⧉ 임베드 코드 복사</button>
   </div>
 </main>
@@ -404,10 +406,30 @@ document.getElementById("embedBtn").onclick=()=>{
   const code='<iframe src="'+url+'" style="border:0;width:100%;max-width:680px;aspect-ratio:16/10" loading="lazy"></iframe>';
   (navigator.clipboard?navigator.clipboard.writeText(code):Promise.reject()).then(()=>toast("임베드 코드가 복사되었습니다")).catch(()=>window.prompt("임베드 코드:",code));
 };
+function safeName(s){return (String(s||"chart").replace(/[\\/:*?"<>|]+/g,"_").replace(/\.+$/,"").trim())||"chart";}
+document.getElementById("pngBtn").onclick=()=>{
+  if(!window.CUR)return;
+  const src=document.getElementById("cv");
+  const tmp=document.createElement("canvas");tmp.width=src.width;tmp.height=src.height;
+  const cx=tmp.getContext("2d");cx.fillStyle="#fff";cx.fillRect(0,0,tmp.width,tmp.height);cx.drawImage(src,0,0);
+  const a=document.createElement("a");a.href=tmp.toDataURL("image/png");a.download=safeName(window.CUR.title)+".png";a.click();
+  toast("이미지를 저장했습니다");
+};
+document.getElementById("csvBtn").onclick=()=>{
+  if(!window.CUR)return;const it=window.CUR;
+  const names=it.series.map((s,i)=>it.seriesNames[i]||("계열 "+(i+1)));
+  const rows=[["항목"].concat(names)];
+  it.labels.forEach((lab,r)=>rows.push([lab].concat(it.series.map(s=>s[r]==null?"":s[r]))));
+  const csv=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(",")).join("\n");
+  const blob=new Blob(["﻿"+csv],{type:"text/csv;charset=utf-8"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=safeName(it.title)+".csv";a.click();
+  toast("데이터(CSV)를 저장했습니다");
+};
 fetch("cats.json").then(r=>r.json()).then(cats=>{
   cats.forEach(c=>{const a=document.createElement("a");a.textContent=dot(c);a.href="index.html?cat="+encodeURIComponent(c);toc.appendChild(a);});
 }).catch(()=>{});
 fetch("embed/"+id+".json").then(r=>r.json()).then(it=>{
+  window.CUR=it;
   document.getElementById("tag").innerHTML='<a href="index.html?cat='+encodeURIComponent(it.category)+'">'+dot(it.category)+'</a>';
   document.getElementById("title").textContent=dot(it.title);
   document.getElementById("meta").textContent=it.source||"";
