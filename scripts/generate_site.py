@@ -182,7 +182,7 @@ main{flex:1;padding:24px 28px;}
 footer{padding:18px 28px;color:#aaa;font-size:12px;border-top:1px solid var(--line);background:#fff;}
 </style></head><body>
 <header><button class="menu-btn" id="menuBtn" aria-label="목차 열기">☰</button><h1>슬로우팩트북<span style="color:var(--blue)">.</span></h1>
-<span class="sub">슬로우뉴스의 데이터 아카이브입니다. 임베드하거나 다운로드 받아서 자유롭게 이용할 수 있습니다.</span></header>
+<span class="sub">슬로우뉴스의 데이터 아카이브입니다.</span></header>
 <div class="scrim" id="scrim"></div>
 <div class="layout"><aside id="sidebar"></aside>
 <main><div class="toolbar"><input id="search" type="text" placeholder="제목·출처로 검색"><span class="count" id="count"></span></div>
