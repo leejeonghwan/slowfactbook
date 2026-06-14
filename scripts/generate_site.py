@@ -217,9 +217,7 @@ function render(){
   items.forEach((it,i)=>{
     const card=document.createElement("div");card.className="card";
     const meta=[it.source,it.slide].filter(Boolean).join(" · ");
-    const horiz=(it.vizType==="bar"||it.vizType==="stacked_bar_h");
-    const boxStyle=horiz?`style="height:${Math.max(240,it.labels.length*26)}px;aspect-ratio:auto;"`:"";
-    card.innerHTML=`<div class="tag" data-cat="${String(it.category).replace(/"/g,'&quot;')}" title="이 카테고리 보기">${dot(it.category)}</div><h2><a href="chart.html?id=${it.id}" title="크게 보기">${dot(it.title)}</a></h2><div class="meta">${meta}</div><div class="legendbar">${legendHTML(it)}</div><div class="chartbox" ${boxStyle}><canvas data-idx="${i}"></canvas></div>`;
+    card.innerHTML=`<div class="tag" data-cat="${String(it.category).replace(/"/g,'&quot;')}" title="이 카테고리 보기">${dot(it.category)}</div><h2><a href="chart.html?id=${it.id}" title="크게 보기">${dot(it.title)}</a></h2><div class="meta">${meta}</div><div class="legendbar">${legendHTML(it)}</div><div class="chartbox"><canvas data-idx="${i}"></canvas></div>`;
     grid.appendChild(card);observer.observe(card);
   });
 }
@@ -414,6 +412,11 @@ fetch("embed/"+id+".json").then(r=>r.json()).then(it=>{
   document.getElementById("title").textContent=dot(it.title);
   document.getElementById("meta").textContent=it.source||"";
   document.getElementById("legend").innerHTML=legendHTML(it);
+  if(it.vizType==="bar"||it.vizType==="stacked_bar_h"){
+    const box=document.querySelector(".chartbox");
+    box.style.aspectRatio="auto";box.style.flex="none";
+    box.style.height=Math.max(360,it.labels.length*30)+"px";
+  }
   buildChart(document.getElementById("cv"),it);
   document.title=it.title+" — 슬로우팩트북";
 }).catch(()=>{document.getElementById("title").textContent="차트를 불러올 수 없습니다.";});
