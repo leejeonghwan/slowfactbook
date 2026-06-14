@@ -29,6 +29,11 @@ URL_RE = re.compile(r"https?://")
 # a bare value / axis label like "1500만 명.", "500만 명.", "2024", "12.3%" — NOT a title
 VALUE_RE = re.compile(r"^[\d][\d,.\s]*\s*(만|억|천|조)?\s*"
                       r"(명|원|개|건|가구|채|세대|시간|년|개월|배|달러|톤|%|p)?\s*\.?$")
+# short chart annotations (region/series labels), often placed above the real
+# title — e.g. "60세 이전.", "60세 이후.", "65세 이상.", "남성.", "여성." — NOT a title
+LABEL_RE = re.compile(r"(이전|이후|이상|미만|초과|이내|이하)\s*\.?$"
+                      r"|^\d+\s*세\s*\.?$"
+                      r"|^(남성|여성|남자|여자|남|여)\s*\.?$")
 
 def pick_title_source(slide):
     """Choose title/source by on-slide position, not shape order.
@@ -42,9 +47,10 @@ def pick_title_source(slide):
             cand.append((top, " ".join(sh.text_frame.text.split())))
     cand.sort(key=lambda x: x[0])
     srcs = [t for _, t in cand if UNIT_RE.search(t)]
-    titles = [t for _, t in cand
-              if not UNIT_RE.search(t) and not URL_RE.search(t) and not VALUE_RE.match(t)]
-    title = titles[0] if titles else (cand[0][1] if cand else "")
+    base = [t for _, t in cand
+            if not UNIT_RE.search(t) and not URL_RE.search(t) and not VALUE_RE.match(t)]
+    strong = [t for t in base if not LABEL_RE.search(t)]   # drop chart annotations
+    title = (strong or base or [c[1] for c in cand] or [""])[0]
     source = srcs[0] if srcs else ""
     return title, source
 
