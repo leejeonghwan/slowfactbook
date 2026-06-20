@@ -28,7 +28,7 @@ CT_MAP = {
 UNIT_RE = re.compile(r"단위|출처|통계청|국가데이터처|데이터처|노동부|고용노동부|보건복지부|"
                      r"기획재정부|행정안전부|한국은행|OECD|World Bank|World|기준|조사|"
                      r"연구원|연구소|재단|협회|학회|위원회|진흥원|개발원|평가원|"
-                     r"은행|보험|증권|일보|신문|방송|IMF|UN|WHO|ILO")
+                     r"은행|보험|증권|일보|신문|방송|IMF|UN|WHO|ILO|갤럽|리얼미터")
 URL_RE = re.compile(r"https?://")
 # a bare value / axis label like "1500만 명.", "500만 명.", "2024", "12.3%" — NOT a title
 VALUE_RE = re.compile(r"^[\d][\d,.\s]*\s*(만|억|천|조)?\s*"
@@ -39,6 +39,19 @@ LABEL_RE = re.compile(r"(이전|이후|이상|미만|초과|이내|이하)\s*\.?
                       r"|^\d+\s*세\s*\.?$"
                       r"|^(남성|여성|남자|여자|남|여)\s*\.?$"
                       r"|^\S{1,6}\s+-?\d[\d,.]*\s*%?\s*\.?$")  # data callout like "한국 4.3"
+STRONG_SRC = re.compile(r"단위|출처")
+CREDIT_HINT = re.compile(r"20\d\d|기준|조사|,")
+
+def is_source(t):
+    """Is this text a source/credit line (not a title)? '단위/출처' is definitive.
+    An org name alone counts only with a credit signal (year/comma/기준/조사) or if
+    short — so a descriptive title that merely mentions OECD/통계청 stays a title."""
+    t = t or ""
+    if STRONG_SRC.search(t):
+        return True
+    if UNIT_RE.search(t) and (CREDIT_HINT.search(t) or len(t) <= 12):
+        return True
+    return False
 
 def title_placeholder(slide):
     """If the slide uses a real Title placeholder, return its text — the most
@@ -67,17 +80,19 @@ def pick_title_source(slide):
     cand.sort(key=lambda x: x[0])
     urls = [t for _, t in cand if URL_RE.search(t)]
     url = urls[0] if urls else ""
-    srcs = [t for _, t in cand if UNIT_RE.search(t)]
+    srcs = [t for _, t in cand if is_source(t)]
     source = srcs[0] if srcs else ""
     ph = title_placeholder(slide)
     if ph:
         return ph, source, url
     base = [t for _, t in cand
-            if not UNIT_RE.search(t) and not URL_RE.search(t) and not VALUE_RE.match(t)]
+            if not is_source(t) and not URL_RE.search(t) and not VALUE_RE.match(t)]
     strong = [t for t in base if not LABEL_RE.search(t)]   # drop chart annotations
+    # prefer a descriptive multi-word phrase over a bare one-word callout like "한국."
+    multiword = [t for t in strong if " " in t.strip()]
     # never fall back to a URL/source as the title — leave it empty so the chart's
     # own title (e.g. doughnut center) can take over.
-    title = (strong or base or [""])[0]
+    title = (multiword or strong or base or [""])[0]
     return title, source, url
 
 def review_title(slide, chosen):
@@ -89,7 +104,7 @@ def review_title(slide, chosen):
     for sh in slide.shapes:
         if sh.has_text_frame and sh.text_frame.text.strip():
             cand.append(" ".join(sh.text_frame.text.split()))
-    base = [t for t in cand if not UNIT_RE.search(t) and not URL_RE.search(t) and not VALUE_RE.match(t)]
+    base = [t for t in cand if not is_source(t) and not URL_RE.search(t) and not VALUE_RE.match(t)]
     strong = [t for t in base if not LABEL_RE.search(t)]
     if not (chosen or "").strip():
         return {"reason": "no_title", "candidates": cand[:6]}
@@ -161,8 +176,19 @@ def is_weak_title(title, source):
     """True when the slide text-box title isn't a real title (missing, equals the
     source line, or is just a unit/value/annotation) — then use the chart title."""
     t = (title or "").strip()
-    return (not t) or t == (source or "").strip() or bool(UNIT_RE.search(t)) \
+    return (not t) or t == (source or "").strip() or is_source(t) \
         or bool(VALUE_RE.match(t)) or bool(LABEL_RE.search(t))
+
+def is_callout(t):
+    """True for a non-descriptive label — empty, a unit/value/annotation, or a bare
+    short single word like '한국.'/'미국.' (a highlighted callout, not a title)."""
+    t = (t or "").strip()
+    if not t:
+        return True
+    if LABEL_RE.search(t) or VALUE_RE.match(t):
+        return True
+    core = t.rstrip(".")
+    return (" " not in core) and len(core) <= 4
 
 def parse_chart_xml(chart):
     """Fast chart extraction via raw XML. Avoids python-pptx's slow
@@ -243,10 +269,10 @@ def extract(inp, outp, start=1, end=None, dedup=True):
                           "sourceUrl": surl, "vizType": None, "layout": layout,
                           "category": current_section, "note": "no native chart"})
             continue
-        weak = is_weak_title(title, source)
+        slide_titled = not is_callout(title)          # slide has a real descriptive title
         any_chart_title = any(chart_title(sh.chart) for sh in charts)
         rv = review_title(slide, title)
-        if rv and not (weak and any_chart_title):   # chart title rescues it
+        if rv and not (not slide_titled and any_chart_title):   # chart title rescues it
             rv["slide"] = f"slide-{si}"
             title_review.append(rv)
         for ci, sh in enumerate(charts):
@@ -258,18 +284,23 @@ def extract(inp, outp, start=1, end=None, dedup=True):
             if (len(set(kinds)) > 1) or (axes and max(axes) > 0):
                 viz = "combo"   # mixed bar+line and/or dual value axis
             cht = chart_title(ch)
-            # RULE: pie/doughnut -> always use the chart's own (center) title first.
-            # Other types -> use the chart title only when the slide title is weak.
-            if cht and (viz == "pie" or weak):
-                full_title = cht
-            else:
-                # multiple charts share the slide title; distinguish by series name
-                # ("...영업이익 — 반도체"), else a numeric suffix.
+            # TITLE RULE:
+            #  1) a real descriptive slide title wins; for multi-chart slides add the
+            #     chart's own title/callout (or series name) as a distinguisher.
+            #  2) no good slide title -> use the chart's internal title (doughnut center).
+            if slide_titled:
                 suffix = ""
                 if len(charts) > 1:
-                    distinct = [n.strip().rstrip(".") for n in names if n and n.strip()]
-                    suffix = " — " + distinct[0] if len(distinct) == 1 else f" ({ci+1})"
+                    if cht:
+                        suffix = " — " + cht.strip().rstrip(".")
+                    else:
+                        distinct = [n.strip().rstrip(".") for n in names if n and n.strip()]
+                        suffix = " — " + distinct[0] if len(distinct) == 1 else f" ({ci+1})"
                 full_title = title + suffix
+            elif cht:
+                full_title = cht
+            else:
+                full_title = title
             item = {
                 "slide": f"slide-{si}",
                 "title": full_title,
