@@ -3,105 +3,105 @@
     {
       "file": "full.pptx",
       "category": "full",
-      "charts": 1698,
+      "charts": 1712,
       "failed_or_image": 23
     }
   ],
-  "total_charts": 1698,
+  "total_charts": 1712,
   "needs_attention": [
     {
       "file": "full.pptx",
       "items": [
         {
-          "slide": 316,
+          "slide": 318,
           "title": "상대적 빈곤율."
         },
         {
-          "slide": 507,
+          "slide": 509,
           "title": "커피 가격."
         },
         {
-          "slide": 561,
-          "title": ""
-        },
-        {
-          "slide": 580,
-          "title": ""
-        },
-        {
-          "slide": 581,
+          "slide": 563,
           "title": ""
         },
         {
           "slide": 582,
+          "title": ""
+        },
+        {
+          "slide": 583,
+          "title": ""
+        },
+        {
+          "slide": 584,
           "title": "2006년 오세훈."
         },
         {
-          "slide": 686,
+          "slide": 688,
           "title": "트럼프 연설 전후 브렌트유 가격."
         },
         {
-          "slide": 687,
+          "slide": 689,
           "title": "트럼프 연설 전후 코스피 지수."
         },
         {
-          "slide": 724,
-          "title": "브라질."
+          "slide": 727,
+          "title": "사우디 아라비아."
         },
         {
-          "slide": 910,
+          "slide": 916,
           "title": ""
         },
         {
-          "slide": 1312,
+          "slide": 1322,
           "title": "신재생 에너지 균등화 발전 비용(LCOE) 가중 평균."
         },
         {
-          "slide": 1335,
+          "slide": 1345,
           "title": "사과 10개가 필요합니다."
         },
         {
-          "slide": 1336,
+          "slide": 1346,
           "title": "같은 맛의 사과라면,"
         },
         {
-          "slide": 1396,
+          "slide": 1407,
           "title": ""
         },
         {
-          "slide": 1648,
+          "slide": 1661,
           "title": "삼성그룹 지배구조."
         },
         {
-          "slide": 1838,
+          "slide": 1851,
           "title": ""
         },
         {
-          "slide": 1864,
-          "title": "검색엔진."
+          "slide": 1877,
+          "title": "뉴스 웹사이트."
         },
         {
-          "slide": 1909,
+          "slide": 1922,
           "title": ""
         },
         {
-          "slide": 1914,
+          "slide": 1927,
           "title": ""
         },
         {
-          "slide": 1993,
+          "slide": 2006,
           "title": ""
         },
         {
-          "slide": 1994,
+          "slide": 2007,
           "title": "We offer a completely new perspective on the world."
         },
         {
-          "slide": 1995,
+          "slide": 2008,
           "title": ""
         },
         {
-          "slide": 1996,
+          "slide": 2009,
           "title": "슬로우뉴스는,"
         }
       ]
@@ -127,7 +127,7 @@
         "2877+83+1616",
         "실업률과 고용률의 차이."
       ],
-      "slide": "slide-61"
+      "slide": "slide-62"
     },
     {
       "reason": "ambiguous",
@@ -137,7 +137,7 @@
         "업무상 질병 사망.",
         "떨어짐 사고 사망."
       ],
-      "slide": "slide-131"
+      "slide": "slide-132"
     },
     {
       "reason": "ambiguous",
@@ -146,12 +146,12 @@
         "남성 미혼자 비율.",
         "여성 미혼자 비율."
       ],
-      "slide": "slide-158"
+      "slide": "slide-159"
     },
     {
       "reason": "no_title",
       "candidates": [],
-      "slide": "slide-169"
+      "slide": "slide-170"
     },
     {
       "reason": "ambiguous",
@@ -160,7 +160,7 @@
         "노년 부양비율.",
         "노년부양비 = 고령인구(65세 이상) ÷ 생산가능인구(15~64세) ×100"
       ],
-      "slide": "slide-176"
+      "slide": "slide-177"
     },
     {
       "reason": "ambiguous",
@@ -170,15 +170,6 @@
         "60.5% (2040년)",
         "100.5% (2066년)",
         "노년 부양비."
-      ],
-      "slide": "slide-178"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "2차 베이비부머.",
-      "candidates": [
-        "2차 베이비부머.",
-        "1차 베이비부머."
       ],
       "slide": "slide-179"
     },
@@ -202,12 +193,21 @@
     },
     {
       "reason": "ambiguous",
+      "chosen": "2차 베이비부머.",
+      "candidates": [
+        "2차 베이비부머.",
+        "1차 베이비부머."
+      ],
+      "slide": "slide-182"
+    },
+    {
+      "reason": "ambiguous",
       "chosen": "출산 전후 취업 확률.",
       "candidates": [
         "노동리뷰 2025년 2월호.",
         "출산 전후 취업 확률."
       ],
-      "slide": "slide-209"
+      "slide": "slide-210"
     },
     {
       "reason": "ambiguous",
@@ -216,15 +216,34 @@
         "연령대별 여성 고용률.",
         "2025년. 2015년. 2000년."
       ],
-      "slide": "slide-228"
+      "slide": "slide-229"
     },
     {
-      "reason": "no_title",
+      "reason": "ambiguous",
+      "chosen": "연령대별 고용률 비교(남성).",
+      "candidates": [
+        "ILO Stat. ｢Gender Equality and Non-Discrimination Indicators (GEND)-Labourforce participation rate by sex and age(%)｣.",
+        "연령대별 고용률 비교(남성)."
+      ],
+      "slide": "slide-230"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "연령대별 고용률 비교(여성).",
+      "candidates": [
+        "ILO Stat. ｢Gender Equality and Non-Discrimination Indicators (GEND)-Labourforce participation rate by sex and age(%)｣.",
+        "연령대별 고용률 비교(여성)."
+      ],
+      "slide": "slide-231"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "OECD와 비교한 연령대별 고용률.",
       "candidates": [
         "ILO Stat. ｢Gender Equality and Non-Discrimination Indicators (GEND)-Labourforce participation rate by sex and age(%)｣.",
         "OECD와 비교한 연령대별 고용률."
       ],
-      "slide": "slide-231"
+      "slide": "slide-232"
     },
     {
       "reason": "ambiguous",
@@ -233,7 +252,7 @@
         "현대자동차 생산과 판매 현황.",
         "기아 생산과 판매 현황."
       ],
-      "slide": "slide-243"
+      "slide": "slide-244"
     },
     {
       "reason": "ambiguous",
@@ -242,11 +261,20 @@
         "현대차+기아 철강 사용량.",
         "현대차 1대당 철강 사용량."
       ],
-      "slide": "slide-244"
+      "slide": "slide-245"
     },
     {
       "reason": "ambiguous",
-      "chosen": "미국.",
+      "chosen": "현대차+기아 철강 사용량.",
+      "candidates": [
+        "현대차+기아 철강 사용량.",
+        "격차."
+      ],
+      "slide": "slide-246"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "한국의 수출 비율.",
       "candidates": [
         "EU.",
         "미국.",
@@ -254,11 +282,11 @@
         "중국.",
         "한국의 수출 비율."
       ],
-      "slide": "slide-247"
+      "slide": "slide-248"
     },
     {
       "reason": "ambiguous",
-      "chosen": "일본.",
+      "chosen": "한국의 수입 비율.",
       "candidates": [
         "한국의 수입 비율.",
         "EU.",
@@ -266,22 +294,22 @@
         "일본.",
         "중국."
       ],
-      "slide": "slide-248"
+      "slide": "slide-249"
     },
     {
       "reason": "ambiguous",
-      "chosen": "도요타.",
+      "chosen": "자동차 3사 시가 총액.",
       "candidates": [
         "자동차 3사 시가 총액.",
         "도요타.",
         "GM.",
         "현대자동차."
       ],
-      "slide": "slide-254"
+      "slide": "slide-255"
     },
     {
       "reason": "ambiguous",
-      "chosen": "도요타.",
+      "chosen": "주요 자동차 기업 시가 총액.",
       "candidates": [
         "주요 자동차 기업 시가 총액.",
         "도요타.",
@@ -290,7 +318,7 @@
         "메르세데스벤츠.",
         "BMW."
       ],
-      "slide": "slide-255"
+      "slide": "slide-256"
     },
     {
       "reason": "ambiguous",
@@ -299,7 +327,7 @@
         "소득 5분위 순자산 비교.",
         "소득 5분위 소득 비교."
       ],
-      "slide": "slide-303"
+      "slide": "slide-305"
     },
     {
       "reason": "no_title",
@@ -311,7 +339,7 @@
         "64.8%.",
         "70.9%."
       ],
-      "slide": "slide-307"
+      "slide": "slide-309"
     },
     {
       "reason": "ambiguous",
@@ -320,7 +348,7 @@
         "시장 지니계수와 가처분 지니계수 차이.",
         "한국. 프랑스."
       ],
-      "slide": "slide-311"
+      "slide": "slide-313"
     },
     {
       "reason": "no_title",
@@ -328,7 +356,7 @@
         "통계청.",
         "노인빈곤율 시장소득 기준."
       ],
-      "slide": "slide-317"
+      "slide": "slide-319"
     },
     {
       "reason": "no_title",
@@ -336,7 +364,7 @@
         "통계청.",
         "노인빈곤율 시장소득 기준."
       ],
-      "slide": "slide-318"
+      "slide": "slide-320"
     },
     {
       "reason": "no_title",
@@ -344,7 +372,7 @@
         "노인 빈곤율 가처분 소득 기준.",
         "통계청."
       ],
-      "slide": "slide-319"
+      "slide": "slide-321"
     },
     {
       "reason": "no_title",
@@ -352,7 +380,7 @@
         "노인 빈곤율 시장 소득 기준.",
         "통계청."
       ],
-      "slide": "slide-320"
+      "slide": "slide-322"
     },
     {
       "reason": "ambiguous",
@@ -361,7 +389,7 @@
         "소득 상위 10분위 실효세율 추이.",
         "국세청."
       ],
-      "slide": "slide-323"
+      "slide": "slide-325"
     },
     {
       "reason": "ambiguous",
@@ -370,7 +398,7 @@
         "근로소득 10분위 소득 분포.",
         "국세청."
       ],
-      "slide": "slide-324"
+      "slide": "slide-326"
     },
     {
       "reason": "ambiguous",
@@ -379,40 +407,22 @@
         "근로소득 10분위 세액 분포.",
         "국세청."
       ],
-      "slide": "slide-325"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "소득 10분위 소득 분포.",
-      "candidates": [
-        "소득 10분위 소득 분포.",
-        "국세청."
-      ],
-      "slide": "slide-326"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "소득 10분위 소득 분포.",
-      "candidates": [
-        "소득 10분위 소득 분포.",
-        "국세청."
-      ],
       "slide": "slide-327"
     },
     {
       "reason": "ambiguous",
-      "chosen": "소득 10분위 세액 분포.",
+      "chosen": "소득 10분위 소득 분포.",
       "candidates": [
-        "소득 10분위 세액 분포.",
+        "소득 10분위 소득 분포.",
         "국세청."
       ],
       "slide": "slide-328"
     },
     {
       "reason": "ambiguous",
-      "chosen": "소득 10분위 세액 분포.",
+      "chosen": "소득 10분위 소득 분포.",
       "candidates": [
-        "소득 10분위 세액 분포.",
+        "소득 10분위 소득 분포.",
         "국세청."
       ],
       "slide": "slide-329"
@@ -428,12 +438,30 @@
     },
     {
       "reason": "ambiguous",
+      "chosen": "소득 10분위 세액 분포.",
+      "candidates": [
+        "소득 10분위 세액 분포.",
+        "국세청."
+      ],
+      "slide": "slide-331"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "소득 10분위 세액 분포.",
+      "candidates": [
+        "소득 10분위 세액 분포.",
+        "국세청."
+      ],
+      "slide": "slide-332"
+    },
+    {
+      "reason": "ambiguous",
       "chosen": "불평등 개선 효과.",
       "candidates": [
         "불평등 개선 효과.",
         "프랑스. 한국."
       ],
-      "slide": "slide-339"
+      "slide": "slide-341"
     },
     {
       "reason": "ambiguous",
@@ -443,15 +471,7 @@
         "한국.",
         "프랑스."
       ],
-      "slide": "slide-340"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "OECD, 단위: 세.",
-        "한국인의 기대수명과 OECD 평균."
-      ],
-      "slide": "slide-344"
+      "slide": "slide-342"
     },
     {
       "reason": "no_title",
@@ -459,28 +479,12 @@
         "건강보험료율.",
         "건강보험공단. 단위: %."
       ],
-      "slide": "slide-346"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "건강보험료 재정 전망.",
-        "국가데이터처. 단위: 조 원."
-      ],
-      "slide": "slide-347"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "건강보험료 재정 전망.",
-        "국민건강보험공단. 단위: 조 원."
-      ],
       "slide": "slide-348"
     },
     {
       "reason": "no_title",
       "candidates": [
-        "건강보험료-건강보험 지출 추이.",
+        "건강보험료 재정 전망.",
         "국가데이터처. 단위: 조 원."
       ],
       "slide": "slide-349"
@@ -488,10 +492,18 @@
     {
       "reason": "no_title",
       "candidates": [
+        "건강보험료 재정 전망.",
+        "국민건강보험공단. 단위: 조 원."
+      ],
+      "slide": "slide-350"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [
         "기준 중위소득.",
         "단위: 만 원."
       ],
-      "slide": "slide-350"
+      "slide": "slide-352"
     },
     {
       "reason": "ambiguous",
@@ -500,7 +512,7 @@
         "스토킹 처벌법 시행 이후 1심 선고 비율.",
         "사법연감."
       ],
-      "slide": "slide-379"
+      "slide": "slide-381"
     },
     {
       "reason": "ambiguous",
@@ -509,11 +521,11 @@
         "주택분 종합부동산세 과세 현황.",
         "국세청. 종합부동산세 결정현황."
       ],
-      "slide": "slide-381"
+      "slide": "slide-383"
     },
     {
       "reason": "ambiguous",
-      "chosen": "소득세.",
+      "chosen": "세수 현황.",
       "candidates": [
         "국세청.",
         "세수 현황.",
@@ -522,7 +534,7 @@
         "부가가치세.",
         "종합부동산세."
       ],
-      "slide": "slide-417"
+      "slide": "slide-419"
     },
     {
       "reason": "ambiguous",
@@ -531,7 +543,7 @@
         "국세청.",
         "법인세 현황."
       ],
-      "slide": "slide-418"
+      "slide": "slide-420"
     },
     {
       "reason": "ambiguous",
@@ -540,7 +552,7 @@
         "국세 징수 현황.",
         "국세청. 종합부동산세 결정현황."
       ],
-      "slide": "slide-421"
+      "slide": "slide-423"
     },
     {
       "reason": "ambiguous",
@@ -549,25 +561,25 @@
         "상속세 징수 현황.",
         "국세청."
       ],
-      "slide": "slide-430"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "상속+증여세 징수 현황.",
-      "candidates": [
-        "상속+증여세 징수 현황.",
-        "국세청."
-      ],
-      "slide": "slide-431"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "상속+증여세 징수 현황.",
-      "candidates": [
-        "상속+증여세 징수 현황.",
-        "국세청."
-      ],
       "slide": "slide-432"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "상속+증여세 징수 현황.",
+      "candidates": [
+        "상속+증여세 징수 현황.",
+        "국세청."
+      ],
+      "slide": "slide-433"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "상속+증여세 징수 현황.",
+      "candidates": [
+        "상속+증여세 징수 현황.",
+        "국세청."
+      ],
+      "slide": "slide-434"
     },
     {
       "reason": "ambiguous",
@@ -576,11 +588,11 @@
         "국세 징수 현황.",
         "국세청. 종합부동산세 결정현황."
       ],
-      "slide": "slide-433"
+      "slide": "slide-435"
     },
     {
       "reason": "ambiguous",
-      "chosen": "이명박.",
+      "chosen": "1주택자 종부세 세율.",
       "candidates": [
         "이명박.",
         "박근혜.",
@@ -589,24 +601,16 @@
         "노무현.",
         "1주택자 종부세 세율."
       ],
-      "slide": "slide-434"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "OECD 평균과 비교한 GDP 대비 부동산 세금 비중.",
-        "2018년 기준 OECD, 단위: %."
-      ],
-      "slide": "slide-440"
+      "slide": "slide-436"
     },
     {
       "reason": "no_title",
       "candidates": [],
-      "slide": "slide-444"
+      "slide": "slide-446"
     },
     {
       "reason": "ambiguous",
-      "chosen": "소득세.",
+      "chosen": "세수 현황.",
       "candidates": [
         "국세청.",
         "세수 현황.",
@@ -615,12 +619,12 @@
         "부가가치세.",
         "종합부동산세."
       ],
-      "slide": "slide-445"
+      "slide": "slide-447"
     },
     {
       "reason": "no_title",
       "candidates": [],
-      "slide": "slide-446"
+      "slide": "slide-448"
     },
     {
       "reason": "ambiguous",
@@ -630,7 +634,7 @@
         "지방세.",
         "국세."
       ],
-      "slide": "slide-463"
+      "slide": "slide-465"
     },
     {
       "reason": "ambiguous",
@@ -639,7 +643,7 @@
         "EU.",
         "법인세 실효 세율."
       ],
-      "slide": "slide-467"
+      "slide": "slide-469"
     },
     {
       "reason": "ambiguous",
@@ -648,7 +652,7 @@
         "국토교통부.",
         "부동산 공시가격 현실화율."
       ],
-      "slide": "slide-470"
+      "slide": "slide-472"
     },
     {
       "reason": "ambiguous",
@@ -657,7 +661,7 @@
         "국토교통부.",
         "공시지가 총액."
       ],
-      "slide": "slide-471"
+      "slide": "slide-473"
     },
     {
       "reason": "ambiguous",
@@ -666,7 +670,7 @@
         "국제 밀 가격.",
         "딘위: 달러/부셀."
       ],
-      "slide": "slide-480"
+      "slide": "slide-482"
     },
     {
       "reason": "ambiguous",
@@ -676,7 +680,7 @@
         "이코노미스트.",
         "한국."
       ],
-      "slide": "slide-481"
+      "slide": "slide-483"
     },
     {
       "reason": "ambiguous",
@@ -685,7 +689,7 @@
         "국제 쌀 가격.",
         "딘위: 달러/부셀."
       ],
-      "slide": "slide-487"
+      "slide": "slide-489"
     },
     {
       "reason": "ambiguous",
@@ -694,7 +698,7 @@
         "국제 쌀과 밀 가격.",
         "딘위: 달러/부셀."
       ],
-      "slide": "slide-488"
+      "slide": "slide-490"
     },
     {
       "reason": "no_title",
@@ -702,7 +706,7 @@
         "한국과 일본의 쌀 단위 면적당 생산량.",
         "농촌경제연구원, 단위: kg/ha."
       ],
-      "slide": "slide-492"
+      "slide": "slide-494"
     },
     {
       "reason": "ambiguous",
@@ -711,7 +715,7 @@
         "커피 가격.",
         "USD / 파운드."
       ],
-      "slide": "slide-504"
+      "slide": "slide-506"
     },
     {
       "reason": "ambiguous",
@@ -721,52 +725,34 @@
         "Source: USDA/FAS/Export Sales Reporting.",
         "2024년 대비 20% 수준."
       ],
-      "slide": "slide-513"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "친윤.",
-      "candidates": [
-        "친윤.",
-        "친한."
-      ],
-      "slide": "slide-519"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "비명.",
-      "candidates": [
-        "비명.",
-        "친명."
-      ],
-      "slide": "slide-520"
+      "slide": "slide-515"
     },
     {
       "reason": "ambiguous",
       "chosen": "박근혜 탄핵.",
       "candidates": [
         "정당 지지율.",
-        "갤럽리포트.",
         "박근혜 탄핵.",
         "윤석열 탄핵.",
         "조국 사태.",
-        "윤석열 당선."
+        "윤석열 당선.",
+        "코로나."
       ],
-      "slide": "slide-525"
+      "slide": "slide-527"
     },
     {
       "reason": "no_title",
       "candidates": [
         "방송 3사 출구조사."
       ],
-      "slide": "slide-534"
+      "slide": "slide-536"
     },
     {
       "reason": "no_title",
       "candidates": [
         "방송 3사 출구조사."
       ],
-      "slide": "slide-535"
+      "slide": "slide-537"
     },
     {
       "reason": "no_title",
@@ -774,11 +760,11 @@
         "NBS 전국 지표조사, 3월 둘째 주.",
         "전국 1000명 대상, 휴대전화 전화 면접 조사, 95% 신뢰 수준에 ±3.1%포인트.)"
       ],
-      "slide": "slide-536"
+      "slide": "slide-538"
     },
     {
       "reason": "ambiguous",
-      "chosen": "전은수.",
+      "chosen": "여론M 재선거과 보궐 선거 예측.",
       "candidates": [
         "여론M 재선거과 보궐 선거 예측.",
         "한동훈.",
@@ -787,11 +773,11 @@
         "김용남.",
         "송영길."
       ],
-      "slide": "slide-544"
+      "slide": "slide-546"
     },
     {
       "reason": "ambiguous",
-      "chosen": "전은수.",
+      "chosen": "여론M 재선거와 보궐 선거 예측.",
       "candidates": [
         "한동훈.",
         "조국.",
@@ -800,7 +786,7 @@
         "송영길.",
         "이광재."
       ],
-      "slide": "slide-545"
+      "slide": "slide-547"
     },
     {
       "reason": "ambiguous",
@@ -812,16 +798,7 @@
         "하정우.",
         "김용남."
       ],
-      "slide": "slide-546"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "중도 성향 응답자의 비율.",
-      "candidates": [
-        "중도 성향 응답자의 비율.",
-        "갤럽리포트."
-      ],
-      "slide": "slide-556"
+      "slide": "slide-548"
     },
     {
       "reason": "ambiguous",
@@ -834,34 +811,7 @@
         "윤석열 당선.",
         "코로나."
       ],
-      "slide": "slide-557"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "주관적 정치적 성향 분포.",
-      "candidates": [
-        "주관적 정치적 성향 분포.",
-        "갤럽리포트, 연간 평균."
-      ],
-      "slide": "slide-558"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "이대남과 이대녀의 민주당 지지율.",
-      "candidates": [
-        "이대남과 이대녀의 민주당 지지율.",
-        "갤럽리포트, 월간 평균."
-      ],
       "slide": "slide-559"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "이대남과 이대녀의 국민의힘 지지율.",
-      "candidates": [
-        "이대남과 이대녀의 국민의힘 지지율.",
-        "갤럽리포트, 월간 평균."
-      ],
-      "slide": "slide-560"
     },
     {
       "reason": "no_title",
@@ -869,7 +819,7 @@
         "대구시장 선거 출구 조사.",
         "방송 3사, 단위: %."
       ],
-      "slide": "slide-562"
+      "slide": "slide-564"
     },
     {
       "reason": "no_title",
@@ -877,31 +827,13 @@
         "서울시장 선거 출구 조사.",
         "방송 3사, 단위: %."
       ],
-      "slide": "slide-563"
+      "slide": "slide-565"
     },
     {
       "reason": "no_title",
       "candidates": [
         "서울시장 선거 출구 조사(수정).",
         "방송 3사, 단위: %."
-      ],
-      "slide": "slide-564"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "이대남의 정당 지지율.",
-      "candidates": [
-        "이대남의 정당 지지율.",
-        "갤럽리포트, 월간 평균."
-      ],
-      "slide": "slide-565"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "이대녀의 정당 지지율.",
-      "candidates": [
-        "이대녀의 정당 지지율.",
-        "갤럽리포트, 월간 평균."
       ],
       "slide": "slide-566"
     },
@@ -910,65 +842,10 @@
       "chosen": "이대남과 이대녀의 정당 지지율.",
       "candidates": [
         "이대남과 이대녀의 정당 지지율.",
-        "갤럽리포트, 월간 평균.",
         "18~29세 남성.",
         "18~29세 여성."
       ],
-      "slide": "slide-567"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "이대남의 정당 지지율.",
-      "candidates": [
-        "이대남의 정당 지지율.",
-        "갤럽리포트, 월간 평균."
-      ],
-      "slide": "slide-568"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "성별-연령대별 대통령 지지율.",
-      "candidates": [
-        "성별-연령대별 대통령 지지율.",
-        "갤럽리포트, 월간 평균."
-      ],
       "slide": "slide-569"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "성별-연령대별 대통령 지지율.",
-      "candidates": [
-        "성별-연령대별 대통령 지지율.",
-        "갤럽리포트, 월간 평균."
-      ],
-      "slide": "slide-570"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "성별-연령대별 대통령 지지율.",
-      "candidates": [
-        "성별-연령대별 대통령 지지율.",
-        "갤럽리포트, 월간 평균."
-      ],
-      "slide": "slide-571"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "성별-연령대별 민주당 지지율.",
-      "candidates": [
-        "갤럽리포트, 월간 평균.",
-        "성별-연령대별 민주당 지지율."
-      ],
-      "slide": "slide-572"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "성별-연령대별 국민의힘 지지율.",
-      "candidates": [
-        "갤럽리포트, 월간 평균.",
-        "성별-연령대별 국민의힘 지지율."
-      ],
-      "slide": "slide-573"
     },
     {
       "reason": "ambiguous",
@@ -977,7 +854,7 @@
         "이재명 직무수행 평가.",
         "김동연 직무수행 평가."
       ],
-      "slide": "slide-574"
+      "slide": "slide-576"
     },
     {
       "reason": "ambiguous",
@@ -987,7 +864,7 @@
         "김동연 직무수행 평가.",
         "빨간색은 오세훈."
       ],
-      "slide": "slide-575"
+      "slide": "slide-577"
     },
     {
       "reason": "ambiguous",
@@ -997,7 +874,7 @@
         "김동연 직무수행 평가.",
         "노란색이 평균."
       ],
-      "slide": "slide-576"
+      "slide": "slide-578"
     },
     {
       "reason": "ambiguous",
@@ -1006,7 +883,7 @@
         "2016년 12월 9일, 탄핵안 가결. 3년10개월 차.",
         "2년 7개월차."
       ],
-      "slide": "slide-578"
+      "slide": "slide-580"
     },
     {
       "reason": "ambiguous",
@@ -1019,7 +896,7 @@
         "잼버리.",
         "채 상병 사건."
       ],
-      "slide": "slide-579"
+      "slide": "slide-581"
     },
     {
       "reason": "ambiguous",
@@ -1028,7 +905,7 @@
         "역대 대통령 취임 첫 분기 지지율.",
         "역대 대통령 직무 수행 평가 긍정률. / 갤럽. 분기별 평균이고 이재명은 첫 주."
       ],
-      "slide": "slide-585"
+      "slide": "slide-587"
     },
     {
       "reason": "ambiguous",
@@ -1037,7 +914,7 @@
         "역대 대통령 취임 첫 분기와 마지막 분기 지지율.",
         "역대 대통령 직무 수행 평가 긍정률. / 갤럽. 분기별 평균이고 이재명은 첫 주."
       ],
-      "slide": "slide-587"
+      "slide": "slide-589"
     },
     {
       "reason": "ambiguous",
@@ -1045,24 +922,6 @@
       "candidates": [
         "역대 대통령 취임 첫 직무수행 긍정율.",
         "역대 대통령 직무 수행 평가 긍정률. / 갤럽. 분기별 평균이고 이재명은 첫 주."
-      ],
-      "slide": "slide-588"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "역대 대통령 평가.",
-      "candidates": [
-        "역대 대통령 평가.",
-        "한국갤럽, 11월28일. 표본오차: ±3.1%포인트(95% 신뢰수준),"
-      ],
-      "slide": "slide-589"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "역대 대통령 평가.",
-      "candidates": [
-        "역대 대통령 평가.",
-        "한국갤럽, 2025년 11월28일. 표본오차: ±3.1%포인트(95% 신뢰수준),"
       ],
       "slide": "slide-590"
     },
@@ -1073,7 +932,7 @@
         "정청래 잘하고 있습니까.",
         "장동혁 잘하고 있습니까."
       ],
-      "slide": "slide-597"
+      "slide": "slide-599"
     },
     {
       "reason": "ambiguous",
@@ -1082,7 +941,7 @@
         "정청래 잘하고 있습니까.",
         "장동혁 잘하고 있습니까."
       ],
-      "slide": "slide-598"
+      "slide": "slide-600"
     },
     {
       "reason": "ambiguous",
@@ -1091,49 +950,71 @@
         "가치 지향에 따른 6개 유권자 그룹.",
         "이원재."
       ],
-      "slide": "slide-606"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "이재명.",
-      "candidates": [
-        "정치 지도자 선호도.",
-        "갤럽리포트.",
-        "이재명.",
-        "한동훈.",
-        "김문수.",
-        "조국."
-      ],
-      "slide": "slide-607"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "지방선거에서 많이 당선돼야 하는 후보는?",
-      "candidates": [
-        "지방선거에서 많이 당선돼야 하는 후보는?",
-        "한국갤럽,"
-      ],
       "slide": "slide-608"
     },
     {
       "reason": "ambiguous",
-      "chosen": "이재명.",
+      "chosen": "정치 지도자 선호도.",
       "candidates": [
         "정치 지도자 선호도.",
-        "갤럽리포트.",
         "이재명.",
         "한동훈.",
         "김문수.",
-        "조국."
+        "조국.",
+        "이준석."
       ],
       "slide": "slide-609"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "정치 지도자 선호도.",
+      "candidates": [
+        "정치 지도자 선호도.",
+        "이재명.",
+        "한동훈.",
+        "김문수.",
+        "조국.",
+        "이준석."
+      ],
+      "slide": "slide-611"
     },
     {
       "reason": "no_title",
       "candidates": [
         "한국갤럽 응답률. 국제 기준(AAPOR)"
       ],
-      "slide": "slide-610"
+      "slide": "slide-612"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [
+        "2023",
+        "2024",
+        "2022",
+        "리얼미터 정당 지지도.",
+        "2025",
+        "2026"
+      ],
+      "slide": "slide-614"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [
+        "2023",
+        "2024",
+        "2022",
+        "리얼미터 정당 지지도.",
+        "2025",
+        "2026"
+      ],
+      "slide": "slide-615"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [
+        "리얼미터 정당 지지도."
+      ],
+      "slide": "slide-616"
     },
     {
       "reason": "ambiguous",
@@ -1143,14 +1024,14 @@
         "정치적 성향.",
         "득표율."
       ],
-      "slide": "slide-617"
+      "slide": "slide-619"
     },
     {
       "reason": "no_title",
       "candidates": [
         "21대 대선 방송 3사 출구 조사."
       ],
-      "slide": "slide-620"
+      "slide": "slide-622"
     },
     {
       "reason": "ambiguous",
@@ -1159,7 +1040,7 @@
         "연령대별 투표율.",
         "중앙선거관리위원히."
       ],
-      "slide": "slide-622"
+      "slide": "slide-624"
     },
     {
       "reason": "no_title",
@@ -1167,7 +1048,7 @@
         "21대 대선 방송 3사 출구 조사.",
         "방송 3사 출구조사, MBC 추정 투표율에 선거인수를 곱한 결과."
       ],
-      "slide": "slide-628"
+      "slide": "slide-630"
     },
     {
       "reason": "ambiguous",
@@ -1178,7 +1059,7 @@
         "2012년. 문재인.",
         "2022년. 이재명."
       ],
-      "slide": "slide-629"
+      "slide": "slide-631"
     },
     {
       "reason": "no_title",
@@ -1186,17 +1067,17 @@
         "21대 대선 출구조사 성별 연령별 득표율.",
         "21대 대선 방송 3사 출구 조사 결과, 단위: %."
       ],
-      "slide": "slide-631"
+      "slide": "slide-633"
     },
     {
       "reason": "ambiguous",
-      "chosen": "김영삼.",
+      "chosen": "역대 대통령 선거 득표율.",
       "candidates": [
         "역대 대통령 선거 득표율.",
         "김영삼.",
         "안철수."
       ],
-      "slide": "slide-632"
+      "slide": "slide-634"
     },
     {
       "reason": "ambiguous",
@@ -1205,7 +1086,7 @@
         "의원 1인당 간담회 개최 건수.",
         "참석자 1인당 간담회 비용."
       ],
-      "slide": "slide-633"
+      "slide": "slide-635"
     },
     {
       "reason": "ambiguous",
@@ -1214,16 +1095,16 @@
         "의원 1인당 정책 개발과 토론회 비용.",
         "의원 1인당 문자 메시지 발송 비용."
       ],
-      "slide": "slide-634"
+      "slide": "slide-636"
     },
     {
       "reason": "ambiguous",
-      "chosen": "김영삼.",
+      "chosen": "역대 대통령 선거 득표율.",
       "candidates": [
         "역대 대통령 선거 득표율.",
         "김영삼."
       ],
-      "slide": "slide-640"
+      "slide": "slide-642"
     },
     {
       "reason": "ambiguous",
@@ -1232,7 +1113,7 @@
         "박근혜 탄핵 표결 결과(이탈표 최소 56명).",
         "윤석열 탄핵 표결 결과(이탈표 최소 12명)."
       ],
-      "slide": "slide-644"
+      "slide": "slide-646"
     },
     {
       "reason": "ambiguous",
@@ -1245,7 +1126,7 @@
         "김기영(민주당 추천.)",
         "안창호(자유한국당 추천)."
       ],
-      "slide": "slide-645"
+      "slide": "slide-647"
     },
     {
       "reason": "ambiguous",
@@ -1254,7 +1135,7 @@
         "당원 수.",
         "당비 내는 당원 수."
       ],
-      "slide": "slide-646"
+      "slide": "slide-648"
     },
     {
       "reason": "no_title",
@@ -1262,7 +1143,7 @@
         "성동구 구정 만족도 조사.",
         "단위: %. 성동구."
       ],
-      "slide": "slide-655"
+      "slide": "slide-657"
     },
     {
       "reason": "no_title",
@@ -1270,7 +1151,7 @@
         "성동구 구정 만족도 조사.",
         "단위: %. 성동구."
       ],
-      "slide": "slide-656"
+      "slide": "slide-658"
     },
     {
       "reason": "ambiguous",
@@ -1280,7 +1161,7 @@
         "최상목 9건.",
         "한덕수 8건."
       ],
-      "slide": "slide-661"
+      "slide": "slide-663"
     },
     {
       "reason": "ambiguous",
@@ -1289,7 +1170,28 @@
         "기자회견 건수.",
         "김대중과 노무현은 150건 이상으로 추산."
       ],
-      "slide": "slide-662"
+      "slide": "slide-664"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [
+        "정당 지지율, 2026년 3월 월간 합계. 한국갤럽."
+      ],
+      "slide": "slide-665"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [
+        "민주당 지지율, 2026년 3월 월간 합계. 한국갤럽."
+      ],
+      "slide": "slide-666"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [
+        "대통령 지지율, 2026년 3월 월간 합계. 한국갤럽."
+      ],
+      "slide": "slide-667"
     },
     {
       "reason": "ambiguous",
@@ -1298,7 +1200,7 @@
         "베네수엘라 1인당 GDP와 국제 유가.",
         "GDP 국제유가"
       ],
-      "slide": "slide-669"
+      "slide": "slide-671"
     },
     {
       "reason": "ambiguous",
@@ -1307,7 +1209,7 @@
         "이란 레알-달러화 환율.",
         "IRR-USD."
       ],
-      "slide": "slide-671"
+      "slide": "slide-673"
     },
     {
       "reason": "ambiguous",
@@ -1316,25 +1218,25 @@
         "코스피 지수.",
         "KRX."
       ],
-      "slide": "slide-672"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "코스피 지수와 S&P 500 지수.",
-      "candidates": [
-        "코스피 지수와 S&P 500 지수.",
-        "KRX."
-      ],
-      "slide": "slide-673"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "코스피 지수와 S&P 500 지수.",
-      "candidates": [
-        "코스피 지수와 S&P 500 지수.",
-        "KRX."
-      ],
       "slide": "slide-674"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "코스피 지수와 S&P 500 지수.",
+      "candidates": [
+        "코스피 지수와 S&P 500 지수.",
+        "KRX."
+      ],
+      "slide": "slide-675"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "코스피 지수와 S&P 500 지수.",
+      "candidates": [
+        "코스피 지수와 S&P 500 지수.",
+        "KRX."
+      ],
+      "slide": "slide-676"
     },
     {
       "reason": "ambiguous",
@@ -1342,24 +1244,6 @@
       "candidates": [
         "S&P 500 지수.",
         "인베스팅닷컴."
-      ],
-      "slide": "slide-675"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "미국 국채 보유량.",
-      "candidates": [
-        "미국 국채 보유량.",
-        "IRR-USD."
-      ],
-      "slide": "slide-676"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "미국 국채 보유량.",
-      "candidates": [
-        "미국 국채 보유량.",
-        "IRR-USD."
       ],
       "slide": "slide-677"
     },
@@ -1374,13 +1258,31 @@
     },
     {
       "reason": "ambiguous",
+      "chosen": "미국 국채 보유량.",
+      "candidates": [
+        "미국 국채 보유량.",
+        "IRR-USD."
+      ],
+      "slide": "slide-679"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "미국 국채 보유량.",
+      "candidates": [
+        "미국 국채 보유량.",
+        "IRR-USD."
+      ],
+      "slide": "slide-680"
+    },
+    {
+      "reason": "ambiguous",
       "chosen": "호르무즈 해협을 통과한 선박 수.",
       "candidates": [
         "호르무즈 해협을 통과한 선박 수.",
         "전쟁 발발.",
         "휴전."
       ],
-      "slide": "slide-684"
+      "slide": "slide-686"
     },
     {
       "reason": "ambiguous",
@@ -1389,7 +1291,7 @@
         "달러 인덱스와 세 차례 달러 약세 국면.",
         "인베스팅닷컴."
       ],
-      "slide": "slide-694"
+      "slide": "slide-696"
     },
     {
       "reason": "ambiguous",
@@ -1398,7 +1300,7 @@
         "미국과 한국 성장률 비교.",
         "2025년과 2026년은 전망."
       ],
-      "slide": "slide-698"
+      "slide": "slide-700"
     },
     {
       "reason": "ambiguous",
@@ -1407,7 +1309,7 @@
         "중국 경제 성장률.",
         "2025년과 2026년은 전망."
       ],
-      "slide": "slide-699"
+      "slide": "slide-701"
     },
     {
       "reason": "ambiguous",
@@ -1416,7 +1318,7 @@
         "중국 경제 성장률.",
         "2026년은 전망."
       ],
-      "slide": "slide-700"
+      "slide": "slide-702"
     },
     {
       "reason": "no_title",
@@ -1424,7 +1326,7 @@
         "갤럽 국가 호감도 조사.",
         "단위: %."
       ],
-      "slide": "slide-704"
+      "slide": "slide-706"
     },
     {
       "reason": "ambiguous",
@@ -1434,25 +1336,26 @@
         "일본.",
         "한국."
       ],
-      "slide": "slide-717"
+      "slide": "slide-720"
     },
     {
       "reason": "no_title",
       "candidates": [
         "미국 기준금리."
       ],
-      "slide": "slide-718"
+      "slide": "slide-721"
     },
     {
       "reason": "ambiguous",
-      "chosen": "국민연금.",
+      "chosen": "노르웨이 국부펀드.",
       "candidates": [
         "KIC.",
         "국민연금.",
         "사우디국부펀드.",
-        "UAE 국부펀드."
+        "UAE 국부펀드.",
+        "노르웨이 국부펀드."
       ],
-      "slide": "slide-726"
+      "slide": "slide-729"
     },
     {
       "reason": "ambiguous",
@@ -1461,7 +1364,7 @@
         "전함 보유 대수.",
         "딘위: 척수. TvR(True Value Rating) 순."
       ],
-      "slide": "slide-732"
+      "slide": "slide-735"
     },
     {
       "reason": "ambiguous",
@@ -1470,7 +1373,7 @@
         "Fred.",
         "Sham’s Rule Indicator."
       ],
-      "slide": "slide-734"
+      "slide": "slide-737"
     },
     {
       "reason": "ambiguous",
@@ -1479,7 +1382,16 @@
         "포트폴리오 비교.",
         "뱅가드, 뉴욕타임스 인용, 1926~2023년 분석."
       ],
-      "slide": "slide-735"
+      "slide": "slide-738"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "수도권 순유입 인구.",
+      "candidates": [
+        "수도권 순유입 인구.",
+        "국가데이터처 인구이동통계."
+      ],
+      "slide": "slide-748"
     },
     {
       "reason": "ambiguous",
@@ -1489,7 +1401,7 @@
         "2023년 부산.",
         "2052년 부산."
       ],
-      "slide": "slide-761"
+      "slide": "slide-764"
     },
     {
       "reason": "ambiguous",
@@ -1499,16 +1411,16 @@
         "2023년 대구.",
         "2052년 대구."
       ],
-      "slide": "slide-762"
+      "slide": "slide-765"
     },
     {
       "reason": "ambiguous",
-      "chosen": "15~64세.",
+      "chosen": "연령대별 구성 비율.",
       "candidates": [
         "15~64세.",
         "연령대별 구성 비율."
       ],
-      "slide": "slide-763"
+      "slide": "slide-766"
     },
     {
       "reason": "ambiguous",
@@ -1519,17 +1431,17 @@
         "대구.",
         "서울."
       ],
-      "slide": "slide-766"
+      "slide": "slide-769"
     },
     {
       "reason": "ambiguous",
-      "chosen": "거제시.",
+      "chosen": "전국 평균.",
       "candidates": [
         "남녀 성비.",
         "거제시.",
         "전국 평균."
       ],
-      "slide": "slide-769"
+      "slide": "slide-772"
     },
     {
       "reason": "ambiguous",
@@ -1540,7 +1452,7 @@
         "평균.",
         "경북."
       ],
-      "slide": "slide-775"
+      "slide": "slide-778"
     },
     {
       "reason": "ambiguous",
@@ -1550,7 +1462,7 @@
         "0.5~1.0.",
         "1.0~1.5."
       ],
-      "slide": "slide-776"
+      "slide": "slide-779"
     },
     {
       "reason": "ambiguous",
@@ -1560,7 +1472,7 @@
         "송파구.",
         "강남구."
       ],
-      "slide": "slide-799"
+      "slide": "slide-802"
     },
     {
       "reason": "ambiguous",
@@ -1569,7 +1481,7 @@
         "부산지역 연도별 순유출 인구.",
         "연 평균 3.04만 명."
       ],
-      "slide": "slide-816"
+      "slide": "slide-819"
     },
     {
       "reason": "ambiguous",
@@ -1579,7 +1491,7 @@
         "서울.",
         "경기."
       ],
-      "slide": "slide-836"
+      "slide": "slide-839"
     },
     {
       "reason": "ambiguous",
@@ -1589,11 +1501,11 @@
         "햇빛연금 도입.",
         "농촌기본소득 도입 발표."
       ],
-      "slide": "slide-837"
+      "slide": "slide-840"
     },
     {
       "reason": "ambiguous",
-      "chosen": "코스피(4265)+코스닥(608)+코넥스(3).",
+      "chosen": "2026년 2월5일.",
       "candidates": [
         "코스피(4265)+코스닥(608)+코넥스(3).",
         "회사채(276)+IPO(5)+유상증자(10).",
@@ -1602,15 +1514,7 @@
         "2025년 11월.",
         "2024년 말."
       ],
-      "slide": "slide-865"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "은행 총자산과 당기순이익.",
-        "금융감독원 금융통계정보시스템. 단위: 조 원."
-      ],
-      "slide": "slide-866"
+      "slide": "slide-871"
     },
     {
       "reason": "ambiguous",
@@ -1619,7 +1523,7 @@
         "가상 자산 거래소 점유율.",
         "코인게코, 2025년 평균."
       ],
-      "slide": "slide-870"
+      "slide": "slide-876"
     },
     {
       "reason": "ambiguous",
@@ -1628,7 +1532,7 @@
         "한국 가상자산 거래소 점유율.",
         "코인게코, 2025년 평균."
       ],
-      "slide": "slide-873"
+      "slide": "slide-879"
     },
     {
       "reason": "no_title",
@@ -1636,7 +1540,7 @@
         "지방 정부 금고, 지역은행과 농협은행 분포.",
         "행정안전부, 12개월 장기 금리 기준, 단위: 개."
       ],
-      "slide": "slide-877"
+      "slide": "slide-883"
     },
     {
       "reason": "no_title",
@@ -1644,7 +1548,7 @@
         "4대 은행 이자이익.",
         "금융감독원 금융통계시스템, 단위: 억 원."
       ],
-      "slide": "slide-879"
+      "slide": "slide-885"
     },
     {
       "reason": "no_title",
@@ -1652,7 +1556,7 @@
         "은행 점포 수.",
         "금융감독원 금융통계시스템, 단위: 개."
       ],
-      "slide": "slide-880"
+      "slide": "slide-886"
     },
     {
       "reason": "ambiguous",
@@ -1660,54 +1564,6 @@
       "candidates": [
         "GDP 대비 가계부채 비율.",
         "2025년 말 88.6%. 2030년 목표 80%."
-      ],
-      "slide": "slide-882"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "4대 은행 이자순수익.",
-        "금융감독원 금융통계시스템, 단위: 조 원."
-      ],
-      "slide": "slide-883"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "4대 은행 순이자이익.",
-        "금융감독원 금융통계시스템, 단위: 억 원."
-      ],
-      "slide": "slide-884"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "4대 은행 이자순수익.",
-        "금융감독원 금융통계시스템, 단위: 억 원."
-      ],
-      "slide": "slide-885"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "4대 은행 이자수익과 이자비용.",
-        "금융감독원 금융통계시스템, 단위: 조 원."
-      ],
-      "slide": "slide-886"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "4대 은행 이자수익과 이자비용.",
-        "금융감독원 금융통계시스템, 단위: 조 원."
-      ],
-      "slide": "slide-887"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "시중은행 이자수익과 이자비용.",
-        "금융감독원 금융통계시스템, 단위: 조 원."
       ],
       "slide": "slide-888"
     },
@@ -1720,13 +1576,37 @@
       "slide": "slide-889"
     },
     {
+      "reason": "no_title",
+      "candidates": [
+        "4대 은행 순이자이익.",
+        "금융감독원 금융통계시스템, 단위: 억 원."
+      ],
+      "slide": "slide-890"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [
+        "4대 은행 이자순수익.",
+        "금융감독원 금융통계시스템, 단위: 억 원."
+      ],
+      "slide": "slide-891"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [
+        "4대 은행 이자순수익.",
+        "금융감독원 금융통계시스템, 단위: 조 원."
+      ],
+      "slide": "slide-895"
+    },
+    {
       "reason": "ambiguous",
       "chosen": "종합주가지수.",
       "candidates": [
         "종합주가지수.",
         "한국거래소."
       ],
-      "slide": "slide-916"
+      "slide": "slide-923"
     },
     {
       "reason": "ambiguous",
@@ -1735,7 +1615,7 @@
         "코스피 지수.",
         "한국거래소."
       ],
-      "slide": "slide-917"
+      "slide": "slide-924"
     },
     {
       "reason": "ambiguous",
@@ -1744,11 +1624,11 @@
         "코스피 지수.",
         "한국거래소."
       ],
-      "slide": "slide-918"
+      "slide": "slide-925"
     },
     {
       "reason": "ambiguous",
-      "chosen": "이재명.",
+      "chosen": "코스피 지수.",
       "candidates": [
         "코스피 지수.",
         "한국거래소.",
@@ -1757,7 +1637,7 @@
         "문재인.",
         "박근혜."
       ],
-      "slide": "slide-919"
+      "slide": "slide-926"
     },
     {
       "reason": "ambiguous",
@@ -1766,7 +1646,7 @@
         "코스피 지수와 S&P 500 지수.",
         "KRX."
       ],
-      "slide": "slide-920"
+      "slide": "slide-927"
     },
     {
       "reason": "ambiguous",
@@ -1775,7 +1655,7 @@
         "코스닥 지수.",
         "한국거래소."
       ],
-      "slide": "slide-921"
+      "slide": "slide-928"
     },
     {
       "reason": "ambiguous",
@@ -1787,7 +1667,7 @@
         "이재명 정부 출범.",
         "윤석열 파면."
       ],
-      "slide": "slide-922"
+      "slide": "slide-929"
     },
     {
       "reason": "ambiguous",
@@ -1796,7 +1676,7 @@
         "이재명 정부 출범 이후 코스피 지수.",
         "한국거래소."
       ],
-      "slide": "slide-923"
+      "slide": "slide-930"
     },
     {
       "reason": "ambiguous",
@@ -1805,7 +1685,7 @@
         "KB부동산허브. 2022.1.10 = 100.0 굵은 선이 강남구.",
         "주간 아파트 매매가격지수."
       ],
-      "slide": "slide-944"
+      "slide": "slide-951"
     },
     {
       "reason": "ambiguous",
@@ -1814,7 +1694,7 @@
         "한국부동산원.",
         "주간 아파트 매매가격지수."
       ],
-      "slide": "slide-945"
+      "slide": "slide-952"
     },
     {
       "reason": "ambiguous",
@@ -1823,7 +1703,7 @@
         "한국부동산원.",
         "주간 아파트 매매가격지수."
       ],
-      "slide": "slide-946"
+      "slide": "slide-953"
     },
     {
       "reason": "ambiguous",
@@ -1832,7 +1712,7 @@
         "주택 가격 전망 지수.",
         "6.27 대책."
       ],
-      "slide": "slide-948"
+      "slide": "slide-955"
     },
     {
       "reason": "ambiguous",
@@ -1841,7 +1721,7 @@
         "KB부동산허브. 2022.1.10 = 100.0 굵은 선이 강남구.",
         "주간 아파트 매매가격지수."
       ],
-      "slide": "slide-949"
+      "slide": "slide-956"
     },
     {
       "reason": "ambiguous",
@@ -1850,7 +1730,7 @@
         "KB부동산허브. 2022.1.10 = 100.0 굵은 선이 강남구.",
         "주간 아파트 매매가격지수."
       ],
-      "slide": "slide-950"
+      "slide": "slide-957"
     },
     {
       "reason": "ambiguous",
@@ -1859,7 +1739,7 @@
         "KB부동산허브. 2022.1.10 = 100.0 굵은 선이 강남구.",
         "아파트 1㎡ 가격."
       ],
-      "slide": "slide-951"
+      "slide": "slide-958"
     },
     {
       "reason": "ambiguous",
@@ -1868,7 +1748,7 @@
         "KB부동산허브. 2022.1.10 = 100.0 굵은 선이 강남구.",
         "아파트 1㎡ 가격."
       ],
-      "slide": "slide-952"
+      "slide": "slide-959"
     },
     {
       "reason": "ambiguous",
@@ -1877,7 +1757,7 @@
         "소득 대비 주택 가격 비율.",
         "넘베오."
       ],
-      "slide": "slide-953"
+      "slide": "slide-960"
     },
     {
       "reason": "ambiguous",
@@ -1887,7 +1767,16 @@
         "넘베오.",
         "한국 서울."
       ],
-      "slide": "slide-954"
+      "slide": "slide-961"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "월간 전세 수급 지수.",
+      "candidates": [
+        "월간 전세 수급 지수.",
+        "한국부동산원."
+      ],
+      "slide": "slide-965"
     },
     {
       "reason": "ambiguous",
@@ -1899,7 +1788,16 @@
         "월세.",
         "주식 가격이 1% 오를 때 소비 변화."
       ],
-      "slide": "slide-971"
+      "slide": "slide-979"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "GDP 대비 주택 시가총액 비율과 합계 출산율.",
+      "candidates": [
+        "GDP 대비 주택 시가총액 비율과 합계 출산율.",
+        "한국은행과 국가데이터처."
+      ],
+      "slide": "slide-988"
     },
     {
       "reason": "ambiguous",
@@ -1909,7 +1807,7 @@
         "김문수 득표율.",
         "아파트 ㎡당 매매가격."
       ],
-      "slide": "slide-987"
+      "slide": "slide-995"
     },
     {
       "reason": "ambiguous",
@@ -1918,7 +1816,7 @@
         "이재명 득표율.",
         "아파트 ㎡당 매매가격."
       ],
-      "slide": "slide-988"
+      "slide": "slide-996"
     },
     {
       "reason": "ambiguous",
@@ -1931,7 +1829,7 @@
         "반전세 전환.",
         "월세 수입 발생."
       ],
-      "slide": "slide-992"
+      "slide": "slide-1000"
     },
     {
       "reason": "ambiguous",
@@ -1940,7 +1838,7 @@
         "국토교통부.",
         "공시지가 총액."
       ],
-      "slide": "slide-994"
+      "slide": "slide-1002"
     },
     {
       "reason": "ambiguous",
@@ -1949,7 +1847,7 @@
         "국토교통부.",
         "공시지가 총액."
       ],
-      "slide": "slide-995"
+      "slide": "slide-1003"
     },
     {
       "reason": "ambiguous",
@@ -1960,7 +1858,7 @@
         "20대.",
         "60대."
       ],
-      "slide": "slide-1003"
+      "slide": "slide-1011"
     },
     {
       "reason": "no_title",
@@ -1968,7 +1866,7 @@
         "보험료율과 소득대체율.",
         "단위: %."
       ],
-      "slide": "slide-1031"
+      "slide": "slide-1040"
     },
     {
       "reason": "no_title",
@@ -1976,7 +1874,7 @@
         "보험료율과 소득대체율.",
         "단위: 10억 원."
       ],
-      "slide": "slide-1032"
+      "slide": "slide-1041"
     },
     {
       "reason": "ambiguous",
@@ -1988,7 +1886,16 @@
         "한국 채권.",
         "해외 채권."
       ],
-      "slide": "slide-1034"
+      "slide": "slide-1043"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "현행 보험료율과 소득 대체율.",
+      "candidates": [
+        "현행 보험료율과 소득 대체율.",
+        "노무현 정부 연금 개혁."
+      ],
+      "slide": "slide-1047"
     },
     {
       "reason": "no_title",
@@ -1996,7 +1903,7 @@
         "연령대별 국민연금 기준소득 월액.",
         "단위: %."
       ],
-      "slide": "slide-1039"
+      "slide": "slide-1048"
     },
     {
       "reason": "no_title",
@@ -2004,7 +1911,7 @@
         "연령대별 국민연금 기준소득 월액.",
         "단위: 명."
       ],
-      "slide": "slide-1040"
+      "slide": "slide-1049"
     },
     {
       "reason": "no_title",
@@ -2012,25 +1919,25 @@
         "연령대별 국민연금 기준소득 월액.",
         "단위: 명."
       ],
-      "slide": "slide-1042"
+      "slide": "slide-1051"
     },
     {
       "reason": "ambiguous",
-      "chosen": "한국.",
+      "chosen": "사망자 장기 기증률.",
       "candidates": [
         "사망자 장기 기증률.",
         "한국."
       ],
-      "slide": "slide-1054"
+      "slide": "slide-1063"
     },
     {
       "reason": "ambiguous",
-      "chosen": "한국.",
+      "chosen": "생존자 장기 기증률.",
       "candidates": [
         "생존자 장기 기증률.",
         "한국."
       ],
-      "slide": "slide-1055"
+      "slide": "slide-1064"
     },
     {
       "reason": "ambiguous",
@@ -2039,86 +1946,50 @@
         "한국의 자살률.",
         "10만 명당 자살자 수."
       ],
-      "slide": "slide-1066"
+      "slide": "slide-1075"
     },
     {
       "reason": "ambiguous",
-      "chosen": "한국의 자살률.",
+      "chosen": "사망자 수.",
       "candidates": [
-        "한국의 자살률.",
-        "10만 명당 자살자 수."
-      ],
-      "slide": "slide-1078"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "한국의 자살자 수.",
-      "candidates": [
-        "한국의 자살자 수.",
-        "10만 명당 자살자 수."
-      ],
-      "slide": "slide-1079"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "한국의 자살자 수(여성).",
-      "candidates": [
-        "한국의 자살자 수(여성).",
-        "10만 명당 자살자 수."
+        "사망자 수.",
+        "국가데이터처 사망 원인 통계."
       ],
       "slide": "slide-1080"
     },
     {
       "reason": "ambiguous",
-      "chosen": "한국의 자살자 수(여성).",
+      "chosen": "자살자 수.",
       "candidates": [
-        "한국의 자살자 수(여성).",
-        "10만 명당 자살자 수."
-      ],
-      "slide": "slide-1081"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "한국의 10대 자살자 수.",
-      "candidates": [
-        "한국의 10대 자살자 수.",
-        "10만 명당 자살자 수."
-      ],
-      "slide": "slide-1082"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "한국의 10대와 20대 자살자 수.",
-      "candidates": [
-        "한국의 10대와 20대 자살자 수.",
-        "10만 명당 자살자 수."
+        "자살자 수.",
+        "국가데이터처 사망 원인 통계."
       ],
       "slide": "slide-1083"
     },
     {
       "reason": "ambiguous",
-      "chosen": "한국의 20대 자살자 수.",
+      "chosen": "자살자 수.",
       "candidates": [
-        "한국의 20대 자살자 수.",
-        "10만 명당 자살자 수."
+        "자살자 수.",
+        "국가데이터처 사망 원인 통계."
       ],
       "slide": "slide-1084"
     },
     {
       "reason": "ambiguous",
-      "chosen": "한국의 10대 자살자 수.",
+      "chosen": "10만 명당 자살률.",
       "candidates": [
-        "한국의 10대 자살자 수.",
-        "10만 명당 자살자 수."
+        "10만 명당 자살률.",
+        "국가데이터처 사망 원인 통계."
       ],
       "slide": "slide-1085"
     },
     {
       "reason": "ambiguous",
-      "chosen": "한국의 자살자 수(남성).",
+      "chosen": "국가데이터처 사망 원인 통계.",
       "candidates": [
-        "한국의 자살자 수(남성).",
-        "10만 명당 자살자 수."
+        "사망원인.",
+        "국가데이터처 사망 원인 통계."
       ],
       "slide": "slide-1086"
     },
@@ -2133,19 +2004,82 @@
     },
     {
       "reason": "ambiguous",
-      "chosen": "토론토의 경우: 안전 장벽 설치 전후 자살 건수 비교.",
+      "chosen": "한국의 자살자 수.",
       "candidates": [
-        "토론토의 경우: 안전 장벽 설치 전후 자살 건수 비교.",
-        "장벽 설치 전은 1993~2003년, 장벽 설치 후는 2004~2014년."
+        "한국의 자살자 수.",
+        "10만 명당 자살자 수."
+      ],
+      "slide": "slide-1088"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "한국의 자살자 수(여성).",
+      "candidates": [
+        "한국의 자살자 수(여성).",
+        "10만 명당 자살자 수."
+      ],
+      "slide": "slide-1089"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "한국의 자살자 수(여성).",
+      "candidates": [
+        "한국의 자살자 수(여성).",
+        "10만 명당 자살자 수."
+      ],
+      "slide": "slide-1090"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "한국의 10대 자살자 수.",
+      "candidates": [
+        "한국의 10대 자살자 수.",
+        "10만 명당 자살자 수."
+      ],
+      "slide": "slide-1091"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "한국의 10대와 20대 자살자 수.",
+      "candidates": [
+        "한국의 10대와 20대 자살자 수.",
+        "10만 명당 자살자 수."
+      ],
+      "slide": "slide-1092"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "한국의 20대 자살자 수.",
+      "candidates": [
+        "한국의 20대 자살자 수.",
+        "10만 명당 자살자 수."
+      ],
+      "slide": "slide-1093"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "한국의 10대 자살자 수.",
+      "candidates": [
+        "한국의 10대 자살자 수.",
+        "10만 명당 자살자 수."
+      ],
+      "slide": "slide-1094"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "한국의 자살자 수(남성).",
+      "candidates": [
+        "한국의 자살자 수(남성).",
+        "10만 명당 자살자 수."
       ],
       "slide": "slide-1095"
     },
     {
       "reason": "ambiguous",
-      "chosen": "브리즈번의 경우: 안전 장벽 설치 전후 자살 건수 비교.",
+      "chosen": "한국의 자살률.",
       "candidates": [
-        "브리즈번의 경우: 안전 장벽 설치 전후 자살 건수 비교.",
-        "장벽 설치 전은 1990~1993년, 장벽 설치 후는 1994~2012년."
+        "한국의 자살률.",
+        "10만 명당 자살자 수."
       ],
       "slide": "slide-1096"
     },
@@ -2156,7 +2090,7 @@
         "토론토의 경우: 안전 장벽 설치 전후 자살 건수 비교.",
         "장벽 설치 전은 1993~2003년, 장벽 설치 후는 2004~2014년."
       ],
-      "slide": "slide-1097"
+      "slide": "slide-1104"
     },
     {
       "reason": "ambiguous",
@@ -2165,37 +2099,55 @@
         "브리즈번의 경우: 안전 장벽 설치 전후 자살 건수 비교.",
         "장벽 설치 전은 1990~1993년, 장벽 설치 후는 1994~2012년."
       ],
-      "slide": "slide-1098"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [],
-      "slide": "slide-1099"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [],
-      "slide": "slide-1100"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "단위: 억 달러.",
-        "증권투자 유출과 유입."
-      ],
-      "slide": "slide-1119"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "단위: 억 달러.",
-        "증권투자 유출과 유입."
-      ],
-      "slide": "slide-1120"
+      "slide": "slide-1105"
     },
     {
       "reason": "ambiguous",
-      "chosen": "이명박.",
+      "chosen": "토론토의 경우: 안전 장벽 설치 전후 자살 건수 비교.",
+      "candidates": [
+        "토론토의 경우: 안전 장벽 설치 전후 자살 건수 비교.",
+        "장벽 설치 전은 1993~2003년, 장벽 설치 후는 2004~2014년."
+      ],
+      "slide": "slide-1106"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "브리즈번의 경우: 안전 장벽 설치 전후 자살 건수 비교.",
+      "candidates": [
+        "브리즈번의 경우: 안전 장벽 설치 전후 자살 건수 비교.",
+        "장벽 설치 전은 1990~1993년, 장벽 설치 후는 1994~2012년."
+      ],
+      "slide": "slide-1107"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [],
+      "slide": "slide-1108"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [],
+      "slide": "slide-1109"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [
+        "단위: 억 달러.",
+        "증권투자 유출과 유입."
+      ],
+      "slide": "slide-1128"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [
+        "단위: 억 달러.",
+        "증권투자 유출과 유입."
+      ],
+      "slide": "slide-1129"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "역대 정부 누적 물가.",
       "candidates": [
         "역대 정부 누적 물가.",
         "이명박.",
@@ -2203,7 +2155,7 @@
         "박근혜.",
         "문재인."
       ],
-      "slide": "slide-1167"
+      "slide": "slide-1177"
     },
     {
       "reason": "ambiguous",
@@ -2212,7 +2164,7 @@
         "254년 동안 장마철 강수량 추이.",
         "『승정원일기』와『일성록』의 조선후기 측우기록 분석 및 <한양우량표>(1770-1907)와 <서울 250년간 우량표> 개발 연구"
       ],
-      "slide": "slide-1182"
+      "slide": "slide-1192"
     },
     {
       "reason": "ambiguous",
@@ -2222,16 +2174,16 @@
         "1.5도 목표.",
         "산업화 이전 평균 온도."
       ],
-      "slide": "slide-1184"
+      "slide": "slide-1194"
     },
     {
       "reason": "ambiguous",
-      "chosen": "한국.",
+      "chosen": "1인당 이산화탄소 배출량.",
       "candidates": [
         "1인당 이산화탄소 배출량.",
         "한국."
       ],
-      "slide": "slide-1187"
+      "slide": "slide-1197"
     },
     {
       "reason": "ambiguous",
@@ -2243,7 +2195,7 @@
         "2021년 목표.",
         "2016년 목표."
       ],
-      "slide": "slide-1189"
+      "slide": "slide-1199"
     },
     {
       "reason": "ambiguous",
@@ -2252,7 +2204,7 @@
         "한국의 온실가스 배출량과 2030년 목표.",
         "총배출량(백만 톤 CO2eq.)"
       ],
-      "slide": "slide-1190"
+      "slide": "slide-1200"
     },
     {
       "reason": "ambiguous",
@@ -2261,7 +2213,7 @@
         "한국의 온실가스 순배출량과 2030년 목표.",
         "총배출량(억 톤CO2eq.)"
       ],
-      "slide": "slide-1191"
+      "slide": "slide-1201"
     },
     {
       "reason": "ambiguous",
@@ -2270,7 +2222,7 @@
         "한국의 온실가스 순배출량과 목표.",
         "총배출량(억 톤CO2eq.)"
       ],
-      "slide": "slide-1192"
+      "slide": "slide-1202"
     },
     {
       "reason": "ambiguous",
@@ -2282,7 +2234,7 @@
         "61% 감축, 목표 하한.",
         "53% 감축, 목표 상한."
       ],
-      "slide": "slide-1193"
+      "slide": "slide-1203"
     },
     {
       "reason": "ambiguous",
@@ -2294,7 +2246,7 @@
         "61% 감축, 목표 하한.",
         "53% 감축, 목표 상한."
       ],
-      "slide": "slide-1194"
+      "slide": "slide-1204"
     },
     {
       "reason": "ambiguous",
@@ -2307,7 +2259,7 @@
         "2031~2035년 예상 배출량 17.5억 톤.",
         "선형 감축 경로를 따를 경우"
       ],
-      "slide": "slide-1197"
+      "slide": "slide-1207"
     },
     {
       "reason": "ambiguous",
@@ -2316,7 +2268,7 @@
         "한국의 온실가스 감축 목표.",
         "총배출량(백만 톤 CO2eq.)"
       ],
-      "slide": "slide-1198"
+      "slide": "slide-1208"
     },
     {
       "reason": "ambiguous",
@@ -2325,7 +2277,7 @@
         "현대자동차 온실가스 배출량.",
         "총배출량(백만 톤 CO2eq.)"
       ],
-      "slide": "slide-1199"
+      "slide": "slide-1209"
     },
     {
       "reason": "ambiguous",
@@ -2334,7 +2286,7 @@
         "한국의 온실가스 감축 목표.",
         "총배출량(백만 톤 CO2eq.)"
       ],
-      "slide": "slide-1200"
+      "slide": "slide-1210"
     },
     {
       "reason": "ambiguous",
@@ -2347,7 +2299,7 @@
         "제거 크레딧.",
         "규제 시장과 자발적 시장, 배출권 거래 시장과 크레딧 시장의 구조."
       ],
-      "slide": "slide-1203"
+      "slide": "slide-1213"
     },
     {
       "reason": "ambiguous",
@@ -2356,12 +2308,12 @@
         "대구경북 지역 사과 수확량.",
         "총배출량(백만 톤 CO2eq.)"
       ],
-      "slide": "slide-1211"
+      "slide": "slide-1221"
     },
     {
       "reason": "no_title",
       "candidates": [],
-      "slide": "slide-1217"
+      "slide": "slide-1227"
     },
     {
       "reason": "ambiguous",
@@ -2373,12 +2325,12 @@
         "석탄.",
         "신재생."
       ],
-      "slide": "slide-1229"
+      "slide": "slide-1239"
     },
     {
       "reason": "no_title",
       "candidates": [],
-      "slide": "slide-1232"
+      "slide": "slide-1242"
     },
     {
       "reason": "ambiguous",
@@ -2391,20 +2343,7 @@
         "전남.",
         "인천."
       ],
-      "slide": "slide-1236"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "재생 가능 에너지 비율.",
-      "candidates": [
-        "재생 가능 에너지 비율.",
-        "독일.",
-        "이탈리아.",
-        "호주.",
-        "영국.",
-        "한국."
-      ],
-      "slide": "slide-1237"
+      "slide": "slide-1246"
     },
     {
       "reason": "ambiguous",
@@ -2421,12 +2360,25 @@
     },
     {
       "reason": "ambiguous",
+      "chosen": "재생 가능 에너지 비율.",
+      "candidates": [
+        "재생 가능 에너지 비율.",
+        "독일.",
+        "이탈리아.",
+        "호주.",
+        "영국.",
+        "한국."
+      ],
+      "slide": "slide-1257"
+    },
+    {
+      "reason": "ambiguous",
       "chosen": "2038년 10.3GW 부족.",
       "candidates": [
         "전력 수급 전망.",
         "2038년 10.3GW 부족."
       ],
-      "slide": "slide-1250"
+      "slide": "slide-1260"
     },
     {
       "reason": "ambiguous",
@@ -2439,7 +2391,7 @@
         "전남.",
         "인천."
       ],
-      "slide": "slide-1252"
+      "slide": "slide-1262"
     },
     {
       "reason": "ambiguous",
@@ -2448,15 +2400,7 @@
         "한국전력공사 부채.",
         "국제 LNG 가격."
       ],
-      "slide": "slide-1259"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "OECD 에너지원별 발전 비중.",
-        "단위: %."
-      ],
-      "slide": "slide-1272"
+      "slide": "slide-1269"
     },
     {
       "reason": "ambiguous",
@@ -2465,7 +2409,7 @@
         "한국 에너지원별 발전 비중.",
         "재생 에너지 9%."
       ],
-      "slide": "slide-1275"
+      "slide": "slide-1285"
     },
     {
       "reason": "ambiguous",
@@ -2474,15 +2418,7 @@
         "스페인 에너지원별 발전 비중.",
         "재생 에너지 45%."
       ],
-      "slide": "slide-1276"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "한국과 OECD 저탄소 에너지 비율.",
-        "단위: %, 아워월드데이터."
-      ],
-      "slide": "slide-1281"
+      "slide": "slide-1286"
     },
     {
       "reason": "ambiguous",
@@ -2491,7 +2427,7 @@
         "EU 도매 전력 가격.",
         "굵은 파란선이 스페인."
       ],
-      "slide": "slide-1291"
+      "slide": "slide-1301"
     },
     {
       "reason": "ambiguous",
@@ -2500,7 +2436,7 @@
         "EU LNG 가격과 영국 전기요금.",
         "러시아-우크라이나 전쟁 발발."
       ],
-      "slide": "slide-1297"
+      "slide": "slide-1307"
     },
     {
       "reason": "ambiguous",
@@ -2509,7 +2445,7 @@
         "EU 도매 전력 가격.",
         "러시아-우크라이나 전쟁 발발."
       ],
-      "slide": "slide-1298"
+      "slide": "slide-1308"
     },
     {
       "reason": "ambiguous",
@@ -2518,7 +2454,7 @@
         "EU LNG 가격과 영국 전기요금.",
         "러시아-우크라이나 전쟁 발발."
       ],
-      "slide": "slide-1302"
+      "slide": "slide-1312"
     },
     {
       "reason": "ambiguous",
@@ -2527,7 +2463,7 @@
         "태양광 패널 가격과 설치 용량.",
         "아워월드인데이터."
       ],
-      "slide": "slide-1303"
+      "slide": "slide-1313"
     },
     {
       "reason": "ambiguous",
@@ -2540,7 +2476,7 @@
         "영국.",
         "한국."
       ],
-      "slide": "slide-1317"
+      "slide": "slide-1327"
     },
     {
       "reason": "ambiguous",
@@ -2549,7 +2485,7 @@
         "석유 매장량.",
         "오일 샌드는 제외,"
       ],
-      "slide": "slide-1325"
+      "slide": "slide-1335"
     },
     {
       "reason": "ambiguous",
@@ -2558,7 +2494,7 @@
         "전력 입찰량.",
         "전력통계."
       ],
-      "slide": "slide-1326"
+      "slide": "slide-1336"
     },
     {
       "reason": "ambiguous",
@@ -2567,16 +2503,16 @@
         "전력 입찰량.",
         "전력통계."
       ],
-      "slide": "slide-1327"
+      "slide": "slide-1337"
     },
     {
       "reason": "ambiguous",
-      "chosen": "연료비.",
+      "chosen": "정산 단가.",
       "candidates": [
         "연료비.",
         "정산 단가."
       ],
-      "slide": "slide-1339"
+      "slide": "slide-1349"
     },
     {
       "reason": "no_title",
@@ -2584,7 +2520,7 @@
         "연료원별 정산 단가와 계통 한계가격(2025년 11월 기준).",
         "전력통계정보시스템, 단위: 원/kWh."
       ],
-      "slide": "slide-1340"
+      "slide": "slide-1350"
     },
     {
       "reason": "no_title",
@@ -2592,7 +2528,7 @@
         "발전원별 입찰량과 거래량(여름: 2025년 7월 기준).",
         "전력통계정보시스템, 단위: GWh."
       ],
-      "slide": "slide-1342"
+      "slide": "slide-1352"
     },
     {
       "reason": "no_title",
@@ -2600,7 +2536,7 @@
         "발전원별 입찰량과 거래량(2025년 1월 기준).",
         "전력통계정보시스템, 단위: GWh."
       ],
-      "slide": "slide-1343"
+      "slide": "slide-1353"
     },
     {
       "reason": "no_title",
@@ -2608,7 +2544,7 @@
         "발전원별 입찰량과 거래량(겨울: 2025년 1월 기준).",
         "전력통계정보시스템, 단위: GWh."
       ],
-      "slide": "slide-1344"
+      "slide": "slide-1354"
     },
     {
       "reason": "ambiguous",
@@ -2617,7 +2553,7 @@
         "2011~2023년, 한국 온실가스 배출량 88억 톤.",
         "5개 한국 전력 발전 자회사. 28%, 25억 톤."
       ],
-      "slide": "slide-1352"
+      "slide": "slide-1362"
     },
     {
       "reason": "ambiguous",
@@ -2626,7 +2562,7 @@
         "한국 온실가스 배출량.",
         "5개 한국 전력 발전 자회사. 25%, 25억 톤."
       ],
-      "slide": "slide-1353"
+      "slide": "slide-1363"
     },
     {
       "reason": "ambiguous",
@@ -2635,7 +2571,7 @@
         "명목 GDP 성장률(작년 동기 대비).",
         "2026년 1분기, 17.1%"
       ],
-      "slide": "slide-1371"
+      "slide": "slide-1381"
     },
     {
       "reason": "ambiguous",
@@ -2644,7 +2580,7 @@
         "명목 GDP 성장률(전 분기 대비).",
         "2026년 1분기, 11.0%"
       ],
-      "slide": "slide-1372"
+      "slide": "slide-1382"
     },
     {
       "reason": "ambiguous",
@@ -2653,7 +2589,7 @@
         "2026년 1분기, 9.2%",
         "GNI 성장률(전 분기 대비)."
       ],
-      "slide": "slide-1374"
+      "slide": "slide-1384"
     },
     {
       "reason": "ambiguous",
@@ -2662,7 +2598,7 @@
         "GNI 성장률(전년 동기 대비).",
         "2026년 1분기, 13.0%"
       ],
-      "slide": "slide-1375"
+      "slide": "slide-1385"
     },
     {
       "reason": "ambiguous",
@@ -2671,11 +2607,11 @@
         "코스피 지수.",
         "KRX."
       ],
-      "slide": "slide-1390"
+      "slide": "slide-1400"
     },
     {
       "reason": "ambiguous",
-      "chosen": "이재명.",
+      "chosen": "코스피 지수.",
       "candidates": [
         "코스피 지수.",
         "한국거래소.",
@@ -2684,7 +2620,7 @@
         "문재인.",
         "박근혜."
       ],
-      "slide": "slide-1391"
+      "slide": "slide-1401"
     },
     {
       "reason": "ambiguous",
@@ -2693,37 +2629,48 @@
         "코스피 지수와 S&P 500 지수.",
         "KRX."
       ],
-      "slide": "slide-1394"
+      "slide": "slide-1404"
     },
     {
       "reason": "ambiguous",
-      "chosen": "삼성전자.",
+      "chosen": "시가총액 상위 50개 종목.",
       "candidates": [
         "시가총액 상위 50개 종목.",
         "삼성전자.",
         "SK하이닉스."
       ],
-      "slide": "slide-1397"
+      "slide": "slide-1408"
     },
     {
       "reason": "ambiguous",
-      "chosen": "삼성전자.",
+      "chosen": "시가총액 상위 50개 종목.",
+      "candidates": [
+        "시가총액 상위 50개 종목.",
+        "삼성전자.",
+        "SK하이닉스.",
+        "스페이스X."
+      ],
+      "slide": "slide-1409"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "시가총액 상위 50개 종목.",
       "candidates": [
         "시가총액 상위 50개 종목.",
         "삼성전자.",
         "SK하이닉스."
       ],
-      "slide": "slide-1398"
+      "slide": "slide-1410"
     },
     {
       "reason": "ambiguous",
-      "chosen": "삼성전자.",
+      "chosen": "시가총액 상위 50개 종목.",
       "candidates": [
         "시가총액 상위 50개 종목.",
         "삼성전자.",
         "SK하이닉스."
       ],
-      "slide": "slide-1399"
+      "slide": "slide-1411"
     },
     {
       "reason": "ambiguous",
@@ -2736,7 +2683,7 @@
         "황창규.",
         "구현모."
       ],
-      "slide": "slide-1401"
+      "slide": "slide-1413"
     },
     {
       "reason": "ambiguous",
@@ -2749,7 +2696,7 @@
         "황창규.",
         "구현모."
       ],
-      "slide": "slide-1402"
+      "slide": "slide-1414"
     },
     {
       "reason": "ambiguous",
@@ -2761,7 +2708,7 @@
         "황창규.",
         "김영섭."
       ],
-      "slide": "slide-1404"
+      "slide": "slide-1416"
     },
     {
       "reason": "ambiguous",
@@ -2770,29 +2717,29 @@
         "CAPEX 투자 설비 추이 및 전망.",
         "2020년 3000억 달러에서, 2025년 6000억 달러로, 2030년 1조 달러로."
       ],
-      "slide": "slide-1420"
+      "slide": "slide-1432"
     },
     {
       "reason": "ambiguous",
-      "chosen": "중국.",
+      "chosen": "자동차 생산 대수.",
       "candidates": [
         "자동차 생산 대수.",
         "중국.",
         "미국.",
         "한국."
       ],
-      "slide": "slide-1423"
+      "slide": "slide-1435"
     },
     {
       "reason": "ambiguous",
-      "chosen": "도요타.",
+      "chosen": "자동차 3사 시가 총액.",
       "candidates": [
         "자동차 3사 시가 총액.",
         "도요타.",
         "GM.",
         "현대자동차."
       ],
-      "slide": "slide-1425"
+      "slide": "slide-1437"
     },
     {
       "reason": "ambiguous",
@@ -2801,7 +2748,7 @@
         "현대자동차 생산과 판매 현황.",
         "기아 생산과 판매 현황."
       ],
-      "slide": "slide-1426"
+      "slide": "slide-1438"
     },
     {
       "reason": "ambiguous",
@@ -2810,7 +2757,7 @@
         "현대자동차 생산과 판매 현황.",
         "기아 생산과 판매 현황."
       ],
-      "slide": "slide-1427"
+      "slide": "slide-1439"
     },
     {
       "reason": "ambiguous",
@@ -2819,7 +2766,7 @@
         "한국 철강 산업 현황.",
         "2025년은 추산."
       ],
-      "slide": "slide-1435"
+      "slide": "slide-1447"
     },
     {
       "reason": "ambiguous",
@@ -2831,7 +2778,7 @@
         "DX(디스플레이).",
         "DA(가전)."
       ],
-      "slide": "slide-1453"
+      "slide": "slide-1465"
     },
     {
       "reason": "ambiguous",
@@ -2843,21 +2790,21 @@
         "SDC(디스플레이).",
         "Harman(가전)."
       ],
-      "slide": "slide-1454"
+      "slide": "slide-1466"
     },
     {
       "reason": "no_title",
       "candidates": [
         "삼성전자와 SK하이닉스 영업이익 추이. (단위: 조 원.)"
       ],
-      "slide": "slide-1458"
+      "slide": "slide-1470"
     },
     {
       "reason": "no_title",
       "candidates": [
         "삼성전자와 SK하이닉스 영업이익 추이. (단위: 조 원.)"
       ],
-      "slide": "slide-1459"
+      "slide": "slide-1471"
     },
     {
       "reason": "ambiguous",
@@ -2866,27 +2813,27 @@
         "파운드리 시장 점유율.",
         "카운터포인트 자료."
       ],
-      "slide": "slide-1476"
+      "slide": "slide-1488"
     },
     {
       "reason": "ambiguous",
-      "chosen": "삼성전자.",
+      "chosen": "시가총액 상위 50개 종목.",
       "candidates": [
         "시가총액 상위 50개 종목.",
         "삼성전자.",
         "SK하이닉스."
       ],
-      "slide": "slide-1479"
+      "slide": "slide-1491"
     },
     {
       "reason": "ambiguous",
-      "chosen": "삼성전자.",
+      "chosen": "시가총액 상위 50개 종목.",
       "candidates": [
         "시가총액 상위 50개 종목.",
         "삼성전자.",
         "SK하이닉스."
       ],
-      "slide": "slide-1480"
+      "slide": "slide-1492"
     },
     {
       "reason": "ambiguous",
@@ -2895,12 +2842,12 @@
         "월별 수출과 무역수지.",
         "산업통상자원부 수출실적."
       ],
-      "slide": "slide-1485"
+      "slide": "slide-1498"
     },
     {
       "reason": "no_title",
       "candidates": [],
-      "slide": "slide-1490"
+      "slide": "slide-1503"
     },
     {
       "reason": "ambiguous",
@@ -2909,7 +2856,7 @@
         "검색 시장 점유율.",
         "인터넷 트랜드 자료."
       ],
-      "slide": "slide-1491"
+      "slide": "slide-1504"
     },
     {
       "reason": "ambiguous",
@@ -2918,7 +2865,7 @@
         "검색 시장 점유율.",
         "인터넷 트랜드 자료."
       ],
-      "slide": "slide-1492"
+      "slide": "slide-1505"
     },
     {
       "reason": "ambiguous",
@@ -2931,7 +2878,7 @@
         "새벽 배송 도입.",
         "데이터 유출 사고."
       ],
-      "slide": "slide-1500"
+      "slide": "slide-1513"
     },
     {
       "reason": "ambiguous",
@@ -2940,7 +2887,7 @@
         "삼양식품과 엔비디아 주가 추이.",
         "5년 동안, 엔비디아는 13달러에서 178달러로 1269% 상승. 삼양식품은 11만 원에서 157만 원으로 1327% 상승."
       ],
-      "slide": "slide-1507"
+      "slide": "slide-1520"
     },
     {
       "reason": "ambiguous",
@@ -2949,7 +2896,7 @@
         "엔비디아 매출과 영업이익.",
         "매출 570억 달러. 영업이익 360억 달러."
       ],
-      "slide": "slide-1514"
+      "slide": "slide-1527"
     },
     {
       "reason": "ambiguous",
@@ -2959,17 +2906,17 @@
         "튀르키예.",
         "굵은 파란선이 한국."
       ],
-      "slide": "slide-1548"
+      "slide": "slide-1561"
     },
     {
       "reason": "no_title",
       "candidates": [],
-      "slide": "slide-1572"
+      "slide": "slide-1585"
     },
     {
       "reason": "no_title",
       "candidates": [],
-      "slide": "slide-1573"
+      "slide": "slide-1586"
     },
     {
       "reason": "ambiguous",
@@ -2978,115 +2925,71 @@
         "화훼산업 수입 수출 통계.",
         "농림축산식품 주요통계 2024."
       ],
-      "slide": "slide-1584"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "현재 사용 스마트폰 재구입 의향자 비율.",
-      "candidates": [
-        "갤럽, 2012-2025 스마트폰 사용률 & 브랜드.",
-        "현재 사용 스마트폰 재구입 의향자 비율."
-      ],
-      "slide": "slide-1596"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "현재 사용 스마트폰 재구입 의향자 비율.",
-      "candidates": [
-        "갤럽, 2012-2023 스마트폰 사용률 & 브랜드.",
-        "현재 사용 스마트폰 재구입 의향자 비율."
-      ],
       "slide": "slide-1597"
     },
     {
-      "reason": "ambiguous",
-      "chosen": "18~29세 아이폰과 갤럭시폰 점유율.",
-      "candidates": [
-        "한국갤럽, 2012-2025 스마트폰 사용률 & 브랜드.",
-        "18~29세 아이폰과 갤럭시폰 점유율."
-      ],
-      "slide": "slide-1609"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "30대 아이폰과 갤럭시폰 점유율.",
-      "candidates": [
-        "한국갤럽, 2012-2025 스마트폰 사용률 & 브랜드.",
-        "30대 아이폰과 갤럭시폰 점유율."
-      ],
-      "slide": "slide-1610"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "40대 아이폰과 갤럭시폰 점유율.",
-      "candidates": [
-        "한국갤럽, 2012-2025 스마트폰 사용률 & 브랜드.",
-        "40대 아이폰과 갤럭시폰 점유율."
-      ],
-      "slide": "slide-1611"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "18~29세 아이폰과 갤럭시폰 점유율.",
-      "candidates": [
-        "한국갤럽, 2012-2025 스마트폰 사용률 & 브랜드.",
-        "18~29세 아이폰과 갤럭시폰 점유율."
-      ],
-      "slide": "slide-1612"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "30대 아이폰과 갤럭시폰 점유율.",
-      "candidates": [
-        "30대 아이폰과 갤럭시폰 점유율.",
-        "한국갤럽, 2012-2025 스마트폰 사용률 & 브랜드."
-      ],
-      "slide": "slide-1613"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "40대 아이폰과 갤럭시폰 점유율.",
-      "candidates": [
-        "40대 아이폰과 갤럭시폰 점유율.",
-        "한국갤럽, 2012-2025 스마트폰 사용률 & 브랜드."
-      ],
-      "slide": "slide-1614"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "20대 남녀 아이폰 점유율 추이.",
-      "candidates": [
-        "갤럽, 2012-2025 스마트폰 사용률 & 브랜드.",
-        "20대 남녀 아이폰 점유율 추이."
-      ],
-      "slide": "slide-1615"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "2030 남녀 아이폰 점유율 추이.",
-      "candidates": [
-        "갤럽, 2012-2025 스마트폰 사용률 & 브랜드.",
-        "2030 남녀 아이폰 점유율 추이."
-      ],
-      "slide": "slide-1616"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "30대 남녀 아이폰 점유율 추이.",
-      "candidates": [
-        "갤럽, 2012-2025 스마트폰 사용률 & 브랜드.",
-        "30대 남녀 아이폰 점유율 추이."
-      ],
-      "slide": "slide-1617"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "20대 아이폰 점유율 성별 차이.",
+      "reason": "no_title",
       "candidates": [
         "갤럽, 2012-2023 스마트폰 사용률 & 브랜드.",
-        "20대 아이폰 점유율 성별 차이."
+        "2023년."
       ],
-      "slide": "slide-1618"
+      "slide": "slide-1603"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [
+        "갤럽, 2012-2023 스마트폰 사용률 & 브랜드.",
+        "2023년."
+      ],
+      "slide": "slide-1605"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [
+        "갤럽, 2012-2020 스마트폰 사용률 & 브랜드.",
+        "2020년."
+      ],
+      "slide": "slide-1606"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [
+        "갤럽, 2012-2014 스마트폰 사용률 & 브랜드.",
+        "2014년."
+      ],
+      "slide": "slide-1607"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [
+        "갤럽, 2012-2014 스마트폰 사용률 & 브랜드.",
+        "2016년."
+      ],
+      "slide": "slide-1608"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [
+        "갤럽, 2012-2023 스마트폰 사용률 & 브랜드.",
+        "2023년."
+      ],
+      "slide": "slide-1632"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [
+        "갤럽, 2012-2023 스마트폰 사용률 & 브랜드.",
+        "2024년."
+      ],
+      "slide": "slide-1633"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [
+        "한국갤럽, 2012-2025 스마트폰 사용률 & 브랜드.",
+        "2025년."
+      ],
+      "slide": "slide-1634"
     },
     {
       "reason": "ambiguous",
@@ -3095,12 +2998,26 @@
         "옥소폴리틱스.",
         "정치적 성향과 스마트폰 점유율."
       ],
-      "slide": "slide-1622"
+      "slide": "slide-1635"
     },
     {
       "reason": "no_title",
       "candidates": [],
-      "slide": "slide-1623"
+      "slide": "slide-1636"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [
+        "갤럽, 2012-2023 스마트폰 사용률 & 브랜드."
+      ],
+      "slide": "slide-1638"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [
+        "갤럽, 2012-2023 스마트폰 사용률 & 브랜드."
+      ],
+      "slide": "slide-1639"
     },
     {
       "reason": "no_title",
@@ -3108,7 +3025,7 @@
         "갤럽, 2012-2023 스마트폰 사용률 & 브랜드. / 2022년 지방선거 출구 조사.",
         "2023년."
       ],
-      "slide": "slide-1627"
+      "slide": "slide-1640"
     },
     {
       "reason": "no_title",
@@ -3116,7 +3033,15 @@
         "갤럽, 2012-2023 스마트폰 사용률 & 브랜드. / 2022년 지방선거 출구 조사.",
         "2023년."
       ],
-      "slide": "slide-1630"
+      "slide": "slide-1643"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [
+        "갤럽, 2012-2023 스마트폰 사용률 & 브랜드.",
+        "2023년."
+      ],
+      "slide": "slide-1644"
     },
     {
       "reason": "ambiguous",
@@ -3126,25 +3051,25 @@
         "(첫 스마트폰으로 아이폰을 썼던 사람을 대상으로) 지금은 뭘 쓰나요?",
         "(첫 스마트폰으로 안드로이드폰을 썼던 사람을 대상으로) 지금은 뭘 쓰나요?"
       ],
-      "slide": "slide-1632"
+      "slide": "slide-1645"
     },
     {
       "reason": "ambiguous",
-      "chosen": "미국.",
+      "chosen": "Digital Endpoint Tracker, Q1, 2022 / 451 Research.",
       "candidates": [
         "Digital Endpoint Tracker, Q1, 2022 / 451 Research.",
         "미국."
       ],
-      "slide": "slide-1633"
+      "slide": "slide-1646"
     },
     {
       "reason": "ambiguous",
-      "chosen": "글로벌.",
+      "chosen": "Share of Android vs iOS users worldwide as of June 2023, by generation / Statista.",
       "candidates": [
         "Share of Android vs iOS users worldwide as of June 2023, by generation / Statista.",
         "글로벌."
       ],
-      "slide": "slide-1634"
+      "slide": "slide-1647"
     },
     {
       "reason": "ambiguous",
@@ -3153,7 +3078,7 @@
         "US SMARTPHONE MARKET SHARE 2022년 11월 / Oberlo.",
         "스마트폰 점유율."
       ],
-      "slide": "slide-1639"
+      "slide": "slide-1652"
     },
     {
       "reason": "ambiguous",
@@ -3162,7 +3087,7 @@
         "US SMARTPHONE MARKET SHARE 2022년 11월 / Oberlo.",
         "스마트폰 점유율."
       ],
-      "slide": "slide-1640"
+      "slide": "slide-1653"
     },
     {
       "reason": "ambiguous",
@@ -3171,7 +3096,7 @@
         "삼성바이오로직스 영업실적.",
         "제일모직+삼성물산 합병의 일등공신."
       ],
-      "slide": "slide-1651"
+      "slide": "slide-1664"
     },
     {
       "reason": "ambiguous",
@@ -3183,7 +3108,7 @@
         "밥캣 지분을 빼고 분할한 사업회사의 기업 가치.",
         "두산밥캣을 인수할 두산로보틱스의 기업 가치."
       ],
-      "slide": "slide-1654"
+      "slide": "slide-1667"
     },
     {
       "reason": "ambiguous",
@@ -3195,7 +3120,7 @@
         "바이오로직스가 보유(92.1%)한 바이오에피스 지분 가치.",
         "제일모직 합병 가액은 21.5조 원."
       ],
-      "slide": "slide-1655"
+      "slide": "slide-1668"
     },
     {
       "reason": "ambiguous",
@@ -3205,7 +3130,7 @@
         "바이오로직스가 보유(92.1%)한 바이오에피스 지분 가치.",
         "삼성바이오로직스가 평가한 삼성바이오에피스 기업 가치."
       ],
-      "slide": "slide-1656"
+      "slide": "slide-1669"
     },
     {
       "reason": "ambiguous",
@@ -3216,7 +3141,7 @@
         "LG엔솔 분할.",
         "LG엔솔 상장."
       ],
-      "slide": "slide-1666"
+      "slide": "slide-1679"
     },
     {
       "reason": "ambiguous",
@@ -3227,7 +3152,7 @@
         "LG엔솔 분할.",
         "LG엔솔 상장."
       ],
-      "slide": "slide-1667"
+      "slide": "slide-1680"
     },
     {
       "reason": "ambiguous",
@@ -3238,7 +3163,7 @@
         "LG엔솔 분할.",
         "LG엔솔 상장."
       ],
-      "slide": "slide-1668"
+      "slide": "slide-1681"
     },
     {
       "reason": "ambiguous",
@@ -3248,7 +3173,7 @@
         "분할 직전, 2022년 11월30일.",
         "분할 이후, 20224년 10월4일."
       ],
-      "slide": "slide-1670"
+      "slide": "slide-1683"
     },
     {
       "reason": "ambiguous",
@@ -3258,33 +3183,33 @@
         "분할 직전, 2022년 11월30일.",
         "분할 이후, 20224년 10월4일."
       ],
-      "slide": "slide-1671"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "통합 삼성물산 출범. 2015년 9월15일.",
-      "candidates": [
-        "제일모직과 삼성물산 시가총액 비교.",
-        "제일모직 상장폐지. 2014년 7월1일.",
-        "에버랜드가 제일모직으로 이름을 바꿔 상장. 2014년 12월18일.",
-        "삼성물산이 제일모직에 합병되면서 상장 폐지. 2015년 9월15일.",
-        "제일모직이 삼성물산을 인수한 뒤 삼성물산으로 이름을 변경. 2015년 9월15일.",
-        "통합 삼성물산 출범. 2015년 9월15일."
-      ],
-      "slide": "slide-1683"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "통합 삼성물산 출범. 2015년 9월15일.",
-      "candidates": [
-        "제일모직과 삼성물산 시가총액 비교.",
-        "제일모직 상장폐지. 2014년 7월1일.",
-        "에버랜드가 제일모직으로 이름을 바꿔 상장. 2014년 12월18일.",
-        "삼성물산이 제일모직에 합병되면서 상장 폐지. 2015년 9월15일.",
-        "제일모직이 삼성물산을 인수한 뒤 삼성물산으로 이름을 변경. 2015년 9월15일.",
-        "통합 삼성물산 출범. 2015년 9월15일."
-      ],
       "slide": "slide-1684"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "통합 삼성물산 출범. 2015년 9월15일.",
+      "candidates": [
+        "제일모직과 삼성물산 시가총액 비교.",
+        "제일모직 상장폐지. 2014년 7월1일.",
+        "에버랜드가 제일모직으로 이름을 바꿔 상장. 2014년 12월18일.",
+        "삼성물산이 제일모직에 합병되면서 상장 폐지. 2015년 9월15일.",
+        "제일모직이 삼성물산을 인수한 뒤 삼성물산으로 이름을 변경. 2015년 9월15일.",
+        "통합 삼성물산 출범. 2015년 9월15일."
+      ],
+      "slide": "slide-1696"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "통합 삼성물산 출범. 2015년 9월15일.",
+      "candidates": [
+        "제일모직과 삼성물산 시가총액 비교.",
+        "제일모직 상장폐지. 2014년 7월1일.",
+        "에버랜드가 제일모직으로 이름을 바꿔 상장. 2014년 12월18일.",
+        "삼성물산이 제일모직에 합병되면서 상장 폐지. 2015년 9월15일.",
+        "제일모직이 삼성물산을 인수한 뒤 삼성물산으로 이름을 변경. 2015년 9월15일.",
+        "통합 삼성물산 출범. 2015년 9월15일."
+      ],
+      "slide": "slide-1697"
     },
     {
       "reason": "ambiguous",
@@ -3297,7 +3222,7 @@
         "제일모직이 삼성물산을 인수한 뒤 삼성물산으로 이름을 변경. 2015년 9월15일.",
         "에버랜드가 제일모직으로 이름을 바꿔 상장. 2014년 12월18일."
       ],
-      "slide": "slide-1689"
+      "slide": "slide-1702"
     },
     {
       "reason": "ambiguous",
@@ -3306,7 +3231,7 @@
         "박효정, 한글맞춤법의 사이시옷에 대해서, 인문과학연구, 2020. 가운데.",
         "맞춤법 표기 정확도."
       ],
-      "slide": "slide-1699"
+      "slide": "slide-1712"
     },
     {
       "reason": "ambiguous",
@@ -3315,7 +3240,7 @@
         "BHI 지수 비교.",
         "Beverage Hydration Index) = (음료를 마신 후 2시간 동안 몸에 남은 수분량) ÷ (같은 양의 물을 마셨을 때 남은 수분량. DOI: 10.3945/ajcn.115.114769"
       ],
-      "slide": "slide-1707"
+      "slide": "slide-1720"
     },
     {
       "reason": "ambiguous",
@@ -3325,7 +3250,7 @@
         "종량제 시스템 전면 도입.",
         "종량제 시스템 시범 도입."
       ],
-      "slide": "slide-1710"
+      "slide": "slide-1723"
     },
     {
       "reason": "ambiguous",
@@ -3334,23 +3259,7 @@
         "서울 버스 노선.",
         "서울시."
       ],
-      "slide": "slide-1719"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "가해자 연령대별 자동차 보험 손해액.",
-        "경찰청: 단위 억 원."
-      ],
-      "slide": "slide-1722"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "연령대별 자동차보험 계약자 수.",
-        "보험통계조회서비스, 단위: 만 명."
-      ],
-      "slide": "slide-1724"
+      "slide": "slide-1732"
     },
     {
       "reason": "ambiguous",
@@ -3359,7 +3268,7 @@
         "형사 사건 기소율.",
         "* 기소 = 구공판 + 구약식 * 불기소 = 혐의없음 + 기소유예 + 죄가안됨 + 공소권없음 + 각하 + 기소중지 + 참고인중지 + 공소보류"
       ],
-      "slide": "slide-1733"
+      "slide": "slide-1746"
     },
     {
       "reason": "ambiguous",
@@ -3368,7 +3277,7 @@
         "형사사건 가운데 벌금형 건수.",
         "대법원."
       ],
-      "slide": "slide-1735"
+      "slide": "slide-1748"
     },
     {
       "reason": "ambiguous",
@@ -3381,7 +3290,7 @@
         "조선.",
         "대한제국."
       ],
-      "slide": "slide-1737"
+      "slide": "slide-1750"
     },
     {
       "reason": "no_title",
@@ -3389,7 +3298,7 @@
         "한국은행이 기준금리를 0.25%포인트 내릴 경우, 진단적 기대의 상대적 효과.",
         "한국은행."
       ],
-      "slide": "slide-1738"
+      "slide": "slide-1751"
     },
     {
       "reason": "ambiguous",
@@ -3398,7 +3307,7 @@
         "서울시 길고양이 현황.",
         "서울시."
       ],
-      "slide": "slide-1739"
+      "slide": "slide-1752"
     },
     {
       "reason": "ambiguous",
@@ -3407,7 +3316,7 @@
         "케어의 구조 개체 수와 동물 사체 처리 비용.",
         "셜록."
       ],
-      "slide": "slide-1740"
+      "slide": "slide-1753"
     },
     {
       "reason": "ambiguous",
@@ -3416,7 +3325,16 @@
         "항공사별 1인당 운항횟수와 정비 대수.",
         "국토교통부 항공안전백서."
       ],
-      "slide": "slide-1744"
+      "slide": "slide-1757"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "IMD 국가 경쟁력 순위.",
+      "candidates": [
+        "IMD 국가 경쟁력 순위.",
+        "IMD World Competitiveness Yearbook."
+      ],
+      "slide": "slide-1758"
     },
     {
       "reason": "ambiguous",
@@ -3425,7 +3343,34 @@
         "항공사별 대당 정비사 수.",
         "국토교통부 항공안전백서."
       ],
-      "slide": "slide-1746"
+      "slide": "slide-1759"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "연령대별 미디어 소비.",
+      "candidates": [
+        "연령대별 미디어 소비.",
+        "한국문화관광연구원. 주당 소비시간."
+      ],
+      "slide": "slide-1763"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "연령대별 미디어 소비 시간.",
+      "candidates": [
+        "연령대별 미디어 소비 시간.",
+        "한국문화관광연구원. 주당 소비시간."
+      ],
+      "slide": "slide-1764"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "연령대별 미디어 소비 시간(이용자 표본).",
+      "candidates": [
+        "연령대별 미디어 소비 시간(이용자 표본).",
+        "한국문화관광연구원. 주당 소비시간."
+      ],
+      "slide": "slide-1765"
     },
     {
       "reason": "ambiguous",
@@ -3438,7 +3383,7 @@
         "밴드와 접객원.",
         "김봉현."
       ],
-      "slide": "slide-1753"
+      "slide": "slide-1766"
     },
     {
       "reason": "ambiguous",
@@ -3447,7 +3392,7 @@
         "서울대 신입생 합격자 현황.",
         "정을호(민주당 의원)"
       ],
-      "slide": "slide-1754"
+      "slide": "slide-1767"
     },
     {
       "reason": "ambiguous",
@@ -3456,17 +3401,17 @@
         "코레일.",
         "명절 KTX 기차 표 판매."
       ],
-      "slide": "slide-1757"
+      "slide": "slide-1770"
     },
     {
       "reason": "ambiguous",
-      "chosen": "일본.",
+      "chosen": "관광 수입 순위.",
       "candidates": [
         "관광 수입 순위.",
         "한국.",
         "일본."
       ],
-      "slide": "slide-1760"
+      "slide": "slide-1773"
     },
     {
       "reason": "ambiguous",
@@ -3476,7 +3421,7 @@
         "딘위: 만 명.",
         "日本政府観光局"
       ],
-      "slide": "slide-1761"
+      "slide": "slide-1774"
     },
     {
       "reason": "ambiguous",
@@ -3485,7 +3430,7 @@
         "아마존 고용 인원.",
         "딘위: 만 명."
       ],
-      "slide": "slide-1762"
+      "slide": "slide-1775"
     },
     {
       "reason": "ambiguous",
@@ -3494,7 +3439,7 @@
         "아마존 고용 인원.",
         "딘위: 만 명."
       ],
-      "slide": "slide-1763"
+      "slide": "slide-1776"
     },
     {
       "reason": "ambiguous",
@@ -3504,7 +3449,7 @@
         "딘위: 만 명.",
         "한국관광공사."
       ],
-      "slide": "slide-1764"
+      "slide": "slide-1777"
     },
     {
       "reason": "ambiguous",
@@ -3514,7 +3459,7 @@
         "딘위: 만 명.",
         "한국관광공사."
       ],
-      "slide": "slide-1765"
+      "slide": "slide-1778"
     },
     {
       "reason": "ambiguous",
@@ -3524,7 +3469,7 @@
         "딘위: 만 명.",
         "한국관광공사."
       ],
-      "slide": "slide-1766"
+      "slide": "slide-1779"
     },
     {
       "reason": "ambiguous",
@@ -3534,15 +3479,7 @@
         "딘위: 만 명.",
         "한국관광공사."
       ],
-      "slide": "slide-1767"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "The Richest Cities in the World.",
-        "CEO월드, 단위: 10억 달러."
-      ],
-      "slide": "slide-1770"
+      "slide": "slide-1780"
     },
     {
       "reason": "ambiguous",
@@ -3551,7 +3488,7 @@
         "AI 수능 테스트 결과.",
         "서강대학교 수학과 김종락 교수 연구팀."
       ],
-      "slide": "slide-1779"
+      "slide": "slide-1792"
     },
     {
       "reason": "ambiguous",
@@ -3560,7 +3497,7 @@
         "월별 출판 판매 부수.",
         "한강 노벨상 수상 발표."
       ],
-      "slide": "slide-1809"
+      "slide": "slide-1822"
     },
     {
       "reason": "ambiguous",
@@ -3569,7 +3506,7 @@
         "화물 운송량.",
         "만"
       ],
-      "slide": "slide-1814"
+      "slide": "slide-1827"
     },
     {
       "reason": "ambiguous",
@@ -3578,7 +3515,7 @@
         "달걀 낙하 실험.",
         "가로축은 높이, 세로축은 비율."
       ],
-      "slide": "slide-1815"
+      "slide": "slide-1828"
     },
     {
       "reason": "ambiguous",
@@ -3587,7 +3524,7 @@
         "달걀 낙하 실험.",
         "가로축은 높이, 세로축은 비율."
       ],
-      "slide": "slide-1816"
+      "slide": "slide-1829"
     },
     {
       "reason": "ambiguous",
@@ -3596,7 +3533,7 @@
         "클로드 에이전트 호출 비율.",
         "2026년 1월19일부터 2월2일까지 앤트로픽 공개 API를 통해 발생한 99만8481건의 호출을 분석 결과."
       ],
-      "slide": "slide-1818"
+      "slide": "slide-1831"
     },
     {
       "reason": "ambiguous",
@@ -3605,7 +3542,7 @@
         "구글코리아와 네이버 법인세 비교(2023년).",
         "실제 구글코리아 매출과 내야할 법인세."
       ],
-      "slide": "slide-1820"
+      "slide": "slide-1833"
     },
     {
       "reason": "ambiguous",
@@ -3614,7 +3551,7 @@
         "전성민 등의 연구.",
         "구글과 넷플릭스, 페이스북의 실제 한국 매출과 신고 매출."
       ],
-      "slide": "slide-1821"
+      "slide": "slide-1834"
     },
     {
       "reason": "ambiguous",
@@ -3625,30 +3562,21 @@
         "예상 여행비.",
         "예상 여행비."
       ],
-      "slide": "slide-1826"
+      "slide": "slide-1839"
     },
     {
       "reason": "no_title",
       "candidates": [],
-      "slide": "slide-1832"
+      "slide": "slide-1845"
     },
     {
       "reason": "no_title",
       "candidates": [],
-      "slide": "slide-1833"
+      "slide": "slide-1846"
     },
     {
       "reason": "ambiguous",
-      "chosen": "가장 선호하는 채널.",
-      "candidates": [
-        "가장 선호하는 채널.",
-        "한국갤럽."
-      ],
-      "slide": "slide-1840"
-    },
-    {
-      "reason": "ambiguous",
-      "chosen": "문재인.",
+      "chosen": "국경 없는 기자회, 언론자유지수.",
       "candidates": [
         "국경 없는 기자회, 언론자유지수.",
         "노무현.",
@@ -3657,7 +3585,7 @@
         "문재인.",
         "윤석열."
       ],
-      "slide": "slide-1842"
+      "slide": "slide-1855"
     },
     {
       "reason": "no_title",
@@ -3667,7 +3595,7 @@
         "언론수용자 조사는 2022년 자료 없음. 주당 이용 시간에 4.3주 곱해서 환산.",
         "2022년 조사 없음."
       ],
-      "slide": "slide-1843"
+      "slide": "slide-1856"
     },
     {
       "reason": "ambiguous",
@@ -3677,7 +3605,7 @@
         "수도권에 폭우가 내렸을 때.",
         "빅카인즈에서 ‘폭우’로 검색해서 집계한 결과."
       ],
-      "slide": "slide-1862"
+      "slide": "slide-1875"
     },
     {
       "reason": "ambiguous",
@@ -3686,7 +3614,7 @@
         "광고비 현황.",
         "10조 원 규모 뉴미디어 광고, 우리가 알던 광고 시장이 아니다."
       ],
-      "slide": "slide-1868"
+      "slide": "slide-1881"
     },
     {
       "reason": "no_title",
@@ -3694,28 +3622,12 @@
         "종이신문 열독률.",
         "언론진흥재단, 단위: %."
       ],
-      "slide": "slide-1871"
+      "slide": "slide-1884"
     },
     {
       "reason": "no_title",
       "candidates": [],
-      "slide": "slide-1874"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "주요 방송사 매출 추이.",
-        "금융감독원 전자공시, 단위: 억 원."
-      ],
-      "slide": "slide-1875"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "주요 방송사 매출 추이.",
-        "금융감독원 전자공시, 단위: 억 원."
-      ],
-      "slide": "slide-1876"
+      "slide": "slide-1887"
     },
     {
       "reason": "no_title",
@@ -3723,7 +3635,7 @@
         "2024년 주요 20개 신문사 매출 추이.",
         "금융감독원 전자공시. 단위: 억 원."
       ],
-      "slide": "slide-1877"
+      "slide": "slide-1890"
     },
     {
       "reason": "no_title",
@@ -3731,7 +3643,7 @@
         "2025년 주요 신문사 매출 추이.",
         "금융감독원 전자공시. 단위: 억 원."
       ],
-      "slide": "slide-1878"
+      "slide": "slide-1891"
     },
     {
       "reason": "no_title",
@@ -3739,87 +3651,19 @@
         "2024년 주요 방송사 매출 추이.",
         "금융감독원 전자공시. 단위: 억 원."
       ],
-      "slide": "slide-1879"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "주요 17개 신문사 매출 추이.",
-        "금융감독원 전자공시. 단위: 억 원."
-      ],
-      "slide": "slide-1881"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "종이신문과 인터넷신문 매출 합계.",
-        "한국언론진흥재단 신문산업 실태 조사."
-      ],
-      "slide": "slide-1882"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "종이신문과 인터넷신문 매출 합계.",
-        "한국언론진흥재단 신문산업 실태 조사와 금융감독원 전자공시 교차 분석, 단위: 억 원."
-      ],
-      "slide": "slide-1883"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "주요 신문사 매출 추이."
-      ],
-      "slide": "slide-1884"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "주요 신문사 매출 추이."
-      ],
-      "slide": "slide-1885"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "주요 신문사 매출 추이."
-      ],
-      "slide": "slide-1886"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "주요 경제신문 매출 추이.",
-        "금융감독원 전자공시, 단위: 억 원."
-      ],
-      "slide": "slide-1887"
+      "slide": "slide-1892"
     },
     {
       "reason": "no_title",
       "candidates": [
         "2025년 주요 18개 신문사 매출 규모."
       ],
-      "slide": "slide-1888"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "주요 20개 신문사 매출 추이.",
-        "금융감독원 전자공시, 서울경제신문은 2023년. 단위: 억 원."
-      ],
-      "slide": "slide-1893"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "주요 20개 신문사 매출 추이."
-      ],
-      "slide": "slide-1894"
+      "slide": "slide-1901"
     },
     {
       "reason": "no_title",
       "candidates": [],
-      "slide": "slide-1896"
+      "slide": "slide-1909"
     },
     {
       "reason": "ambiguous",
@@ -3832,7 +3676,7 @@
         "이건희 집행유예 판결.",
         "삼성 비자금 특검."
       ],
-      "slide": "slide-1897"
+      "slide": "slide-1910"
     },
     {
       "reason": "ambiguous",
@@ -3845,7 +3689,7 @@
         "이건희 집행유예 판결.",
         "삼성 비자금 특검."
       ],
-      "slide": "slide-1898"
+      "slide": "slide-1911"
     },
     {
       "reason": "ambiguous",
@@ -3855,7 +3699,7 @@
         "재판 끝.",
         "37억 원에서 67억 원으로. 협찬과 후원은 빠진 금액."
       ],
-      "slide": "slide-1900"
+      "slide": "slide-1913"
     },
     {
       "reason": "ambiguous",
@@ -3864,7 +3708,7 @@
         "메타와 알파벳의 광고 매출.",
         "결국 광고 플랫폼."
       ],
-      "slide": "slide-1904"
+      "slide": "slide-1917"
     },
     {
       "reason": "ambiguous",
@@ -3873,12 +3717,12 @@
         "2000만 뷰 이상 트윗의 분포.",
         "워싱턴포스트."
       ],
-      "slide": "slide-1905"
+      "slide": "slide-1918"
     },
     {
       "reason": "no_title",
       "candidates": [],
-      "slide": "slide-1908"
+      "slide": "slide-1921"
     },
     {
       "reason": "ambiguous",
@@ -3887,7 +3731,7 @@
         "채널 구독자 수와 톱 기사 조회 수 비교.",
         "2020년11월16일 ~ 2021년 4월24일."
       ],
-      "slide": "slide-1910"
+      "slide": "slide-1923"
     },
     {
       "reason": "ambiguous",
@@ -3896,7 +3740,7 @@
         "다음 기사 배열과 인기 기사 비교.",
         "2020년3월2일 ~ 2021년 4월30일."
       ],
-      "slide": "slide-1911"
+      "slide": "slide-1924"
     },
     {
       "reason": "ambiguous",
@@ -3905,7 +3749,7 @@
         "뉴스 페이지뷰.",
         "우리가 무엇을 볼 것인가를 플랫폼이 결정하는 시대."
       ],
-      "slide": "slide-1916"
+      "slide": "slide-1929"
     },
     {
       "reason": "no_title",
@@ -3916,7 +3760,7 @@
         "5.3%",
         "3.0%"
       ],
-      "slide": "slide-1917"
+      "slide": "slide-1930"
     },
     {
       "reason": "no_title",
@@ -3927,7 +3771,7 @@
         "5.3%",
         "3.0%"
       ],
-      "slide": "slide-1918"
+      "slide": "slide-1931"
     },
     {
       "reason": "no_title",
@@ -3935,7 +3779,7 @@
         "페이지뷰. (단위 : 1000뷰.)",
         "김위근, 한국 언론과 포털 뉴스 서비스, 한국언론진흥재단, 2020년 11월30일. 2024년은 이정환 추산."
       ],
-      "slide": "slide-1919"
+      "slide": "slide-1932"
     },
     {
       "reason": "no_title",
@@ -3943,7 +3787,7 @@
         "페이지뷰. (단위 : 억뷰.)",
         "김위근, 한국 언론과 포털 뉴스 서비스, 한국언론진흥재단, 2020년 11월30일. 2024년은 이정환 추산."
       ],
-      "slide": "slide-1920"
+      "slide": "slide-1933"
     },
     {
       "reason": "no_title",
@@ -3953,7 +3797,7 @@
         "83",
         "14"
       ],
-      "slide": "slide-1921"
+      "slide": "slide-1934"
     },
     {
       "reason": "ambiguous",
@@ -3962,14 +3806,14 @@
         "잠.",
         "미디어 소비."
       ],
-      "slide": "slide-1922"
+      "slide": "slide-1935"
     },
     {
       "reason": "no_title",
       "candidates": [
         "2024년 국가데이터처 생활시간조사, 단위: 시간."
       ],
-      "slide": "slide-1923"
+      "slide": "slide-1936"
     },
     {
       "reason": "ambiguous",
@@ -3978,7 +3822,7 @@
         "네이버 트래픽에서 뉴스가 차지하는 비율.",
         "게이트웨이가 닫히고 있다."
       ],
-      "slide": "slide-1924"
+      "slide": "slide-1937"
     },
     {
       "reason": "ambiguous",
@@ -3987,95 +3831,69 @@
         "페이스북도 링크 노출을 줄였다.",
         "뉴스 콘텐츠의 우선 순위를 크게 낮췄다."
       ],
-      "slide": "slide-1925"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "https://www.pewresearch.org/journalism/fact-sheet/newspapers/",
-        "미국 신문 산업 광고 매출 추이.",
-        "퓨리서치, 단위: 억 달러. (신문산업 2013년부터는 추정치.)",
-        "신문."
-      ],
-      "slide": "slide-1926"
+      "slide": "slide-1938"
     },
     {
       "reason": "ambiguous",
-      "chosen": "구글.",
+      "chosen": "미국 신문‧방송 산업과 빅테크 광고 매출 추이.",
       "candidates": [
+        "미국 신문‧방송 산업과 빅테크 광고 매출 추이.",
         "구글.",
         "페이스북.",
         "아마존."
       ],
-      "slide": "slide-1927"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "미국의 종이신문 구독자 수.",
-        "https://www.journalism.org/fact-sheet/newspapers/",
-        "퓨리서치센터, 단위: 100만 명."
-      ],
-      "slide": "slide-1928"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "250억 달러.",
-        "500억 달러.",
-        "https://www.pewresearch.org/journalism/fact-sheet/newspapers/",
-        "미국 신문 산업 광고와 구독 매출 추이.",
-        "퓨리서치, 단위: 억 달러. (2013년부터는 추정치.)"
-      ],
-      "slide": "slide-1929"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "250억 달러.",
-        "500억 달러.",
-        "https://www.pewresearch.org/journalism/fact-sheet/newspapers/",
-        "미국 신문 산업 광고와 구독 매출 추이.",
-        "퓨리처치, 단위: 억 달러."
-      ],
-      "slide": "slide-1930"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [],
-      "slide": "slide-1933"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [],
       "slide": "slide-1940"
     },
     {
+      "reason": "ambiguous",
+      "chosen": "주요 신문사 발행부수 비교.",
+      "candidates": [
+        "주요 신문사 발행부수 비교.",
+        "한국 언론의 오래된 집단 사기극."
+      ],
+      "slide": "slide-1944"
+    },
+    {
       "reason": "no_title",
       "candidates": [],
-      "slide": "slide-1941"
+      "slide": "slide-1946"
     },
     {
       "reason": "ambiguous",
-      "chosen": "뉴욕타임스 유료 구독자 현황.",
+      "chosen": "유료화가 가능한 언론은 몇 안 된다.",
       "candidates": [
-        "트럼프 범프.",
-        "코로나 범프.",
-        "1000만 독자 목표.",
-        "뉴욕타임스 유료 구독자 현황."
+        "주요 신문사 뉴스 유료화 현황.",
+        "유료화가 가능한 언론은 몇 안 된다."
       ],
+      "slide": "slide-1947"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "구독이 아니라 후원.",
+      "candidates": [
+        "주요 신문사 후원 현황.",
+        "구독이 아니라 후원."
+      ],
+      "slide": "slide-1950"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [],
+      "slide": "slide-1953"
+    },
+    {
+      "reason": "no_title",
+      "candidates": [],
       "slide": "slide-1954"
     },
     {
       "reason": "ambiguous",
-      "chosen": "뉴욕타임스 유료 구독자 현황.",
+      "chosen": "가장 큰 문제는 먹고 사는 문제가 아니라, 의제의 실종.",
       "candidates": [
-        "트럼프 범프.",
-        "코로나 범프.",
-        "1000만 독자 목표.",
-        "뉴욕타임스 유료 구독자 현황."
+        "‘재벌 개혁’ 키워드 관련 기사 출고 현황. 빅카인즈. / 조선일보 제외.",
+        "가장 큰 문제는 먹고 사는 문제가 아니라, 의제의 실종."
       ],
-      "slide": "slide-1955"
+      "slide": "slide-1958"
     },
     {
       "reason": "ambiguous",
@@ -4086,7 +3904,29 @@
         "1000만 독자 목표.",
         "뉴욕타임스 유료 구독자 현황."
       ],
-      "slide": "slide-1956"
+      "slide": "slide-1967"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "뉴욕타임스 유료 구독자 현황.",
+      "candidates": [
+        "트럼프 범프.",
+        "코로나 범프.",
+        "1000만 독자 목표.",
+        "뉴욕타임스 유료 구독자 현황."
+      ],
+      "slide": "slide-1968"
+    },
+    {
+      "reason": "ambiguous",
+      "chosen": "뉴욕타임스 유료 구독자 현황.",
+      "candidates": [
+        "트럼프 범프.",
+        "코로나 범프.",
+        "1000만 독자 목표.",
+        "뉴욕타임스 유료 구독자 현황."
+      ],
+      "slide": "slide-1969"
     },
     {
       "reason": "ambiguous",
@@ -4099,15 +3939,7 @@
         "김석진.",
         "김창룡."
       ],
-      "slide": "slide-1971"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "종이신문 열독률과 구독률.",
-        "한국언론진흥재단, 단위: %."
-      ],
-      "slide": "slide-1979"
+      "slide": "slide-1984"
     },
     {
       "reason": "no_title",
@@ -4115,14 +3947,14 @@
         "신문용지 산업.",
         "한국제지연합회, 단위: 만 톤."
       ],
-      "slide": "slide-1980"
+      "slide": "slide-1993"
     },
     {
       "reason": "no_title",
       "candidates": [
         "2017년."
       ],
-      "slide": "slide-1982"
+      "slide": "slide-1995"
     },
     {
       "reason": "ambiguous",
@@ -4135,7 +3967,7 @@
         "황교익&산이.",
         "드라마 ‘피노키오’ 방영."
       ],
-      "slide": "slide-1986"
+      "slide": "slide-1999"
     },
     {
       "reason": "ambiguous",
@@ -4148,7 +3980,7 @@
         "세월호 5주기.",
         "신년 기자회견. 중국 경호원 기자 폭행 사건."
       ],
-      "slide": "slide-1987"
+      "slide": "slide-2000"
     },
     {
       "reason": "no_title",
@@ -4156,41 +3988,31 @@
         "2017년.",
         "단위 : %. 로이터저널리즘연구소."
       ],
-      "slide": "slide-1988"
+      "slide": "slide-2001"
     },
     {
       "reason": "ambiguous",
       "chosen": "한국인이 가장 즐겨 보는 뉴스 채널.",
       "candidates": [
-        "갤럽리포트.",
         "한국인이 가장 즐겨 보는 뉴스 채널.",
         "JTBC.",
         "KBS.",
         "MBC."
       ],
-      "slide": "slide-1989"
+      "slide": "slide-2002"
     },
     {
       "reason": "ambiguous",
       "chosen": "한국인이 가장 즐겨 보는 뉴스 채널.",
       "candidates": [
-        "갤럽리포트.",
         "한국인이 가장 즐겨 보는 뉴스 채널.",
         "JTBC.",
         "KBS.",
         "MBC.",
         "SBS."
       ],
-      "slide": "slide-1990"
-    },
-    {
-      "reason": "no_title",
-      "candidates": [
-        "세계 신문사 구독과 광고 추이.",
-        "PwC+WAN-IFRA, 단위 억 달러."
-      ],
-      "slide": "slide-1991"
+      "slide": "slide-2003"
     }
   ],
-  "site_items": 1641
+  "site_items": 1658
 }
