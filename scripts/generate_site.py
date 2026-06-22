@@ -261,12 +261,13 @@ function legendHTML(it){
   else if(it.series.length>1){entries=it.seriesNames.map((n,i)=>[n||("계열 "+(i+1)),PALETTE[i%PALETTE.length]]);}
   return entries.map(([l,c])=>`<span class="lg"><i style="background:${c}"></i>${dot(l)}</span>`).join("");
 }
+function blank(x){return (x==null||x==="None"||x==="none")?"":String(x);}
 function sparseTick(it){return function(val,index){const L=it.labels;
-  const cur=(L[index]==null?"":String(L[index]));
-  const prev=index>0?(L[index-1]==null?"":String(L[index-1])):null;
+  const cur=blank(L[index]);
+  const prev=index>0?blank(L[index-1]):null;
   return (cur!==prev)?cur:"";};}
 function buildChart(canvas,it){
-  const t=it.vizType,labels=it.labels.map(x=>x==null?"":String(x));
+  const t=it.vizType,labels=it.labels.map(blank);
   const ds=it.series.map((vals,i)=>({label:it.seriesNames[i]||("계열 "+(i+1)),data:vals,backgroundColor:PALETTE[i%PALETTE.length],borderColor:PALETTE[i%PALETTE.length]}));
   const unit=(it.source.match(/단위:\s*([^,.]+)/)||[])[1]||"";
   const tip={callbacks:{label:c=>(ds.length>1?`${c.dataset.label}: `:"")+`${c.formattedValue} ${unit}`.trim()}};

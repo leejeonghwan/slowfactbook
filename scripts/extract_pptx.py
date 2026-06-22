@@ -310,7 +310,7 @@ def extract(inp, outp, start=1, end=None, dedup=True):
                 "vizType": viz,
                 "chartType_raw": ct,
                 "seriesNames": names,
-                "labels": [str(c).strip().rstrip(".") for c in labels],
+                "labels": ["" if c is None else str(c).strip().rstrip(".") for c in labels],
                 "series": series,
             }
             if viz == "combo":
