@@ -3,6 +3,8 @@ name: Build & Deploy Slow Factbook
 on:
   push:
     branches: [main]
+  schedule:
+    - cron: "0 20 * * *"        # 매일 05:00 KST 자동 갱신
   workflow_dispatch:
 
 permissions:
@@ -13,14 +15,19 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      KOSIS_API_KEY: ${{ secrets.KOSIS_API_KEY }}
+      ECOS_API_KEY: ${{ secrets.ECOS_API_KEY }}
     steps:
       - uses: actions/checkout@v4
         with:
-          lfs: true                # pull source decks if stored via Git LFS
+          lfs: true
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
       - run: pip install -r requirements.txt
+      - name: API 차트 최신값 수집
+        run: python scripts/build_api_charts.py
       - name: Build site
         run: python scripts/build.py
       - uses: actions/upload-pages-artifact@v3

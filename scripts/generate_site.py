@@ -61,6 +61,7 @@ def load_items(data_dir):
                 "source": it.get("source", ""), "sourceUrl": it.get("sourceUrl", ""),
                 "vizType": it["vizType"], "labels": labels,
                 "seriesNames": names, "series": series, "slide": it.get("slide"),
+                "updated": it.get("updated", ""),
             }
             if it["vizType"] == "combo":
                 item["seriesKinds"], item["seriesAxes"] = kinds, axes
@@ -97,6 +98,8 @@ def build(data_dir, outp):
             cats.append(it["category"])
     if not cats:
         cats = CATEGORIES
+    if any(it.get("updated") for it in items):
+        cats = ["최근 업데이트"] + cats
     site_dir = os.path.dirname(outp) or "."
     os.makedirs(site_dir, exist_ok=True)
     html = TEMPLATE.replace("__CORE__", CORE_JS) \
@@ -195,12 +198,17 @@ __CORE__
 let activeCat=null,query="",charts=[];
 const grid=document.getElementById("grid"),sidebar=document.getElementById("sidebar"),
       countEl=document.getElementById("count"),searchEl=document.getElementById("search");
-function filtered(){return ITEMS.filter(it=>(!activeCat||it.category===activeCat)&&(!query||(it.title+it.category+it.source).toLowerCase().includes(query.toLowerCase())));}
+const RECENT="최근 업데이트";
+function filtered(){
+  let r=ITEMS.filter(it=>(!activeCat||(activeCat===RECENT?!!it.updated:it.category===activeCat))&&(!query||(it.title+it.category+it.source).toLowerCase().includes(query.toLowerCase())));
+  if(activeCat===RECENT)r=r.slice().sort((a,b)=>String(b.updated).localeCompare(String(a.updated)));
+  return r;
+}
 function renderSidebar(){
   sidebar.innerHTML="";
   const all=document.createElement("div");all.className="cat"+(activeCat===null?" active":"");
   all.innerHTML=`전체 <span class="cnt">${ITEMS.length}</span>`;all.onclick=()=>{activeCat=null;render();closeNav();};sidebar.appendChild(all);
-  CATEGORIES.forEach(c=>{const n=ITEMS.filter(it=>it.category===c).length;const el=document.createElement("div");
+  CATEGORIES.forEach(c=>{const n=(c===RECENT?ITEMS.filter(it=>!!it.updated):ITEMS.filter(it=>it.category===c)).length;const el=document.createElement("div");
     el.className="cat"+(activeCat===c?" active":"")+(n===0?" empty":"");
     el.innerHTML=`${dot(c)} <span class="cnt">${n||""}</span>`;el.onclick=()=>{activeCat=c;render();closeNav();};sidebar.appendChild(el);});
 }
