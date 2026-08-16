@@ -72,6 +72,16 @@ def pp(t, cyc):
 
 
 def main():
+    prev = []
+    if os.path.exists(OUTP):
+        try:
+            prev = json.load(open(OUTP, encoding="utf-8")).get("items", [])
+        except Exception:
+            prev = []
+    if not KOSIS_KEY:
+        print("!! KOSIS_API_KEY 가 비어 있습니다. GitHub Secrets 에 등록하세요.")
+        print(f"   기존 data/api.json({len(prev)}건)을 그대로 둡니다.")
+        return 0
     if not os.path.exists(REG):
         print("등록된 API 차트가 없습니다. scripts/newchart.py 로 추가하세요.")
         json.dump({"category": "새 데이터", "items": []},
@@ -107,6 +117,9 @@ def main():
             "series": [[round(v * sc, 6) for _, v in ser]],
         })
         print(f"  · {key} {c['title'][:26]:28s} {pp(ser[0][0],cyc)}~{pp(ser[-1][0],cyc)} ({len(ser)}개)")
+    if not items and prev:
+        print(f"\n!! 수집 0건. 기존 data/api.json({len(prev)}건)을 그대로 둡니다.")
+        return 0
     json.dump({"category": "새 데이터", "_origin": "api", "items": items},
               open(OUTP, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print(f"\nAPI 차트 {len(items)}건 → data/api.json  (실패 {errs})")
