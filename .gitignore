@@ -15,3 +15,9 @@ site/
 # want them versioned — see .gitattributes). Comment these lines to commit them.
 source/*.key
 source/*.pptx
+
+# 작업용 로컬 파일 (깃에 올리지 않음)
+.cache/
+슬로우팩트북_현황.html
+latest/
+*.log
