@@ -346,6 +346,16 @@ html,body{margin:0;height:100%;background:transparent;
   <div class="chartbox"><canvas id="cv"></canvas></div>
   <div id="credit">슬로우팩트북</div>
 </div>
+<style>
+.datawrap{margin-top:14px;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.datascroll{max-height:460px;overflow:auto}
+#datatable{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+#datatable th{position:sticky;top:0;background:#f4f4f2;color:#555;font-size:11.5px;font-weight:600;
+  text-align:right;padding:8px 10px;border-bottom:1px solid var(--line)}
+#datatable th:first-child,#datatable td:first-child{text-align:left}
+#datatable td{padding:6px 10px;border-bottom:1px solid #f2f2ef;text-align:right}
+#datatable tr:hover td{background:#fafaf8}
+</style>
 <script>
 __CORE__
 const id=new URLSearchParams(location.search).get("id");
@@ -413,9 +423,22 @@ h1.title{font-size:30px;font-weight:800;margin:0 0 4px;letter-spacing:-.5px;}
     <a class="back" href="index.html">← 전체 보기</a>
     <button class="embed-btn" id="pngBtn">⬇ 이미지(PNG)</button>
     <button class="embed-btn" id="csvBtn">⬇ 데이터(CSV)</button>
+    <button class="embed-btn" id="copyBtn">⧉ 데이터 복사</button>
+    <button class="embed-btn" id="tblBtn">▾ 데이터 표</button>
     <button class="embed-btn" id="embedBtn">⧉ 임베드 코드 복사</button>
   </div>
+  <div class="datawrap" id="datawrap" hidden><div class="datascroll"><table id="datatable"></table></div></div>
 </main>
+<style>
+.datawrap{margin-top:14px;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.datascroll{max-height:460px;overflow:auto}
+#datatable{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+#datatable th{position:sticky;top:0;background:#f4f4f2;color:#555;font-size:11.5px;font-weight:600;
+  text-align:right;padding:8px 10px;border-bottom:1px solid var(--line)}
+#datatable th:first-child,#datatable td:first-child{text-align:left}
+#datatable td{padding:6px 10px;border-bottom:1px solid #f2f2ef;text-align:right}
+#datatable tr:hover td{background:#fafaf8}
+</style>
 <script>
 __CORE__
 const id=new URLSearchParams(location.search).get("id");
@@ -452,6 +475,29 @@ document.getElementById("csvBtn").onclick=()=>{
   const blob=new Blob(["﻿"+csv],{type:"text/csv;charset=utf-8"});
   const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=safeName(it.title)+".csv";a.click();
   toast("데이터(CSV)를 저장했습니다");
+};
+function tableRows(it){
+  const names=it.series.map((s,i)=>it.seriesNames[i]||("계열 "+(i+1)));
+  const rows=[["항목"].concat(names)];
+  it.labels.forEach((lab,r)=>rows.push([lab].concat(it.series.map(s=>s[r]==null?"":s[r]))));
+  return rows;
+}
+document.getElementById("copyBtn").onclick=()=>{
+  if(!window.CUR)return;
+  const tsv=tableRows(window.CUR).map(r=>r.join("\t")).join("\n");
+  navigator.clipboard.writeText(tsv).then(()=>toast("데이터를 복사했습니다. 키노트에 붙여넣으세요"))
+    .catch(()=>toast("복사에 실패했습니다"));
+};
+document.getElementById("tblBtn").onclick=()=>{
+  const w=document.getElementById("datawrap"),b=document.getElementById("tblBtn");
+  if(!w.hidden){w.hidden=true;b.textContent="▾ 데이터 표";return;}
+  if(!window.CUR)return;
+  const rows=tableRows(window.CUR),t=document.getElementById("datatable");
+  const esc=v=>String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+  t.innerHTML="<thead><tr>"+rows[0].map(c=>"<th>"+esc(c)+"</th>").join("")+"</tr></thead><tbody>"
+    +rows.slice(1).map(r=>"<tr>"+r.map(c=>"<td>"+(c===""?"–":esc(c))+"</td>").join("")+"</tr>").join("")+"</tbody>";
+  w.hidden=false;b.textContent="▴ 데이터 표 접기";
+  w.scrollIntoView({behavior:"smooth",block:"nearest"});
 };
 fetch("cats.json").then(r=>r.json()).then(cats=>{
   cats.forEach(c=>{const a=document.createElement("a");a.textContent=dot(c);a.href="index.html?cat="+encodeURIComponent(c);toc.appendChild(a);});
