@@ -1,0 +1,29 @@
+{
+ "slide-160": {
+  "label": "조혼인율",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1B8000F",
+  "itmId": "T1+",
+  "objL1": "42+",
+  "prdSe": "Y",
+  "startPrdDe": "1970",
+  "endPrdDe": "2026",
+  "source": "국가데이터처 인구동향조사, 단위: 인구 천 명당 건.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B8000F"
+ },
+ "slide-787": {
+  "label": "지역 합계출산율(전국)",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1B8000F",
+  "itmId": "T1+",
+  "objL1": "30+",
+  "prdSe": "Y",
+  "startPrdDe": "2000",
+  "endPrdDe": "2026",
+  "round": 3,
+  "source": "국가데이터처 인구동향조사, 단위: 명.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B8000F"
+ }
+}

@@ -1,0 +1,42 @@
+{
+ "api-0001": {
+  "title": "합계출산율",
+  "category": "출산",
+  "origin": "api",
+  "scale": 1.0,
+  "unit": "",
+  "cycle": "Y",
+  "source": "인구동향조사",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B81A17",
+  "table": "시군구/합계출산율, 모의 연령별 출산율",
+  "tblId": "DT_1B81A17",
+  "item": "합계출산율",
+  "provider": "kosis",
+  "orgId": "101",
+  "itmId": "T1+",
+  "prdSe": "Y",
+  "objL1": "00+",
+  "startPrdDe": "1960",
+  "endPrdDe": "2030"
+ },
+ "api-0002": {
+  "title": "청년 실업률",
+  "category": "노동",
+  "origin": "api",
+  "scale": 1.0,
+  "unit": "%",
+  "cycle": "Y",
+  "source": "경제활동인구조사",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1YL20531E",
+  "table": "청년실업률(시도)",
+  "tblId": "DT_1YL20531E",
+  "item": "청년실업률",
+  "provider": "kosis",
+  "orgId": "101",
+  "itmId": "T80+",
+  "prdSe": "Y",
+  "objL1": "00+",
+  "startPrdDe": "1960",
+  "endPrdDe": "2030"
+ }
+}
