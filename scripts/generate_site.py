@@ -9,7 +9,7 @@ Each json in <data_dir> is one extractor output. Its category is taken from
 the json's top-level "category" field (set by build.py) or, failing that,
 from the filename.
 """
-import sys, os, json, glob
+import sys, os, json, glob, shutil
 
 CATEGORIES = [
     "한눈에 보는 한국","노동, 비정규직, 산업재해","인구 구조, 출산","물가와 생활",
@@ -68,6 +68,9 @@ def load_items(data_dir):
             items.append(item)
     return items
 
+SEP = "\x1f"
+
+
 def assign_ids(items, idpath):
     """Assign each chart a stable id (c0001, ...), persisted in ids.json and
     keyed on category+title so ids survive data fixes. Only renaming a chart
@@ -75,17 +78,35 @@ def assign_ids(items, idpath):
     m = json.load(open(idpath, encoding="utf-8")) if os.path.exists(idpath) else {}
     nums = [int(v[1:]) for v in m.values() if v[1:].isdigit()]
     cnt = max(nums) if nums else 0
-    used = {}
+    used, seen = {}, {}
     for it in items:
-        base = it["category"] + "" + it["title"]
-        key, k = base, 2
-        while key in used:                      # same title twice in one build
-            key = base + "" + str(k); k += 1
-        used[key] = 1
-        if key not in m:
+        # 새 열쇠: 슬라이드 + 제목.
+        # 예전 열쇠(분류+제목)는 같은 제목이 116쌍 겹쳤고, 겹치는 것끼리는 빌드
+        # 순서로 2·3을 붙였다. 덱에서 차트가 하나 늘거나 줄면 순서가 밀려
+        # 임베드 주소가 다른 차트를 가리켰다. 슬라이드를 열쇠에 넣으면 그 일이 없다.
+        nb = "S" + SEP + str(it.get("slide")) + SEP + it["title"]
+        nkey, k = nb, 2
+        while nkey in seen:                     # 한 슬라이드에 같은 제목이 둘 (3쌍)
+            nkey = nb + SEP + str(k); k += 1
+        seen[nkey] = 1
+
+        # 예전 열쇠 — 이미 나간 임베드 주소를 그대로 물려받으려고 계산한다
+        base = it["category"] + SEP + it["title"]
+        okey, k = base, 2
+        while okey in used:
+            okey = base + SEP + str(k); k += 1
+        used[okey] = 1
+
+        if nkey in m:
+            it["id"] = m[nkey]
+        elif okey in m:                         # 이번 빌드에서 새 열쇠로 옮겨 적는다
+            m[nkey] = m[okey]
+            it["id"] = m[nkey]
+        else:
             cnt += 1
-            m[key] = f"c{cnt:04d}"
-        it["id"] = m[key]
+            m[nkey] = f"c{cnt:04d}"
+            it["id"] = m[nkey]
+        m.setdefault(okey, it["id"])            # 예전 열쇠도 남겨 되돌릴 수 있게 한다
     json.dump(m, open(idpath, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
 def build(data_dir, outp):
@@ -102,6 +123,16 @@ def build(data_dir, outp):
         cats = ["최근 업데이트"] + cats
     site_dir = os.path.dirname(outp) or "."
     os.makedirs(site_dir, exist_ok=True)
+    # Chart.js 를 저장소에서 복사해 함께 배포한다.
+    # CDN 하나가 죽으면 차트 전체가 빈 화면이 되던 문제를 없앤다 (CDN 은 대체 경로로만 남김).
+    _vend = os.path.join(site_dir, "vendor")
+    os.makedirs(_vend, exist_ok=True)
+    _src = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                        "assets", "chart.umd.min.js")
+    if os.path.exists(_src):
+        shutil.copyfile(_src, os.path.join(_vend, "chart.umd.min.js"))
+    else:
+        print("!! assets/chart.umd.min.js 가 없습니다. CDN 대체 경로로만 동작합니다.")
     html = TEMPLATE.replace("__CORE__", CORE_JS) \
                    .replace("__DATA__", json.dumps(items, ensure_ascii=False)) \
                    .replace("__CATS__", json.dumps(cats, ensure_ascii=False))
@@ -136,7 +167,8 @@ TEMPLATE = r"""<!DOCTYPE html>
 <html lang="ko"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>슬로우팩트북</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="vendor/chart.umd.min.js"></script>
+<script>window.Chart||document.write('<scr'+'ipt src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"><\/scr'+'ipt>')</script>
 <style>
 :root{--blue:#2f5e8e;--red:#c0322f;--gray:#b3b3b3;--orange:#f5a623;--ink:#1a1a1a;--line:#e6e6e6;}
 *{box-sizing:border-box;} body{margin:0;font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",-apple-system,sans-serif;color:var(--ink);background:#fafafa;}
@@ -326,7 +358,8 @@ EMBED_TEMPLATE = r"""<!DOCTYPE html>
 <html lang="ko"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>슬로우팩트북 차트</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="vendor/chart.umd.min.js"></script>
+<script>window.Chart||document.write('<scr'+'ipt src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"><\/scr'+'ipt>')</script>
 <style>
 html,body{margin:0;height:100%;background:transparent;
   font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",-apple-system,sans-serif;color:#1a1a1a;}
@@ -372,7 +405,8 @@ VIEW_TEMPLATE = r"""<!DOCTYPE html>
 <html lang="ko"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>슬로우팩트북</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="vendor/chart.umd.min.js"></script>
+<script>window.Chart||document.write('<scr'+'ipt src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"><\/scr'+'ipt>')</script>
 <style>
 :root{--blue:#2f5e8e;--ink:#1a1a1a;--line:#e6e6e6;}
 *{box-sizing:border-box;} body{margin:0;font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",-apple-system,sans-serif;color:var(--ink);background:#fafafa;}

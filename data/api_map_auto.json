@@ -20,31 +20,9 @@
    "2025"
   ],
   "_recoveredPeriods": null,
-  "objL1": "00+"
- },
- "slide-22": {
-  "label": "취업자 분포",
-  "category": "노동",
-  "provider": "kosis",
-  "orgId": "101",
-  "tblId": "DT_1DE9076_8",
-  "itmId": "T00+",
-  "prdSe": "Y",
-  "startPrdDe": "2000",
-  "endPrdDe": "2026",
-  "scale": 0.1,
-  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DE9076_8",
-  "_matchScore": 1.0,
-  "_tblNm": "졸업/중퇴 취업자의 직업별 취업분포(8차)",
-  "_statNm": "경제활동인구조사",
-  "_chartFreq": "Y",
-  "_periodRange": [
-   "201305",
-   "202505"
-  ],
-  "_recoveredPeriods": null,
-  "objL1": "M.10+",
-  "objL2": "N.00+"
+  "objL1": "00+",
+  "_auditOverlap": 26,
+  "_auditFrac": 1.0
  },
  "slide-25": {
   "label": "15~29세 실업률",
@@ -173,7 +151,9 @@
    "202504",
    "202601"
   ],
-  "objL1": "00+"
+  "objL1": "00+",
+  "_auditOverlap": 105,
+  "_auditFrac": 1.0
  },
  "slide-71": {
   "label": "취업자 수",
@@ -196,7 +176,9 @@
    "2025"
   ],
   "_recoveredPeriods": null,
-  "objL1": "45+"
+  "objL1": "45+",
+  "_auditOverlap": 46,
+  "_auditFrac": 1.0
  },
  "slide-77": {
   "label": "실업률",
@@ -220,7 +202,9 @@
   ],
   "_recoveredPeriods": null,
   "objL1": "75+",
-  "objL2": "00+"
+  "objL2": "00+",
+  "_auditOverlap": 26,
+  "_auditFrac": 1.0
  },
  "slide-81": {
   "label": "실업률과 고용률",
@@ -243,7 +227,9 @@
    "2025"
   ],
   "_recoveredPeriods": null,
-  "objL1": "0+"
+  "objL1": "0+",
+  "_auditOverlap": 26,
+  "_auditFrac": 1.0
  },
  "slide-103": {
   "label": "고용형태별 노동시간",
@@ -266,7 +252,9 @@
    "2024"
   ],
   "_recoveredPeriods": null,
-  "objL1": "13102732814TYPES.02+"
+  "objL1": "13102732814TYPES.02+",
+  "_auditOverlap": 18,
+  "_auditFrac": 1.0
  },
  "slide-104": {
   "label": "정규직과 비정규직 시간당 임금",
@@ -290,7 +278,9 @@
   ],
   "_recoveredPeriods": null,
   "objL1": "13102732820TYPES.02+",
-  "objL2": "13102732820SIZES.0+"
+  "objL2": "13102732820SIZES.0+",
+  "_auditOverlap": 17,
+  "_auditFrac": 1.0
  },
  "slide-143": {
   "label": "‘쉬었음’ 인구",
@@ -596,7 +586,9 @@
    "202605"
   ],
   "objL1": "75+",
-  "objL2": "905+"
+  "objL2": "905+",
+  "_auditOverlap": 281,
+  "_auditFrac": 1.0
  },
  "slide-156": {
   "label": "월별 출생아 수와 혼인 건수",
@@ -1164,7 +1156,9 @@
    "202603"
   ],
   "objL1": "00+",
-  "objL2": "10+"
+  "objL2": "10+",
+  "_auditOverlap": 543,
+  "_auditFrac": 1.0
  },
  "slide-158": {
   "label": "혼인건수와 이혼건수",
@@ -1188,7 +1182,9 @@
   ],
   "_recoveredPeriods": null,
   "objL1": "00+",
-  "objL2": "0+"
+  "objL2": "0+",
+  "_auditOverlap": 21,
+  "_auditFrac": 1.0
  },
  "slide-160": {
   "label": "조혼인율",
@@ -1211,7 +1207,9 @@
    "2024"
   ],
   "_recoveredPeriods": null,
-  "objL1": "42+"
+  "objL1": "42+",
+  "_auditOverlap": 55,
+  "_auditFrac": 1.0
  },
  "slide-164": {
   "label": "한국 출생아 수",
@@ -1234,7 +1232,9 @@
    "2024"
   ],
   "_recoveredPeriods": null,
-  "objL1": "00+"
+  "objL1": "00+",
+  "_auditOverlap": 25,
+  "_auditFrac": 1.0
  },
  "slide-166": {
   "label": "한국 출생아 수와 사망자 수",
@@ -1257,32 +1257,9 @@
    "2024"
   ],
   "_recoveredPeriods": null,
-  "objL1": "00+"
- },
- "slide-167": {
-  "label": "한국 사망자 수",
-  "category": "인구 구조",
-  "provider": "kosis",
-  "orgId": "101",
-  "tblId": "DT_1B80A18",
-  "itmId": "T2+",
-  "prdSe": "Y",
-  "startPrdDe": "1925",
-  "endPrdDe": "2073",
-  "scale": 0.0001,
-  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B80A18",
-  "_matchScore": 1.0,
-  "_tblNm": "시군구/성/연령(5세)별 사망자수(1997~), 사망률(1998~)",
-  "_statNm": "인구동향조사",
-  "_chartFreq": "Y",
-  "_periodRange": [
-   "1997",
-   "2024"
-  ],
-  "_recoveredPeriods": null,
-  "objL1": "0+",
-  "objL2": "000+",
-  "objL3": "00+"
+  "objL1": "00+",
+  "_auditOverlap": 25,
+  "_auditFrac": 1.0
  },
  "slide-168": {
   "label": "한국 사망자 수와 출생아 수 추계",
@@ -1305,7 +1282,9 @@
    "2024"
   ],
   "_recoveredPeriods": null,
-  "objL1": "00+"
+  "objL1": "00+",
+  "_auditOverlap": 22,
+  "_auditFrac": 1.0
  },
  "slide-176": {
   "label": "총진료비와 65세 이상 진료비",
@@ -1328,7 +1307,9 @@
    "2024"
   ],
   "_recoveredPeriods": null,
-  "objL1": "0001+"
+  "objL1": "0001+",
+  "_auditOverlap": 14,
+  "_auditFrac": 1.0
  },
  "slide-197": {
   "label": "경력단절여성",
@@ -1352,7 +1333,9 @@
   ],
   "_recoveredPeriods": null,
   "objL1": "00+",
-  "objL2": "00+"
+  "objL2": "00+",
+  "_auditOverlap": 12,
+  "_auditFrac": 1.0
  },
  "slide-199": {
   "label": "육아휴직자",
@@ -1375,7 +1358,9 @@
    "2024"
   ],
   "_recoveredPeriods": null,
-  "objL1": "G2+"
+  "objL1": "G2+",
+  "_auditOverlap": 15,
+  "_auditFrac": 1.0
  },
  "slide-237": {
   "label": "월별 물가 상승률",
@@ -1709,7 +1694,9 @@
    "202509",
    "202510"
   ],
-  "objL1": "00+"
+  "objL1": "00+",
+  "_auditOverlap": 310,
+  "_auditFrac": 1.0
  },
  "slide-238": {
   "label": "소비자물가 상승률",
@@ -1732,7 +1719,9 @@
    "2024"
   ],
   "_recoveredPeriods": null,
-  "objL1": "1005+"
+  "objL1": "1005+",
+  "_auditOverlap": 25,
+  "_auditFrac": 1.0
  },
  "slide-239": {
   "label": "소비자 물가 상승률",
@@ -1755,7 +1744,9 @@
    "2024"
   ],
   "_recoveredPeriods": null,
-  "objL1": "1005+"
+  "objL1": "1005+",
+  "_auditOverlap": 45,
+  "_auditFrac": 1.0
  },
  "slide-241": {
   "label": "임금 상승률",
@@ -1778,7 +1769,9 @@
    "2024"
   ],
   "_recoveredPeriods": null,
-  "objL1": "00+"
+  "objL1": "00+",
+  "_auditOverlap": 13,
+  "_auditFrac": 1.0
  },
  "slide-336": {
   "label": "GDP 대비 사회 복지 지출",
@@ -1801,7 +1794,9 @@
    "2024"
   ],
   "_recoveredPeriods": null,
-  "objL1": "222+"
+  "objL1": "222+",
+  "_auditOverlap": 35,
+  "_auditFrac": 1.0
  },
  "slide-391": {
   "label": "국세 수입",
@@ -1824,7 +1819,9 @@
    "2024"
   ],
   "_recoveredPeriods": null,
-  "objL1": "15110AD6Cq+"
+  "objL1": "15110AD6Cq+",
+  "_auditOverlap": 33,
+  "_auditFrac": 1.0
  },
  "slide-405": {
   "label": "국가채무",
@@ -1847,7 +1844,9 @@
    "2024"
   ],
   "_recoveredPeriods": null,
-  "objL1": "A01+"
+  "objL1": "A01+",
+  "_auditOverlap": 28,
+  "_auditFrac": 0.964
  },
  "slide-419": {
   "label": "세수 현황",
@@ -1871,7 +1870,9 @@
   ],
   "_recoveredPeriods": null,
   "objL1": "15133SMB070101+",
-  "objL2": "15133SMS01+"
+  "objL2": "15133SMS01+",
+  "_auditOverlap": 21,
+  "_auditFrac": 1.0
  },
  "slide-423": {
   "label": "국세 징수 현황",
@@ -1894,7 +1895,9 @@
    "2025"
   ],
   "_recoveredPeriods": null,
-  "objL1": "15133SMB070101+"
+  "objL1": "15133SMB070101+",
+  "_auditOverlap": 21,
+  "_auditFrac": 1.0
  },
  "slide-431": {
   "label": "국세 징수 현황",
@@ -1917,7 +1920,9 @@
    "2024"
   ],
   "_recoveredPeriods": null,
-  "objL1": "15133SMB070102+"
+  "objL1": "15133SMB070102+",
+  "_auditOverlap": 20,
+  "_auditFrac": 1.0
  },
  "slide-435": {
   "label": "국세 징수 현황",
@@ -1940,7 +1945,9 @@
    "2024"
   ],
   "_recoveredPeriods": null,
-  "objL1": "15133SMB070101+"
+  "objL1": "15133SMB070101+",
+  "_auditOverlap": 20,
+  "_auditFrac": 1.0
  },
  "slide-479": {
   "label": "대외 채무",
@@ -1963,7 +1970,9 @@
    "2024"
   ],
   "_recoveredPeriods": null,
-  "objL1": "13102134499ACC_CD.A000000+"
+  "objL1": "13102134499ACC_CD.A000000+",
+  "_auditOverlap": 31,
+  "_auditFrac": 0.968
  },
  "slide-486": {
   "label": "1인당 쌀 소비량",
@@ -1987,7 +1996,9 @@
   ],
   "_recoveredPeriods": null,
   "objL1": "10+",
-  "objL2": "00+"
+  "objL2": "00+",
+  "_auditOverlap": 63,
+  "_auditFrac": 1.0
  },
  "slide-674": {
   "label": "코스피 지수",
@@ -2280,7 +2291,9 @@
    "202604",
    "202605"
   ],
-  "objL1": "13102792816A.01+"
+  "objL1": "13102792816A.01+",
+  "_auditOverlap": 269,
+  "_auditFrac": 0.996
  },
  "slide-701": {
   "label": "중국 경제 성장률",
@@ -2303,7 +2316,9 @@
    "2024"
   ],
   "_recoveredPeriods": null,
-  "objL1": "1050+"
+  "objL1": "1050+",
+  "_auditOverlap": 64,
+  "_auditFrac": 1.0
  },
  "slide-753": {
   "label": "서울과 경기 지역내총생산(GRDP)",
@@ -2327,7 +2342,9 @@
   ],
   "_recoveredPeriods": null,
   "objL1": "11+",
-  "objL2": "E00+"
+  "objL2": "E00+",
+  "_auditOverlap": 30,
+  "_auditFrac": 1.0
  },
  "slide-754": {
   "label": "지역내총생산(GRDP)",
@@ -2351,7 +2368,9 @@
   ],
   "_recoveredPeriods": null,
   "objL1": "21+",
-  "objL2": "Z10+"
+  "objL2": "Z10+",
+  "_auditOverlap": 40,
+  "_auditFrac": 1.0
  },
  "slide-767": {
   "label": "부산과 인천 경제활동인구",
@@ -2375,7 +2394,9 @@
   ],
   "_recoveredPeriods": null,
   "objL1": "21+",
-  "objL2": "0+"
+  "objL2": "0+",
+  "_auditOverlap": 25,
+  "_auditFrac": 1.0
  },
  "slide-787": {
   "label": "합계출산율",
@@ -2398,53 +2419,9 @@
    "2024"
   ],
   "_recoveredPeriods": null,
-  "objL1": "00+"
- },
- "slide-839": {
-  "label": "상장기업 수",
-  "category": "지역",
-  "provider": "kosis",
-  "orgId": "458",
-  "tblId": "DT_11533N_001",
-  "itmId": "T004+",
-  "prdSe": "Y",
-  "startPrdDe": "1956",
-  "endPrdDe": "2025",
-  "scale": 1,
-  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=458&tblId=DT_11533N_001",
-  "_matchScore": 1.0,
-  "_tblNm": "첨단세라믹산업 응답업체 현황",
-  "_statNm": "첨단세라믹산업조사",
-  "_chartFreq": "Y",
-  "_periodRange": [
-   "2016",
-   "2024"
-  ],
-  "_recoveredPeriods": null,
-  "objL1": "00030001+"
- },
- "slide-863": {
-  "label": "방위비 분담금",
-  "category": "북한",
-  "provider": "kosis",
-  "orgId": "122",
-  "tblId": "DT_122009_006",
-  "itmId": "T001+",
-  "prdSe": "Y",
-  "startPrdDe": "1991",
-  "endPrdDe": "2031",
-  "scale": 1,
-  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=122&tblId=DT_122009_006",
-  "_matchScore": 1.0,
-  "_tblNm": "방위비분담금 현황",
-  "_statNm": "국방통계",
-  "_chartFreq": "Y",
-  "_periodRange": [
-   "2018",
-   "2024"
-  ],
-  "_recoveredPeriods": null,
-  "objL1": "DATA+"
+  "objL1": "00+",
+  "_auditOverlap": 25,
+  "_auditFrac": 1.0
  },
  "slide-864": {
   "label": "남한과 북한 GDP",
@@ -2468,7 +2445,9 @@
   ],
   "_recoveredPeriods": null,
   "objL1": "01+",
-  "objL2": "10+"
+  "objL2": "10+",
+  "_auditOverlap": 35,
+  "_auditFrac": 1.0
  },
  "slide-865": {
   "label": "남한과 북한 합계출산율",
@@ -2491,7 +2470,9 @@
    "2024"
   ],
   "_recoveredPeriods": null,
-  "objL1": "10+"
+  "objL1": "10+",
+  "_auditOverlap": 17,
+  "_auditFrac": 0.941
  },
  "slide-898": {
   "label": "GDP 대비 정부부채 비율",
@@ -2514,7 +2495,9 @@
    "2023"
   ],
   "_recoveredPeriods": null,
-  "objL1": "1005+"
+  "objL1": "1005+",
+  "_auditOverlap": 13,
+  "_auditFrac": 1.0
  },
  "slide-928": {
   "label": "코스닥 지수",
@@ -2804,7 +2787,9 @@
    "202512",
    "202601"
   ],
-  "objL1": "13102792840A.02+"
+  "objL1": "13102792840A.02+",
+  "_auditOverlap": 266,
+  "_auditFrac": 0.996
  },
  "slide-942": {
   "label": "코스피 PBR(주가자산비율)",
@@ -3093,7 +3078,9 @@
    "202512",
    "202601"
   ],
-  "objL1": "13102792822A.01+"
+  "objL1": "13102792822A.01+",
+  "_auditOverlap": 265,
+  "_auditFrac": 0.996
  },
  "slide-954": {
   "label": "주택 가격 전망 지수",
@@ -3276,41 +3263,9 @@
    "202602"
   ],
   "objL1": "13102134688CSI_CD.FMFB+",
-  "objL2": "13102134688CSI_CLF_CD.99988+"
- },
- "slide-975": {
-  "label": "아파트 1㎡당 분양가와 매매가(서울)",
-  "category": "부동산",
-  "provider": "kosis",
-  "orgId": "101",
-  "tblId": "DT_1JU1501",
-  "itmId": "T21+",
-  "prdSe": "M",
-  "startPrdDe": "201501",
-  "endPrdDe": "202612",
-  "scale": 0.001,
-  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1JU1501",
-  "_matchScore": 1.0,
-  "_tblNm": "주택의 종류별 주택 - 읍면동(연도 끝자리 0, 5), 시군구(그 외 연도)",
-  "_statNm": "주택총조사",
-  "_chartFreq": "M",
-  "_periodRange": [
-   "2016",
-   "2025"
-  ],
-  "_recoveredPeriods": [
-   "2016",
-   "2017",
-   "2018",
-   "2019",
-   "2020",
-   "2021",
-   "2022",
-   "2023",
-   "2024",
-   "2025"
-  ],
-  "objL1": "05+"
+  "objL2": "13102134688CSI_CLF_CD.99988+",
+  "_auditOverlap": 158,
+  "_auditFrac": 1.0
  },
  "slide-980": {
   "label": "주택 시가총액",
@@ -3333,7 +3288,9 @@
    "2024"
   ],
   "_recoveredPeriods": null,
-  "objL1": "00+"
+  "objL1": "00+",
+  "_auditOverlap": 30,
+  "_auditFrac": 1.0
  },
  "slide-992": {
   "label": "서울과 수도권 아파트 평균 분양가",
@@ -3466,6 +3423,8 @@
    "202412"
   ],
   "objL1": "01+",
-  "objL2": "T1+"
+  "objL2": "T1+",
+  "_auditOverlap": 108,
+  "_auditFrac": 1.0
  }
 }
