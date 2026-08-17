@@ -215,6 +215,7 @@ def main():
     # ── 매칭 ──
     sys.path.insert(0, os.path.join(ROOT, "scripts"))
     import generate_site as g
+    os.environ["MATCH_FAST_NOCACHE"] = "1"
     from match_fast import align, chart_years, infer_freq
 
     items = g.load_items(DATA)

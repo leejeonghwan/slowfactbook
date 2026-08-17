@@ -98,10 +98,35 @@ ALIAS = {"충북": "충청북", "충남": "충청남", "전북": "전라북", "�
          "경기": "경기", "전국": "전국", "계": "전국"}
 
 
+_AGERANGE = re.compile(r"^(\d+)[~\-–_]+(\d+)세?$")
+_AGEONE = re.compile(r"^(\d+)세?(이상|미만|초과|이하)?$")
+_AGEOPEN = re.compile(r"^[~\-–]+(\d+)세?$")
+
+
+def norm_age(s):
+    """연령 라벨 표기를 하나로 모은다.
+    '20 ~ 24' '20-24세' '20–24' → '20-24세' · '~ 19세' → '0-19세' · '65세이상' → '65세이상'
+    KOSIS 분류명이 '20 - 24세', 차트가 '20~24세' 처럼 제각각이라 이걸 맞춰야 대조가 된다."""
+    m = _AGERANGE.match(s)
+    if m:
+        return f"{int(m.group(1))}-{int(m.group(2))}세"
+    m = _AGEOPEN.match(s)
+    if m:
+        return f"0-{int(m.group(1))}세"
+    m = _AGEONE.match(s)
+    if m and m.group(2):
+        return f"{int(m.group(1))}세{m.group(2)}"
+    if re.fullmatch(r"\d+대", s):
+        d = int(s[:-1])
+        return f"{d}-{d+9}세"
+    return s
+
+
 def norm(s):
     s = str(s).strip()
     s = re.sub(r"[\s.·,()]+", "", s)
     s = SUFFIX.sub("", s)
+    s = norm_age(s)
     return ALIAS.get(s, s)
 
 

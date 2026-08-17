@@ -18,7 +18,22 @@ DATA = os.path.join(ROOT, "data")
 KEY = os.environ.get("KOSIS_API_KEY", "")
 CACHE = os.path.join(ROOT, ".cache", "kosis.json")
 os.makedirs(os.path.dirname(CACHE), exist_ok=True)
-_cache = json.load(open(CACHE, encoding="utf-8")) if os.path.exists(CACHE) else {}
+
+
+
+def _load_cache():
+    """다른 프로세스가 쓰는 중이면 깨진 JSON을 읽을 수 있다. 그때는 빈 캐시로 시작한다.
+    (NOCACHE=1 이면 아예 읽지 않는다 — align 만 쓰려고 import 하는 쪽을 위해)"""
+    if os.environ.get("MATCH_FAST_NOCACHE") == "1" or not os.path.exists(CACHE):
+        return {}
+    try:
+        return json.load(open(CACHE, encoding="utf-8"))
+    except Exception as e:
+        print(f"!! 캐시를 읽지 못해 빈 캐시로 시작합니다 ({str(e)[:60]})", file=sys.stderr)
+        return {}
+
+
+_cache = _load_cache()
 _n = 0
 
 SCALES = [1, 1e-1, 1e1, 1e-2, 1e2, 1e-3, 1e3, 1e-4, 1e4, 1e-6, 1e6, 1e-8, 1e8, 1e-9, 1e9, 1e-12, 1e12]
@@ -112,6 +127,59 @@ def norm_title(t):
     return re.sub(r"\s+", " ", t).strip()
 
 
+# 기사용 제목을 통계용 검색어로 바꾼다.
+# KOSIS 전문검색은 짧은 통계 용어에 강하고 긴 서술형 제목에는 아무것도 못 돌려준다.
+#   '월별 취업자 수 증감'          → 취업자 수 / 취업자
+#   '최저임금 인상율과 소비자 물가 상승율' → 최저임금 / 소비자 물가 상승율 / 소비자 물가
+_MODIFIER = re.compile(
+    r"(월별|연도별|년도별|분기별|지역별|시도별|국가별|성별|연령별|학력별|업종별|규모별|유형별|"
+    r"추이|변화|비교|현황|전망|증감|추계|누적|기준|현재|전체|국내|우리나라|한국의|"
+    r"상위\s*\d+|하위\s*\d+|\d+대\s*기업)")
+_TAILNOISE = re.compile(r"\s*\(\s*\d+\s*\)\s*$|\s*\d+\s*$")
+_SPLIT = re.compile(r"\s*(?:과|와|및|vs\.?|대비|그리고|,|/)\s+")
+
+
+def query_terms(title, maxn=4):
+    """제목 하나에서 검색어 후보를 짧은 것 위주로 몇 개 뽑는다."""
+    base = _TAILNOISE.sub("", norm_title(title)).strip()
+    out, seen = [], set()
+
+    def push(s):
+        s = re.sub(r"\s+", " ", s).strip(" -–—의")
+        if 1 < len(s) <= 20 and s not in seen:
+            seen.add(s)
+            out.append(s)
+
+    # 1) 접속사로 쪼갠 조각 (‘최저임금과 물가’ → 둘 다 따로 찾는다)
+    parts = [p for p in _SPLIT.split(base) if p.strip()]
+    for p in parts if len(parts) > 1 else []:
+        push(_MODIFIER.sub(" ", p))
+    # 2) 수식어를 걷어낸 통짜
+    push(_MODIFIER.sub(" ", base))
+    # 3) 그래도 길면 뒤쪽 2~3 어절 (통계 용어는 대개 끝에 온다)
+    w = _MODIFIER.sub(" ", base).split()
+    for k in (3, 2, 1):
+        if len(w) > k:
+            push(" ".join(w[-k:]))
+    push(base)
+    return out[:maxn]
+
+
+def search_multi(title, want=6):
+    """검색어를 여러 개 시도해 후보 통계표를 모은다. 짧은 질의부터 순서대로."""
+    got, seen = [], set()
+    for term in query_terms(title):
+        for c in search(term) or []:
+            tid = c.get("TBL_ID")
+            if not tid or tid.startswith("INH_") or tid in seen:
+                continue
+            seen.add(tid)
+            got.append(c)
+        if len(got) >= want:
+            break
+    return got[:want]
+
+
 def align(cv, av, tol=0.02):
     n, m = len(cv), len(av)
     if n < 4 or m < 4:
@@ -164,6 +232,7 @@ def main():
     ap.add_argument("--limit", type=int, default=400)
     ap.add_argument("--offset", type=int, default=0)
     ap.add_argument("--cands", type=int, default=3)
+    ap.add_argument("--redo", action="store_true", help="후보를 못 찾았던 차트를 다시 시도")
     ap.add_argument("--codes", type=int, default=45)
     ap.add_argument("--accept", type=float, default=0.9)
     a = ap.parse_args()
@@ -183,6 +252,9 @@ def main():
     rp = os.path.join(DATA, "_match_review.json")
     conf = json.load(open(cp, encoding="utf-8")) if os.path.exists(cp) else {}
     rev = json.load(open(rp, encoding="utf-8")) if os.path.exists(rp) else []
+    if a.redo:
+        # 검색어 생성기가 바뀌었으니 후보를 못 찾았던 것만 다시 돌린다
+        rev = [r for r in rev if r.get("why") not in ("검색 결과 없음",) and r.get("best_score")]
     done = set(conf) | {r["slide"] for r in rev}
 
     for it, ys, freq in targets[a.offset:a.offset + a.limit]:
@@ -196,8 +268,7 @@ def main():
         vals = it["series"][0]
         best = None
         try:
-            cands = [c for c in search(norm_title(it["title"]))[:6]
-                     if c.get("TBL_ID") and not c["TBL_ID"].startswith("INH_")][:a.cands]
+            cands = search_multi(it["title"], want=max(6, a.cands))[:a.cands]
         except Exception as e:
             rev.append({"slide": it["slide"], "title": it["title"], "category": it["category"],
                         "freq": freq, "why": f"검색 실패: {str(e)[:60]}"})
