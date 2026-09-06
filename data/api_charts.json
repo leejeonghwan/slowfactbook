@@ -107,5 +107,30 @@
     "objL1": "a701"
    }
   ]
+ },
+ "api-0005": {
+  "origin": "api",
+  "provider": "kosis",
+  "orgId": "408",
+  "itmId": "T001+",
+  "prdSe": "D",
+  "cycle": "D",
+  "startPrdDe": "20210705",
+  "endPrdDe": "20351231",
+  "scale": 1.0,
+  "source": "한국부동산원 전국주택가격동향조사(주간). 2021년 6월 이전은 R-ONE 자료를 연쇄 환산",
+  "category": "부동산",
+  "title": "서울 아파트 주간 매매가격지수(2012년~)",
+  "unit": "2026.7.6=100",
+  "table": "주간 아파트 매매가격지수",
+  "tblId": "DT_304004_WEEK_002_C",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=408&tblId=DT_304004_WEEK_002_C",
+  "series": [
+   {
+    "name": "서울",
+    "objL1": "a7"
+   }
+  ],
+  "prefix": "api-0005.json"
  }
 }

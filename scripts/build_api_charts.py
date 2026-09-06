@@ -14,6 +14,10 @@
 
   KOSIS_API_KEY=... ECOS_API_KEY=... python3 scripts/build_api_charts.py
 
+API 에 없는 옛 구간을 앞에 붙일 수 있다 ("prefix": "api-0005.json" → data/api_prefix/ 의 파일).
+파일은 {"series": {"계열명": [["YYYYMMDD", 값], ...]}} 꼴. 기준 시점이 달라도 된다 — 겹치는 구간의
+비율(중앙값)로 환산해 잇고, 겹치는 구간이 상수배로 안 맞으면(0.5% 초과) 그 계열은 붙이지 않는다.
+
 계열이 여럿인 차트는 등록부에 "series" 를 둔다. 각 원소는 기본 spec 위에 덮어쓰는 조각이다.
   "series": [{"name": "서울", "objL1": "a7"}, {"name": "강남권역", "objL1": "a702"}]
 """
@@ -61,6 +65,43 @@ def ecos_series(spec):
     import ecos
     return ecos.search(spec["statCode"], spec["cycle"], spec["start"], spec["end"],
                        spec.get("itemCode"))
+
+
+def chain_prefix(fetched, spec):
+    """API 계열 앞에 옛 구간(prefix 파일)을 연쇄로 이어붙인다. 계열 이름으로 맞춘다."""
+    pf = spec.get("prefix")
+    if not pf:
+        return fetched
+    path = os.path.join(DATA, "api_prefix", pf)
+    if not os.path.exists(path):
+        print(f"    ! prefix 파일 없음: {path}")
+        return fetched
+    pre = json.load(open(path, encoding="utf-8")).get("series", {})
+    out = []
+    for name, d in fetched:
+        old = pre.get(name)
+        if not old:
+            out.append((name, d))
+            continue
+        od = {p: v for p, v in old if v is not None}
+        common = sorted(set(od) & set(d))
+        if len(common) < 4:
+            print(f"    ! {name}: 겹치는 시점이 {len(common)}개뿐 — 옛 구간을 붙이지 않음")
+            out.append((name, d))
+            continue
+        rr = sorted(d[p] / od[p] for p in common if od[p])
+        ratio = rr[len(rr) // 2]
+        dev = max(abs(d[p] / od[p] / ratio - 1) for p in common if od[p])
+        if dev > 0.005:
+            print(f"    ! {name}: 겹치는 구간이 상수배로 안 맞음 (최대 {dev*100:.2f}%) — 옛 구간을 붙이지 않음")
+            out.append((name, d))
+            continue
+        first = min(d)
+        merged = {p: round(v * ratio, 4) for p, v in od.items() if p < first}
+        merged.update(d)
+        print(f"    + {name}: {min(merged)}부터 이어붙임 (환산 ×{ratio:.5f}, 겹침 {len(common)}점, 최대 편차 {dev*100:.2f}%)")
+        out.append((name, merged))
+    return out
 
 
 def pp(t, cyc):
@@ -114,6 +155,7 @@ def main():
             streak += 1
             continue
         streak = 0
+        fetched = chain_prefix(fetched, c)
         periods = sorted(set().union(*[d.keys() for _, d in fetched]))
         if len(periods) < 2:
             continue
