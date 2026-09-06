@@ -4,7 +4,8 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: "0 20 * * *"        # 매일 05:00 KST 자동 갱신
+    - cron: "0 23 * * *"        # 매일 08:00 KST 자동 갱신 (05시 무렵은 KOSIS OpenAPI 가 자주 응답하지 않는다)
+    - cron: "0 5 * * *"         # 매일 14:00 KST 한 번 더 — 아침에 KOSIS 가 죽어 있었으면 여기서 받는다
   workflow_dispatch:
 
 concurrency:
