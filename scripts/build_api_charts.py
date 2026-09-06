@@ -13,6 +13,9 @@
 키노트에서 만든 기존 차트(origin=keynote)와는 파일이 분리돼 있어 섞이지 않는다.
 
   KOSIS_API_KEY=... ECOS_API_KEY=... python3 scripts/build_api_charts.py
+
+계열이 여럿인 차트는 등록부에 "series" 를 둔다. 각 원소는 기본 spec 위에 덮어쓰는 조각이다.
+  "series": [{"name": "서울", "objL1": "a7"}, {"name": "강남권역", "objL1": "a702"}]
 """
 import os, sys, json, time, datetime, urllib.parse, urllib.request
 
@@ -93,13 +96,19 @@ def main():
     for key, c in reg.items():
         if c.get("disabled"):
             continue
+        parts = c.get("series") or [{"name": c["title"]}]
+        fetched = []
         try:
-            ser = ecos_series(c) if c.get("provider") == "ecos" else kosis_series(c)
+            for part in parts:
+                spec = {**c, **{k: v for k, v in part.items() if k != "name"}}
+                ser = ecos_series(spec) if spec.get("provider") == "ecos" else kosis_series(spec)
+                fetched.append((part.get("name") or c["title"], dict(ser)))
         except Exception as e:
             print(f"  ✗ {key} {c['title']}: {str(e)[:60]}")
             errs += 1
             continue
-        if len(ser) < 2:
+        periods = sorted(set().union(*[d.keys() for _, d in fetched]))
+        if len(periods) < 2:
             continue
         sc = c.get("scale", 1) or 1
         cyc = c.get("cycle", "Y")
@@ -111,12 +120,12 @@ def main():
                       + (f", 단위: {c['unit']}" if c.get("unit") else ""),
             "sourceUrl": c.get("sourceUrl", ""),
             "vizType": c.get("vizType", "line"),
-            "labels": [pp(p, cyc) for p, _ in ser],
-            "seriesNames": [c["title"]],
+            "labels": [pp(p, cyc) for p in periods],
+            "seriesNames": [n for n, _ in fetched],
             "updated": today,
-            "series": [[round(v * sc, 6) for _, v in ser]],
+            "series": [[None if d.get(p) is None else round(d[p] * sc, 6) for p in periods] for _, d in fetched],
         })
-        print(f"  · {key} {c['title'][:26]:28s} {pp(ser[0][0],cyc)}~{pp(ser[-1][0],cyc)} ({len(ser)}개)")
+        print(f"  · {key} {c['title'][:26]:28s} {pp(periods[0],cyc)}~{pp(periods[-1],cyc)} ({len(periods)}개 × {len(fetched)}계열)")
     if not items and prev:
         print(f"\n!! 수집 0건. 기존 data/api.json({len(prev)}건)을 그대로 둡니다.")
         return 0

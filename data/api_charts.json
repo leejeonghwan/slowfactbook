@@ -38,5 +38,74 @@
   "objL1": "00+",
   "startPrdDe": "1960",
   "endPrdDe": "2030"
+ },
+ "api-0003": {
+  "origin": "api",
+  "provider": "kosis",
+  "orgId": "408",
+  "itmId": "T001+",
+  "prdSe": "D",
+  "cycle": "D",
+  "startPrdDe": "20210705",
+  "endPrdDe": "20351231",
+  "scale": 1.0,
+  "source": "한국부동산원 전국주택가격동향조사(주간)",
+  "category": "부동산",
+  "title": "주간 아파트 매매가격지수(부동산원)",
+  "unit": "2026.7.6=100",
+  "table": "주간 아파트 매매가격지수",
+  "tblId": "DT_304004_WEEK_002_C",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=408&tblId=DT_304004_WEEK_002_C",
+  "series": [
+   {
+    "name": "전국",
+    "objL1": "a0"
+   },
+   {
+    "name": "서울",
+    "objL1": "a7"
+   },
+   {
+    "name": "강북권역",
+    "objL1": "a701"
+   },
+   {
+    "name": "강남권역",
+    "objL1": "a702"
+   }
+  ]
+ },
+ "api-0004": {
+  "origin": "api",
+  "provider": "kosis",
+  "orgId": "408",
+  "itmId": "T001+",
+  "prdSe": "D",
+  "cycle": "D",
+  "startPrdDe": "20210705",
+  "endPrdDe": "20351231",
+  "scale": 1.0,
+  "source": "한국부동산원 전국주택가격동향조사(주간)",
+  "category": "부동산",
+  "title": "주간 아파트 매매가격 변동률(부동산원)",
+  "unit": "%, 전주 대비",
+  "table": "주간 아파트 매매가격지수 변동률",
+  "vizType": "column",
+  "tblId": "DT_304004_WEEK_001_C",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=408&tblId=DT_304004_WEEK_001_C",
+  "series": [
+   {
+    "name": "서울",
+    "objL1": "a7"
+   },
+   {
+    "name": "강남권역",
+    "objL1": "a702"
+   },
+   {
+    "name": "강북권역",
+    "objL1": "a701"
+   }
+  ]
  }
 }
