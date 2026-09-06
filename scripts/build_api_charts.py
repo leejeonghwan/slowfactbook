@@ -188,6 +188,13 @@ def main():
             "series": [[None if d.get(p) is None else round(d[p] * sc, 6) for p in periods] for _, d in fetched],
         })
         print(f"  · {key} {c['title'][:26]:28s} {pp(periods[0],cyc)}~{pp(periods[-1],cyc)} ({len(periods)}개 × {len(fetched)}계열)")
+    # 이번에 못 받은 차트는 직전 성공본(data/api.json)의 항목을 그대로 살린다.
+    # KOSIS 가 잠깐 죽었다고 이미 나가 있는 임베드 주소가 404 가 되면 안 된다.
+    got = {it["slide"] for it in items}
+    kept = [it for it in prev if it["slide"] not in got and it["slide"] in reg and not reg[it["slide"]].get("disabled")]
+    if kept:
+        print(f"  · 이번에 못 받은 {len(kept)}건은 직전 성공본을 유지: " + ", ".join(it["slide"] for it in kept))
+        items = sorted(items + kept, key=lambda it: it["slide"])
     if not items and prev:
         print(f"\n!! 수집 0건. 기존 data/api.json({len(prev)}건)을 그대로 둡니다.")
         return 0
