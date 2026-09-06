@@ -132,5 +132,33 @@
    }
   ],
   "prefix": "api-0005.json"
+ },
+ "api-0006": {
+  "origin": "api",
+  "provider": "kosis",
+  "orgId": "408",
+  "itmId": "T001+",
+  "prdSe": "D",
+  "cycle": "D",
+  "startPrdDe": "20210705",
+  "endPrdDe": "20351231",
+  "scale": 1.0,
+  "source": "한국부동산원 전국주택가격동향조사(주간). 2021년 6월 이전은 R-ONE 지수에서 산출",
+  "category": "부동산",
+  "title": "서울 아파트 주간 매매가격 변동률(2012년~)",
+  "unit": "%, 전주 대비",
+  "table": "주간 아파트 매매가격지수 변동률",
+  "vizType": "column",
+  "tblId": "DT_304004_WEEK_001_C",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=408&tblId=DT_304004_WEEK_001_C",
+  "series": [
+   {
+    "name": "서울",
+    "objL1": "a7"
+   }
+  ],
+  "prefix": "api-0006.json",
+  "prefixMode": "abs",
+  "prefixTol": 0.03
  }
 }

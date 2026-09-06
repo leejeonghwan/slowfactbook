@@ -89,6 +89,20 @@ def chain_prefix(fetched, spec):
             print(f"    ! {name}: 겹치는 시점이 {len(common)}개뿐 — 옛 구간을 붙이지 않음")
             out.append((name, d))
             continue
+        first = min(d)
+        if spec.get("prefixMode") == "abs":
+            # 변동률처럼 0 근처 값: 환산 없이 그대로 잇고, 겹치는 구간은 절대 차이로 검증한다
+            tol = spec.get("prefixTol", 0.02)
+            dev = max(abs(d[p] - od[p]) for p in common)
+            if dev > tol:
+                print(f"    ! {name}: 겹치는 구간이 안 맞음 (최대 차이 {dev:.3f}) — 옛 구간을 붙이지 않음")
+                out.append((name, d))
+                continue
+            merged = {p: v for p, v in od.items() if p < first}
+            merged.update(d)
+            print(f"    + {name}: {min(merged)}부터 이어붙임 (겹침 {len(common)}점, 최대 차이 {dev:.3f})")
+            out.append((name, merged))
+            continue
         rr = sorted(d[p] / od[p] for p in common if od[p])
         ratio = rr[len(rr) // 2]
         dev = max(abs(d[p] / od[p] / ratio - 1) for p in common if od[p])
@@ -96,7 +110,6 @@ def chain_prefix(fetched, spec):
             print(f"    ! {name}: 겹치는 구간이 상수배로 안 맞음 (최대 {dev*100:.2f}%) — 옛 구간을 붙이지 않음")
             out.append((name, d))
             continue
-        first = min(d)
         merged = {p: round(v * ratio, 4) for p, v in od.items() if p < first}
         merged.update(d)
         print(f"    + {name}: {min(merged)}부터 이어붙임 (환산 ×{ratio:.5f}, 겹침 {len(common)}점, 최대 편차 {dev*100:.2f}%)")
