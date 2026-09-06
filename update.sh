@@ -5,6 +5,17 @@
 set -e
 cd "$(dirname "$0")"
 
+# KOSIS 수집을 여기(국내)서 한다. GitHub 빌드 서버(해외)는 KOSIS OpenAPI 가 자주 응답하지 않는다.
+# 키는 .env 파일(KOSIS_API_KEY=…) 또는 환경변수. 없으면 이 단계는 건너뛴다.
+[ -f .env ] && set -a && . ./.env && set +a
+if [ -n "$KOSIS_API_KEY" ]; then
+  echo "▶ KOSIS 수집 (API 트랙 + 확정 매칭 갱신)…"
+  python3 scripts/build_api_charts.py || echo "  API 트랙 수집 실패 — 직전 성공본 유지"
+  python3 scripts/refresh_charts.py --apply || echo "  확정 매칭 갱신 실패"
+else
+  echo "▶ KOSIS_API_KEY 없음 — 수집은 GitHub 빌드에 맡김 (.env 에 넣으면 여기서 받는다)"
+fi
+
 echo "▶ 빌드 (추출 + 사이트 생성)…"
 python3 scripts/build.py
 

@@ -21,3 +21,6 @@ source/*.pptx
 슬로우팩트북_현황.html
 latest/
 *.log
+
+# API 키
+.env
