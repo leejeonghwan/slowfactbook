@@ -1,0 +1,67 @@
+[
+ {
+  "date": "2026-09-06",
+  "slide": "slide-237",
+  "id": null,
+  "title": "월별 물가 상승률",
+  "category": "물가와 생활",
+  "mode": "auto",
+  "from": "2026",
+  "to": "2026",
+  "n": 2,
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1YL20581",
+  "keynoteSynced": false
+ },
+ {
+  "date": "2026-09-06",
+  "slide": "slide-674",
+  "id": null,
+  "title": "코스피 지수",
+  "category": "세계 경제",
+  "mode": "auto",
+  "from": "2026",
+  "to": "2026",
+  "n": 1,
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=343&tblId=DT_343_2010_S0029",
+  "keynoteSynced": false
+ },
+ {
+  "date": "2026-09-06",
+  "slide": "slide-928",
+  "id": null,
+  "title": "코스닥 지수",
+  "category": "주식",
+  "mode": "auto",
+  "from": "2026",
+  "to": "2026",
+  "n": 1,
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=343&tblId=DT_343_2010_S0065",
+  "keynoteSynced": false
+ },
+ {
+  "date": "2026-09-06",
+  "slide": "slide-942",
+  "id": null,
+  "title": "코스피 PBR(주가자산비율)",
+  "category": "주식",
+  "mode": "auto",
+  "from": "2026",
+  "to": "2026",
+  "n": 1,
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=343&tblId=DT_343_2010_S0034",
+  "keynoteSynced": false
+ },
+ {
+  "date": "2026-09-06",
+  "slide": "slide-954",
+  "id": null,
+  "title": "주택 가격 전망 지수",
+  "category": "부동산",
+  "mode": "auto",
+  "from": "2026-07",
+  "to": "2026-08",
+  "n": 1,
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=301&tblId=DT_511Y002",
+  "keynoteSynced": false
+ }
+]
