@@ -37,9 +37,9 @@ def kosis_series(spec):
     u = ("https://kosis.kr/openapi/Param/statisticsParameterData.do?"
          + "&".join(f"{k}={urllib.parse.quote(str(v), safe='+')}" for k, v in q.items()))
     last = None
-    for t in range(4):
+    for t in range(2):                       # KOSIS 가 멈춰 있을 때 빌드가 몇십 분씩 끌리지 않게: 2회, 25초
         try:
-            with urllib.request.urlopen(u, timeout=60) as r:
+            with urllib.request.urlopen(u, timeout=25) as r:
                 d = json.loads(r.read().decode("utf-8"))
             if not isinstance(d, list):
                 raise RuntimeError(str(d)[:100])
@@ -93,8 +93,13 @@ def main():
     reg = json.load(open(REG, encoding="utf-8"))
     today = datetime.date.today().isoformat()
     items, errs = [], 0
+    streak = 0                               # 연속 실패 — 3번 연달아 실패하면 KOSIS 장애로 보고 그만둔다
     for key, c in reg.items():
         if c.get("disabled"):
+            continue
+        if streak >= 3:
+            print(f"  · {key} 건너뜀 (KOSIS 연속 실패)")
+            errs += 1
             continue
         parts = c.get("series") or [{"name": c["title"]}]
         fetched = []
@@ -106,7 +111,9 @@ def main():
         except Exception as e:
             print(f"  ✗ {key} {c['title']}: {str(e)[:60]}")
             errs += 1
+            streak += 1
             continue
+        streak = 0
         periods = sorted(set().union(*[d.keys() for _, d in fetched]))
         if len(periods) < 2:
             continue

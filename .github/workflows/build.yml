@@ -7,6 +7,10 @@ on:
     - cron: "0 20 * * *"        # 매일 05:00 KST 자동 갱신
   workflow_dispatch:
 
+concurrency:
+  group: build-deploy            # 푸시가 연달아 와도 한 번에 하나만 돈다 (봇 커밋 충돌 방지)
+  cancel-in-progress: true    # 새 푸시가 오면 돌던 빌드는 취소 (최신 커밋이 이긴다)
+
 permissions:
   contents: write         # 자동 갱신분(data/)을 저장소에 되돌려 커밋한다
   pages: write
@@ -36,7 +40,9 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add data/overrides.json data/changelog.json
           if git diff --cached --quiet; then echo "자동 갱신 변경 없음"; else
-            git commit -m "자동 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d')" && git push
+            git commit -m "자동 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d')"
+            git pull --rebase || true
+            git push || echo "커밋 되돌리기 실패 — 사이트는 그대로 빌드"
           fi
       - name: Build site
         run: python scripts/build.py

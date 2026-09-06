@@ -90,9 +90,13 @@ def main():
     today = datetime.date.today().isoformat()
 
     ext, skip_multi, skip_score, skip_current, errs = [], [], [], [], []
+    streak = 0                                   # 연속 조회 실패 — KOSIS 장애면 나머지는 건너뛴다
     for slide, spec in mapping.items():
         it = items.get(slide)
         if not it or spec.get("provider", "kosis") != "kosis":
+            continue
+        if streak >= 3:
+            errs.append((it["title"], "건너뜀(연속 실패)"))
             continue
         series = it.get("series") or []
         if len(series) != 1:
@@ -102,7 +106,9 @@ def main():
             api = fetch(spec)
         except Exception as e:
             errs.append((it["title"], str(e)[:60]))
+            streak += 1
             continue
+        streak = 0
         if len(api) < 4:
             continue
         av = [v for _, v in api]

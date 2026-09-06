@@ -46,7 +46,7 @@ def api(url, ck, tries=2):
     last = None
     for t in range(tries):
         try:
-            with urllib.request.urlopen(url, timeout=45) as r:
+            with urllib.request.urlopen(url, timeout=25) as r:
                 d = json.loads(r.read().decode("utf-8"))
             if not isinstance(d, list):
                 if str(d.get("err")) == "30":
