@@ -63,5 +63,33 @@
   "n": 1,
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=301&tblId=DT_511Y002",
   "keynoteSynced": false
+ },
+ {
+  "date": "2026-09-06",
+  "slide": "m-0001",
+  "id": "c2031",
+  "title": "미국 비농업 고용자 수",
+  "category": "세계 경제",
+  "mode": "new",
+  "from": "1939-01",
+  "to": "2026-08",
+  "n": 1052,
+  "sourceUrl": "https://fred.stlouisfed.org/series/PAYEMS",
+  "note": "FRED PAYEMS 원본 CSV(천 명)를 백만 명으로 환산",
+  "keynoteSynced": false
+ },
+ {
+  "date": "2026-09-06",
+  "slide": "m-0002",
+  "id": "c2032",
+  "title": "미국 월별 신규 일자리(비농업 고용 전월 대비 증감)",
+  "category": "세계 경제",
+  "mode": "new",
+  "from": "2021-01",
+  "to": "2026-08",
+  "n": 68,
+  "sourceUrl": "https://fred.stlouisfed.org/series/PAYEMS",
+  "note": "PAYEMS 전월 차분, 2021-01부터",
+  "keynoteSynced": false
  }
 ]
