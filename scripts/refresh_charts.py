@@ -82,7 +82,9 @@ def main():
         if os.path.exists(p):
             mapping.update(json.load(open(p, encoding="utf-8")))
 
-    items = {it["slide"]: it for it in g.load_items(DATA)}
+    _items = g.load_items(DATA)
+    g.assign_ids(_items, os.path.join(DATA, "ids.json"))   # changelog 에 id 를 남기려면 필요하다
+    items = {it["slide"]: it for it in _items}
     ovp = os.path.join(DATA, "overrides.json")
     ov = json.load(open(ovp, encoding="utf-8")) if os.path.exists(ovp) else {}
     today = datetime.date.today().isoformat()
