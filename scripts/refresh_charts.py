@@ -140,7 +140,16 @@ def main():
             o["series"] = e["series"]
             o["updated"] = today
         json.dump(ov, open(ovp, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-        print(f"\n→ data/overrides.json 에 {len(ext)}건 반영. 다음: python3 scripts/build.py")
+        # 키노트에 옮길 목록(changelog)에도 남긴다 — keynote_sync.py 가 읽는다
+        clp = os.path.join(DATA, "changelog.json")
+        cl = json.load(open(clp, encoding="utf-8")) if os.path.exists(clp) else []
+        for e in ext:
+            cl.append({"date": today, "slide": e["slide"], "id": e["id"], "title": e["title"],
+                       "category": items[e["slide"]]["category"], "mode": "auto",
+                       "from": e["from"], "to": e["to"], "n": e["n"],
+                       "sourceUrl": mapping[e["slide"]].get("sourceUrl", ""), "keynoteSynced": False})
+        json.dump(cl, open(clp, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+        print(f"\n→ data/overrides.json 에 {len(ext)}건 반영 (changelog 기록). 다음: python3 scripts/build.py")
     elif ext:
         print("\n(미리보기입니다. 반영하려면 --apply)")
     return 0

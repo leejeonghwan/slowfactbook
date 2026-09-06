@@ -88,6 +88,41 @@ https://<사용자>.github.io/slowfactbook/embed.html?id=c0001
 
 > 임베드 URL이 안정적이므로, **한 번 고쳐 push하면 그 차트를 삽입한 모든 외부 페이지가 자동으로 갱신**된다. 새 항목을 추가하면 새 id가 발급되고, 기존 항목 id는 보존된다.
 
+## 팩트북이 정본이다 — 갱신·추가·키노트 동기화
+
+원본 덱을 매번 다시 내보내 추출하는 경로(`source/` → `build.py`)는 남겨 두되, 일상 갱신은 팩트북 쪽에서 한다.
+키노트는 팩트북에서 바뀐 것을 가져다 맞추는 쪽(팩트북 → 키노트)이다. 세 가지 경로가 있다.
+
+| 경로 | 스크립트 | 언제 |
+|---|---|---|
+| 자동 갱신 | `refresh_charts.py` (KOSIS 확정 매칭) · `build_api_charts.py` (API 트랙) · `kb_update.py` (KB 엑셀) | 매일 05:00 빌드가 KOSIS 매칭분을 이어붙이고 `data/`에 커밋한다 |
+| 슬라이드 갱신 | `set_data.py` | "슬라이드 N 을 이 데이터로" — CSV·TSV·엑셀·붙여넣은 표 |
+| 슬라이드 추가 | `add_chart.py` | "이 데이터(URL)로 차트 하나" — `data/manual.json` 에 들어가고 새 id 를 받는다 |
+
+```bash
+# 갱신: 겹치는 구간을 대조해 어긋나면 멈춘다. 뒤에만 이어붙인다. 기본은 미리보기.
+python3 scripts/set_data.py 964 새데이터.xlsx --sheet "아파트 매매평균가격" --url https://... --source "KB부동산 데이터허브" --unit "억 원"
+pbpaste | python3 scripts/set_data.py 122 -             # 붙여넣은 표
+python3 scripts/set_data.py 122 new.csv --revise --apply # 원자료 수정치까지 덮어쓰기
+python3 scripts/set_data.py 55  new.csv --replace --apply # 비시계열·계열 구성 변경은 통째로
+
+# 추가
+python3 scripts/add_chart.py 표.csv --title "…" --category "노동" --source "…" --unit "%" --url https://... --apply
+
+# KOSIS 표 URL 을 줬다면 한 번 등록해 두면 그 뒤로는 매일 자동으로 잇는다
+KOSIS_API_KEY=… python3 scripts/register_auto.py 122 --url "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_MON051" --apply
+
+# 키노트에 옮길 것 — 바뀐 차트 목록 + 붙여넣을 TSV(latest/keynote/)
+python3 scripts/keynote_sync.py
+python3 scripts/keynote_sync.py --done c0718,c2031   # 옮긴 뒤 표시
+
+./update.sh   # 빌드 → 커밋 → push
+```
+
+- 표는 방향(시점이 행인지 열인지)·구분자·단위 배수(만원↔억 원 등 10의 거듭제곱)를 스스로 맞춘다. 안 맞으면 `--transpose` `--scale` `--by-order`.
+- 모든 변경은 `data/changelog.json` 에 남고(자동 갱신 포함), `keynote_sync.py` 가 그걸 읽어 아직 키노트에 안 옮긴 것만 보여준다.
+- 차트 id(=임베드 주소)는 갱신해도 그대로다. 제목을 바꿀 때만 바뀐다.
+
 ## 알려진 보강 포인트
 
 - 빌드 단계가 비연속적으로 흩어진 경우 `dedup_builds()`가 일부를 놓칠 수 있음 → 필요 시 제목+데이터 해시 기준 전역 중복 제거로 강화.

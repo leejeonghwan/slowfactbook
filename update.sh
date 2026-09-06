@@ -17,5 +17,6 @@ if git diff --cached --quiet; then
   exit 0
 fi
 git commit -m "데이터 업데이트 $(date '+%Y-%m-%d %H:%M')"
+git pull --rebase --quiet   # 매일 새벽 자동 갱신 커밋(봇)이 먼저 올라가 있을 수 있다
 git push
 echo "✅ push 완료. 1~2분 뒤 사이트와 모든 임베드가 자동 갱신됩니다."
