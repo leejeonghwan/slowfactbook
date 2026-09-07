@@ -24,3 +24,6 @@ latest/
 
 # API 키
 .env
+
+# 세션 임시 폴더
+_to_delete/
