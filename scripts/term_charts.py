@@ -65,6 +65,10 @@ def chain(parts):
         rr = sorted(cur[p] / prev[p] for p in common if prev[p])
         ratio = rr[len(rr) // 2]
         dev = max(abs(cur[p] / prev[p] / ratio - 1) for p in common if prev[p])
+        if dev > 0.01:
+            # 같은 계열이 아니다(옛 KB 조사 vs 부동산원 조사). 접속 시점 한 점의 비율로 이어 이음새를 없앤다.
+            ratio = cur[common[0]] / prev[common[0]]
+            print(f"    ! 겹치는 구간이 상수배가 아님(최대 {dev*100:.2f}%) → 접속 시점 {common[0]} 한 점 비율로 잇는다")
         # 옛 표(1986~)는 새 조사가 시작된 2003.11 한 달만 겹친다 — 기준 시점 접속은 원래 한 점으로 한다
         note = " ※ 한 점 접속" if len(common) < 3 else ""
         print(f"    연쇄: {min(prev)}~{max(prev)} 표({len(prev)}달) → ×{ratio:.5f} (겹침 {len(common)}달, 최대 편차 {dev*100:.2f}%){note}")
