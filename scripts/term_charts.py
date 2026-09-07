@@ -68,8 +68,9 @@ def chain(parts):
         # 옛 표(1986~)는 새 조사가 시작된 2003.11 한 달만 겹친다 — 기준 시점 접속은 원래 한 점으로 한다
         note = " ※ 한 점 접속" if len(common) < 3 else ""
         print(f"    연쇄: {min(prev)}~{max(prev)} 표({len(prev)}달) → ×{ratio:.5f} (겹침 {len(common)}달, 최대 편차 {dev*100:.2f}%){note}")
+        first = min(cur)                      # 루프 안에서 min(cur) 를 다시 재면 한 달만 붙는다
         for p, v in prev.items():
-            if p < min(cur):
+            if p < first:
                 cur[p] = v * ratio
     return cur
 
