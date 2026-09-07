@@ -126,7 +126,14 @@ def main():
     if a.apt_file:
         apt = json.load(open(a.apt_file))
     else:
-        apt = chain([dict(bac.kosis_series(spec)) for spec in APT])
+        parts = []
+        for spec in APT:
+            d = dict(bac.kosis_series(spec))
+            ks = sorted(d)
+            gaps = sum(1 for a, b in zip(ks, ks[1:]) if addm(a, 1) != b)
+            print(f"  표 {spec['tblId']}: {ks[0] if ks else '-'}~{ks[-1] if ks else '-'} {len(d)}달" + (f" (빈 구간 {gaps}곳)" if gaps else ""))
+            parts.append(d)
+        apt = chain(parts)
     print(f"  {min(apt)}~{max(apt)} {len(apt)}달")
     n2, s2, m2 = term_series(apt)
 
