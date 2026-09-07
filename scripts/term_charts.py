@@ -60,12 +60,14 @@ def chain(parts):
     cur = dict(parts[-1])
     for prev in reversed(parts[:-1]):
         common = sorted(set(prev) & set(cur))
-        if len(common) < 3:
-            raise RuntimeError(f"겹치는 구간이 {len(common)}개뿐")
+        if not common:
+            raise RuntimeError(f"겹치는 구간이 없음 ({min(prev)}~{max(prev)} vs {min(cur)}~{max(cur)})")
         rr = sorted(cur[p] / prev[p] for p in common if prev[p])
         ratio = rr[len(rr) // 2]
         dev = max(abs(cur[p] / prev[p] / ratio - 1) for p in common if prev[p])
-        print(f"    연쇄: {min(prev)}~{min(cur)} 구간 ×{ratio:.5f} (겹침 {len(common)}달, 최대 편차 {dev*100:.2f}%)")
+        # 옛 표(1986~)는 새 조사가 시작된 2003.11 한 달만 겹친다 — 기준 시점 접속은 원래 한 점으로 한다
+        note = " ※ 한 점 접속" if len(common) < 3 else ""
+        print(f"    연쇄: {min(prev)}~{max(prev)} 표({len(prev)}달) → ×{ratio:.5f} (겹침 {len(common)}달, 최대 편차 {dev*100:.2f}%){note}")
         for p, v in prev.items():
             if p < min(cur):
                 cur[p] = v * ratio
