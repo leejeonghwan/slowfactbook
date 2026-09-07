@@ -12,6 +12,7 @@ if [ -n "$KOSIS_API_KEY" ]; then
   echo "▶ KOSIS 수집 (API 트랙 + 확정 매칭 갱신)…"
   python3 scripts/build_api_charts.py || echo "  API 트랙 수집 실패 — 직전 성공본 유지"
   python3 scripts/refresh_charts.py --apply || echo "  확정 매칭 갱신 실패"
+  python3 scripts/term_charts.py --apply || echo "  정권별 비교 차트 갱신 실패"
 else
   echo "▶ KOSIS_API_KEY 없음 — 수집은 GitHub 빌드에 맡김 (.env 에 넣으면 여기서 받는다)"
 fi
