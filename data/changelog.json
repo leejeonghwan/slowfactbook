@@ -119,5 +119,33 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=408&tblId=DT_30404_B012",
   "note": "term_charts.py 자동 생성",
   "keynoteSynced": false
+ },
+ {
+  "date": "2026-09-07",
+  "slide": "m-0003",
+  "id": "",
+  "title": "역대 정부 누적 물가 상승률",
+  "category": "소비와 물가",
+  "mode": "replace",
+  "from": "1년차",
+  "to": "임기 말",
+  "n": 61,
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1J22003",
+  "note": "term_charts.py 자동 생성",
+  "keynoteSynced": false
+ },
+ {
+  "date": "2026-09-07",
+  "slide": "m-0004",
+  "id": "",
+  "title": "역대 정부 서울 아파트 가격 상승률",
+  "category": "부동산",
+  "mode": "replace",
+  "from": "1년차",
+  "to": "임기 말",
+  "n": 61,
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=408&tblId=DT_30404_B012",
+  "note": "term_charts.py 자동 생성",
+  "keynoteSynced": false
  }
 ]
