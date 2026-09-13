@@ -129,32 +129,41 @@ def align(item, new, mapping):
         if pairs and len(pairs) >= min(len(pos), 3):
             tail = [j for j, l in enumerate(new["labels"]) if _norm(l) not in pos]
             return "라벨", pairs, tail, 0
-    # 값으로 맞춘다 (연도만 반복해 찍힌 월간 차트 등). 차트의 마지막 값을 새 표에서 찾아 앞으로 대조한다.
-    j0 = next(iter(mapping))
-    i0 = mapping[j0]
+    # 값으로 맞춘다 (연도만 반복해 찍힌 월간 차트 등). 차트의 마지막 값과 맞는 후보 오프셋을 전부 찾고,
+    # 대응되는 모든 계열의 겹치는 구간을 대조해 가장 잘 맞는 오프셋을 고른다. (완만한 계열은 한 달 옆도 0.5% 안에 든다)
+    j0 = next(iter(mapping)); i0 = mapping[j0]
     cv, nv = item["series"][i0], new["series"][j0]
     anchor = next((i for i in range(len(cv) - 1, -1, -1) if cv[i] is not None), None)
     if anchor is None:
         return None, [], [], 0
     av = cv[anchor]
-    for off in range(len(nv) - 1, -1, -1):              # 뒤에서부터: 마지막 값은 보통 표 끝쪽에 있다
+    best = None
+    for off in range(len(nv)):
         x = nv[off]
         if x is None or abs(av - x) / max(abs(x), 1e-9) > TOL:
             continue
-        d = off - anchor                                 # new_idx = old_idx + d
-        hits = tot = 0
-        for i, c in enumerate(cv):
-            j = i + d
-            if c is None or j < 0 or j >= len(nv) or nv[j] is None:
-                continue
-            tot += 1
-            hits += abs(c - nv[j]) / max(abs(nv[j]), 1e-9) <= TOL
-        if (tot >= 3 and hits / tot >= 0.9) or (tot == 2 and hits == 2):
-            pairs = [(i, i + d) for i in range(len(cv)) if 0 <= i + d < len(nv)]
-            tail = list(range(len(cv) + d, len(nv))) if len(cv) + d < len(nv) else []
-            before = max(0, d)                          # 차트 시작보다 앞선 새 시점 수
-            return "값", pairs, tail, before
-    return None, [], [], 0
+        d = off - anchor
+        hits = tot = err = 0
+        for j, i in mapping.items():
+            c_s, n_s = item["series"][i], new["series"][j]
+            for i2, c in enumerate(c_s):
+                j2 = i2 + d
+                if c is None or j2 < 0 or j2 >= len(n_s) or n_s[j2] is None:
+                    continue
+                tot += 1
+                e = abs(c - n_s[j2]) / max(abs(n_s[j2]), 1e-9)
+                err += e
+                hits += e <= TOL
+        if tot >= 2 and hits / tot >= 0.9 and (tot >= 3 or hits == 2):
+            score = (hits / tot, -err / tot)
+            if best is None or score > best[0]:
+                best = (score, d)
+    if best is None:
+        return None, [], [], 0
+    d = best[1]
+    pairs = [(i, i + d) for i in range(len(cv)) if 0 <= i + d < len(nv)]
+    tail = list(range(len(cv) + d, len(nv))) if len(cv) + d < len(nv) else []
+    return "값", pairs, tail, max(0, d)
 
 
 def main():
