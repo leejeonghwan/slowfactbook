@@ -1,0 +1,5 @@
+# Illustration generation.
+
+Built-in ImageGen tool. Asset: work-care-career.png.
+
+Prompt: Create one cohesive editorial illustration asset for a Korean data explainer about work, gender pay gaps, and caregiving. Wide 3:2 canvas, pure solid black #000000 background, flat minimal vector-like illustration, all visible shapes use golden amber #fdad00 and very dark charcoal only. Three small human figures: an adult woman working at a desk with laptop on left, an adult man carrying a baby at center, and an adult woman stepping up a simple career staircase on right. Equal dignity and agency, no gender stereotypes, simple geometric bodies, rounded heads, highly reduced facial detail. Large clean silhouettes, sophisticated editorial motion-graphics aesthetic. Generous pure black negative space around and between figures, figures arranged along one baseline. NO text, no numbers, no labels, no charts, no gradients, no texture, no border. Finished illustration that will be placed in the right portion of a black-and-amber data animation. Entire illustration visible with generous margins.
