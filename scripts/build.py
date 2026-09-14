@@ -77,6 +77,14 @@ def main():
     import generate_site
     items = generate_site.build(DATA, os.path.join(SITE, "index.html"))
     report["site_items"] = len(items)
+    # pages/*.html : 차트 목록과 별개인 단독 페이지(코호트 분석 등)를 그대로 사이트에 싣는다
+    pages = os.path.join(ROOT, "pages")
+    if os.path.isdir(pages):
+        import shutil
+        for f in sorted(os.listdir(pages)):
+            if f.endswith(".html"):
+                shutil.copy(os.path.join(pages, f), os.path.join(SITE, f))
+                print(f"  page: {f} -> site/{f}")
     json.dump(report, open(os.path.join(DATA, "_report.json"), "w", encoding="utf-8"),
               ensure_ascii=False, indent=2)
     # standalone list of slides whose title looks uncertain (review / override these)

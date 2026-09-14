@@ -27,3 +27,7 @@ latest/
 
 # 세션 임시 폴더
 _to_delete/
+
+# 별도 프로젝트 폴더 (팩트북과 무관)
+gender-gap/
+gender-video/
