@@ -249,5 +249,18 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=408&tblId=DT_30404_B012",
   "note": "term_charts.py 자동 생성",
   "keynoteSynced": false
+ },
+ {
+  "date": "2026-09-16",
+  "slide": "slide-928",
+  "id": "c0689",
+  "title": "코스닥 지수",
+  "category": "주식",
+  "mode": "auto",
+  "from": "2026",
+  "to": "2026",
+  "n": 1,
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=343&tblId=DT_343_2010_S0065",
+  "keynoteSynced": false
  }
 ]
