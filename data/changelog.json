@@ -282,5 +282,19 @@
   "source": "국가데이터처 2024년 국민이전계정(1인당, 2026-09-17 발표), 단위: 만원",
   "note": "2023년→2024년 국민이전계정으로 교체 (korea.kr 보도자료 newsId=156782137)",
   "kosisTbl": "DT_1NTA2003"
+ },
+ {
+  "date": "2026-09-18",
+  "slide": "slide-926",
+  "id": "c0687",
+  "title": "코스피 지수",
+  "category": "주식",
+  "mode": "replace",
+  "from": "1년차",
+  "to": "임기 말",
+  "n": 61,
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=343&tblId=DT_343_2010_S0027",
+  "note": "취임 달 정렬로 재구성(61점), 2026-08까지. 2009-06·2012-12·2026-05·2026-06 값을 한국거래소 월말 종가로 정정",
+  "keynoteSynced": false
  }
 ]
