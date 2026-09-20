@@ -296,5 +296,35 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=343&tblId=DT_343_2010_S0027",
   "note": "취임 달 정렬로 재구성(61점), 2026-08까지. 2009-06·2012-12·2026-05·2026-06 값을 한국거래소 월말 종가로 정정",
   "keynoteSynced": false
+ },
+ {
+  "date": "2026-09-20",
+  "slide": "slide-308",
+  "id": "c0209",
+  "title": "시장 Vs. 가처분 소득 지니 계수 개선 효과",
+  "category": "젠더와 격차",
+  "keynoteSynced": false,
+  "mode": "replace",
+  "from": "Belgium~Mexico",
+  "to": "Slovak Republic~Mexico",
+  "n": 37,
+  "sourceUrl": "https://www.oecd.org/en/data/datasets/income-distribution-database.html",
+  "source": "OECD 소득분배 데이터베이스, 각국 최신 연도(2019~2025, 대부분 2023년). 시장소득 지니계수가 세금·이전소득을 거쳐 가처분소득 지니계수로 낮아진 비율, 단위: %",
+  "note": "2021년→각국 최신 연도. 기존 캡션은 '지니계수를 뺀 값, %포인트'였으나 실제 값은 감소율(%)이라 캡션 정정"
+ },
+ {
+  "date": "2026-09-20",
+  "slide": "slide-338",
+  "id": "c0233",
+  "title": "정부 재정에 따른 불평등 개선 효과",
+  "category": "복지와 사회 안전망",
+  "keynoteSynced": false,
+  "mode": "replace",
+  "from": "Finland~Costa Rica",
+  "to": "Finland~Mexico",
+  "n": 37,
+  "sourceUrl": "https://www.oecd.org/en/data/datasets/income-distribution-database.html",
+  "source": "OECD 소득분배 데이터베이스, 각국 최신 연도(2019~2025, 대부분 2023년). 시장소득 지니계수에서 가처분소득 지니계수를 뺀 값, 단위: %포인트",
+  "note": "2021년→각국 최신 연도. 0~1 스케일에서 %포인트(0~100)로 단위 변경"
  }
 ]
