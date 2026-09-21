@@ -326,5 +326,31 @@
   "sourceUrl": "https://www.oecd.org/en/data/datasets/income-distribution-database.html",
   "source": "OECD 소득분배 데이터베이스, 각국 최신 연도(2019~2025, 대부분 2023년). 시장소득 지니계수에서 가처분소득 지니계수를 뺀 값, 단위: %포인트",
   "note": "2021년→각국 최신 연도. 0~1 스케일에서 %포인트(0~100)로 단위 변경"
+ },
+ {
+  "date": "2026-09-21",
+  "slide": "slide-674",
+  "id": "c0494",
+  "title": "코스피 지수",
+  "category": "세계 경제",
+  "mode": "auto",
+  "from": "2026",
+  "to": "2026",
+  "n": 1,
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=343&tblId=DT_343_2010_S0029",
+  "keynoteSynced": false
+ },
+ {
+  "date": "2026-09-21",
+  "slide": "slide-942",
+  "id": "c0702",
+  "title": "코스피 PBR(주가자산비율)",
+  "category": "주식",
+  "mode": "auto",
+  "from": "2026",
+  "to": "2026",
+  "n": 1,
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=343&tblId=DT_343_2010_S0034",
+  "keynoteSynced": false
  }
 ]
