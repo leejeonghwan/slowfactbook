@@ -122,6 +122,10 @@ python3 scripts/keynote_sync.py --done c0718,c2031   # 옮긴 뒤 표시
 - 표는 방향(시점이 행인지 열인지)·구분자·단위 배수(만원↔억 원 등 10의 거듭제곱)를 스스로 맞춘다. 안 맞으면 `--transpose` `--scale` `--by-order`.
 - 모든 변경은 `data/changelog.json` 에 남고(자동 갱신 포함), `keynote_sync.py` 가 그걸 읽어 아직 키노트에 안 옮긴 것만 보여준다.
 - 차트 id(=임베드 주소)는 갱신해도 그대로다. 제목을 바꿀 때만 바뀐다.
+- 계열이 둘 이상인 차트도 자동 갱신된다. `register_auto.py` 가 계열마다 따로 대조해 축을 각각 찾아
+  `data/api_map_auto.json` 의 `series` 에 적고, `refresh_charts.py` 는 모든 계열의 시점 정렬이
+  똑같을 때만 통째로 이어붙인다(하나라도 어긋나면 건드리지 않는다).
+  계열마다 통계표가 다른 차트(실적 + 장래추계처럼)는 자동 갱신이 안 되니 `set_data.py` 로 손본다.
 
 ## 알려진 보강 포인트
 

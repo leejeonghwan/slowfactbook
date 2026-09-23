@@ -9,7 +9,8 @@ match_fast.py 가 제목 검색으로 표를 찾는 것과 달리, 여기서는 
 그 표의 모든 항목×분류 계열을 받아 차트 값과 대조하고(match_fast.align), 맞는 계열을
 data/api_map_auto.json 에 적는다. 그 다음부터는 refresh_charts.py 와 매일 빌드가 알아서 잇는다.
 
-계열이 둘 이상인 차트는 refresh_charts 가 아직 못 잇는다(첫 계열만 등록되고, 갱신은 set_data.py 로).
+계열이 둘 이상이면 계열마다 따로 대조해 축을 각각 찾아 적는다(spec["series"]).
+모든 계열이 같은 시점에서 맞아떨어져야 등록한다 — 그래야 refresh_charts 가 통째로 이어붙인다.
 """
 import os, sys, json, re, collections, argparse
 
@@ -18,6 +19,12 @@ DATA = os.path.join(ROOT, "data")
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
 import generate_site as g       # noqa: E402
 import match_fast as mf         # noqa: E402
+
+
+def _far(prdSe, p1):
+    """자동 갱신이 앞으로 몇 해는 더 긁어오도록 끝 시점을 넉넉히 잡는다."""
+    y = int(str(p1)[:4]) + 8
+    return {"Y": f"{y}", "H": f"{y}02", "Q": f"{y}04", "M": f"{y}12"}.get(prdSe, f"{y}")
 
 
 def main():
@@ -61,10 +68,10 @@ def main():
     p0, p1 = min(yy), str(int(max(yy)) + 1)
     span = {"Y": (p0, p1), "Q": (p0 + "01", p1 + "04"), "M": (p0 + "01", p1 + "12"), "H": (p0 + "01", p1 + "02")}
     prds = {"Y": ["Y"], "Q": ["Q"], "M": ["M"], "H": ["H", "Y"]}[freq]
-    vals = it["series"][0]
-    print(f"대상: {it['slide']} {it['id']} [{it['category']}] {it['title']}  주기 {freq}  {p0}~{max(yy)}  {len(vals)}점")
-    if len(it["series"]) > 1:
-        print(f"  ! 계열 {len(it['series'])}개 — 첫 계열('{(it.get('seriesNames') or ['?'])[0]}')만 대조·등록합니다.")
+    targets = [[None if v is None else float(v) for v in row] for row in it["series"]]
+    names = it.get("seriesNames") or [f"계열{i+1}" for i in range(len(targets))]
+    print(f"대상: {it['slide']} {it['id']} [{it['category']}] {it['title']}  주기 {freq}  {p0}~{max(yy)}  "
+          f"{len(targets[0])}점 × {len(targets)}계열")
 
     mi = mf.meta(org, tbl)
     itms = [r["ITM_ID"] for r in mi if r.get("OBJ_ID") == "ITEM"]
@@ -72,16 +79,58 @@ def main():
     for r in mi:
         if r.get("OBJ_ID") != "ITEM":
             objs.setdefault(r["OBJ_ID"], []).append(r["ITM_ID"])
-    names = {r["ITM_ID"]: r.get("ITM_NM") for r in mi}
+    names_meta = {r["ITM_ID"]: r.get("ITM_NM") for r in mi}
+    # 축마다 따로 — 축이 달라도 코드값이 같을 수 있어 한 데 묶으면 엉뚱한 이름이 붙는다
+    names_ax = {}
+    for r in mi:
+        if r.get("OBJ_ID") != "ITEM":
+            names_ax.setdefault(r["OBJ_ID"], {})[r["ITM_ID"]] = r.get("ITM_NM")
     keys = list(objs)
     print(f"  표 {tbl}: 항목 {len(itms)}개, 분류축 {len(keys)}개 " +
           " ".join(f"{k}({len(objs[k])})" for k in keys))
 
-    best = None
-    # 첫 축은 넓게, 나머지 축은 첫 코드(보통 '계'·'전국')부터. 못 찾으면 둘째 축도 넓힌다.
-    plans = [[a.codes] + [1] * (len(keys) - 1)]
-    if len(keys) >= 2:
-        plans.append([a.codes, 30] + [1] * (len(keys) - 2))
+    best = [None] * len(targets)          # 계열마다 가장 잘 맞는 KOSIS 계열
+    # KOSIS 는 한 번에 40,000셀까지만 준다. 시점이 많으면(월 단위 수십 년) 코드를 그만큼 적게 넣어야 한다.
+    nper = (int(p1) - int(p0) + 1) * {"Y": 1, "H": 2, "Q": 4, "M": 12}[freq]
+    budget = max(2, 38000 // max(1, nper))
+    sizes = [len(objs[k]) for k in keys]
+    def fit(plan):
+        plan = [max(1, min(n, sz)) for n, sz in zip(plan, sizes)]
+        while len(plan) > 1 and plan[0] * plan[1] > budget:
+            if plan[1] >= plan[0]:
+                plan[1] = max(1, plan[1] // 2)
+            else:
+                plan[0] = max(1, plan[0] // 2)
+            if plan[0] == plan[1] == 1:
+                break
+        prod = 1
+        for x in plan:
+            prod *= x
+        while plan[0] > 1 and prod > budget:
+            plan[0] = max(1, plan[0] // 2)
+            prod = 1
+            for x in plan:
+                prod *= x
+        return plan
+    cands = []
+    for i in range(len(keys)):                       # 축을 하나씩 넓게 훑는다
+        pl = [1] * len(keys); pl[i] = min(a.codes, budget)
+        cands.append(fit(pl))
+    if len(keys) >= 2:                               # 두 축을 함께 (계열이 여럿일 때 흔한 꼴)
+        h = max(2, int(budget ** 0.5))
+        cands.append(fit([h, h] + [1] * (len(keys) - 2)))
+    if len(targets) > 1 and len(keys) >= 2:          # 계열이 여럿이면 분류축을 넓게 보는 쪽을 먼저
+        cands.insert(0, cands.pop(1))
+    uniq, seen_plans = [], set()
+    for pl in cands:
+        if tuple(pl) not in seen_plans:
+            seen_plans.add(tuple(pl)); uniq.append(pl)
+    plans = uniq
+    print(f"  한 번에 받을 수 있는 코드 수 {budget}개 (시점 {nper}개) → 탐색 계획 {plans}")
+
+    def done():
+        return all(b and b["score"] >= 0.99 for b in best)
+
     for plan in plans:
         ol = ["+".join(objs[k][:n]) + "+" for k, n in zip(keys, plan)]
         for ps in prds:
@@ -93,40 +142,60 @@ def main():
                     print(f"  조회 실패: {str(e)[:80]}")
                     continue
                 for gk, ser in groups.items():
-                    r, off, sc = mf.align(vals, [v for _, v in ser])
-                    if r > 0 and (best is None or r > best["score"]):
-                        best = {"score": round(r, 3), "gk": gk, "prdSe": ps, "offset": off,
-                                "scale": sc, "periods": [p for p, _ in ser], "start": lo, "end": hi}
-                if best and best["score"] >= 0.99:
+                    av = [v for _, v in ser]
+                    for i, vals in enumerate(targets):
+                        r, off, sc = mf.align(vals, av)
+                        if r > 0 and (best[i] is None or r > best[i]["score"]):
+                            best[i] = {"score": round(r, 3), "gk": gk, "prdSe": ps, "offset": off,
+                                       "scale": sc, "periods": [p for p, _ in ser], "start": lo, "end": hi}
+                if done():
                     break
-            if best and best["score"] >= 0.99:
+            if done():
                 break
-        if best and best["score"] >= a.accept:
+        if all(b and b["score"] >= a.accept for b in best):
             break
 
-    if not best or best["score"] < a.accept:
-        print(f"  맞는 계열을 못 찾았습니다 (최고 일치도 {best['score'] if best else 0}). "
-              f"단위·주기가 다르거나 이 표가 아닐 수 있습니다.")
+    bad = [i for i, b in enumerate(best) if not b or b["score"] < a.accept]
+    if bad:
+        for i in bad:
+            print(f"  ✗ '{names[i]}' 계열을 못 찾았습니다 (최고 일치도 {best[i]['score'] if best[i] else 0}).")
+        print("  단위·주기가 다르거나 이 표가 아닐 수 있습니다.")
         return 1
-    itm, c1, c2, c3 = best["gk"]
-    d = best["offset"]
-    per = [best["periods"][i + d] for i in range(len(vals)) if 0 <= i + d < len(best["periods"])]
+    if len({b["prdSe"] for b in best}) != 1 or len({b["offset"] for b in best}) != 1:
+        print("  ✗ 계열마다 주기나 시점 정렬이 다릅니다 — 자동 갱신을 걸면 어긋납니다.")
+        for i, b in enumerate(best):
+            print(f"     {names[i]}: 주기 {b['prdSe']} 시작 오프셋 {b['offset']}")
+        return 1
+
+    b0 = best[0]
+    d = b0["offset"]
+    per = [b0["periods"][i + d] for i in range(len(targets[0])) if 0 <= i + d < len(b0["periods"])]
     spec = {"label": it["title"], "category": it["category"], "provider": "kosis",
-            "orgId": org, "tblId": tbl, "itmId": itm + "+", "prdSe": best["prdSe"],
-            "startPrdDe": best["start"], "endPrdDe": str(int(p1) + 8) if best["prdSe"] == "Y" else best["end"][:4] + "9" + best["end"][5:],
-            "scale": best["scale"],
+            "orgId": org, "tblId": tbl, "prdSe": b0["prdSe"],
+            "startPrdDe": b0["start"],
+            "endPrdDe": _far(b0["prdSe"], p1),
             "sourceUrl": f"https://kosis.kr/statHtml/statHtml.do?orgId={org}&tblId={tbl}",
-            "_matchScore": best["score"], "_itmNm": names.get(itm), "_chartFreq": freq,
+            "_matchScore": min(b["score"] for b in best), "_chartFreq": freq,
             "_periodRange": [per[0], per[-1]] if per else None,
             "_recoveredPeriods": per if freq != "Y" else None, "_registeredBy": "register_auto"}
-    for i, cc in enumerate([c1, c2, c3]):
-        if cc is not None and i < len(keys):
-            spec[f"objL{i+1}"] = cc + "+"
-    cls = " / ".join(f"{keys[i]}={names.get(c, c)}" for i, c in enumerate([c1, c2, c3]) if c is not None and i < len(keys))
-    scs = "" if best["scale"] == 1 else f" ×{best['scale']:g}"
-    print(f"  ✓ 일치도 {best['score']:.2f}  항목 {names.get(itm, itm)}  {cls}  [{best['prdSe']}{scs}]  "
-          f"{per[0] if per else '?'}~{per[-1] if per else '?'}")
-    if best["score"] < 1.0:
+    subs = []
+    for i, b in enumerate(best):
+        itm, c1, c2, c3 = b["gk"]
+        sub = {"name": names[i], "itmId": itm + "+", "scale": b["scale"]}
+        for j, cc in enumerate([c1, c2, c3]):
+            if cc is not None and j < len(keys):
+                sub[f"objL{j+1}"] = cc + "+"
+        subs.append(sub)
+        cls = " / ".join(f"{keys[j]}={names_ax.get(keys[j], {}).get(c, c)}" for j, c in enumerate([c1, c2, c3])
+                         if c is not None and j < len(keys))
+        scs = "" if b["scale"] == 1 else f" ×{b['scale']:g}"
+        print(f"  ✓ '{names[i]}' 일치도 {b['score']:.2f}  항목 {names_meta.get(itm, itm)}  {cls}  [{b['prdSe']}{scs}]")
+    if len(subs) == 1:
+        spec.update({k: v for k, v in subs[0].items() if k != "name"})
+    else:
+        spec["series"] = subs
+    print(f"  {per[0] if per else '?'}~{per[-1] if per else '?'}")
+    if min(b["score"] for b in best) < 1.0:
         print("  · 일치도 1.00 이 아니면 몇 점이 어긋난 것입니다. 원자료 수정치일 수도, 다른 계열일 수도 있으니 확인하세요.")
     if not a.apply:
         print("\n(미리보기입니다. 등록하려면 --apply)")
