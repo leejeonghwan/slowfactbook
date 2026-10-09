@@ -1,0 +1,278 @@
+{
+ "slide-12": {
+  "id": "slide-12",
+  "title": "15~29세 취업자 분포",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-13": {
+  "id": "slide-13",
+  "title": "30~39세 취업자 분포",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-14": {
+  "id": "slide-14",
+  "title": "40~49세 취업자 분포",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-15": {
+  "id": "slide-15",
+  "title": "50~59세 취업자 분포",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-16": {
+  "id": "slide-16",
+  "title": "60세 이상 취업자 분포",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-26": {
+  "id": "slide-26",
+  "title": "15~29세 실업자 수",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-27": {
+  "id": "slide-27",
+  "title": "구인 구직 현황",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-28": {
+  "id": "slide-28",
+  "title": "구인 배수",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-29": {
+  "id": "c0018",
+  "title": "20대 이하 일자리",
+  "tbl": "DT_1FL_7006",
+  "tblNm": "근로자 및 기업특성별 일자리 형태별 임금근로 일자리"
+ },
+ "slide-30": {
+  "id": "c0019",
+  "title": "30대 일자리",
+  "tbl": "DT_1FL_7006",
+  "tblNm": "근로자 및 기업특성별 일자리 형태별 임금근로 일자리"
+ },
+ "slide-31": {
+  "id": "c0020",
+  "title": "20대 이하 일자리",
+  "tbl": "DT_1FL_7006",
+  "tblNm": "근로자 및 기업특성별 일자리 형태별 임금근로 일자리"
+ },
+ "slide-32": {
+  "id": "c1511",
+  "title": "20대 이하 인구 대비 일자리 비중",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-33": {
+  "id": "c1512",
+  "title": "20대 인구",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-35": {
+  "id": "c1513",
+  "title": "20대 인구와 취업자",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-36": {
+  "id": "c2041",
+  "title": "55세 이상 취업자",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-37": {
+  "id": "c2042",
+  "title": "20대 인구와 취업자",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-38": {
+  "id": "c1908",
+  "title": "20대 인구와 취업자 수",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-41": {
+  "id": "c2043",
+  "title": "20대 인구 취업자 수 비율",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-42": {
+  "id": "c2044",
+  "title": "20대 인구 고용 분포",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-45": {
+  "id": "c0021",
+  "title": "지속 고용과 신규 채용",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-47": {
+  "id": "c0022",
+  "title": "15~29세 실업률과 확장 실업률",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-48": {
+  "id": "c0023",
+  "title": "취업자 수(연도별)",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-49": {
+  "id": "c0024",
+  "title": "취업자 분포",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-51": {
+  "id": "c0025",
+  "title": "취업자 수",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-55": {
+  "id": "c0026",
+  "title": "남녀 노동시간 격차",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-57": {
+  "id": "c0027",
+  "title": "남녀 시간당 임금 총액",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-58": {
+  "id": "c2046",
+  "title": "남녀 월 임금 총액",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-60": {
+  "id": "c0029",
+  "title": "고용률",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-62": {
+  "id": "c0030",
+  "title": "15~29세와 60세 이상 고용률 비교",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-79": {
+  "id": "c0039",
+  "title": "취업자 수(월별)",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-82": {
+  "id": "c1517",
+  "title": "직종별 취업자 수",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-84": {
+  "id": "c0042",
+  "title": "연령별 비정규직 비율",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-85": {
+  "id": "c0043",
+  "title": "20대와 60대 고용률",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-87": {
+  "id": "c0045",
+  "title": "연도별 취업자 수 증감",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-89": {
+  "id": "c0046",
+  "title": "월별 취업자 수 증감",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-92": {
+  "id": "c2030",
+  "title": "청년 실업률",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-93": {
+  "id": "c0049",
+  "title": "청년 실업자와 쉬었음 인구",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-94": {
+  "id": "c0050",
+  "title": "일자리 수 증가",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-95": {
+  "id": "c0051",
+  "title": "구인 구직 현황",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-96": {
+  "id": "c0052",
+  "title": "구인 배수",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-97": {
+  "id": "c0053",
+  "title": "제조업 취업자수 증감 추이",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-98": {
+  "id": "c0054",
+  "title": "건설업 취업자수 증감 추이",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-99": {
+  "id": "c0055",
+  "title": "제조업 취업자 수",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-100": {
+  "id": "c0056",
+  "title": "건설업 취업자 수",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-103": {
+  "id": "c0058",
+  "title": "실업급여 지급액",
+  "tbl": null,
+  "tblNm": null
+ },
+ "slide-104": {
+  "id": "c0059",
+  "title": "실업급여 지급인원",
+  "tbl": null,
+  "tblNm": null
+ }
+}

@@ -1,0 +1,24 @@
+{
+  "checked_on": "2026-10-10",
+  "method": "웹 페이지 읽기 시도; API 원자료 수치 대조는 수행하지 않음",
+  "checks": [
+    {
+      "url": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1YL20531E",
+      "result": "확인 불가",
+      "reason": "SSO 이동 후 도구가 페이지에 접근하지 못함",
+      "match_verified": false
+    },
+    {
+      "url": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B81A17",
+      "result": "내용 대조 불가",
+      "reason": "페이지 외형은 응답했으나 통계표 수치·메타데이터가 읽히지 않음",
+      "match_verified": false
+    },
+    {
+      "url": "https://data.kbland.kr/kbstats/wmh?tIdx=HT06&tsIdx=aptSaleAvgPrice",
+      "result": "내용 대조 불가",
+      "reason": "JavaScript 실행이 필요한 페이지로, 통계 데이터가 읽히지 않음",
+      "match_verified": false
+    }
+  ]
+}

@@ -62,6 +62,9 @@ def load_items(data_dir):
                 "source": it.get("source", ""), "sourceUrl": it.get("sourceUrl", ""),
                 "vizType": it["vizType"], "labels": labels,
                 "seriesNames": names, "series": series, "slide": it.get("slide"),
+                # 항목이 data/*.json 에 박아 둔 자기 id 를 그대로 들고 간다.
+                # 이게 없으면 assign_ids 가 또 슬라이드+제목으로 발급해 버린다.
+                "id": it.get("id"),
                 "updated": it.get("updated", ""),
             }
             if it["vizType"] == "combo":

@@ -110,6 +110,12 @@ def chart_years(item):
         else:
             m2 = re.fullmatch(r"[’']?(\d{2})\s*년?", str(l).strip())
             out.append(str(2000 + int(m2.group(1)) if int(m2.group(1)) < 50 else 1900 + int(m2.group(1))) if m2 else None)
+    # 두 자리 숫자를 연도로 읽는 보정이 '가로축이 시간이 아닌' 차트를 망친다.
+    # 생애주기 차트의 0~85세 라벨이 2010~2049·1950~1985 로 둔갑해 시계열로 잡혔다.
+    # 시간축이라면 연도가 뒤로 갈수록 줄지 않는다 — 그 조건을 어기면 시간축이 아니다.
+    ys = [int(y) for y in out if y]
+    if ys and any(b < a for a, b in zip(ys, ys[1:])):
+        return [None] * len(out)
     return out
 
 

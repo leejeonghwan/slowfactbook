@@ -27,8 +27,7 @@ def read_json(path, errors):
 def time_axis(labels, frequency):
     labs = [str(x).strip() for x in labels]
     nonempty = [x for x in labs if x]
-    freq = {"Y": "年", "A": "年", "Q": "분기", "M": "월", "W": "주", "D": "일"}.get(frequency)
-    freq = "연" if freq == "年" else freq
+    freq = {"Y": "연", "A": "연", "Q": "분기", "M": "월", "W": "주", "D": "일"}.get(frequency)
     if not nonempty:
         return freq or "미확인", "빈 시점", "연결 설정" if freq else "판정 불가"
     years = [x for x in nonempty if re.fullmatch(r"(?:19|20)\d{2}년?", x)]
@@ -39,7 +38,7 @@ def time_axis(labels, frequency):
                 ("분기", r"(?:19|20)\d{2}\s*[-.]?\s*(?:[1-4]\s*[Qq분기]+|[Qq][1-4])")]
     for guessed, pattern in patterns:
         if all(re.fullmatch(pattern, x) for x in nonempty):
-            return freq or guessed, "形式 확인·원자료 대조 전".replace("形式", "형식"), "연결 설정" if freq else "라벨 추정"
+            return freq or guessed, "형식 확인·원자료 대조 전", "연결 설정" if freq else "라벨 추정"
     if len(years) == len(nonempty):
         issue = "연도만 있음: 원시점 대조 필요" if freq in {"월", "분기", "일", "주"} else "연도 표기·원자료 대조 전"
         return freq or "연", issue, "연결 설정" if freq else "라벨 추정"
@@ -80,7 +79,7 @@ def build(data_dir, reviews):
             # Location key avoids conflating multiple charts with identical titles/IDs.
             audit_key = f"{path.name}:{slide}:{index}"
             spec = mappings.get(cid) or mappings.get(slide) or api.get(slide) or {}
-            track = "API設定".replace("設定", "설정") if spec else "미등록"
+            track = "API 설정" if spec else "미등록"
             if cid in kb:
                 spec, track = kb[cid], "엑셀 입력"
             elif slide in {"slide-570", "slide-571"}:
@@ -118,7 +117,7 @@ def build(data_dir, reviews):
                 "source_checked_at": "", "notes": "", "fingerprint": digest,
             }
             decision = reviews.get(audit_key, {})
-            allowed = {"release_frequency", "release_evidence_url", "confirmed_check_frequency", "update_mode", "owner", "source_checked_at", "notes", "match_verified"}
+            allowed = {"release_frequency", "release_evidence_url", "confirmed_check_frequency", "update_mode", "owner", "source_checked_at", "notes", "match_verified", "source_status"}
             # Human decisions are retained only for the chart content reviewed.
             if decision and decision.get("fingerprint") == digest:
                 row.update({k: v for k, v in decision.items() if k in allowed})
