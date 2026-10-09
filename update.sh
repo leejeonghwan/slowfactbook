@@ -66,6 +66,9 @@ else
   echo "▶ KOSIS_API_KEY 없음 — 수집은 GitHub 빌드에 맡김 (.env 에 넣으면 여기서 받는다)"
 fi
 
+echo "▶ 여론조사 지지율 (리얼미터 주간집계)…"
+python3 scripts/poll_charts.py realmeter --apply || echo "  리얼미터 갱신 실패/보류 — 기존 값 유지"
+
 echo "▶ 빌드 (추출 + 사이트 생성)…"
 python3 scripts/build.py
 

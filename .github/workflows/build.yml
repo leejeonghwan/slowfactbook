@@ -35,6 +35,8 @@ jobs:
         run: python scripts/build_api_charts.py
       - name: 확정 매칭 차트 제자리 갱신 (KOSIS)
         run: python scripts/refresh_charts.py --apply || echo "갱신 실패 — 기존 데이터로 빌드"
+      - name: 여론조사 지지율 (리얼미터)
+        run: python scripts/poll_charts.py realmeter --apply || echo "리얼미터 갱신 실패/보류 — 기존 값 유지"
       - name: 갱신분 커밋
         run: |
           git config user.name "slowfactbook-bot"
