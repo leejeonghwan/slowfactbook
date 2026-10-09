@@ -96,6 +96,11 @@ def main():
     ovp = os.path.join(DATA, "overrides.json")
     ov = json.load(open(ovp, encoding="utf-8")) if os.path.exists(ovp) else {}
     today = datetime.date.today().isoformat()
+    # 최근 업데이트 정렬용: 날짜만 쓰면 같은 날 바뀐 것들의 순서가 파일 순서로 밀린다.
+    # KST 분 단위 시각까지 적어 실제 시간순으로 서게 한다. changelog 의 date 는 날짜 그대로.
+    stamp = __import__("datetime").datetime.now(
+        __import__("datetime").timezone(__import__("datetime").timedelta(hours=9))
+    ).strftime("%Y-%m-%d %H:%M")
     done, skip = [], []
 
     for cid, conf in reg.items():
@@ -174,7 +179,7 @@ def main():
         o = ov.setdefault(it["slide"], {})
         o["labels"] = list(map(str, it["labels"])) + newlabels
         o["series"] = newseries
-        o["updated"] = today
+        o["updated"] = stamp
         if conf.get("source"):
             o["source"] = conf["source"]
         if conf.get("sourceUrl"):

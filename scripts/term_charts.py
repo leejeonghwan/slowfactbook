@@ -121,6 +121,11 @@ def main():
         print("KOSIS_API_KEY 가 필요합니다 (.env 또는 환경변수)")
         return 1
     today = datetime.date.today().isoformat()
+    # 최근 업데이트 정렬용: 날짜만 쓰면 같은 날 바뀐 것들의 순서가 파일 순서로 밀린다.
+    # KST 분 단위 시각까지 적어 실제 시간순으로 서게 한다. changelog 의 date 는 날짜 그대로.
+    stamp = __import__("datetime").datetime.now(
+        __import__("datetime").timezone(__import__("datetime").timedelta(hours=9))
+    ).strftime("%Y-%m-%d %H:%M")
 
     print("▶ 소비자물가지수")
     cpi = json.load(open(a.cpi_file)) if a.cpi_file else dict(bac.kosis_series(CPI))
@@ -151,11 +156,11 @@ def main():
         {"title": "역대 정부 누적 물가 상승률", "category": "소비와 물가",
          "source": "국가데이터처 소비자물가지수(2020=100), 취임 달 대비 누적 상승률, 단위: %",
          "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1J22003",
-         "vizType": "line", "labels": LABELS, "seriesNames": n1, "series": s1, "updated": today},
+         "vizType": "line", "labels": LABELS, "seriesNames": n1, "series": s1, "updated": stamp},
         {"title": "역대 정부 서울 아파트 가격 상승률", "category": "부동산",
          "source": "한국부동산원 월간 아파트 매매가격지수(1986~2012 구간은 2011.6=100 표를 연쇄 환산), 취임 달 대비 누적 상승률, 단위: %",
          "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=408&tblId=DT_30404_B012",
-         "vizType": "line", "labels": LABELS, "seriesNames": n2, "series": s2, "updated": today},
+         "vizType": "line", "labels": LABELS, "seriesNames": n2, "series": s2, "updated": stamp},
     ]
     if not a.apply:
         print("\n(미리보기입니다. 반영하려면 --apply)")

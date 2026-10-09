@@ -146,6 +146,11 @@ def main():
         return 0
     reg = json.load(open(REG, encoding="utf-8"))
     today = datetime.date.today().isoformat()
+    # 최근 업데이트 정렬용: 날짜만 쓰면 같은 날 바뀐 것들의 순서가 파일 순서로 밀린다.
+    # KST 분 단위 시각까지 적어 실제 시간순으로 서게 한다. changelog 의 date 는 날짜 그대로.
+    stamp = __import__("datetime").datetime.now(
+        __import__("datetime").timezone(__import__("datetime").timedelta(hours=9))
+    ).strftime("%Y-%m-%d %H:%M")
     items, errs = [], 0
     streak = 0                               # 연속 실패 — 3번 연달아 실패하면 KOSIS 장애로 보고 그만둔다
     for key, c in reg.items():
@@ -184,7 +189,7 @@ def main():
             "vizType": c.get("vizType", "line"),
             "labels": [pp(p, cyc) for p in periods],
             "seriesNames": [n for n, _ in fetched],
-            "updated": today,
+            "updated": stamp,
             "series": [[None if d.get(p) is None else round(d[p] * sc, 6) for p in periods] for _, d in fetched],
         })
         print(f"  · {key} {c['title'][:26]:28s} {pp(periods[0],cyc)}~{pp(periods[-1],cyc)} ({len(periods)}개 × {len(fetched)}계열)")

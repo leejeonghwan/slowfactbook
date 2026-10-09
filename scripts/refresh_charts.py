@@ -96,6 +96,11 @@ def main():
     ovp = os.path.join(DATA, "overrides.json")
     ov = json.load(open(ovp, encoding="utf-8")) if os.path.exists(ovp) else {}
     today = datetime.date.today().isoformat()
+    # 최근 업데이트 정렬용: 날짜만 쓰면 같은 날 바뀐 것들의 순서가 파일 순서로 밀린다.
+    # KST 분 단위 시각까지 적어 실제 시간순으로 서게 한다. changelog 의 date 는 날짜 그대로.
+    stamp = __import__("datetime").datetime.now(
+        __import__("datetime").timezone(__import__("datetime").timedelta(hours=9))
+    ).strftime("%Y-%m-%d %H:%M")
 
     ext, skip_multi, skip_score, skip_current, skip_align, errs = [], [], [], [], [], []
     streak = 0                                   # 연속 조회 실패 — KOSIS 장애면 나머지는 건너뛴다
@@ -173,7 +178,7 @@ def main():
             o = ov.setdefault(e["slide"], {})
             o["labels"] = e["labels"]
             o["series"] = e["series"]
-            o["updated"] = today
+            o["updated"] = stamp
         json.dump(ov, open(ovp, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
         # 키노트에 옮길 목록(changelog)에도 남긴다 — keynote_sync.py 가 읽는다
         clp = os.path.join(DATA, "changelog.json")

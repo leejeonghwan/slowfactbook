@@ -129,7 +129,9 @@ def main():
         if not dry:
             ov = overrides.get(slide, {})
             ov.update({"labels": labels, "series": series,
-                       "updated": datetime.date.today().isoformat(),
+                       "updated": datetime.datetime.now(
+                           datetime.timezone(datetime.timedelta(hours=9))
+                       ).strftime("%Y-%m-%d %H:%M"),
                        "source": spec.get("source", ov.get("source", "")),
                        "sourceUrl": spec.get("sourceUrl", ov.get("sourceUrl", ""))})
             overrides[slide] = ov

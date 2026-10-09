@@ -69,10 +69,15 @@ def main():
     n = 1 + max([int(it["slide"].split("-")[1]) for it in doc["items"]] or [0])
     slide = f"m-{n:04d}"
     today = datetime.date.today().isoformat()
+    # 최근 업데이트 정렬용: 날짜만 쓰면 같은 날 바뀐 것들의 순서가 파일 순서로 밀린다.
+    # KST 분 단위 시각까지 적어 실제 시간순으로 서게 한다. changelog 의 date 는 날짜 그대로.
+    stamp = __import__("datetime").datetime.now(
+        __import__("datetime").timezone(__import__("datetime").timedelta(hours=9))
+    ).strftime("%Y-%m-%d %H:%M")
     item = {"slide": slide, "title": a.title, "category": a.category, "source": src,
             "sourceUrl": a.url or "", "vizType": viz, "labels": labels,
             "seriesNames": names, "series": [[None if v is None else round(v, 6) for v in s] for s in series],
-            "updated": today}
+            "updated": stamp}
     if viz == "combo":
         item["seriesKinds"] = ["column"] * (len(series) - 1) + ["line"]
         item["seriesAxes"] = ["y"] * (len(series) - 1) + ["y2"]
