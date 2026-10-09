@@ -485,5 +485,32 @@
   "n": 1,
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1YL20581",
   "keynoteSynced": false
+ },
+ {
+  "date": "2026-10-09",
+  "slide": "slide-528",
+  "id": "c0380",
+  "title": "대통령과 정당 지지율",
+  "category": "정치",
+  "keynoteSynced": false,
+  "mode": "replace",
+  "from": "6~6",
+  "to": "6~10",
+  "n": 53,
+  "source": "한국갤럽"
+ },
+ {
+  "date": "2026-10-09",
+  "slide": "m-0005",
+  "id": "c2040",
+  "title": "한국갤럽 대통령 지지율",
+  "category": "정치",
+  "mode": "new",
+  "from": "6",
+  "to": "10",
+  "n": 52,
+  "sourceUrl": "",
+  "note": "",
+  "keynoteSynced": false
  }
 ]
