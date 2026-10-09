@@ -272,8 +272,10 @@ function render(){
   },{rootMargin:"300px"});
   items.forEach((it,i)=>{
     const card=document.createElement("div");card.className="card";
-    const meta=[it.source,it.slide].filter(Boolean).join(" · ");
-    card.innerHTML=`<div class="tag" data-cat="${String(it.category).replace(/"/g,'&quot;')}" title="이 카테고리 보기">${dot(it.category)}</div><h2><a href="chart.html?id=${it.id}" title="크게 보기">${dot(it.title)}</a></h2><div class="meta">${meta}</div><div class="legendbar">${legendHTML(it)}</div><div class="chartbox"><canvas data-idx="${i}"></canvas></div>`;
+    // 슬라이드 번호는 원본 덱을 추적하려고 달아 둔 내부 표시다. 읽는 사람에게는
+    // 아무 뜻이 없으므로 카드에 보이지 않게 하고, 속성으로만 남겨 둔다.
+    const meta=[it.source].filter(Boolean).join(" · ");
+    card.innerHTML=`<div class="tag" data-cat="${String(it.category).replace(/"/g,'&quot;')}" title="이 카테고리 보기">${dot(it.category)}</div><h2><a href="chart.html?id=${it.id}" title="크게 보기">${dot(it.title)}</a></h2><div class="meta" data-slide="${it.slide||""}">${meta}</div><div class="legendbar">${legendHTML(it)}</div><div class="chartbox"><canvas data-idx="${i}"></canvas></div>`;
     grid.appendChild(card);observer.observe(card);
   });
 }
@@ -311,10 +313,26 @@ function legendHTML(it){
   return entries.map(([l,c])=>`<span class="lg"><i style="background:${c}"></i>${dot(l)}</span>`).join("");
 }
 function blank(x){return (x==null||x==="None"||x==="none")?"":String(x);}
-function sparseTick(it){return function(val,index){const L=it.labels;
-  const cur=blank(L[index]);
-  const prev=index>0?blank(L[index-1]):null;
-  return (cur!==prev)?cur:"";};}
+// 가로축 눈금. 라벨이 2026-09 처럼 시점을 다 적고 있으면 그대로 다 찍으면 빽빽하므로
+// '연도가 바뀌는 자리'에만 연도를 찍는다. 점이 적을 때(3년 이하)는 분기마다 월까지 찍는다.
+// 라벨이 연도만 반복하는 옛 자료는 예전처럼 값이 바뀌는 자리에만 찍는다.
+const YM=/^((?:19|20)\d{2})[-./](\d{2})$/;
+function sparseTick(it){
+  const L=it.labels.map(blank);
+  const ym=L.map(x=>String(x).match(YM));
+  const isYM=ym.filter(Boolean).length>=L.length*0.8;
+  const dense=isYM&&L.length<=36;
+  return function(val,index){
+    if(isYM){
+      const m=ym[index]; if(!m) return "";
+      if(dense) return (index%3===0)?`${m[1].slice(2)}.${m[2]}`:"";
+      const prev=index>0?ym[index-1]:null;
+      return (!prev||prev[1]!==m[1])?m[1]:"";
+    }
+    const cur=L[index], prev=index>0?L[index-1]:null;
+    return (cur!==prev)?cur:"";
+  };
+}
 function buildChart(canvas,it){
   const t=it.vizType,labels=it.labels.map(blank);
   const ds=it.series.map((vals,i)=>({label:it.seriesNames[i]||("계열 "+(i+1)),data:vals,backgroundColor:PALETTE[i%PALETTE.length],borderColor:PALETTE[i%PALETTE.length]}));

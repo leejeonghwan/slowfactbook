@@ -3843,5 +3843,212 @@
     "objL2": "20+"
    }
   ]
+ },
+ "c0005": {
+  "label": "15~29세 취업자 분포",
+  "category": "한눈에 보는 한국",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1DA7002S",
+  "prdSe": "Y",
+  "startPrdDe": "2000",
+  "endPrdDe": "2034",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DA7002S",
+  "_matchScore": 1.0,
+  "_chartFreq": "Y",
+  "_periodRange": [
+   "2000",
+   "2025"
+  ],
+  "_recoveredPeriods": null,
+  "_registeredBy": "register_auto",
+  "series": [
+   {
+    "name": "취업자.",
+    "itmId": "T30+",
+    "scale": 1,
+    "objL1": "75+"
+   },
+   {
+    "name": "실업자.",
+    "itmId": "T40+",
+    "scale": 1,
+    "objL1": "75+"
+   },
+   {
+    "name": "비경제활동인구.",
+    "itmId": "T50+",
+    "scale": 1,
+    "objL1": "75+"
+   }
+  ]
+ },
+ "c0006": {
+  "label": "30~39세 취업자 분포",
+  "category": "한눈에 보는 한국",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1DA7002S",
+  "prdSe": "Y",
+  "startPrdDe": "2000",
+  "endPrdDe": "2034",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DA7002S",
+  "_matchScore": 1.0,
+  "_chartFreq": "Y",
+  "_periodRange": [
+   "2000",
+   "2025"
+  ],
+  "_recoveredPeriods": null,
+  "_registeredBy": "register_auto",
+  "series": [
+   {
+    "name": "취업자.",
+    "itmId": "T30+",
+    "scale": 1,
+    "objL1": "30+"
+   },
+   {
+    "name": "실업자.",
+    "itmId": "T40+",
+    "scale": 1,
+    "objL1": "30+"
+   },
+   {
+    "name": "비경제활동인구.",
+    "itmId": "T50+",
+    "scale": 1,
+    "objL1": "30+"
+   }
+  ]
+ },
+ "c0007": {
+  "label": "40~49세 취업자 분포",
+  "category": "한눈에 보는 한국",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1DA7002S",
+  "prdSe": "Y",
+  "startPrdDe": "2000",
+  "endPrdDe": "2034",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DA7002S",
+  "_matchScore": 1.0,
+  "_chartFreq": "Y",
+  "_periodRange": [
+   "2000",
+   "2025"
+  ],
+  "_recoveredPeriods": null,
+  "_registeredBy": "register_auto",
+  "series": [
+   {
+    "name": "취업자.",
+    "itmId": "T30+",
+    "scale": 1,
+    "objL1": "40+"
+   },
+   {
+    "name": "실업자.",
+    "itmId": "T40+",
+    "scale": 1,
+    "objL1": "40+"
+   },
+   {
+    "name": "비경제활동인구.",
+    "itmId": "T50+",
+    "scale": 1,
+    "objL1": "40+"
+   }
+  ]
+ },
+ "c0013": {
+  "label": "취업자 분포",
+  "category": "노동",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1DA7004S",
+  "prdSe": "Y",
+  "startPrdDe": "2000",
+  "endPrdDe": "2034",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DA7004S",
+  "_matchScore": 1.0,
+  "_chartFreq": "Y",
+  "_periodRange": [
+   "2000",
+   "2025"
+  ],
+  "_recoveredPeriods": null,
+  "_registeredBy": "register_auto",
+  "series": [
+   {
+    "name": "취업자.",
+    "itmId": "T30+",
+    "scale": 0.1,
+    "objL1": "00+"
+   },
+   {
+    "name": "실업자.",
+    "itmId": "T40+",
+    "scale": 0.1,
+    "objL1": "00+"
+   },
+   {
+    "name": "비경제활동인구.",
+    "itmId": "T50+",
+    "scale": 0.1,
+    "objL1": "00+"
+   }
+  ]
+ },
+ "c0024": {
+  "label": "취업자 분포",
+  "category": "노동",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1DA7002S",
+  "prdSe": "Y",
+  "startPrdDe": "2000",
+  "endPrdDe": "2034",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DA7002S",
+  "_matchScore": 1.0,
+  "_chartFreq": "Y",
+  "_periodRange": [
+   "2000",
+   "2025"
+  ],
+  "_recoveredPeriods": null,
+  "_registeredBy": "register_auto",
+  "series": [
+   {
+    "name": "15~29세.",
+    "itmId": "T30+",
+    "scale": 0.1,
+    "objL1": "75+"
+   },
+   {
+    "name": "30~39세.",
+    "itmId": "T30+",
+    "scale": 0.1,
+    "objL1": "30+"
+   },
+   {
+    "name": "40~49세.",
+    "itmId": "T30+",
+    "scale": 0.1,
+    "objL1": "40+"
+   },
+   {
+    "name": "50~59세.",
+    "itmId": "T30+",
+    "scale": 0.1,
+    "objL1": "50+"
+   },
+   {
+    "name": "60세 이상.",
+    "itmId": "T30+",
+    "scale": 0.1,
+    "objL1": "60+"
+   }
+  ]
  }
 }

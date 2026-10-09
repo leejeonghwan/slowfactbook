@@ -1,0 +1,74 @@
+{
+ "c0005": {
+  "title": "15~29세 취업자 분포",
+  "survey": "경제활동인구조사",
+  "tbl": "DT_1DA7002S",
+  "tblNm": "연령별 경제활동인구 총괄"
+ },
+ "c0006": {
+  "title": "30~39세 취업자 분포",
+  "survey": "경제활동인구조사",
+  "tbl": "DT_1DA7002S",
+  "tblNm": "연령별 경제활동인구 총괄"
+ },
+ "c0007": {
+  "title": "40~49세 취업자 분포",
+  "survey": "경제활동인구조사",
+  "tbl": "DT_1DA7002S",
+  "tblNm": "연령별 경제활동인구 총괄"
+ },
+ "c0008": {
+  "title": "50~59세 취업자 분포",
+  "survey": "경제활동인구조사",
+  "tbl": null,
+  "tblNm": null
+ },
+ "c0009": {
+  "title": "60세 이상 취업자 분포",
+  "survey": "경제활동인구조사",
+  "tbl": null,
+  "tblNm": null
+ },
+ "c0013": {
+  "title": "취업자 분포",
+  "survey": "경제활동인구조사",
+  "tbl": "DT_1DA7004S",
+  "tblNm": "행정구역(시도)별 경제활동인구"
+ },
+ "c0015": {
+  "title": "15~29세 실업자 수",
+  "survey": "경제활동인구조사",
+  "tbl": null,
+  "tblNm": null
+ },
+ "c0016": {
+  "title": "구인 구직 현황",
+  "survey": "근로실태 조사",
+  "tbl": null,
+  "tblNm": null
+ },
+ "c0017": {
+  "title": "구인 배수",
+  "survey": "근로실태 조사",
+  "tbl": null,
+  "tblNm": null
+ },
+ "c1908": {
+  "title": "20대 인구와 취업자 수",
+  "survey": "경제활동인구조사",
+  "tbl": null,
+  "tblNm": null
+ },
+ "c0024": {
+  "title": "취업자 분포",
+  "survey": "경제활동인구조사",
+  "tbl": "DT_1DA7002S",
+  "tblNm": "연령별 경제활동인구 총괄"
+ },
+ "c0025": {
+  "title": "취업자 수",
+  "survey": "경제활동인구조사",
+  "tbl": null,
+  "tblNm": null
+ }
+}
