@@ -176,21 +176,18 @@ header{padding:22px 28px;border-bottom:1px solid var(--line);background:#fff;dis
 header h1{font-size:24px;margin:0;font-weight:800;letter-spacing:-.5px;}
 header .sub{color:#888;font-size:13px;}
 .layout{display:flex;min-height:calc(100vh - 67px);}
-aside{width:240px;flex-shrink:0;border-right:1px solid var(--line);background:#fff;padding:16px 0;overflow-y:auto;position:sticky;top:67px;height:calc(100vh - 67px);}
+aside{width:212px;flex-shrink:0;border-right:1px solid var(--line);background:#fff;padding:16px 0;overflow-y:auto;position:sticky;top:67px;height:calc(100vh - 67px);}
 aside .cat{padding:9px 22px;font-size:14px;cursor:pointer;color:#444;border-left:3px solid transparent;}
 aside .cat:hover{background:#f2f5f9;}
 aside .cat.active{border-left-color:var(--blue);color:var(--blue);font-weight:700;background:#f2f5f9;}
 aside .cat .cnt{color:#bbb;font-size:12px;float:right;} aside .cat.empty{color:#c8c8c8;}
-main{flex:1;padding:24px 28px;}
+main{flex:1;padding:20px 22px;}
 .toolbar{display:flex;gap:12px;align-items:center;margin-bottom:20px;flex-wrap:wrap;}
 #search{flex:1;min-width:220px;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;outline:none;}
 #search:focus{border-color:var(--blue);} .count{color:#999;font-size:13px;}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
-@media(min-width:1100px){.grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
-@media(min-width:1400px){.grid{grid-template-columns:repeat(4,minmax(0,1fr));}}
-@media(min-width:1900px){.grid{grid-template-columns:repeat(5,minmax(0,1fr));}}
-@media(min-width:2300px){.grid{grid-template-columns:repeat(6,minmax(0,1fr));}}
-@media(min-width:2900px){.grid{grid-template-columns:repeat(7,minmax(0,1fr));}}
+/* 컬럼 수를 화면 폭(media query)이 아니라 본문 영역 폭에 맡긴다. 사이드바가
+   빠진 실제 폭으로 계산되므로 맥북 13"(1280)에서도 4컬럼이 들어간다. */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(230px,100%),1fr));gap:12px;}
 .menu-btn{display:none;background:none;border:1px solid var(--line);border-radius:7px;padding:4px 11px;font-size:16px;cursor:pointer;line-height:1;}
 .scrim{display:none;}
 @media(max-width:820px){
