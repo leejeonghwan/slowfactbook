@@ -32,13 +32,15 @@ DENY = {
 
 
 def audit(spec, it):
+    # refresh_charts 가 다계열을 지원하면서 fetch → fetch_many 로 바뀌었다.
+    # 계열마다 따로 받아오므로 전부 펼쳐서 가장 잘 맞는 짝을 찾는다.
     try:
-        api = rc.fetch(spec)
+        apis = [a for a in rc.fetch_many(spec) if a]
     except Exception as e:
         return None, f"조회 실패 ({str(e)[:40]})"
-    if len(api) < 4:
+    if not apis or max(len(a) for a in apis) < 4:
         return None, "원자료가 너무 짧음"
-    av = [v for _, v in api]
+    av = [v for _, v in max(apis, key=len)]
     best = None
     for s in it.get("series") or []:
         cv = [None if x is None else float(x) for x in s]
@@ -98,6 +100,13 @@ def main():
     for _, t, why in drop:
         print(f"  ✗ {t[:30]:32s} {why}")
 
+    # 안전장치: 조회 자체가 무더기로 실패하면 '값이 안 맞는 것'이 아니라 이쪽 코드나
+    # KOSIS 가 고장난 것이다. 그때 지우면 등록부가 통째로 날아간다 (실제로 한 번 날렸다).
+    fails = sum(1 for _, _, why in drop if "조회 실패" in why)
+    if a.prune and fails > max(3, len(mapping) * 0.2):
+        print(f"\n조회 실패가 {fails}건입니다 — 값이 틀린 게 아니라 조회가 고장난 것으로 보고"
+              f" 아무것도 지우지 않았습니다. 원인을 먼저 보세요.")
+        return 1
     if a.prune and drop:
         json.dump(keep, open(p, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
         print(f"\n→ data/api_map_auto.json 에서 {len(drop)}건 제외 (남은 {len(keep)}건)")

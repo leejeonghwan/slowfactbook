@@ -87,13 +87,14 @@ def parse_realmeter(path, allow_no_party=False):
     return out
 
 
-def load_chart(slide):
+def load_chart(key):
     ov = json.load(open(os.path.join(DATA, "overrides.json"), encoding="utf-8"))
     full = {i.get("slide"): i for i in json.load(open(os.path.join(DATA, "full.json"), encoding="utf-8"))["items"]}
-    base = full.get(slide)
+    base = full.get(key) or next((i for i in full.values() if i.get("id") == key), None)
     if base is None:
-        raise SystemExit(f"{slide} 을 찾지 못했습니다.")
-    it = {**base, **(ov.get(slide) or {})}
+        raise SystemExit(f"{key} 을 찾지 못했습니다.")
+    cid = base.get("id") or key
+    it = {**base, **(ov.get(cid) or ov.get(base.get("slide")) or {})}
     names = [str(x).strip().rstrip(".") for x in (it.get("seriesNames") or [])]
     return ov, it, names
 
@@ -165,6 +166,7 @@ def main():
     ovf = json.load(open(os.path.join(DATA, "overrides.json"), encoding="utf-8"))
 
     def push(slide, it, series, idx_vals, cid, title):
+        # 열쇠는 차트 id 다 (슬라이드 번호는 덱이 바뀌면 밀린다).
         labs = list(it["labels"]) + [label]
         ser = [list(x) for x in series]
         for i, v in idx_vals:
@@ -172,10 +174,10 @@ def main():
         for i in range(len(ser)):
             if len(ser[i]) < len(labs):
                 ser[i].append(None)
-        o = dict(ovf.get(slide) or {})
+        o = dict(ovf.get(cid) or ovf.get(slide) or {})
         o.update({"labels": labs, "series": ser, "source": "리얼미터", "unit": "%",
                   "sourceUrl": url, "updated": stamp})
-        ovf[slide] = o
+        ovf[cid] = o
         cl.append({"date": today, "slide": slide, "id": cid, "title": title,
                    "category": "정치", "mode": "자동 갱신", "n": 1,
                    "note": f"리얼미터 {y}년 {mo}월 {wk}주", "url": url})

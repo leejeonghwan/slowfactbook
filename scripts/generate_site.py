@@ -24,7 +24,8 @@ def clean(values):
 def load_items(data_dir):
     items = []
     seen = set()  # drop exact-duplicate charts (same title + data), even non-adjacent
-    # optional manual corrections, keyed by slide id (e.g. {"slide-735": {"title": "...", "category": "..."}})
+    # 손으로 고친 것·자동 갱신분. 열쇠는 차트 id (예 {"c0380": {"series": [...]}}).
+    # 예전엔 슬라이드 번호였는데, 덱을 다시 내보낼 때마다 번호가 밀려 열쇠가 어긋났다.
     ov_path = os.path.join(data_dir, "overrides.json")
     overrides = json.load(open(ov_path, encoding="utf-8")) if os.path.exists(ov_path) else {}
     for f in sorted(glob.glob(os.path.join(data_dir, "*.json"))):
@@ -33,7 +34,7 @@ def load_items(data_dir):
             continue  # skip ids.json / _report.json / _title_review.json / overrides.json
         fallback = doc.get("category") or os.path.splitext(os.path.basename(f))[0]
         for it in doc.get("items", []):
-            ov = overrides.get(it.get("slide"), {})
+            ov = overrides.get(it.get("id")) or overrides.get(it.get("slide")) or {}
             if ov:
                 it = {**it, **ov}
             cat = it.get("category") or fallback
@@ -97,7 +98,9 @@ def assign_ids(items, idpath):
             okey = base + SEP + str(k); k += 1
         used[okey] = 1
 
-        if nkey in m:
+        if it.get("id"):
+            m.setdefault(nkey, it["id"])        # 항목이 자기 id 를 들고 있으면 그것이 정본
+        elif nkey in m:
             it["id"] = m[nkey]
         elif okey in m:                         # 이번 빌드에서 새 열쇠로 옮겨 적는다
             m[nkey] = m[okey]

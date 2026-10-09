@@ -235,6 +235,8 @@ def main():
     ap.add_argument("--redo", action="store_true", help="후보를 못 찾았던 차트를 다시 시도")
     ap.add_argument("--codes", type=int, default=45)
     ap.add_argument("--accept", type=float, default=0.9)
+    ap.add_argument("--only-kosis", action="store_true",
+                    help="출처가 국가데이터처·KOSIS 계열인 차트만 돌린다 (registry.py 기준)")
     a = ap.parse_args()
 
     sys.path.insert(0, os.path.join(ROOT, "scripts"))
@@ -246,6 +248,19 @@ def main():
         f = infer_freq(ys)
         if f and len(it["labels"]) >= 5 and len(it["title"]) >= 3:
             targets.append((it, ys, f))
+    if a.only_kosis:
+        # 출처 문자열이 KOSIS 계열인 것만 남긴다. 전수(1,800여 건)를 훑으면
+        # 한 번에 안 끝나고, 애초에 KOSIS 가 아닌 차트는 검색이 헛돈다.
+        KEY = ("국가데이터처", "통계청", "KOSIS", "국가통계포털", "고용노동부", "보건복지부",
+               "행정안전부", "교육부", "국세청", "기획재정부", "건강보험", "국토교통부",
+               "한국부동산원")
+        ov = json.load(open(os.path.join(DATA, "overrides.json"), encoding="utf-8"))
+        def src(it):
+            o = ov.get(it.get("slide")) or {}
+            return (o.get("source") or it.get("source") or "")
+        before = len(targets)
+        targets = [t for t in targets if any(k in src(t[0]) for k in KEY)]
+        print(f"KOSIS 출처만: {before} → {len(targets)}건", flush=True)
     print(f"대상 {len(targets)}건 · 실행 {a.offset}~{a.offset + a.limit}", flush=True)
 
     cp = os.path.join(DATA, "api_map_auto.json")

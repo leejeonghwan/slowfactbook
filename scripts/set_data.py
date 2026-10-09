@@ -222,7 +222,7 @@ def main():
 
     ovp = os.path.join(DATA, "overrides.json")
     ov = json.load(open(ovp, encoding="utf-8")) if os.path.exists(ovp) else {}
-    o = dict(ov.get(it["slide"], {}))
+    o = dict(ov.get(it.get("id")) or ov.get(it["slide"]) or {})
     today = datetime.date.today().isoformat()
     # 최근 업데이트 정렬용: 날짜만 쓰면 같은 날 바뀐 것들의 순서가 파일 순서로 밀린다.
     # KST 분 단위 시각까지 적어 실제 시간순으로 서게 한다. changelog 의 date 는 날짜 그대로.
@@ -338,7 +338,7 @@ def main():
     if not a.apply:
         print("\n(미리보기입니다. 반영하려면 --apply)")
         return 0
-    ov[it["slide"]] = o
+    ov[it.get("id") or it["slide"]] = o
     json.dump(ov, open(ovp, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     clp = os.path.join(DATA, "changelog.json")
     cl = json.load(open(clp, encoding="utf-8")) if os.path.exists(clp) else []

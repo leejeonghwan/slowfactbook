@@ -187,7 +187,7 @@ def main():
                 else:
                     ext.append(round(v * sc, 6))
             newseries.append(list(s) + ext)
-        o = ov.setdefault(it["slide"], {})
+        o = ov.setdefault(it.get("id") or it["slide"], {})
         o["labels"] = list(map(str, it["labels"])) + newlabels
         o["series"] = newseries
         o["updated"] = stamp

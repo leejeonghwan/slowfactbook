@@ -1,0 +1,1458 @@
+[
+ {
+  "slide": "slide-8",
+  "title": "생애주기 소득과 소비",
+  "category": "한눈에 보는 한국",
+  "freq": "Y",
+  "n": 86,
+  "source": "국가데이터처 2024년 국민이전계정(1인당, 2026-09-17 발표), 단위: 만원",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_113_STBL_1031383",
+    "tblNm": "참여한 사회문화예술교육 항목별 만족도 - 강사의 전문성",
+    "statNm": "국민문화예술교육조사"
+   },
+   {
+    "tblId": "DT_1NTA2002",
+    "tblNm": "생애주기적자계정(국가총액규모)",
+    "statNm": "국민이전계정"
+   },
+   {
+    "tblId": "DT_1NTA2003",
+    "tblNm": "생애주기적자계정(1인규모)",
+    "statNm": "국민이전계정"
+   }
+  ]
+ },
+ {
+  "slide": "slide-9",
+  "title": "생애주기 공공 소비",
+  "category": "한눈에 보는 한국",
+  "freq": "Y",
+  "n": 86,
+  "source": "국가데이터처 2024년 국민이전계정(1인당, 2026-09-17 발표), 단위: 만원",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1NTA2003",
+    "tblNm": "생애주기적자계정(1인규모)",
+    "statNm": "국민이전계정"
+   },
+   {
+    "tblId": "DT_1NTA2002",
+    "tblNm": "생애주기적자계정(국가총액규모)",
+    "statNm": "국민이전계정"
+   },
+   {
+    "tblId": "DT_1NTA2001",
+    "tblNm": "국민이전계정 총량값",
+    "statNm": "국민이전계정"
+   }
+  ]
+ },
+ {
+  "slide": "slide-10",
+  "title": "생애주기 적자",
+  "category": "한눈에 보는 한국",
+  "freq": "Y",
+  "n": 86,
+  "source": "국가데이터처 2024년 국민이전계정(1인당, 2026-09-17 발표), 단위: 만원",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1NTA2003",
+    "tblNm": "생애주기적자계정(1인규모)",
+    "statNm": "국민이전계정"
+   },
+   {
+    "tblId": "DT_1NTA2002",
+    "tblNm": "생애주기적자계정(국가총액규모)",
+    "statNm": "국민이전계정"
+   },
+   {
+    "tblId": "DT_1NTA2001",
+    "tblNm": "국민이전계정 총량값",
+    "statNm": "국민이전계정"
+   }
+  ]
+ },
+ {
+  "slide": "slide-12",
+  "title": "15~29세 취업자 분포",
+  "category": "한눈에 보는 한국",
+  "freq": "Y",
+  "n": 26,
+  "source": "국가데이터처 「경제활동인구조사」",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1DE9076_8",
+    "tblNm": "졸업/중퇴 취업자의 직업별 취업분포(8차)",
+    "statNm": "경제활동인구조사"
+   },
+   {
+    "tblId": "DT_1DE9072",
+    "tblNm": "졸업/중퇴 취업자의 산업별 취업분포(10차, ~2024)",
+    "statNm": "경제활동인구조사"
+   },
+   {
+    "tblId": "DT_380002_A039_7TH",
+    "tblNm": "동일 직책 종사자의 성별 분포",
+    "statNm": "근로환경조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-13",
+  "title": "30~39세 취업자 분포",
+  "category": "한눈에 보는 한국",
+  "freq": "Y",
+  "n": 26,
+  "source": "국가데이터처 「경제활동인구조사」",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_154020_A131",
+    "tblNm": "평균 연령 및 연령 분포",
+    "statNm": "여성의경제활동및경력단절실태조사"
+   },
+   {
+    "tblId": "DT_1HDAAA06",
+    "tblNm": "가구주연령계층별(10세) 자산, 부채, 소득 현황",
+    "statNm": "가계금융복지조사"
+   },
+   {
+    "tblId": "DT_380002_A039_7TH",
+    "tblNm": "동일 직책 종사자의 성별 분포",
+    "statNm": "근로환경조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-14",
+  "title": "40~49세 취업자 분포",
+  "category": "한눈에 보는 한국",
+  "freq": "Y",
+  "n": 26,
+  "source": "국가데이터처 「경제활동인구조사」",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_154020_A131",
+    "tblNm": "평균 연령 및 연령 분포",
+    "statNm": "여성의경제활동및경력단절실태조사"
+   },
+   {
+    "tblId": "DT_1HDAAA06",
+    "tblNm": "가구주연령계층별(10세) 자산, 부채, 소득 현황",
+    "statNm": "가계금융복지조사"
+   },
+   {
+    "tblId": "DT_380002_A039_7TH",
+    "tblNm": "동일 직책 종사자의 성별 분포",
+    "statNm": "근로환경조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-15",
+  "title": "50~59세 취업자 분포",
+  "category": "한눈에 보는 한국",
+  "freq": "Y",
+  "n": 26,
+  "source": "국가데이터처 「경제활동인구조사」",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1HDAAA06",
+    "tblNm": "가구주연령계층별(10세) 자산, 부채, 소득 현황",
+    "statNm": "가계금융복지조사"
+   },
+   {
+    "tblId": "DT_380002_A039_7TH",
+    "tblNm": "동일 직책 종사자의 성별 분포",
+    "statNm": "근로환경조사"
+   },
+   {
+    "tblId": "DT_1HDAAB03",
+    "tblNm": "가구특성별 소득구간별 가구분포",
+    "statNm": "가계금융복지조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-16",
+  "title": "60세 이상 취업자 분포",
+  "category": "한눈에 보는 한국",
+  "freq": "Y",
+  "n": 26,
+  "source": "국가데이터처 「경제활동인구조사」",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_43701N_001",
+    "tblNm": "응답자 분포표",
+    "statNm": "북한이탈주민실태조사"
+   },
+   {
+    "tblId": "DT_113_STBL_1029516",
+    "tblNm": "관광 숙박여행 동반자 수 분포",
+    "statNm": "국민여행조사"
+   },
+   {
+    "tblId": "DT_113_STBL_1029517",
+    "tblNm": "관광 당일여행 동반자 수 분포",
+    "statNm": "국민여행조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-17",
+  "title": "남성 출생연도별 고용 현황",
+  "category": "한눈에 보는 한국",
+  "freq": "Y",
+  "n": 81,
+  "source": "「경제활동인구조사」 마이크로 데이터, 2025년 연간 평균",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_117079_25BB002031",
+    "tblNm": "종사상지위",
+    "statNm": "전국다문화가족실태조사"
+   },
+   {
+    "tblId": "DT_43701N_231",
+    "tblNm": "함께 살고 있지 않은 자녀 출생지(만 18세 미만)",
+    "statNm": "북한이탈주민실태조사"
+   },
+   {
+    "tblId": "DT_43701N_226",
+    "tblNm": "남한에 거주하고 있는 자녀 출생지(만 18세 미만)",
+    "statNm": "북한이탈주민실태조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-18",
+  "title": "여성 출생연도별 고용 현황",
+  "category": "한눈에 보는 한국",
+  "freq": "Y",
+  "n": 81,
+  "source": "「경제활동인구조사」 마이크로 데이터, 2025년 연간 평균",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_331001_2024AC104",
+    "tblNm": "기혼여성(19~49세)의 출생아별 출산전후휴가 및 육아휴직 여부",
+    "statNm": "가족과출산조사"
+   },
+   {
+    "tblId": "DT_331001_2024AC034",
+    "tblNm": "출생아별 출산전후휴가 및 육아휴직 여부",
+    "statNm": "가족과출산조사"
+   },
+   {
+    "tblId": "DT_117079_25BB002032",
+    "tblNm": "구직경로",
+    "statNm": "전국다문화가족실태조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-19",
+  "title": "출생연도별 고용 현황",
+  "category": "한눈에 보는 한국",
+  "freq": "Y",
+  "n": 81,
+  "source": "「경제활동인구조사」 마이크로 데이터, 2025년 연간 평균",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_2FA011F",
+    "tblNm": "출생지역별 경제활동인구(이민자)",
+    "statNm": "이민자체류실태및고용조사"
+   },
+   {
+    "tblId": "DT_MS1013",
+    "tblNm": "성별, 종사상지위별 취업인구(자국출생자/타국출생자)",
+    "statNm": "국제노동기구(ILO)"
+   },
+   {
+    "tblId": "DT_MS1009",
+    "tblNm": "성별, 경제활동별 취업인구(자국출생자/타국출생자)",
+    "statNm": "국제노동기구(ILO)"
+   }
+  ]
+ },
+ {
+  "slide": "slide-26",
+  "title": "15~29세 실업자 수",
+  "category": "노동",
+  "freq": "Q",
+  "n": 105,
+  "source": "국가데이터처 「경제활동인구조사」",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1SSSP041R",
+    "tblNm": "사회적 관계망 (13세 이상 인구)",
+    "statNm": "사회조사"
+   },
+   {
+    "tblId": "DT_1SSHE020R",
+    "tblNm": "건강관리(13세 이상 인구)",
+    "statNm": "사회조사"
+   },
+   {
+    "tblId": "DT_38304_2013_N002",
+    "tblNm": "장애인 경제활동상태 - 연령별",
+    "statNm": "장애인경제활동실태조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-27",
+  "title": "구인 구직 현황",
+  "category": "노동",
+  "freq": "M",
+  "n": 286,
+  "source": "고용노동부 근로실태 조사",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1YL1101",
+    "tblNm": "구인배수(시도)",
+    "statNm": "e-지방지표"
+   },
+   {
+    "tblId": "DT_109006_J011",
+    "tblNm": "구직활동에서 가장 필요하다고 생각하는 것",
+    "statNm": "국가보훈대상자생활실태조사"
+   },
+   {
+    "tblId": "DT_154021_22AA003200",
+    "tblNm": "구직자의 구인·구직 정보 서비스 이용 경험(복수응답)",
+    "statNm": "양성평등실태조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-28",
+  "title": "구인 배수",
+  "category": "노동",
+  "freq": "M",
+  "n": 288,
+  "source": "고용노동부 근로실태 조사",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1YL1101",
+    "tblNm": "구인배수(시도)",
+    "statNm": "e-지방지표"
+   },
+   {
+    "tblId": "DT_MLTM_6613",
+    "tblNm": "인력 채용이 어려운 이유 (복수응답)",
+    "statNm": "기계설비산업실태조사"
+   },
+   {
+    "tblId": "DT_208008_026",
+    "tblNm": "구인·구직 및 취업 현황",
+    "statNm": "시도통계"
+   }
+  ]
+ },
+ {
+  "slide": "slide-29",
+  "title": "20대 이하 일자리",
+  "category": "노동",
+  "freq": "Q",
+  "n": 30,
+  "source": "국가데이터처",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1FL_7005",
+    "tblNm": "근로자 및 기업특성별 임금근로 일자리",
+    "statNm": "임금근로일자리동향행정통계"
+   },
+   {
+    "tblId": "DT_1FL_7006",
+    "tblNm": "근로자 및 기업특성별 일자리 형태별 임금근로 일자리",
+    "statNm": "임금근로일자리동향행정통계"
+   },
+   {
+    "tblId": "DT_1FL_7010",
+    "tblNm": "연령 및 산업대분류별 일자리형태별 임금근로 일자리",
+    "statNm": "임금근로일자리동향행정통계"
+   }
+  ]
+ },
+ {
+  "slide": "slide-30",
+  "title": "30대 일자리",
+  "category": "노동",
+  "freq": "Q",
+  "n": 30,
+  "source": "국가데이터처",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1FL_7005",
+    "tblNm": "근로자 및 기업특성별 임금근로 일자리",
+    "statNm": "임금근로일자리동향행정통계"
+   },
+   {
+    "tblId": "DT_1FL_7006",
+    "tblNm": "근로자 및 기업특성별 일자리 형태별 임금근로 일자리",
+    "statNm": "임금근로일자리동향행정통계"
+   },
+   {
+    "tblId": "DT_1FL_7010",
+    "tblNm": "연령 및 산업대분류별 일자리형태별 임금근로 일자리",
+    "statNm": "임금근로일자리동향행정통계"
+   }
+  ]
+ },
+ {
+  "slide": "slide-31",
+  "title": "20대 이하 일자리",
+  "category": "노동",
+  "freq": "Q",
+  "n": 32,
+  "source": "국가데이터처",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1FL_7005",
+    "tblNm": "근로자 및 기업특성별 임금근로 일자리",
+    "statNm": "임금근로일자리동향행정통계"
+   },
+   {
+    "tblId": "DT_1FL_7006",
+    "tblNm": "근로자 및 기업특성별 일자리 형태별 임금근로 일자리",
+    "statNm": "임금근로일자리동향행정통계"
+   },
+   {
+    "tblId": "DT_1FL_7010",
+    "tblNm": "연령 및 산업대분류별 일자리형태별 임금근로 일자리",
+    "statNm": "임금근로일자리동향행정통계"
+   }
+  ]
+ },
+ {
+  "slide": "slide-32",
+  "title": "20대 이하 인구 대비 일자리 비중",
+  "category": "노동",
+  "freq": "Q",
+  "n": 32,
+  "source": "국가데이터처",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_113_STBL_1029231",
+    "tblNm": "1인 평균 월별 관광 당일여행 횟수 (만15세이상 전국민)",
+    "statNm": "국민여행조사"
+   },
+   {
+    "tblId": "DT_113_STBL_1032412",
+    "tblNm": "관광 숙박여행 동반자 유형_자녀",
+    "statNm": "국민여행조사"
+   },
+   {
+    "tblId": "DT_113_STBL_1028395",
+    "tblNm": "지속적 반복적 참여 여가활동 분야 및 활동_취미오락활동",
+    "statNm": "국민여가활동조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-33",
+  "title": "20대 인구",
+  "category": "노동",
+  "freq": "Q",
+  "n": 32,
+  "source": "국가데이터처",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_113_STBL_1032358",
+    "tblNm": "문화예술행사 참석 시간-교육",
+    "statNm": "국민문화예술활동조사"
+   },
+   {
+    "tblId": "DT_113_STBL_1030569",
+    "tblNm": "관광여행 만족도_관광지 혼잡도",
+    "statNm": "국민여행조사"
+   },
+   {
+    "tblId": "DT_113_STBL_1032298",
+    "tblNm": "향후 희망하는 여가활동_상위 10개(1+2+3순위)",
+    "statNm": "국민여가활동조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-35",
+  "title": "20대 인구와 취업자",
+  "category": "노동",
+  "freq": "Y",
+  "n": 26,
+  "source": "국가데이터처",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_113_STBL_1032358",
+    "tblNm": "문화예술행사 참석 시간-교육",
+    "statNm": "국민문화예술활동조사"
+   },
+   {
+    "tblId": "DT_113_STBL_1030569",
+    "tblNm": "관광여행 만족도_관광지 혼잡도",
+    "statNm": "국민여행조사"
+   },
+   {
+    "tblId": "DT_113_STBL_1032298",
+    "tblNm": "향후 희망하는 여가활동_상위 10개(1+2+3순위)",
+    "statNm": "국민여가활동조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-36",
+  "title": "55세 이상 취업자",
+  "category": "노동",
+  "freq": "M",
+  "n": 325,
+  "source": "국가데이터처, 단위: 만 명.",
+  "best_score": 0.4,
+  "best_tbl": "DT_1LC0017",
+  "best_tblNm": "주택소유 여부별 인구",
+  "cands": [
+   {
+    "tblId": "DT_11831_N001",
+    "tblNm": "고령자 고용률현황",
+    "statNm": "고령자고용현황"
+   },
+   {
+    "tblId": "DT_1LC0003",
+    "tblNm": "등록취업여부별 인구_시도",
+    "statNm": "생애단계별행정통계"
+   },
+   {
+    "tblId": "DT_1LC0017",
+    "tblNm": "주택소유 여부별 인구",
+    "statNm": "생애단계별행정통계"
+   }
+  ]
+ },
+ {
+  "slide": "slide-37",
+  "title": "20대 인구와 취업자",
+  "category": "노동",
+  "freq": "Y",
+  "n": 8,
+  "source": "국가데이터처, 단위: 만 명.",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_113_STBL_1032358",
+    "tblNm": "문화예술행사 참석 시간-교육",
+    "statNm": "국민문화예술활동조사"
+   },
+   {
+    "tblId": "DT_113_STBL_1030569",
+    "tblNm": "관광여행 만족도_관광지 혼잡도",
+    "statNm": "국민여행조사"
+   },
+   {
+    "tblId": "DT_113_STBL_1032298",
+    "tblNm": "향후 희망하는 여가활동_상위 10개(1+2+3순위)",
+    "statNm": "국민여가활동조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-38",
+  "title": "20대 인구와 취업자 수",
+  "category": "노동",
+  "freq": "M",
+  "n": 327,
+  "source": "국가데이터처 경제활동인구조사, 단위: 만 명",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_113_STBL_1032358",
+    "tblNm": "문화예술행사 참석 시간-교육",
+    "statNm": "국민문화예술활동조사"
+   },
+   {
+    "tblId": "DT_113_STBL_1030569",
+    "tblNm": "관광여행 만족도_관광지 혼잡도",
+    "statNm": "국민여행조사"
+   },
+   {
+    "tblId": "DT_113_STBL_1032298",
+    "tblNm": "향후 희망하는 여가활동_상위 10개(1+2+3순위)",
+    "statNm": "국민여가활동조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-41",
+  "title": "20대 인구 취업자 수 비율",
+  "category": "노동",
+  "freq": "M",
+  "n": 283,
+  "source": "국가데이터처, 단위: %.",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1HDALF06",
+    "tblNm": "소득분배지표(연령계층별)",
+    "statNm": "가계금융복지조사"
+   },
+   {
+    "tblId": "DT_2OEEM3004",
+    "tblNm": "연령별, 성별 고용 및 실업(지표)",
+    "statNm": "OECD"
+   },
+   {
+    "tblId": "DT_2OEEM2018",
+    "tblNm": "전일제 및 시간제 고용",
+    "statNm": "OECD"
+   }
+  ]
+ },
+ {
+  "slide": "slide-42",
+  "title": "20대 인구 고용 분포",
+  "category": "노동",
+  "freq": "Y",
+  "n": 23,
+  "source": "국가데이터처, 단위: %.",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_113_STBL_1029516",
+    "tblNm": "관광 숙박여행 동반자 수 분포",
+    "statNm": "국민여행조사"
+   },
+   {
+    "tblId": "DT_113_STBL_1029517",
+    "tblNm": "관광 당일여행 동반자 수 분포",
+    "statNm": "국민여행조사"
+   },
+   {
+    "tblId": "DT_113_STBL_1029515",
+    "tblNm": "관광여행 동반자 수 분포",
+    "statNm": "국민여행조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-45",
+  "title": "지속 고용과 신규 채용",
+  "category": "노동",
+  "freq": "Q",
+  "n": 32,
+  "source": "국가데이터처",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1YL15002",
+    "tblNm": "비정규직근로자 비율(시도)",
+    "statNm": "e-지방지표"
+   },
+   {
+    "tblId": "DT_33109_D001",
+    "tblNm": "임금 근로자의 고용관계, 근로시간 및 근로계약의 형태",
+    "statNm": "한국복지패널조사"
+   },
+   {
+    "tblId": "DT_33109_E003",
+    "tblNm": "임금 근로자 근로지속불가능 사유",
+    "statNm": "한국복지패널조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-47",
+  "title": "15~29세 실업률과 확장 실업률",
+  "category": "노동",
+  "freq": "M",
+  "n": 132,
+  "source": "국가데이터처",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1YL20531E",
+    "tblNm": "청년실업률(시도)",
+    "statNm": "경제활동인구조사"
+   },
+   {
+    "tblId": "DT_38304_2013_N002",
+    "tblNm": "장애인 경제활동상태 - 연령별",
+    "statNm": "장애인경제활동실태조사"
+   },
+   {
+    "tblId": "DT_1DA7102S",
+    "tblNm": "성/연령별 실업률",
+    "statNm": "경제활동인구조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-48",
+  "title": "취업자 수(연도별)",
+  "category": "노동",
+  "freq": "Y",
+  "n": 63,
+  "source": "통겨청 「경제활동인구조사」",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1DA7011S",
+    "tblNm": "취업시간별 취업자",
+    "statNm": "경제활동인구조사"
+   },
+   {
+    "tblId": "DT_1YL20541",
+    "tblNm": "취업자증감(시도)",
+    "statNm": "e-지방지표"
+   },
+   {
+    "tblId": "DT_383003_C03044",
+    "tblNm": "무급가족종사자의 현 일자리 취업 과정",
+    "statNm": "장애인고용패널조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-49",
+  "title": "취업자 분포",
+  "category": "노동",
+  "freq": "Y",
+  "n": 26,
+  "source": "국가데이터처 「경제활동인구조사」",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1DE9076_8",
+    "tblNm": "졸업/중퇴 취업자의 직업별 취업분포(8차)",
+    "statNm": "경제활동인구조사"
+   },
+   {
+    "tblId": "DT_1DE9072",
+    "tblNm": "졸업/중퇴 취업자의 산업별 취업분포(10차, ~2024)",
+    "statNm": "경제활동인구조사"
+   },
+   {
+    "tblId": "DT_1DE9072_11",
+    "tblNm": "졸업/중퇴 취업자의 산업별 취업분포(11차)",
+    "statNm": "경제활동인구조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-51",
+  "title": "취업자 수",
+  "category": "노동",
+  "freq": "M",
+  "n": 529,
+  "source": "국가데이터처 「경제활동인구조사」",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1DA7011S",
+    "tblNm": "취업시간별 취업자",
+    "statNm": "경제활동인구조사"
+   },
+   {
+    "tblId": "DT_1YL20541",
+    "tblNm": "취업자증감(시도)",
+    "statNm": "e-지방지표"
+   },
+   {
+    "tblId": "DT_383003_C03044",
+    "tblNm": "무급가족종사자의 현 일자리 취업 과정",
+    "statNm": "장애인고용패널조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-55",
+  "title": "남녀 노동시간 격차",
+  "category": "노동",
+  "freq": "Y",
+  "n": 19,
+  "source": "노동부 근로 실태 조사",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_2KAA313",
+    "tblNm": "남녀 임금격차(제조업)",
+    "statNm": "국제통계연감"
+   },
+   {
+    "tblId": "DT_XNN0038",
+    "tblNm": "남녀 임금격차(제조업) - 동북·중앙아시아",
+    "statNm": "신남방신북방통계"
+   },
+   {
+    "tblId": "DT_XNS0038",
+    "tblNm": "남녀 임금격차(제조업) - 남부·동남아시아",
+    "statNm": "신남방신북방통계"
+   }
+  ]
+ },
+ {
+  "slide": "slide-57",
+  "title": "남녀 시간당 임금 총액",
+  "category": "노동",
+  "freq": "Y",
+  "n": 19,
+  "source": "노동부 근로 실태 조사",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_118N_MON054",
+    "tblNm": "산업/규모별 임금 및 근로시간",
+    "statNm": "사업체노동력조사"
+   },
+   {
+    "tblId": "DT_118N_MON055",
+    "tblNm": "산업/규모별 임금 및 근로시간(누계)",
+    "statNm": "사업체노동력조사"
+   },
+   {
+    "tblId": "DT_118N_MON051",
+    "tblNm": "산업/규모별 임금 및 근로시간",
+    "statNm": "사업체노동력조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-58",
+  "title": "남녀 월 임금 총액",
+  "category": "노동",
+  "freq": "Y",
+  "n": 33,
+  "source": "노동부 근로 실태 조사, 단위: 만 원.",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_118N_LCE306",
+    "tblNm": "직종별 임금 및 근로시간 (표준직업분류 7차)",
+    "statNm": "고용형태별노동실태조사"
+   },
+   {
+    "tblId": "DT_118N_LCE305",
+    "tblNm": "산업별 임금 및 근로시간 (표준산업분류10차)",
+    "statNm": "고용형태별노동실태조사"
+   },
+   {
+    "tblId": "DT_118N_LCE0007",
+    "tblNm": "규모별 임금 및 근로시간",
+    "statNm": "고용형태별노동실태조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-60",
+  "title": "고용률",
+  "category": "노동",
+  "freq": "M",
+  "n": 324,
+  "source": "국가데이터처 「경제활동인구조사」",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1DA7001S",
+    "tblNm": "성별 경제활동인구 총괄",
+    "statNm": "경제활동인구조사"
+   },
+   {
+    "tblId": "DT_1DA7004S",
+    "tblNm": "행정구역(시도)별 경제활동인구",
+    "statNm": "경제활동인구조사"
+   },
+   {
+    "tblId": "DT_1DA7002S",
+    "tblNm": "연령별 경제활동인구 총괄",
+    "statNm": "경제활동인구조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-62",
+  "title": "15~29세와 60세 이상 고용률 비교",
+  "category": "노동",
+  "freq": "M",
+  "n": 324,
+  "source": "국가데이터처 「경제활동인구조사」",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_38304_2013_N002",
+    "tblNm": "장애인 경제활동상태 - 연령별",
+    "statNm": "장애인경제활동실태조사"
+   },
+   {
+    "tblId": "DT_1B81A17",
+    "tblNm": "시군구/합계출산율, 모의 연령별 출산율",
+    "statNm": "인구동향조사"
+   },
+   {
+    "tblId": "DT_2FF001F",
+    "tblNm": "15세 이상 국내 상주인구(이민자)",
+    "statNm": "이민자체류실태및고용조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-79",
+  "title": "취업자 수(월별)",
+  "category": "노동",
+  "freq": "M",
+  "n": 527,
+  "source": "국가데이터처 「경제활동인구조사」",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1DA7011S",
+    "tblNm": "취업시간별 취업자",
+    "statNm": "경제활동인구조사"
+   },
+   {
+    "tblId": "DT_1YL20541",
+    "tblNm": "취업자증감(시도)",
+    "statNm": "e-지방지표"
+   },
+   {
+    "tblId": "DT_383003_C03044",
+    "tblNm": "무급가족종사자의 현 일자리 취업 과정",
+    "statNm": "장애인고용패널조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-82",
+  "title": "직종별 취업자 수",
+  "category": "노동",
+  "freq": "M",
+  "n": 161,
+  "source": "국가데이터처 「경제활동인구조사」",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_115_2018_DD006",
+    "tblNm": "직업별(세분류) 향후 1년이내 채용예상인력(학력별, 전공별 등)",
+    "statNm": "산업기술인력수급실태조사"
+   },
+   {
+    "tblId": "DT_115_2018_AA007",
+    "tblNm": "직종별(세분류) 현재인원(성별, 고용형태별 등)",
+    "statNm": "산업기술인력수급실태조사"
+   },
+   {
+    "tblId": "DT_337004_002",
+    "tblNm": "에너지원별 신재생에너지 산업 고용인원 현황",
+    "statNm": "신재생에너지산업실태조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-84",
+  "title": "연령별 비정규직 비율",
+  "category": "노동",
+  "freq": "Y",
+  "n": 23,
+  "source": "국가데이터처, 「경제활동인구조사」",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1YL15002",
+    "tblNm": "비정규직근로자 비율(시도)",
+    "statNm": "e-지방지표"
+   },
+   {
+    "tblId": "DT_38304_2013_N015",
+    "tblNm": "장애인 임금근로자의 비정규직 규모",
+    "statNm": "장애인경제활동실태조사"
+   },
+   {
+    "tblId": "DT_11528_2021_H9995",
+    "tblNm": "이러닝 수요시장 규모(지출액)",
+    "statNm": "이러닝산업실태조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-85",
+  "title": "20대와 60대 고용률",
+  "category": "노동",
+  "freq": "M",
+  "n": 96,
+  "source": "국가데이터처, 「경제활동인구조사」",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_113_STBL_1028264",
+    "tblNm": "주 이용 도서관 - 성인",
+    "statNm": "국민독서실태조사"
+   },
+   {
+    "tblId": "DT_113_STBL_1031915",
+    "tblNm": "독서가 도움되는 부분 - 성인",
+    "statNm": "국민독서실태조사"
+   },
+   {
+    "tblId": "DT_113_STBL_1027554",
+    "tblNm": "1인 지출 경비_단체여행(쇼핑비)",
+    "statNm": "외래관광객조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-87",
+  "title": "연도별 취업자 수 증감",
+  "category": "노동",
+  "freq": "Y",
+  "n": 63,
+  "source": "국가데이터처",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1DA7011S",
+    "tblNm": "취업시간별 취업자",
+    "statNm": "경제활동인구조사"
+   },
+   {
+    "tblId": "DT_1YL20541",
+    "tblNm": "취업자증감(시도)",
+    "statNm": "e-지방지표"
+   },
+   {
+    "tblId": "DT_383003_C03044",
+    "tblNm": "무급가족종사자의 현 일자리 취업 과정",
+    "statNm": "장애인고용패널조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-89",
+  "title": "월별 취업자 수 증감",
+  "category": "노동",
+  "freq": "M",
+  "n": 504,
+  "source": "전년 동월 대비, 국가데이터처",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1DA7011S",
+    "tblNm": "취업시간별 취업자",
+    "statNm": "경제활동인구조사"
+   },
+   {
+    "tblId": "DT_1YL20541",
+    "tblNm": "취업자증감(시도)",
+    "statNm": "e-지방지표"
+   },
+   {
+    "tblId": "DT_383003_C03044",
+    "tblNm": "무급가족종사자의 현 일자리 취업 과정",
+    "statNm": "장애인고용패널조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-92",
+  "title": "청년 실업률",
+  "category": "노동",
+  "freq": "M",
+  "n": 321,
+  "source": "국가데이터처 「경제활동인구조사」",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1YL20531E",
+    "tblNm": "청년실업률(시도)",
+    "statNm": "경제활동인구조사"
+   },
+   {
+    "tblId": "DT_2AX052",
+    "tblNm": "청년 실업률, 남성(15~24세 남성 경제활동인구 중 %)(ILO 모델 추계)",
+    "statNm": "World Bank"
+   },
+   {
+    "tblId": "DT_2AX051",
+    "tblNm": "청년 실업률, 여성(15~24세 여성 경제활동인구 중 %)(ILO 모델 추계)",
+    "statNm": "World Bank"
+   }
+  ]
+ },
+ {
+  "slide": "slide-93",
+  "title": "청년 실업자와 쉬었음 인구",
+  "category": "노동",
+  "freq": "M",
+  "n": 314,
+  "source": "국가데이터처 「경제활동인구조사」",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1YL20531E",
+    "tblNm": "청년실업률(시도)",
+    "statNm": "경제활동인구조사"
+   },
+   {
+    "tblId": "DT_2AX052",
+    "tblNm": "청년 실업률, 남성(15~24세 남성 경제활동인구 중 %)(ILO 모델 추계)",
+    "statNm": "World Bank"
+   },
+   {
+    "tblId": "DT_2AX051",
+    "tblNm": "청년 실업률, 여성(15~24세 여성 경제활동인구 중 %)(ILO 모델 추계)",
+    "statNm": "World Bank"
+   }
+  ]
+ },
+ {
+  "slide": "slide-94",
+  "title": "일자리 수 증가",
+  "category": "노동",
+  "freq": "Q",
+  "n": 30,
+  "source": "국가데이터처",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_154023_25AA005108",
+    "tblNm": "성적 폭력 행위로 인한 영향",
+    "statNm": "여성폭력실태조사"
+   },
+   {
+    "tblId": "DT_154023_25AA005408",
+    "tblNm": "통제 행위로 인한 영향",
+    "statNm": "여성폭력실태조사"
+   },
+   {
+    "tblId": "DT_154023_25AA005507",
+    "tblNm": "스토킹 행위로 인한 영향",
+    "statNm": "여성폭력실태조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-95",
+  "title": "구인 구직 현황",
+  "category": "노동",
+  "freq": "M",
+  "n": 287,
+  "source": "고용노동부 근로실태 조사",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1YL1101",
+    "tblNm": "구인배수(시도)",
+    "statNm": "e-지방지표"
+   },
+   {
+    "tblId": "DT_109006_J011",
+    "tblNm": "구직활동에서 가장 필요하다고 생각하는 것",
+    "statNm": "국가보훈대상자생활실태조사"
+   },
+   {
+    "tblId": "DT_154021_22AA003200",
+    "tblNm": "구직자의 구인·구직 정보 서비스 이용 경험(복수응답)",
+    "statNm": "양성평등실태조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-96",
+  "title": "구인 배수",
+  "category": "노동",
+  "freq": "M",
+  "n": 287,
+  "source": "고용노동부 근로실태 조사",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1YL1101",
+    "tblNm": "구인배수(시도)",
+    "statNm": "e-지방지표"
+   },
+   {
+    "tblId": "DT_MLTM_6613",
+    "tblNm": "인력 채용이 어려운 이유 (복수응답)",
+    "statNm": "기계설비산업실태조사"
+   },
+   {
+    "tblId": "DT_208008_026",
+    "tblNm": "구인·구직 및 취업 현황",
+    "statNm": "시도통계"
+   }
+  ]
+ },
+ {
+  "slide": "slide-97",
+  "title": "제조업 취업자수 증감 추이",
+  "category": "노동",
+  "freq": "M",
+  "n": 144,
+  "source": "국가데이터처",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_380002_A0794_7TH",
+    "tblNm": "고용주 사업장 또는 나의 사업장에서 일한 경험",
+    "statNm": "근로환경조사"
+   },
+   {
+    "tblId": "DT_11827_A002",
+    "tblNm": "업종/고용허가제 구분별 사업장 수",
+    "statNm": "고용허가제고용동향"
+   },
+   {
+    "tblId": "DT_113_STBL_1032318",
+    "tblNm": "자녀 수_미취학아동 자녀",
+    "statNm": "근로자휴가조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-98",
+  "title": "건설업 취업자수 증감 추이",
+  "category": "노동",
+  "freq": "M",
+  "n": 144,
+  "source": "국가데이터처",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_11827_A002",
+    "tblNm": "업종/고용허가제 구분별 사업장 수",
+    "statNm": "고용허가제고용동향"
+   },
+   {
+    "tblId": "DT_451001_B007",
+    "tblNm": "고용형태별 종사자 수",
+    "statNm": "부산항해운항만산업실태조사"
+   },
+   {
+    "tblId": "DT_1C8016",
+    "tblNm": "경기종합지수(2020=100) 구성지표 시계열 (10차)",
+    "statNm": "경기종합지수"
+   }
+  ]
+ },
+ {
+  "slide": "slide-99",
+  "title": "제조업 취업자 수",
+  "category": "노동",
+  "freq": "M",
+  "n": 152,
+  "source": "국가데이터처",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_380002_A0794_7TH",
+    "tblNm": "고용주 사업장 또는 나의 사업장에서 일한 경험",
+    "statNm": "근로환경조사"
+   },
+   {
+    "tblId": "DT_11827_A002",
+    "tblNm": "업종/고용허가제 구분별 사업장 수",
+    "statNm": "고용허가제고용동향"
+   },
+   {
+    "tblId": "DT_113_STBL_1032318",
+    "tblNm": "자녀 수_미취학아동 자녀",
+    "statNm": "근로자휴가조사"
+   }
+  ]
+ },
+ {
+  "slide": "slide-100",
+  "title": "건설업 취업자 수",
+  "category": "노동",
+  "freq": "M",
+  "n": 152,
+  "source": "국가데이터처",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_11827_A002",
+    "tblNm": "업종/고용허가제 구분별 사업장 수",
+    "statNm": "고용허가제고용동향"
+   },
+   {
+    "tblId": "DT_451001_B007",
+    "tblNm": "고용형태별 종사자 수",
+    "statNm": "부산항해운항만산업실태조사"
+   },
+   {
+    "tblId": "DT_1C8016",
+    "tblNm": "경기종합지수(2020=100) 구성지표 시계열 (10차)",
+    "statNm": "경기종합지수"
+   }
+  ]
+ },
+ {
+  "slide": "slide-103",
+  "title": "실업급여 지급액",
+  "category": "노동",
+  "freq": "M",
+  "n": 196,
+  "source": "고용노동부",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_1YL15007E",
+    "tblNm": "구직급여 신청자수(시도)",
+    "statNm": "구직급여신청동향"
+   },
+   {
+    "tblId": "DT_11844N_7374_F",
+    "tblNm": "지역별 구직급여 신청자수",
+    "statNm": "고용행정통계"
+   },
+   {
+    "tblId": "DT_212008_2023A062",
+    "tblNm": "성별·시군별 고용보험 실업급여 수급",
+    "statNm": "시도통계"
+   }
+  ]
+ },
+ {
+  "slide": "slide-104",
+  "title": "실업급여 지급인원",
+  "category": "노동",
+  "freq": "M",
+  "n": 196,
+  "source": "고용노동부",
+  "best_score": 0,
+  "best_tbl": null,
+  "best_tblNm": null,
+  "cands": [
+   {
+    "tblId": "DT_212008_2023A061",
+    "tblNm": "성별·연령별 고용보험 실업급여 수급",
+    "statNm": "시도통계"
+   },
+   {
+    "tblId": "DT_212008_2023A062",
+    "tblNm": "성별·시군별 고용보험 실업급여 수급",
+    "statNm": "시도통계"
+   },
+   {
+    "tblId": "DT_216012_2021C035",
+    "tblNm": "고용보험 실업급여 수급",
+    "statNm": "시도통계"
+   }
+  ]
+ }
+]

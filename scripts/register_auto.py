@@ -202,7 +202,7 @@ def main():
         return 0
     cp = os.path.join(DATA, "api_map_auto.json")
     conf = json.load(open(cp, encoding="utf-8")) if os.path.exists(cp) else {}
-    conf[it["slide"]] = spec
+    conf[it.get("id") or it["slide"]] = spec
     json.dump(conf, open(cp, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     json.dump(mf._cache, open(mf.CACHE, "w", encoding="utf-8"), ensure_ascii=False)
     print(f"\n→ data/api_map_auto.json 에 등록. 이제 refresh_charts.py 와 매일 빌드가 이 차트를 잇습니다.")

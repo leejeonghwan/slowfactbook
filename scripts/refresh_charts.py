@@ -92,7 +92,10 @@ def main():
 
     _items = g.load_items(DATA)
     g.assign_ids(_items, os.path.join(DATA, "ids.json"))   # changelog 에 id 를 남기려면 필요하다
-    items = {it["slide"]: it for it in _items}
+    # 등록부(api_map_auto)와 overrides 의 열쇠는 차트 id 다. 슬라이드 번호는
+    # 덱을 다시 내보낼 때마다 밀려서 더 이상 열쇠로 쓰지 않는다.
+    items = {it["id"]: it for it in _items if it.get("id")}
+    items.update({it["slide"]: it for it in _items})   # 옛 열쇠도 받아준다
     ovp = os.path.join(DATA, "overrides.json")
     ov = json.load(open(ovp, encoding="utf-8")) if os.path.exists(ovp) else {}
     today = datetime.date.today().isoformat()
@@ -175,7 +178,7 @@ def main():
 
     if a.apply and ext:
         for e in ext:
-            o = ov.setdefault(e["slide"], {})
+            o = ov.setdefault(items[e["slide"]].get("id") or e["slide"], {})
             o["labels"] = e["labels"]
             o["series"] = e["series"]
             o["updated"] = stamp
