@@ -46,7 +46,7 @@ def realmeter_latest_pdf():
     return path, url
 
 
-def parse_realmeter(path):
+def parse_realmeter(path, allow_no_party=False):
     import pdfplumber
     with pdfplumber.open(path) as pdf:
         pages = [(p.extract_text() or "") for p in pdf.pages]
@@ -77,9 +77,13 @@ def parse_realmeter(path):
                                      "민주당": float(g[2]), "국민의힘": float(g[3])})
         break
     miss = [k for k in ("week", "approve", "disapprove") if out[k] is None]
-    if miss or not out["party"]:
-        raise SystemExit(f"PDF 에서 못 읽은 항목이 있습니다: {miss or ''} "
-                         f"정당표 {len(out['party'])}행. 양식이 바뀌었을 수 있습니다 — 사람이 봐야 합니다.")
+    if miss:
+        raise SystemExit(f"PDF 에서 못 읽은 항목이 있습니다: {miss}. "
+                         "양식이 바뀌었을 수 있습니다 — 사람이 봐야 합니다.")
+    # 정당 지지도를 뺀 '대통령 국정수행 평가' 단독 호가 간혹 있다. 그때는 대조 그물이
+    # 없을 뿐이니 평가 수치만 쓰고 넘어간다 — 값이 없다고 멈출 일은 아니다.
+    if not out["party"] and not allow_no_party:
+        raise SystemExit("정당 지지도 표를 못 찾았습니다. 양식이 바뀌었을 수 있습니다 — 사람이 봐야 합니다.")
     return out
 
 

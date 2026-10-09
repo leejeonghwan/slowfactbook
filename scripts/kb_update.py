@@ -134,7 +134,18 @@ def main():
                 off = j
                 break
         if off is None:
-            skip.append((cid, "엑셀에서 차트 시작 시점을 못 찾음"))
+            # KB 가 내려주는 엑셀은 최근 몇 년치만 담겨 있을 때가 있다(2021-09~).
+            # 그때는 차트 시작점이 엑셀에 없으므로 반대로 '엑셀 첫 달이 차트 몇 번째인지'를
+            # 찾는다. off 가 음수가 되고, 겹치는 구간 대조와 이어붙이기는 그대로 성립한다.
+            x0 = next((v for _, v in col if v is not None), None)
+            for i, c in enumerate(cv):
+                if c is None or x0 is None:
+                    continue
+                if abs(c - x0 * sc) / max(abs(x0 * sc), 1e-9) <= TOL:
+                    off = -i
+                    break
+        if off is None:
+            skip.append((cid, "엑셀과 차트가 겹치는 지점을 못 찾음"))
             continue
 
         # 겹치는 구간 전수 대조
@@ -143,7 +154,7 @@ def main():
             xs = sheet[names.get(nm, nm)]
             for i, c in enumerate(s):
                 j = i + off
-                if c is None or j >= len(xs) or xs[j][1] is None:
+                if c is None or j < 0 or j >= len(xs) or xs[j][1] is None:
                     continue
                 if abs(c - xs[j][1] * sc) / max(abs(xs[j][1] * sc), 1e-9) > TOL:
                     bad += 1
