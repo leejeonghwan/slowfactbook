@@ -304,12 +304,37 @@ render();
 # ---- shared chart-rendering core, injected into both the site and embed pages ----
 CORE_JS = r"""
 const PALETTE = ["#2f5e8e","#c0322f","#f5a623","#1f8fd6","#6e6e6e","#7aa86f","#9a6fb0"];
+// 정당은 색이 곧 뜻이다. 민주당 계열은 파랑, 국민의힘 계열은 빨강으로 고정한다.
+// 계열 이름(또는 파이 항목 이름)에 아래 말이 들어 있으면 순서와 상관없이 그 색을 쓴다.
+const PARTY_COLOR = [
+  [/국민의힘|자유한국당|새누리|한나라|미래통합|자유선진/, "#c0322f"],
+  [/더불어민주당|민주당|열린우리|새정치민주연합|통합민주/, "#2f5e8e"],
+  [/조국혁신/, "#1f6f8b"], [/개혁신당/, "#e8820c"], [/정의당|진보당/, "#d4a017"],
+  [/무당층|없음|모름/, "#9b9b9b"],
+];
+function partyColor(name){
+  const s=String(name||"");
+  for(const [re,c] of PARTY_COLOR){ if(re.test(s)) return c; }
+  return null;
+}
+// i 번째 계열의 색. 정당 이름이면 고정색, 아니면 기본 팔레트.
+// 한 차트 안에서 색이 겹치지 않도록, 정당색에 이미 쓰인 색은 팔레트에서 건너뛴다.
+function colorsFor(names){
+  const fixed=names.map(partyColor);
+  const used=new Set(fixed.filter(Boolean));
+  let k=0;
+  return fixed.map(c=>{
+    if(c) return c;
+    while(used.has(PALETTE[k%PALETTE.length])) k++;
+    const col=PALETTE[k%PALETTE.length]; k++; return col;
+  });
+}
 function hexA(h,a){const n=parseInt(h.slice(1),16);return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;}
 function dot(s){s=String(s==null?"":s).trim();return (s===""||s.endsWith(".")||s.endsWith("…"))?s:s+".";}
 function legendHTML(it){
   let entries=[];
-  if(it.vizType==="pie"){entries=it.labels.map((l,i)=>[l,PALETTE[i%PALETTE.length]]);}
-  else if(it.series.length>1){entries=it.seriesNames.map((n,i)=>[n||("계열 "+(i+1)),PALETTE[i%PALETTE.length]]);}
+  if(it.vizType==="pie"){const cs=colorsFor(it.labels);entries=it.labels.map((l,i)=>[l,cs[i]]);}
+  else if(it.series.length>1){const cs=colorsFor(it.seriesNames);entries=it.seriesNames.map((n,i)=>[n||("계열 "+(i+1)),cs[i]]);}
   return entries.map(([l,c])=>`<span class="lg"><i style="background:${c}"></i>${dot(l)}</span>`).join("");
 }
 function blank(x){return (x==null||x==="None"||x==="none")?"":String(x);}
@@ -335,14 +360,15 @@ function sparseTick(it){
 }
 function buildChart(canvas,it){
   const t=it.vizType,labels=it.labels.map(blank);
-  const ds=it.series.map((vals,i)=>({label:it.seriesNames[i]||("계열 "+(i+1)),data:vals,backgroundColor:PALETTE[i%PALETTE.length],borderColor:PALETTE[i%PALETTE.length]}));
+  const CS=colorsFor(it.seriesNames||[]);
+  const ds=it.series.map((vals,i)=>({label:it.seriesNames[i]||("계열 "+(i+1)),data:vals,backgroundColor:CS[i],borderColor:CS[i]}));
   const unit=(it.source.match(/단위:\s*([^,.]+)/)||[])[1]||"";
   const tip={callbacks:{label:c=>(ds.length>1?`${c.dataset.label}: `:"")+`${c.formattedValue} ${unit}`.trim()}};
   const interaction={mode:"index",intersect:false};
   const multi=ds.length>1;
   if(t==="combo"){
     const kinds=it.seriesKinds||[],axes=it.seriesAxes||[];
-    const dsets=it.series.map((vals,i)=>{const k=kinds[i]||"line",ax=(axes[i]||0),col=PALETTE[i%PALETTE.length];
+    const dsets=it.series.map((vals,i)=>{const k=kinds[i]||"line",ax=(axes[i]||0),col=CS[i];
       const d={type:(k==="area"?"line":k),label:it.seriesNames[i]||("계열 "+(i+1)),data:vals,borderColor:col,backgroundColor:(k==="bar"?col:hexA(col,0.5)),yAxisID:ax===1?"y1":"y"};
       if(k!=="bar"){d.borderWidth=2;d.pointRadius=0;d.pointHoverRadius=4;d.tension=.25;d.fill=(k==="area");}else{d.borderWidth=0;}
       return d;});
@@ -354,7 +380,7 @@ function buildChart(canvas,it){
   }
   if(t==="line"||t==="area"||t==="two_axis"){
     const isArea=(t==="area");
-    ds.forEach((d,i)=>{const col=PALETTE[i%PALETTE.length];
+    ds.forEach((d,i)=>{const col=CS[i];
       d.borderColor=col;d.borderWidth=isArea?1.5:2;d.pointRadius=0;d.pointHoverRadius=4;d.tension=.25;
       d.backgroundColor=isArea?hexA(col,0.55):col;
       d.fill=isArea?(i===0?"origin":"-1"):false;});
@@ -371,7 +397,7 @@ function buildChart(canvas,it){
   }
   if(t==="pie"){
     const pieTip={callbacks:{label:c=>`${c.label}: ${c.formattedValue} ${unit}`.trim()}};
-    return new Chart(canvas,{type:"doughnut",data:{labels,datasets:[{data:it.series[0],backgroundColor:labels.map((_,i)=>PALETTE[i%PALETTE.length]),borderColor:"#fff",borderWidth:1}]},
+    return new Chart(canvas,{type:"doughnut",data:{labels,datasets:[{data:it.series[0],backgroundColor:(cs=>labels.map((_,i)=>cs[i]))(colorsFor(labels)),borderColor:"#fff",borderWidth:1}]},
       options:{responsive:true,maintainAspectRatio:false,cutout:"60%",plugins:{legend:{display:false},tooltip:pieTip}}});
   }
   const stacked=(t==="stacked_bar");ds.forEach(d=>d.borderWidth=0);
@@ -449,14 +475,18 @@ a.home span{color:var(--blue);}
 #toc a:hover{background:#f2f5f9;color:var(--blue);}
 .scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:35;}
 .scrim.open{display:block;}
-main{max-width:1100px;margin:0 auto;padding:26px 28px;}
+/* 개별 차트 페이지는 가로를 넓게 쓴다. 월·주 단위로 수백 점이 들어가는 차트가 많아
+   폭이 곧 해상도다. 다만 높이가 같이 커지면 화면을 넘기므로 70vh 로 묶는다. */
+main{max-width:1680px;margin:0 auto;padding:26px 32px;}
 .tag{display:inline-block;font-size:12px;color:var(--blue);background:#eaf1f9;padding:3px 10px;border-radius:20px;margin-bottom:12px;}
 h1.title{font-size:30px;font-weight:800;margin:0 0 4px;letter-spacing:-.5px;}
 .meta{font-size:13px;color:#999;margin-bottom:14px;}
 .legendbar{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:4px 14px;margin:0 0 6px;}
 .legendbar .lg{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#555;white-space:nowrap;}
 .legendbar .lg i{width:12px;height:12px;border-radius:2px;flex:0 0 auto;}
-.chartbox{position:relative;width:100%;aspect-ratio:16/9;background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;}
+.chartbox{position:relative;width:100%;aspect-ratio:16/9;max-height:70vh;background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;}
+@media(min-width:1200px){.chartbox{aspect-ratio:21/9;}}
+@media(min-width:1700px){.chartbox{aspect-ratio:12/4;}}
 .tag a{color:inherit;text-decoration:none;}
 .tag a:hover{text-decoration:underline;}
 .actions{margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
@@ -466,7 +496,7 @@ h1.title{font-size:30px;font-weight:800;margin:0 0 4px;letter-spacing:-.5px;}
 .embed-btn:hover{color:var(--blue);border-color:var(--blue);}
 #toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50;}
 #toast.show{opacity:.95;}
-@media(max-width:820px){ main{padding:18px 16px;} h1.title{font-size:23px;} .chartbox{aspect-ratio:4/3;} }
+@media(max-width:820px){ main{padding:18px 16px;} h1.title{font-size:23px;} .chartbox{aspect-ratio:4/3;max-height:none;} }
 </style></head><body>
 <header>
   <button class="toc-handle" id="tocBtn">☰ 목차</button>
@@ -571,7 +601,9 @@ fetch("embed/"+id+".json").then(r=>r.json()).then(it=>{
   document.getElementById("legend").innerHTML=legendHTML(it);
   if(it.vizType==="bar"||it.vizType==="stacked_bar_h"){
     const box=document.querySelector(".chartbox");
-    box.style.aspectRatio="auto";box.style.flex="none";
+    // 항목이 많은 가로 막대는 세로로 늘려야 읽힌다. 비율도 높이 제한도 풀어 준다
+    // (시계열용으로 걸어 둔 max-height:70vh 가 여기까지 적용되면 막대가 뭉개진다).
+    box.style.aspectRatio="auto";box.style.flex="none";box.style.maxHeight="none";
     box.style.height=Math.max(360,it.labels.length*30)+"px";
   }
   buildChart(document.getElementById("cv"),it);
