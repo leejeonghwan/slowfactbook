@@ -236,6 +236,9 @@ main{flex:1;padding:20px 22px;}
 .chartbox>canvas{position:absolute;inset:0;width:100%!important;height:100%!important;}
 
 .legendbar{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:2px 9px;height:16px;overflow:hidden;margin:1px 0 4px;}
+
+.legendbar .lg.pick{cursor:pointer;}
+.legendbar .lg.dim{opacity:.32;}
 .legendbar .lg{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:#666;white-space:nowrap;}
 .legendbar .lg i{width:9px;height:9px;border-radius:2px;flex:0 0 auto;}
 .empty-state{color:#aaa;padding:60px;text-align:center;font-size:15px;}
@@ -291,7 +294,8 @@ function render(){
       if(!e.isIntersecting)return;
       const cv=e.target.querySelector("canvas");
       if(cv && !cv.dataset.done){cv.dataset.done="1";
-        try{charts.push(buildChart(cv,items[+cv.dataset.idx]));}catch(err){console.error(err);}}
+        try{const ch=buildChart(cv,items[+cv.dataset.idx]);charts.push(ch);
+            wireLegend(e.target.querySelector(".legendbar"),()=>ch);}catch(err){console.error(err);}}
       observer.unobserve(e.target);
     });
   },{rootMargin:"300px"});
@@ -391,27 +395,73 @@ function legendHTML(it){
   else if(it.series.length>1){const cs=colorsFor(it.seriesNames,it.highlight);
     // 이름이 빈 계열은 범례에서도 뺀다 — 색만 회색으로 남는다.
     entries=it.seriesNames.map((n,i)=>[n,cs[i]]).filter(([n])=>String(n==null?"":n).trim()!=="");}
-  return entries.map(([l,c])=>`<span class="lg"><i style="background:${c}"></i>${dot(l)}</span>`).join("");
+  // 원형 차트는 계열이 하나(조각이 여럿)라 계열 이름으로 골라낼 수가 없다.
+  const many=entries.length>1&&it.vizType!=="pie";
+  return entries.map(([l,c],k)=>`<span class="lg${many?" pick":""}"${many?` data-s="${l}"`:""}><i style="background:${c}"></i>${dot(l)}</span>`).join("");
+}
+// 아워월드인데이터처럼, 범례를 누르면 그 계열만 또렷하게 두고 나머지는 흐리게 한다.
+// 계열이 스물 몇 개씩 되는 그래프는 이게 없으면 사실상 읽을 수가 없다.
+function fade(h,a){const n=parseInt(String(h).slice(1),16);
+  return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;}
+function applyFocus(chart,name){
+  if(!chart||!chart.data)return;
+  const ds=chart.data.datasets;
+  ds.forEach(d=>{ if(d._c0===undefined){d._c0=d.borderColor;d._b0=d.backgroundColor;d._w0=d.borderWidth;} });
+  const on=!!name;
+  ds.forEach(d=>{
+    const me=(String(d.label||"")===String(name));
+    const base=typeof d._c0==="string"&&d._c0[0]==="#"?d._c0:null;
+    if(!on){ d.borderColor=d._c0; d.backgroundColor=d._b0; d.borderWidth=d._w0; d.order=0; }
+    else if(me){ d.borderColor=d._c0; d.backgroundColor=d._b0;
+                 d.borderWidth=(d._w0||2)+1.5; d.order=-1; }
+    else { d.borderColor=base?fade(base,0.14):d._c0;
+           d.backgroundColor=base?fade(base,0.10):d._b0;
+           d.borderWidth=d._w0; d.order=1; }
+  });
+  // 계열이 많을 때 툴팁이 스물몇 줄로 늘어나는 것도 같이 잡는다
+  const o=chart.options.plugins.tooltip;
+  if(o){ if(o._f0===undefined)o._f0=chart.options.interaction.mode;
+    chart.options.interaction.mode = on?"nearest":o._f0; }
+  chart.update("none");
+}
+// 범례 막대 하나를 그 옆 캔버스의 차트에 묶는다
+function wireLegend(bar,getChart){
+  if(!bar)return;
+  bar.addEventListener("click",e=>{
+    const t=e.target.closest(".lg.pick"); if(!t)return;
+    const cur=bar.dataset.focus||"";
+    const next=(cur===t.dataset.s)?"":t.dataset.s;
+    bar.dataset.focus=next;
+    bar.querySelectorAll(".lg").forEach(x=>x.classList.toggle("dim",!!next&&x.dataset.s!==next));
+    applyFocus(getChart(),next);
+  });
 }
 function blank(x){return (x==null||x==="None"||x==="none")?"":String(x);}
 // 가로축 눈금. 라벨이 2026-09 처럼 시점을 다 적고 있으면 그대로 다 찍으면 빽빽하므로
 // '연도가 바뀌는 자리'에만 연도를 찍는다. 점이 적을 때(3년 이하)는 분기마다 월까지 찍는다.
 // 라벨이 연도만 반복하는 옛 자료는 예전처럼 값이 바뀌는 자리에만 찍는다.
 const YM=/^((?:19|20)\d{2})[-./](\d{2})$/;
+const YMD=/^((?:19|20)\d{2})[-./](\d{2})[-./](\d{2})$/;
 function sparseTick(it){
   const L=it.labels.map(blank);
-  const ym=L.map(x=>String(x).match(YM));
+  // 2026-02-01 처럼 날짜까지 적힌 라벨은 '달이 바뀌는 자리'에 YY.MM 을 찍는다.
+  const ymd=L.map(x=>String(x).match(YMD));
+  const isYMD=ymd.filter(Boolean).length>=L.length*0.8;
+  const ym=isYMD?ymd:L.map(x=>String(x).match(YM));
   const isYM=ym.filter(Boolean).length>=L.length*0.8;
   // 눈금을 붙일 후보(연이 바뀌는 지점, 또는 범주가 바뀌는 지점)를 미리 뽑아둔다.
   // autoSkip 에 맡기면 Chart.js 가 전체 인덱스 기준으로 건너뛰어서
   // 빈 문자열만 골라가고 축이 텅 비는 일이 생긴다.
   const marks=[];
   for(let i=0;i<L.length;i++){
-    if(isYM){ if(!ym[i])continue; if(i===0||!ym[i-1]||ym[i-1][1]!==ym[i][1])marks.push(i); }
+    if(isYM){ if(!ym[i])continue;
+      const chg=isYMD?(i===0||!ym[i-1]||ym[i-1][2]!==ym[i][2]||ym[i-1][1]!==ym[i][1])
+                     :(i===0||!ym[i-1]||ym[i-1][1]!==ym[i][1]);
+      if(chg)marks.push(i); }
     else { if(i===0||L[i]!==L[i-1])marks.push(i); }
   }
   const at=new Map(marks.map((v,i)=>[v,i]));
-  const dense=isYM&&L.length<=36;
+  const dense=isYM&&!isYMD&&L.length<=36;
   return function(val,index){
     if(dense){ const m=ym[index]; return (m&&index%3===0)?`${m[1].slice(2)}.${m[2]}`:""; }
     const k=at.get(index); if(k===undefined)return "";
@@ -419,6 +469,7 @@ function sparseTick(it){
     const target=Math.max(4,Math.min(24,Math.floor(w/72)));
     const step=Math.max(1,Math.ceil(marks.length/target));
     if(k%step!==0)return "";
+    if(isYMD) return `${ym[index][1].slice(2)}.${ym[index][2]}`;
     return isYM?ym[index][1]:L[index];
   };
 }
@@ -518,6 +569,9 @@ html,body{margin:0;height:100%;background:transparent;
 #title{font-size:17px;font-weight:800;margin:0 0 1px;letter-spacing:-.3px;}
 #meta{font-size:11px;color:#999;margin-bottom:6px;}
 .legendbar{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:3px 12px;height:22px;overflow:hidden;margin:0 0 4px;}
+
+.legendbar .lg.pick{cursor:pointer;}
+.legendbar .lg.dim{opacity:.32;}
 .legendbar .lg{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#555;white-space:nowrap;}
 .legendbar .lg i{width:11px;height:11px;border-radius:2px;flex:0 0 auto;}
 .chartbox{position:relative;flex:1;min-height:0;}
@@ -551,7 +605,8 @@ fetch("embed/"+id+".json").then(r=>r.json()).then(it=>{
   document.getElementById("title").textContent=dot(it.title||it.source||"제목 없음");
   document.getElementById("meta").textContent=it.source?dot(it.source):"";
   document.getElementById("legend").innerHTML=legendHTML(it);
-  buildChart(document.getElementById("cv"),it);
+  const _ch=buildChart(document.getElementById("cv"),it);
+  wireLegend(document.getElementById("legend"),()=>_ch);
   document.title=it.title+" — 슬로우팩트북";
 }).catch(()=>{document.getElementById("title").textContent="차트를 불러올 수 없습니다.";});
 </script></body></html>"""
@@ -584,6 +639,9 @@ main{max-width:1680px;margin:0 auto;padding:26px 32px;}
 h1.title{font-size:30px;font-weight:800;margin:0 0 4px;letter-spacing:-.5px;}
 .meta{font-size:13px;color:#999;margin-bottom:14px;}
 .legendbar{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:4px 14px;margin:0 0 6px;}
+
+.legendbar .lg.pick{cursor:pointer;}
+.legendbar .lg.dim{opacity:.32;}
 .legendbar .lg{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#555;white-space:nowrap;}
 .legendbar .lg i{width:12px;height:12px;border-radius:2px;flex:0 0 auto;}
 /* 높이 상한은 화면이 충분히 높을 때만 뜻이 있다. 가로로 누운 휴대폰(예 844×390)에서는
@@ -715,7 +773,8 @@ fetch("embed/"+id+".json").then(r=>r.json()).then(it=>{
     box.style.aspectRatio="auto";box.style.flex="none";box.style.maxHeight="none";
     box.style.height=Math.max(360,it.labels.length*30)+"px";
   }
-  buildChart(document.getElementById("cv"),it);
+  const _ch=buildChart(document.getElementById("cv"),it);
+  wireLegend(document.getElementById("legend"),()=>_ch);
   document.title=it.title+" — 슬로우팩트북";
 }).catch(()=>{document.getElementById("title").textContent="차트를 불러올 수 없습니다.";});
 </script></body></html>"""
