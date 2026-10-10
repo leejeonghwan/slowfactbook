@@ -247,9 +247,18 @@ let activeCat=null,query="",charts=[];
 const grid=document.getElementById("grid"),sidebar=document.getElementById("sidebar"),
       countEl=document.getElementById("count"),searchEl=document.getElementById("search");
 const RECENT="최근 업데이트";
+// 페이지를 열 때마다 한 번 섞어 둔다. 1,800개를 늘 같은 순서로 보여주면 앞쪽 몇십 개만
+// 눈에 띄고 나머지는 영영 안 보인다. 같은 방문 안에서는 순서가 유지돼야 스크롤이 튀지
+// 않으므로, 불러올 때 한 번만 섞고 그 순서를 기억한다.
+(function(){
+  for(let i=ITEMS.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[ITEMS[i],ITEMS[j]]=[ITEMS[j],ITEMS[i]];}
+  ITEMS.forEach((it,i)=>{it._r=i;});
+})();
 function filtered(){
   let r=ITEMS.filter(it=>(!activeCat||(activeCat===RECENT?!!it.updated:it.category===activeCat))&&(!query||(it.title+it.category+it.source).toLowerCase().includes(query.toLowerCase())));
-  if(activeCat===RECENT)r=r.slice().sort((a,b)=>String(b.updated).localeCompare(String(a.updated)));
+  // 최근 업데이트는 갱신 시각 내림차순, 나머지는 이번 방문의 무작위 순서.
+  if(activeCat===RECENT)r=r.slice().sort((a,b)=>String(b.updated||"").localeCompare(String(a.updated||"")));
+  else r=r.slice().sort((a,b)=>a._r-b._r);
   return r;
 }
 function renderSidebar(){
