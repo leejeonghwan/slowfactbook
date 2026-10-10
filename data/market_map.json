@@ -4,5 +4,120 @@
   "interval": "1mo",
   "note": "S&P 500 월말 종가 (야후 파이낸스)",
   "sourceUrl": "https://finance.yahoo.com/quote/%5EGSPC/history/?frequency=1mo"
+ },
+ "c2206": {
+  "symbol": "^KS11",
+  "interval": "1mo",
+  "years": 50,
+  "note": "코스피 지수(월간)",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EKS11/"
+ },
+ "c2207": {
+  "symbol": "^KS11",
+  "interval": "1d",
+  "years": 3,
+  "note": "코스피 지수(2025년~)",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EKS11/",
+  "start": "2025-01-01"
+ },
+ "c2208": {
+  "symbol": "^KS11",
+  "interval": "1d",
+  "years": 3,
+  "note": "코스피 지수(2026년~)",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EKS11/",
+  "start": "2026-01-01"
+ },
+ "c2209": {
+  "symbol": "^KQ11",
+  "interval": "1mo",
+  "years": 50,
+  "note": "코스닥 지수(월간)",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EKQ11/"
+ },
+ "c2210": {
+  "symbol": "^KQ11",
+  "interval": "1d",
+  "years": 3,
+  "note": "코스닥 지수(2025년~)",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EKQ11/",
+  "start": "2025-01-01"
+ },
+ "c2211": {
+  "symbol": "^KQ11",
+  "interval": "1d",
+  "years": 3,
+  "note": "코스닥 지수(2026년~)",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EKQ11/",
+  "start": "2026-01-01"
+ },
+ "c2212": {
+  "symbol": "^IXIC",
+  "interval": "1mo",
+  "years": 50,
+  "note": "나스닥 지수(월간)",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EIXIC/"
+ },
+ "c2213": {
+  "symbol": "^IXIC",
+  "interval": "1d",
+  "years": 3,
+  "note": "나스닥 지수(2025년~)",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EIXIC/",
+  "start": "2025-01-01"
+ },
+ "c2214": {
+  "symbol": "^IXIC",
+  "interval": "1d",
+  "years": 3,
+  "note": "나스닥 지수(2026년~)",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EIXIC/",
+  "start": "2026-01-01"
+ },
+ "c2215": {
+  "symbol": "^GSPC",
+  "interval": "1mo",
+  "years": 50,
+  "note": "S&P 500 지수(월간)",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EGSPC/"
+ },
+ "c2216": {
+  "symbol": "^GSPC",
+  "interval": "1d",
+  "years": 3,
+  "note": "S&P 500 지수(2025년~)",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EGSPC/",
+  "start": "2025-01-01"
+ },
+ "c2217": {
+  "symbol": "^GSPC",
+  "interval": "1d",
+  "years": 3,
+  "note": "S&P 500 지수(2026년~)",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EGSPC/",
+  "start": "2026-01-01"
+ },
+ "c2218": {
+  "symbol": "^DJI",
+  "interval": "1mo",
+  "years": 50,
+  "note": "다우 지수(월간)",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EDJI/"
+ },
+ "c2219": {
+  "symbol": "^DJI",
+  "interval": "1d",
+  "years": 3,
+  "note": "다우 지수(2025년~)",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EDJI/",
+  "start": "2025-01-01"
+ },
+ "c2220": {
+  "symbol": "^DJI",
+  "interval": "1d",
+  "years": 3,
+  "note": "다우 지수(2026년~)",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EDJI/",
+  "start": "2026-01-01"
  }
 }

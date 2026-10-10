@@ -844,5 +844,35 @@
   "n": 18,
   "note": "BLS 공개 API(CUUR0000SA0)에서 지수를 받아 전년 동월 대비로 환산. 겹치는 구간 일치.",
   "keynoteSynced": false
+ },
+ {
+  "date": "2026-10-10",
+  "slide": "slide-1632",
+  "id": "c1106",
+  "title": "삼성전자 영업이익",
+  "category": "기업과 산업",
+  "mode": "manual",
+  "note": "다른 차트와 겹쳐 사이트에서 내림(drop). id 는 재사용하지 않도록 남겨 둠.",
+  "keynoteSynced": false
+ },
+ {
+  "date": "2026-10-10",
+  "slide": "slide-991",
+  "id": "c2103",
+  "title": "코스피와 코스닥. — Untitled 1",
+  "category": "주식",
+  "mode": "manual",
+  "note": "코스피·코스닥을 한 장에 겹쳐 보여주는 구성이 뜻이 없어 사이트에서 내림(drop).",
+  "keynoteSynced": false
+ },
+ {
+  "date": "2026-10-10",
+  "slide": "slide-1026",
+  "id": "c2113",
+  "title": "코스피와 코스닥. — Untitled 1",
+  "category": "주식",
+  "mode": "manual",
+  "note": "코스피·코스닥을 한 장에 겹쳐 보여주는 구성이 뜻이 없어 사이트에서 내림(drop).",
+  "keynoteSynced": false
  }
 ]
