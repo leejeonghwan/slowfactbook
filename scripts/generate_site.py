@@ -374,6 +374,11 @@ function partyColor(name){
 }
 // i 번째 계열의 색. 정당 이름이면 고정색, 아니면 기본 팔레트.
 // 한 차트 안에서 색이 겹치지 않도록, 정당색에 이미 쓰인 색은 팔레트에서 건너뛴다.
+// 고정색을 흰색 쪽으로 섞어 밝기만 달리한다. 뜻(진보=남색, 보수=빨강)은 지키면서
+// 같은 차트 안의 여러 계열을 구분하려고 쓴다.
+function shade(h,t){const n=parseInt(String(h).slice(1),16);
+  const m=(v)=>Math.round(v+(255-v)*t);
+  return "#"+[m((n>>16)&255),m((n>>8)&255),m(n&255)].map(v=>v.toString(16).padStart(2,"0")).join("");}
 function colorsFor(names,highlight){
   const blank=n=>{const s=String(n==null?"":n).trim(); return s===""||s==="None";};
   // 이름 없는 계열은 '뜻을 붙이지 않겠다'는 표시라 회색으로 둔다. 다만 그건
@@ -381,6 +386,16 @@ function colorsFor(names,highlight){
   // 그래프) 그냥 기본색으로 그린다.
   const mixed=names.some(n=>!blank(n));
   const fixed=names.map(n=>blank(n)?(mixed?NEUTRAL:null):partyColor(n));
+  // 같은 고정색이 한 차트에 여럿이면 선이 겹쳐 보여 못 읽는다(역대 대통령 8명이 그렇다).
+  // 색을 버리지 않고 밝기를 단계로 벌려 같은 계열임을 남긴다.
+  const dup={};
+  fixed.forEach(c=>{ if(c&&c!==NEUTRAL) dup[c]=(dup[c]||0)+1; });
+  const seenN={};
+  fixed.forEach((c,i)=>{
+    if(!c||c===NEUTRAL||dup[c]<2) return;
+    const k=(seenN[c]=(seenN[c]||0)+1)-1;
+    fixed[i]=shade(c, Math.min(0.56, k*(0.56/Math.max(1,dup[c]-1))));
+  });
   // 강조 지정이 있으면 그 자리만 강조색으로 덮는다(고정색보다 우선).
   if(highlight!=null){
     const h=String(highlight).trim();
