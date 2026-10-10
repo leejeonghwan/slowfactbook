@@ -87,7 +87,14 @@ def to_series(rows, spec):
             continue
         seen.add(p)
         out.append((p, round(float(v) * scale, nd)))
-    labels = [p[:4] if spec.get("prdSe", "Y") == "Y" else p for p, _ in out]
+    ps = spec.get("prdSe", "Y")
+    if ps == "Y":
+        labels = [p[:4] for p, _ in out]
+    elif ps == "M":
+        # 199001 → 1990-01. 차트 가로축이 월을 알아보려면 이 꼴이어야 한다.
+        labels = [(f"{p[:4]}-{p[4:6]}" if len(p) >= 6 and p[4:6].isdigit() else p) for p, _ in out]
+    else:
+        labels = [p for p, _ in out]
     return labels, [[v for _, v in out]]
 
 

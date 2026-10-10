@@ -6,7 +6,7 @@
    "slide": "api-0001",
    "title": "합계출산율",
    "category": "출산",
-   "source": "인구동향조사 「시군구/합계출산율, 모의 연령별 출산율」",
+   "source": "인구동향조사. 시군구/합계출산율, 모의 연령별 출산율.",
    "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B81A17",
    "vizType": "line",
    "labels": [
@@ -76,7 +76,7 @@
    "slide": "api-0002",
    "title": "청년 실업률",
    "category": "노동",
-   "source": "경제활동인구조사 「청년실업률(시도)」, 단위: %",
+   "source": "경제활동인구조사. 청년실업률(시도), 단위: %.",
    "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1YL20531E",
    "vizType": "line",
    "labels": [
@@ -146,7 +146,7 @@
    "slide": "api-0003",
    "title": "주간 아파트 매매가격지수(부동산원)",
    "category": "부동산",
-   "source": "한국부동산원 전국주택가격동향조사(주간) 「주간 아파트 매매가격지수」, 단위: 2026.7.6=100",
+   "source": "한국부동산원 전국주택가격동향조사(주간). 주간 아파트 매매가격지수, 단위: 2026.7.6=100.",
    "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=408&tblId=DT_304004_WEEK_002_C",
    "vizType": "line",
    "labels": [
@@ -1533,7 +1533,7 @@
    "slide": "api-0004",
    "title": "주간 아파트 매매가격 변동률(부동산원)",
    "category": "부동산",
-   "source": "한국부동산원 전국주택가격동향조사(주간) 「주간 아파트 매매가격지수 변동률」, 단위: %, 전주 대비",
+   "source": "한국부동산원 전국주택가격동향조사(주간). 주간 아파트 매매가격지수 변동률, 단위: %, 전주 대비.",
    "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=408&tblId=DT_304004_WEEK_001_C",
    "vizType": "column",
    "labels": [
@@ -2645,7 +2645,7 @@
    "slide": "api-0005",
    "title": "서울 아파트 주간 매매가격지수(2012년~)",
    "category": "부동산",
-   "source": "한국부동산원 전국주택가격동향조사(주간). 2021년 6월 이전은 R-ONE 자료를 연쇄 환산 「주간 아파트 매매가격지수」, 단위: 2026.7.6=100",
+   "source": "한국부동산원 전국주택가격동향조사(주간). 2021년 6월 이전은 R-ONE 자료를 연쇄 환산. 주간 아파트 매매가격지수, 단위: 2026.7.6=100.",
    "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=408&tblId=DT_304004_WEEK_002_C",
    "vizType": "line",
    "labels": [
@@ -4161,7 +4161,7 @@
    "slide": "api-0006",
    "title": "서울 아파트 주간 매매가격 변동률(2012년~)",
    "category": "부동산",
-   "source": "한국부동산원 전국주택가격동향조사(주간). 2021년 6월 이전은 R-ONE 지수에서 산출 「주간 아파트 매매가격지수 변동률」, 단위: %, 전주 대비",
+   "source": "한국부동산원 전국주택가격동향조사(주간). 2021년 6월 이전은 R-ONE 지수에서 산출. 주간 아파트 매매가격지수 변동률, 단위: %, 전주 대비.",
    "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=408&tblId=DT_304004_WEEK_001_C",
    "vizType": "column",
    "labels": [

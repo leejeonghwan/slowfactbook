@@ -2,7 +2,7 @@
  "c0718": {
   "sheet": "아파트 매매평균가격",
   "scale": 0.0001,
-  "source": "KB부동산 데이터허브 「월간 아파트 매매평균가격」, 단위: 억 원",
+  "source": "KB부동산 데이터허브 월간 아파트 매매평균가격, 단위: 억 원.",
   "sourceUrl": "https://data.kbland.kr/kbstats/wmh?tIdx=HT06&tsIdx=aptSaleAvgPrice",
   "series": {
    "강남11개구": "강남11개구",

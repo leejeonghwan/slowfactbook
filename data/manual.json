@@ -6,7 +6,7 @@
    "slide": "m-0001",
    "title": "미국 비농업 고용자 수",
    "category": "세계 경제",
-   "source": "미국 노동통계국(BLS), FRED PAYEMS, 계절조정, 단위: 백만 명",
+   "source": "미국 노동통계국(BLS), FRED PAYEMS, 계절조정, 단위: 백만 명.",
    "sourceUrl": "https://fred.stlouisfed.org/series/PAYEMS",
    "vizType": "line",
    "labels": [
@@ -2129,7 +2129,7 @@
    "slide": "m-0002",
    "title": "미국 월별 신규 일자리(비농업 고용 전월 대비 증감)",
    "category": "세계 경제",
-   "source": "미국 노동통계국(BLS), FRED PAYEMS, 계절조정, 단위: 천 명",
+   "source": "미국 노동통계국(BLS), FRED PAYEMS, 계절조정, 단위: 천 명.",
    "sourceUrl": "https://fred.stlouisfed.org/series/PAYEMS",
    "vizType": "column",
    "labels": [
@@ -2283,7 +2283,7 @@
   {
    "title": "역대 정부 누적 물가 상승률",
    "category": "소비와 물가",
-   "source": "국가데이터처 소비자물가지수(2020=100), 취임 달 대비 누적 상승률, 단위: %",
+   "source": "국가데이터처 소비자물가지수(2020=100), 취임 달 대비 누적 상승률, 단위: %.",
    "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1J22003",
    "vizType": "line",
    "labels": [
@@ -2936,7 +2936,7 @@
   {
    "title": "역대 정부 서울 아파트 가격 상승률",
    "category": "부동산",
-   "source": "한국부동산원 월간 아파트 매매가격지수(1986~2012 구간은 2011.6=100 표를 연쇄 환산), 취임 달 대비 누적 상승률, 단위: %",
+   "source": "한국부동산원 월간 아파트 매매가격지수(1986~2012 구간은 2011.6=100 표를 연쇄 환산), 취임 달 대비 누적 상승률, 단위: %.",
    "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=408&tblId=DT_30404_B012",
    "vizType": "line",
    "labels": [
@@ -3590,7 +3590,7 @@
    "slide": "m-0005",
    "title": "한국갤럽 대통령 지지율",
    "category": "정치",
-   "source": "한국갤럽, 단위: %",
+   "source": "한국갤럽, 단위: %.",
    "sourceUrl": "",
    "vizType": "line",
    "labels": [
@@ -4236,7 +4236,7 @@
     ]
    ],
    "unit": "억 뷰/일",
-   "source": "김위근, 「한국 언론과 포털 뉴스 서비스」, 한국언론진흥재단, 2020년 11월 30일. 단위: 억 뷰/일(원자료는 1000뷰)",
+   "source": "김위근, 한국 언론과 포털 뉴스 서비스, 한국언론진흥재단, 2020년 11월 30일. 단위: 억 뷰/일(원자료는 1000뷰).",
    "id": "c2192"
   }
  ]

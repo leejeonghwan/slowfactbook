@@ -12,18 +12,18 @@
   "source": "국가데이터처 인구동향조사, 단위: 인구 천 명당 건.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B8000F"
  },
- "c0583": {
-  "label": "지역 합계출산율(전국)",
-  "provider": "kosis",
-  "orgId": "101",
-  "tblId": "DT_1B8000F",
-  "itmId": "T1+",
-  "objL1": "30+",
-  "prdSe": "Y",
-  "startPrdDe": "2000",
-  "endPrdDe": "2026",
+ "c2049": {
+  "label": "월별 경상수지",
+  "provider": "ecos",
+  "statCode": "301Y013",
+  "itemCode": "000000",
+  "cycle": "M",
+  "start": "198001",
+  "end": "209912",
+  "prdSe": "M",
+  "scale": 0.01,
   "round": 3,
-  "source": "국가데이터처 인구동향조사, 단위: 명.",
-  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B8000F"
+  "source": "한국은행 국제수지, 단위: 억 달러.",
+  "sourceUrl": "https://ecos.bok.or.kr/#/Short/6eb4e8"
  }
 }

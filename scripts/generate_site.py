@@ -70,6 +70,8 @@ def load_items(data_dir):
                 # 항목이 data/*.json 에 박아 둔 자기 id 를 그대로 들고 간다.
                 # 이게 없으면 assign_ids 가 또 슬라이드+제목으로 발급해 버린다.
                 "id": it.get("id"),
+                # 단위는 overrides 의 "unit" 을 먼저 보고, 없으면 출처 문자열에서 '단위: …' 를 읽는다.
+                "unit": it.get("unit", ""),
                 "updated": it.get("updated", ""),
             }
             if it["vizType"] == "combo":
@@ -295,7 +297,7 @@ function render(){
     const card=document.createElement("div");card.className="card";
     // 슬라이드 번호는 원본 덱을 추적하려고 달아 둔 내부 표시다. 읽는 사람에게는
     // 아무 뜻이 없으므로 카드에 보이지 않게 하고, 속성으로만 남겨 둔다.
-    const meta=[it.source].filter(Boolean).join(" · ");
+    const meta=it.source?dot(it.source):"";
     card.innerHTML=`<div class="tag" data-cat="${String(it.category).replace(/"/g,'&quot;')}" title="이 카테고리 보기">${dot(it.category)}</div><h2><a href="chart.html?id=${it.id}" title="크게 보기">${dot(it.title||it.source||"제목 없음")}</a></h2><div class="meta" data-slide="${it.slide||""}">${meta}</div><div class="legendbar">${legendHTML(it)}</div><div class="chartbox"><canvas data-idx="${i}"></canvas></div>`;
     grid.appendChild(card);observer.observe(card);
   });
@@ -335,6 +337,9 @@ const PARTY_COLOR = [
   [/더불어민주당|민주당|열린우리|새정치민주연합|통합민주/, "#4a90d9"],
   [/조국혁신/, "#1f6f8b"], [/개혁신당/, "#e8820c"], [/정의당|진보당/, "#d4a017"],
   [/무당층|없음|모름/, "#9b9b9b"],
+  // '기타'는 어느 차트에서든 회색. 다만 '기타 종이신문'처럼 뒤에 말이 붙으면
+  // 그건 제 몫이 있는 항목이므로 팔레트 색을 준다(같은 차트에 둘 이상 올 수 있다).
+  [/^(기타|그\s*외|나머지|무응답|기타등|Other|Others|Etc\.?)[.·\s]*$/i, "#9b9b9b"],
 ];
 // 이름을 비워 둔 계열은 "무당층·기권·응답없음"처럼 뜻을 붙이지 않겠다는 표시다.
 // 팔레트 색을 주면 하나의 항목처럼 읽히므로 중립 회색으로 고정한다.
@@ -396,11 +401,22 @@ function sparseTick(it){
     return isYM?ym[index][1]:L[index];
   };
 }
+// 눈금 글자 크기. 가로축과 세로축을 같은 크기로 두고, 차트가 클수록 조금 키운다.
+// (목차 카드는 230px 안팎이라 10, 개별 페이지는 1000px 넘어가므로 13)
+function tickFont(ctx){
+  const w=(ctx&&ctx.chart&&ctx.chart.width)||800;
+  return {size: w>=900?13:(w>=600?12:(w>=420?11:10))};
+}
+// 가로막대의 항목 이름은 수가 많아 한 단계 작게 간다.
+function tickFontSm(ctx){
+  const w=(ctx&&ctx.chart&&ctx.chart.width)||800;
+  return {size: w>=900?12:(w>=600?11:(w>=420?10:9))};
+}
 function buildChart(canvas,it){
   const t=it.vizType,labels=it.labels.map(blank);
   const CS=colorsFor(it.seriesNames||[]);
   const ds=it.series.map((vals,i)=>({label:(it.seriesNames[i]||""),data:vals,backgroundColor:CS[i],borderColor:CS[i]}));
-  const unit=(it.source.match(/단위:\s*([^,.]+)/)||[])[1]||"";
+  const unit=(it.unit||"").trim()||(it.source.match(/단위:\s*([^,.]+)/)||[])[1]||"";
   const tip={callbacks:{label:c=>((ds.length>1&&c.dataset.label)?`${c.dataset.label}: `:"")+`${c.formattedValue} ${unit}`.trim()}};
   const interaction={mode:"index",intersect:false};
   const multi=ds.length>1;
@@ -412,9 +428,9 @@ function buildChart(canvas,it){
       return d;});
     return new Chart(canvas,{type:"bar",data:{labels,datasets:dsets},
       options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
-        scales:{x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:{size:10}}},
-          y:{position:"left",ticks:{font:{size:10}}},
-          y1:{position:"right",grid:{display:false},ticks:{font:{size:10}}}}}});
+        scales:{x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:tickFont}},
+          y:{position:"left",ticks:{font:tickFont}},
+          y1:{position:"right",grid:{display:false},ticks:{font:tickFont}}}}});
   }
   if(t==="line"||t==="area"||t==="two_axis"){
     const isArea=(t==="area");
@@ -425,13 +441,13 @@ function buildChart(canvas,it){
     const stackY=isArea&&multi;
     return new Chart(canvas,{type:"line",data:{labels,datasets:ds},
       options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
-        scales:{x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:{size:10}}},y:{stacked:stackY,ticks:{font:{size:10}}}}}});
+        scales:{x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:tickFont}},y:{stacked:stackY,ticks:{font:tickFont}}}}});
   }
   if(t==="bar"||t==="stacked_bar_h"){
     const st=(t==="stacked_bar_h");ds.forEach(d=>d.borderWidth=0);
     return new Chart(canvas,{type:"bar",data:{labels,datasets:ds},
       options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
-        scales:{x:{stacked:st,ticks:{font:{size:10}}},y:{stacked:st,grid:{display:false},ticks:{font:{size:9},autoSkip:false}}}}});
+        scales:{x:{stacked:st,ticks:{font:tickFont}},y:{stacked:st,grid:{display:false},ticks:{font:tickFontSm,autoSkip:false}}}}});
   }
   if(t==="pie"){
     const pieTip={callbacks:{label:c=>`${c.label}: ${c.formattedValue} ${unit}`.trim()}};
@@ -441,7 +457,7 @@ function buildChart(canvas,it){
   const stacked=(t==="stacked_bar");ds.forEach(d=>d.borderWidth=0);
   return new Chart(canvas,{type:"bar",data:{labels,datasets:ds},
     options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
-      scales:{x:{stacked,grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:{size:9}}},y:{stacked,ticks:{font:{size:10}}}}}});
+      scales:{x:{stacked,grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:tickFont}},y:{stacked,ticks:{font:tickFont}}}}});
 }
 """
 
@@ -489,7 +505,7 @@ __CORE__
 const id=new URLSearchParams(location.search).get("id");
 fetch("embed/"+id+".json").then(r=>r.json()).then(it=>{
   document.getElementById("title").textContent=dot(it.title||it.source||"제목 없음");
-  document.getElementById("meta").textContent=it.source||"";
+  document.getElementById("meta").textContent=it.source?dot(it.source):"";
   document.getElementById("legend").innerHTML=legendHTML(it);
   buildChart(document.getElementById("cv"),it);
   document.title=it.title+" — 슬로우팩트북";
@@ -646,7 +662,7 @@ fetch("embed/"+id+".json").then(r=>r.json()).then(it=>{
   window.CUR=it;
   document.getElementById("tag").innerHTML='<a href="index.html?cat='+encodeURIComponent(it.category)+'">'+dot(it.category)+'</a>';
   document.getElementById("title").textContent=dot(it.title);
-  document.getElementById("meta").textContent=it.source||"";
+  document.getElementById("meta").textContent=it.source?dot(it.source):"";
   document.getElementById("legend").innerHTML=legendHTML(it);
   if(it.vizType==="bar"||it.vizType==="stacked_bar_h"){
     const box=document.querySelector(".chartbox");

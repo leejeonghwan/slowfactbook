@@ -194,8 +194,9 @@ def main():
             "slide": key,
             "title": c["title"],
             "category": c.get("category", "새 데이터"),
-            "source": f"{c.get('source','')} 「{c.get('table','')}」"
-                      + (f", 단위: {c['unit']}" if c.get("unit") else ""),
+            # 겹낫표는 쓰지 않는다. 문장 끝에는 마침표를 찍는다.
+            "source": (f"{c.get('source','')} {c.get('table','')}".strip()
+                       + (f", 단위: {c['unit']}" if c.get("unit") else "")).rstrip(".") + ".",
             "sourceUrl": c.get("sourceUrl", ""),
             "vizType": c.get("vizType", "line"),
             "labels": labels,
