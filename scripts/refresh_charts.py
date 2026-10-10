@@ -85,7 +85,9 @@ def main():
         a.dry_run = True
 
     mapping = {}
-    for f in ("api_map.json", "api_map_auto.json"):
+    # 손으로 적은 api_map.json 이 자동 등록분(api_map_auto.json)을 이긴다.
+    # 나중에 읽는 쪽이 덮어쓰므로 auto 를 먼저 읽는다.
+    for f in ("api_map_auto.json", "api_map.json"):
         p = os.path.join(DATA, f)
         if os.path.exists(p):
             mapping.update(json.load(open(p, encoding="utf-8")))
