@@ -4196,7 +4196,7 @@
    "slide": "manual-pv-internet",
    "title": "한국의 인터넷 페이지뷰",
    "category": "미디어",
-   "vizType": "line",
+   "vizType": "stacked_bar_h",
    "labels": [
     "2005",
     "2010",
