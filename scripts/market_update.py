@@ -122,7 +122,10 @@ def main():
             skips.append((cid, f"계열 {len(it['series'])}개 — 단일 계열만 지원")); continue
         interval = spec.get("interval", "1mo")
         try:
-            remote = fetch(spec["symbol"], interval)
+            remote = fetch(spec["symbol"], interval, float(spec.get("years", 20)))
+            start = spec.get("start")
+            if start:
+                remote = {k: v for k, v in remote.items() if k >= start}
         except Exception as e:
             skips.append((cid, f"조회 실패: {e}")); continue
 

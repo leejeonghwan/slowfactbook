@@ -2283,7 +2283,7 @@
   {
    "title": "역대 정부 누적 물가 상승률",
    "category": "소비와 물가",
-   "source": "국가데이터처 소비자물가지수(2020=100), 취임 달 대비 누적 상승률, 단위: %.",
+   "source": "국가데이터처 소비자물가지수(2020=100), 취임 달 대비 누적 상승률, 단위: %",
    "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1J22003",
    "vizType": "line",
    "labels": [
@@ -2881,7 +2881,7 @@
      3.16,
      2.97,
      3.22,
-     null,
+     3.54,
      null,
      null,
      null,
@@ -2929,14 +2929,13 @@
      null
     ]
    ],
-   "updated": "2026-09-14",
-   "slide": "m-0003",
-   "id": "c2037"
+   "updated": "2026-10-10 22:20",
+   "slide": "m-0003"
   },
   {
    "title": "역대 정부 서울 아파트 가격 상승률",
    "category": "부동산",
-   "source": "한국부동산원 월간 아파트 매매가격지수(1986~2012 구간은 2011.6=100 표를 연쇄 환산), 취임 달 대비 누적 상승률, 단위: %.",
+   "source": "한국부동산원 월간 아파트 매매가격지수(1986~2012 구간은 2011.6=100 표를 연쇄 환산), 취임 달 대비 누적 상승률, 단위: %",
    "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=408&tblId=DT_30404_B012",
    "vizType": "line",
    "labels": [
@@ -3582,9 +3581,8 @@
      null
     ]
    ],
-   "updated": "2026-09-14",
-   "slide": "m-0004",
-   "id": "c2038"
+   "updated": "2026-10-10 22:20",
+   "slide": "m-0004"
   },
   {
    "slide": "m-0005",
