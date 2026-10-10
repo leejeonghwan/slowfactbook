@@ -84,5 +84,59 @@
     "objL2": "60+"
    }
   ]
+ },
+ "c0583": {
+  "label": "지역별 합계출산율",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1B81A17",
+  "prdSe": "Y",
+  "startPrdDe": "2000",
+  "endPrdDe": "2035",
+  "round": 3,
+  "source": "국가데이터처 인구동향조사. 단위: 명.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B81A17",
+  "series": [
+   {
+    "name": "전국",
+    "itmId": "T1+",
+    "objL1": "00+"
+   },
+   {
+    "name": "서울특별시",
+    "itmId": "T1+",
+    "objL1": "11+"
+   },
+   {
+    "name": "부산광역시",
+    "itmId": "T1+",
+    "objL1": "21+"
+   },
+   {
+    "name": "대구광역시",
+    "itmId": "T1+",
+    "objL1": "22+"
+   },
+   {
+    "name": "인천광역시",
+    "itmId": "T1+",
+    "objL1": "23+"
+   },
+   {
+    "name": "광주광역시",
+    "itmId": "T1+",
+    "objL1": "24+"
+   },
+   {
+    "name": "대전광역시",
+    "itmId": "T1+",
+    "objL1": "25+"
+   },
+   {
+    "name": "울산광역시",
+    "itmId": "T1+",
+    "objL1": "26+"
+   }
+  ]
  }
 }

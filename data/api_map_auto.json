@@ -1331,24 +1331,21 @@
   "provider": "kosis",
   "orgId": "101",
   "tblId": "DT_1B8000I",
-  "itmId": "T10+",
   "prdSe": "Y",
   "startPrdDe": "1925",
-  "endPrdDe": "2073",
-  "scale": 0.0001,
+  "endPrdDe": "2034",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B8000I",
   "_matchScore": 1.0,
-  "_tblNm": "시군구/인구동태건수 및 동태율(출생,사망,혼인,이혼)",
-  "_statNm": "인구동향조사",
   "_chartFreq": "Y",
   "_periodRange": [
    "2000",
-   "2024"
+   "2025"
   ],
   "_recoveredPeriods": null,
-  "objL1": "00+",
-  "_auditOverlap": 25,
-  "_auditFrac": 1.0
+  "_registeredBy": "register_auto",
+  "itmId": "T10+",
+  "scale": 0.0001,
+  "objL1": "00+"
  },
  "c0100": {
   "label": "한국 출생아 수와 사망자 수",
@@ -3481,24 +3478,21 @@
   "provider": "kosis",
   "orgId": "101",
   "tblId": "DT_104Y282",
-  "itmId": "T90+",
   "prdSe": "Y",
   "startPrdDe": "1995",
-  "endPrdDe": "2025",
-  "scale": 0.001,
+  "endPrdDe": "2034",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_104Y282",
   "_matchScore": 1.0,
-  "_tblNm": "시도별 주택시가총액(명목, 연말기준)",
-  "_statNm": "국민대차대조표",
   "_chartFreq": "Y",
   "_periodRange": [
    "1995",
-   "2024"
+   "2025"
   ],
   "_recoveredPeriods": null,
-  "objL1": "00+",
-  "_auditOverlap": 30,
-  "_auditFrac": 1.0
+  "_registeredBy": "register_auto",
+  "itmId": "T90+",
+  "scale": 0.001,
+  "objL1": "00+"
  },
  "c0743": {
   "label": "서울과 수도권 아파트 평균 분양가",
