@@ -66018,5 +66018,32 @@
   "source": "Flurry, 미국 스마트폰 이용자 성별 분포",
   "sourceUrl": "https://www.flurry.com/blog/gen-z-and-millennials-prefer-apple-over-samsung/",
   "revised": "2026-10-10 12:59"
+ },
+ "c1862": {
+  "title": "스마트폰 이용 점유율(전체 연령대)",
+  "unit": "%",
+  "source": "블룸버그 인텔리전스, 미국 스마트폰 이용 점유율",
+  "sourceUrl": "https://www.bloomberg.com/company/press/79-of-gen-z-us-consumers-prefer-iphones-to-rivals-finds-bloomberg-intelligence/",
+  "revised": "2026-10-10 13:04"
+ },
+ "c1863": {
+  "title": "스마트폰 이용 점유율(18~24세)",
+  "unit": "%",
+  "source": "블룸버그 인텔리전스, 미국 스마트폰 이용 점유율",
+  "sourceUrl": "https://www.bloomberg.com/company/press/79-of-gen-z-us-consumers-prefer-iphones-to-rivals-finds-bloomberg-intelligence/",
+  "revised": "2026-10-10 13:04"
+ },
+ "c1998": {
+  "title": "세대별 스마트폰 이용 현황(미국)",
+  "unit": "%",
+  "source": "451 리서치, Digital Endpoint Tracker, 2022년 1분기",
+  "revised": "2026-10-10 13:04"
+ },
+ "c1236": {
+  "title": "세대별 스마트폰 이용 현황(글로벌)",
+  "unit": "%",
+  "source": "스타티스타, 2023년 6월",
+  "sourceUrl": "https://www.statista.com/statistics/1423333/android-vs-ios-users-by-generation/",
+  "revised": "2026-10-10 13:04"
  }
 }
