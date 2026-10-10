@@ -6436,6 +6436,98 @@
    "source": "국가데이터처 인구동향조사. 2025년. 단위: 명.",
    "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B81A17",
    "id": "c2200"
+  },
+  {
+   "slide": "manual-journalist-gi-kr",
+   "title": "한국과 일본 기자 사회 — 여성 기자 비율(한국)",
+   "category": "미디어",
+   "vizType": "pie",
+   "labels": [
+    "여성",
+    "남성"
+   ],
+   "seriesNames": [
+    ""
+   ],
+   "series": [
+    [
+     31.9,
+     68.1
+    ]
+   ],
+   "unit": "%",
+   "source": "단위: %.",
+   "sourceUrl": "",
+   "id": "c2201"
+  },
+  {
+   "slide": "manual-journalist-gi-jp",
+   "title": "한국과 일본 기자 사회 — 여성 기자 비율(일본)",
+   "category": "미디어",
+   "vizType": "pie",
+   "labels": [
+    "여성",
+    "남성"
+   ],
+   "seriesNames": [
+    ""
+   ],
+   "series": [
+    [
+     23.0,
+     77.0
+    ]
+   ],
+   "unit": "%",
+   "source": "단위: %.",
+   "sourceUrl": "",
+   "id": "c2202"
+  },
+  {
+   "slide": "manual-journalist-mg-kr",
+   "title": "한국과 일본 기자 사회 — 여성 관리자 비율(한국)",
+   "category": "미디어",
+   "vizType": "pie",
+   "labels": [
+    "여성",
+    "남성"
+   ],
+   "seriesNames": [
+    ""
+   ],
+   "series": [
+    [
+     12.8,
+     87.2
+    ]
+   ],
+   "unit": "%",
+   "source": "국·실·본부장 기준. 단위: %.",
+   "sourceUrl": "",
+   "id": "c2203"
+  },
+  {
+   "slide": "manual-journalist-mg-jp",
+   "title": "한국과 일본 기자 사회 — 여성 관리자 비율(일본)",
+   "category": "미디어",
+   "vizType": "pie",
+   "labels": [
+    "여성",
+    "남성"
+   ],
+   "seriesNames": [
+    ""
+   ],
+   "series": [
+    [
+     10.0,
+     90.0
+    ]
+   ],
+   "unit": "%",
+   "source": "국·실·본부장 기준. 단위: %.",
+   "sourceUrl": "",
+   "id": "c2204"
   }
  ]
 }

@@ -808,5 +808,28 @@
   "n": 1,
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B81A17",
   "keynoteSynced": false
+ },
+ {
+  "date": "2026-10-10",
+  "slide": null,
+  "id": "c1570",
+  "title": "경기도 지사 후보 가상 대결",
+  "category": "",
+  "mode": "manual",
+  "note": "사용자 요청으로 사이트에서 내림(drop). id 는 재사용하지 않도록 남겨 둠.",
+  "keynoteSynced": false
+ },
+ {
+  "date": "2026-10-10",
+  "slide": "slide-1992",
+  "id": "c1354",
+  "title": "인천공항 승객",
+  "category": "TMI",
+  "mode": "manual",
+  "from": "2026-07",
+  "to": "2026-09",
+  "n": 2,
+  "note": "인천국제공항공사 월별 통계(여객 합계)에서 추가. 겹치는 7개월 값이 모두 일치.",
+  "keynoteSynced": false
  }
 ]
