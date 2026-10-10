@@ -831,5 +831,18 @@
   "n": 2,
   "note": "인천국제공항공사 월별 통계(여객 합계)에서 추가. 겹치는 7개월 값이 모두 일치.",
   "keynoteSynced": false
+ },
+ {
+  "date": "2026-10-10",
+  "slide": "slide-1295",
+  "id": "c0882",
+  "title": "미국 소비자 물가 상승률",
+  "category": "소비와 물가",
+  "mode": "auto",
+  "from": "2025-01",
+  "to": "2026-08",
+  "n": 18,
+  "note": "BLS 공개 API(CUUR0000SA0)에서 지수를 받아 전년 동월 대비로 환산. 겹치는 구간 일치.",
+  "keynoteSynced": false
  }
 ]
