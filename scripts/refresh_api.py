@@ -101,7 +101,11 @@ def main():
     # 현재 차트 상태 (비교용)
     sys.path.insert(0, os.path.join(ROOT, "scripts"))
     import generate_site as g
-    cur = {it["slide"]: it for it in g.load_items(DATA)}
+    # 등록부(api_map)의 열쇠는 이제 차트 id 다. 옛 슬라이드 열쇠도 받아준다.
+    _items = g.load_items(DATA)
+    g.assign_ids(_items, os.path.join(DATA, "ids.json"))
+    cur = {it["slide"]: it for it in _items}
+    cur.update({it["id"]: it for it in _items if it.get("id")})
 
     report, changed = [], 0
     for slide, spec in mapping.items():
@@ -117,7 +121,10 @@ def main():
         old = cur.get(slide)
         old_last = (old["labels"][-1], old["series"][0][-1]) if old and old["labels"] else None
         new_last = (labels[-1], series[0][-1]) if labels else None
-        diff = old_last != new_last
+        # 마지막 점만 보면 과거 값이 수정된 경우를 놓친다. 라벨·값 전체를 본다.
+        diff = not (old
+                    and [str(x) for x in old["labels"]] == [str(x) for x in labels]
+                    and old["series"] == series)
         report.append({"slide": slide, "label": spec.get("label", ""),
                        "status": "changed" if diff else "same",
                        "old_last": old_last, "new_last": new_last,
@@ -127,14 +134,17 @@ def main():
         if diff:
             changed += 1
         if not dry:
-            ov = overrides.get(slide, {})
+            key = (old or {}).get("id") or slide     # overrides 의 열쇠는 차트 id 다
+            ov = overrides.get(key, overrides.get(slide, {}))
             ov.update({"labels": labels, "series": series,
-                       "updated": datetime.datetime.now(
-                           datetime.timezone(datetime.timedelta(hours=9))
-                       ).strftime("%Y-%m-%d %H:%M"),
                        "source": spec.get("source", ov.get("source", "")),
                        "sourceUrl": spec.get("sourceUrl", ov.get("sourceUrl", ""))})
-            overrides[slide] = ov
+            # 값이 그대로면 updated 를 다시 찍지 않는다 — '최근 업데이트'가 오염된다.
+            if diff:
+                ov["updated"] = datetime.datetime.now(
+                    datetime.timezone(datetime.timedelta(hours=9))
+                ).strftime("%Y-%m-%d %H:%M")
+            overrides[key] = ov
 
     if not dry:
         json.dump(overrides, open(OVR, "w", encoding="utf-8"), ensure_ascii=False, indent=1)

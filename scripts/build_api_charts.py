@@ -151,6 +151,8 @@ def main():
     stamp = __import__("datetime").datetime.now(
         __import__("datetime").timezone(__import__("datetime").timedelta(hours=9))
     ).strftime("%Y-%m-%d %H:%M")
+    # 직전 성공본. 값이 그대로면 updated 를 다시 찍지 않으려고 들고 있는다.
+    prevmap = {it.get("slide"): it for it in prev}
     items, errs = [], 0
     streak = 0                               # 연속 실패 — 3번 연달아 실패하면 KOSIS 장애로 보고 그만둔다
     for key, c in reg.items():
@@ -179,6 +181,15 @@ def main():
             continue
         sc = c.get("scale", 1) or 1
         cyc = c.get("cycle", "Y")
+        labels = [pp(p, cyc) for p in periods]
+        names = [n for n, _ in fetched]
+        series = [[None if d.get(p) is None else round(d[p] * sc, 6) for p in periods] for _, d in fetched]
+        # 값이 하나도 안 바뀌었으면 updated 를 건드리지 않는다.
+        # 매번 새로 찍으면 (1) data/api.json 이 매 실행마다 달라져 자동 커밋이 쌓이고
+        # (2) 사이트의 '최근 업데이트'가 바뀌지도 않은 차트로 채워진다.
+        p0 = prevmap.get(key)
+        unchanged = bool(p0) and p0.get("labels") == labels \
+            and p0.get("series") == series and p0.get("seriesNames") == names
         items.append({
             "slide": key,
             "title": c["title"],
@@ -187,12 +198,12 @@ def main():
                       + (f", 단위: {c['unit']}" if c.get("unit") else ""),
             "sourceUrl": c.get("sourceUrl", ""),
             "vizType": c.get("vizType", "line"),
-            "labels": [pp(p, cyc) for p in periods],
-            "seriesNames": [n for n, _ in fetched],
-            "updated": stamp,
-            "series": [[None if d.get(p) is None else round(d[p] * sc, 6) for p in periods] for _, d in fetched],
+            "labels": labels,
+            "seriesNames": names,
+            "updated": (p0.get("updated") or stamp) if unchanged else stamp,
+            "series": series,
         })
-        print(f"  · {key} {c['title'][:26]:28s} {pp(periods[0],cyc)}~{pp(periods[-1],cyc)} ({len(periods)}개 × {len(fetched)}계열)")
+        print(f"  {'·' if unchanged else '●'} {key} {c['title'][:26]:28s} {pp(periods[0],cyc)}~{pp(periods[-1],cyc)} ({len(periods)}개 × {len(fetched)}계열)")
     # 이번에 못 받은 차트는 직전 성공본(data/api.json)의 항목을 그대로 살린다.
     # KOSIS 가 잠깐 죽었다고 이미 나가 있는 임베드 주소가 404 가 되면 안 된다.
     got = {it["slide"] for it in items}
@@ -203,9 +214,15 @@ def main():
     if not items and prev:
         print(f"\n!! 수집 0건. 기존 data/api.json({len(prev)}건)을 그대로 둡니다.")
         return 0
-    json.dump({"category": "새 데이터", "_origin": "api", "items": items},
-              open(OUTP, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-    print(f"\nAPI 차트 {len(items)}건 → data/api.json  (실패 {errs})")
+    doc = {"category": "새 데이터", "_origin": "api", "items": items}
+    txt = json.dumps(doc, ensure_ascii=False, indent=1)
+    before = open(OUTP, encoding="utf-8").read() if os.path.exists(OUTP) else None
+    if txt == before:
+        print(f"\nAPI 차트 {len(items)}건 — 바뀐 값이 없어 data/api.json 을 그대로 둡니다. (실패 {errs})")
+        return 0
+    open(OUTP, "w", encoding="utf-8").write(txt)
+    nchanged = sum(1 for it in items if it.get("updated") == stamp)
+    print(f"\nAPI 차트 {len(items)}건 → data/api.json  (값이 바뀐 차트 {nchanged}건, 실패 {errs})")
     print("다음: python3 scripts/build.py")
     return 0
 
