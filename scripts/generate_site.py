@@ -222,6 +222,10 @@ main{flex:1;padding:20px 22px;}
 .card .tag{display:inline-block;font-size:10px;color:var(--blue);background:#eaf1f9;padding:1px 7px;border-radius:20px;margin-bottom:5px;cursor:pointer;}
 .card .tag:hover{background:#d7e6fa;}
 .chartbox{position:relative;width:100%;min-width:0;aspect-ratio:16/9;}
+/* 캔버스를 상자에 절대 배치해 상자가 높이의 주인이 되게 한다. 그러지 않으면
+   창을 좁혔다 넓힐 때 캔버스가 직전 높이를 그대로 들고 있어 세로가 안 따라온다. */
+.chartbox>canvas{position:absolute;inset:0;width:100%!important;height:100%!important;}
+
 .legendbar{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:2px 9px;height:16px;overflow:hidden;margin:1px 0 4px;}
 .legendbar .lg{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:#666;white-space:nowrap;}
 .legendbar .lg i{width:9px;height:9px;border-radius:2px;flex:0 0 auto;}
@@ -429,6 +433,10 @@ html,body{margin:0;height:100%;background:transparent;
 .legendbar .lg{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#555;white-space:nowrap;}
 .legendbar .lg i{width:11px;height:11px;border-radius:2px;flex:0 0 auto;}
 .chartbox{position:relative;flex:1;min-height:0;}
+/* 캔버스를 상자에 절대 배치해 상자가 높이의 주인이 되게 한다. 그러지 않으면
+   창을 좁혔다 넓힐 때 캔버스가 직전 높이를 그대로 들고 있어 세로가 안 따라온다. */
+.chartbox>canvas{position:absolute;inset:0;width:100%!important;height:100%!important;}
+
 #credit{font-size:10px;color:#bbb;text-align:right;margin-top:4px;}
 #credit a{color:#bbb;text-decoration:none;}
 </style></head><body>
@@ -493,6 +501,10 @@ h1.title{font-size:30px;font-weight:800;margin:0 0 4px;letter-spacing:-.5px;}
 /* 높이 상한은 화면이 충분히 높을 때만 뜻이 있다. 가로로 누운 휴대폰(예 844×390)에서는
    70vh 가 273px 이라 차트가 납작한 띠가 된다. 최소 높이를 같이 걸어 둔다. */
 .chartbox{position:relative;width:100%;aspect-ratio:16/9;max-height:70vh;min-height:300px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;}
+/* 캔버스를 상자에 절대 배치해 상자가 높이의 주인이 되게 한다. 그러지 않으면
+   창을 좁혔다 넓힐 때 캔버스가 직전 높이를 그대로 들고 있어 세로가 안 따라온다. */
+.chartbox>canvas{position:absolute;inset:0;width:100%!important;height:100%!important;}
+
 @media(min-width:1200px){.chartbox{aspect-ratio:21/9;}}
 @media(min-width:1700px){.chartbox{aspect-ratio:12/4;}}
 .tag a{color:inherit;text-decoration:none;}
