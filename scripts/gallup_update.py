@@ -18,6 +18,8 @@ DATA = os.path.join(ROOT, "data")
 CACHE = os.path.join(ROOT, ".cache", "gallup")
 LIST = "https://www.gallup.co.kr/gallupdb/report.asp"
 CONTENT = "https://www.gallup.co.kr/gallupdb/reportContent.asp?seqNo=%d&bType=8"
+ANNUAL = ("https://www.gallup.co.kr/dir/GallupKoreaDaily/"
+          "GallupKoreaDailyOpinion_Monthly_%d12.pdf")
 KST = datetime.timezone(datetime.timedelta(hours=9))
 CHART = "c2228"
 
@@ -56,6 +58,23 @@ def latest_pdf():
     raise SystemExit("목록에서 'N월 통합 포함' 호를 찾지 못했습니다 — 페이지 구조가 바뀐 듯합니다.")
 
 
+def annual_pdf(year):
+    """그 해 12월에 나오는 '연간 통합' 호. 월별 통합표는 해가 바뀌면 1월부터 다시
+    시작하므로, 지난해 10~12월은 이 파일에서만 얻을 수 있다. 없으면 None."""
+    url = ANNUAL % year
+    os.makedirs(CACHE, exist_ok=True)
+    path = os.path.join(CACHE, os.path.basename(url))
+    if not os.path.exists(path):
+        try:
+            body = _get(url)
+        except Exception:
+            return None
+        if len(body) < 100_000:      # 없는 해는 빈 껍데기가 200 으로 온다
+            return None
+        open(path, "wb").write(body)
+    return path
+
+
 def parse(path):
     """{'2026-01': {'남성 18~29세': 30, ...}, ...}"""
     txt = subprocess.run(["pdftotext", "-layout", path, "-"],
@@ -65,13 +84,22 @@ def parse(path):
     lines = txt.split("\n")
     # '대통령 직무 수행 평가' 월별 통합 구간만. 뒤쪽의 정당 지지도·정치 성향 표에도
     # 같은 모양의 행이 있어서 구간을 자르지 않으면 섞인다.
-    start = next((i for i, l in enumerate(lines)
-                  if "월별 통합 교차집계표" in l), None)
-    if start is None:
-        raise SystemExit("'월별 통합 교차집계표' 를 찾지 못했습니다 — 사람이 봐야 합니다.")
-    end = next((i for i in range(start + 1, len(lines))
-                if "월별 통합 교차집계표" in lines[i]), len(lines))
-    seg = lines[start:end]
+    # 목차에도 '월별 통합 교차집계표' 라는 글자가 나오고, 뒤쪽 정당 지지도·정치 성향
+    # 표에도 같은 제목과 같은 모양의 성/연령별 행이 있다. 그래서 '대통령 직무 수행 평가'
+    # 가 바로 뒤따르고 월 머리글이 실제로 들어 있는 첫 구간만 고른다.
+    hits = [i for i, l in enumerate(lines) if "월별 통합 교차집계표" in l]
+    seg = None
+    for n, i in enumerate(hits):
+        end = hits[n + 1] if n + 1 < len(hits) else len(lines)
+        cand = lines[i:end]
+        head = "\n".join(cand[:10])
+        if "대통령 직무 수행 평가" not in head:
+            continue
+        if any(MONTH_RE.search(l) for l in cand) and any(ROW_RE.search(l) for l in cand):
+            seg = cand
+            break
+    if seg is None:
+        raise SystemExit("대통령 직무 수행 평가 월별 통합표를 찾지 못했습니다 — 사람이 봐야 합니다.")
     heads = [i for i, l in enumerate(seg) if MONTH_RE.search(l)]
     out = {}
     for n, h in enumerate(heads):
@@ -102,6 +130,13 @@ def main():
         path, url = latest_pdf()
     print(f"PDF: {os.path.basename(path)}")
     months = parse(path)
+    # 해가 바뀌면 월별 통합표가 1월부터 다시 시작한다. 차트 꼬리가 지난해에 걸쳐
+    # 있으면 그 해 연간 통합 호를 같이 받아 메운다.
+    if months:
+        first = min(months)
+        prev = annual_pdf(int(first[:4]) - 1)
+        if prev:
+            months = {**parse(prev), **months}
     if not months:
         raise SystemExit("월별 통합표에서 성/연령별 행을 읽지 못했습니다 — 사람이 봐야 합니다.")
     print(f"  읽은 달: {', '.join(sorted(months))}")
