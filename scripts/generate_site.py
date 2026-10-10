@@ -218,7 +218,7 @@ main{flex:1;padding:20px 22px;}
 }
 /* 그리드 칸 안에서 카드가 내용(캔버스)의 고유 폭에 밀려 넘치지 않도록 min-width 를 0 으로.
    이게 없으면 화면을 좁힐 때 카드가 안 줄고 가로 스크롤이 생긴다. */
-.card{position:relative;min-width:0;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px 10px;box-shadow:0 1px 3px rgba(0,0,0,.03);}
+.card{cursor:pointer;transition:box-shadow .15s,transform .15s;position:relative;min-width:0;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px 10px;box-shadow:0 1px 3px rgba(0,0,0,.03);}
 .embed-btn{position:absolute;top:9px;right:9px;font-size:10px;color:#bbb;background:#f6f6f6;border:1px solid #eaeaea;border-radius:5px;padding:2px 7px;cursor:pointer;opacity:0;transition:opacity .15s;}
 .card:hover .embed-btn,.embed-btn:focus{opacity:1;}
 .embed-btn:hover{color:var(--blue);border-color:var(--blue);}
@@ -227,6 +227,8 @@ main{flex:1;padding:20px 22px;}
 .card h2{font-size:15px;line-height:1.3;margin:0 0 2px;font-weight:700;letter-spacing:-.3px;}
 .card h2 a{color:inherit;text-decoration:none;}
 .card h2 a:hover{color:var(--blue);text-decoration:underline;}
+.card:hover{box-shadow:0 4px 14px rgba(0,0,0,.09);transform:translateY(-1px);}
+.card .tag,.card h2 a,.card .legendbar .lg.pick{cursor:pointer;}
 .card .meta{font-size:11px;color:#999;margin-bottom:7px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .card .tag{display:inline-block;font-size:10px;color:var(--blue);background:#eaf1f9;padding:1px 7px;border-radius:20px;margin-bottom:5px;cursor:pointer;}
 .card .tag:hover{background:#d7e6fa;}
@@ -318,7 +320,16 @@ function copyEmbed(id){
 }
 searchEl.addEventListener("input",e=>{query=e.target.value;render();});
 // click a card's category chip -> filter to that category
-grid.addEventListener("click",e=>{const t=e.target.closest(".tag");if(t&&t.dataset.cat){activeCat=t.dataset.cat;query="";searchEl.value="";render();window.scrollTo({top:0});}});
+grid.addEventListener("click",e=>{
+  const t=e.target.closest(".tag");
+  if(t&&t.dataset.cat){activeCat=t.dataset.cat;query="";searchEl.value="";render();window.scrollTo({top:0});return;}
+  if(e.target.closest(".legendbar"))return;      // 범례는 계열 고르기로 쓴다
+  if(e.target.closest("a"))return;               // 제목 링크는 원래대로
+  // 카드 아무 데나 눌러도 그 차트로 들어간다
+  const card=e.target.closest(".card"); if(!card)return;
+  const a=card.querySelector("h2 a");
+  if(a) location.href=a.getAttribute("href");
+});
 function closeNav(){document.body.classList.remove("nav-open");}
 document.getElementById("menuBtn").onclick=()=>document.body.classList.toggle("nav-open");
 document.getElementById("scrim").onclick=closeNav;
@@ -342,7 +353,8 @@ const ACCENT = "#fdad00";
 const PARTY_COLOR = [
   // 대통령 이름이 정당과 같은 차트에 있으면 같은 계열의 짙은 색으로 구분한다.
   // 정당 규칙보다 먼저 봐야 '이재명'이 민주당 파랑에 먹히지 않는다.
-  [/이재명/, "#1b3f66"],
+  [/이재명|문재인|노무현|김대중/, "#1b3f66"],
+  [/윤석열|박근혜|이명박/, "#8f2420"],
   [/국민의힘|자유한국당|새누리|한나라|미래통합|자유선진/, "#c0322f"],
   [/더불어민주당|민주당|열린우리|새정치민주연합|통합민주/, "#4a90d9"],
   [/조국혁신/, "#1f6f8b"], [/개혁신당/, "#e8820c"], [/정의당|진보당/, "#d4a017"],
@@ -507,6 +519,18 @@ function pctCap(it){
   }
   return (m>=85&&m<=100.5)?100:null;
 }
+// 목차 카드는 어차피 눌러서 크게 봐야 하므로 마우스오버를 끈다.
+// (처음 그려질 때의 애니메이션은 그대로 둔다 — 카드가 하나씩 차오르는 맛이 있다.)
+// 캔버스에 data-idx 가 붙어 있으면 목차 카드다.
+function mk(canvas,cfg){
+  if(canvas.hasAttribute("data-idx")){
+    cfg.options=cfg.options||{};
+    cfg.options.events=[];                       // hover/뫼브 이벤트 자체를 받지 않는다
+    cfg.options.plugins=cfg.options.plugins||{};
+    cfg.options.plugins.tooltip={enabled:false};
+  }
+  return new Chart(canvas,cfg);
+}
 function buildChart(canvas,it){
   const t=it.vizType,labels=it.labels.map(blank);
   const CS=colorsFor(it.seriesNames||[],it.highlight);
@@ -521,7 +545,7 @@ function buildChart(canvas,it){
       const d={type:(k==="area"?"line":k),label:(it.seriesNames[i]||""),data:vals,borderColor:col,backgroundColor:(k==="bar"?col:hexA(col,0.5)),yAxisID:ax===1?"y1":"y"};
       if(k!=="bar"){d.borderWidth=2;d.pointRadius=0;d.pointHoverRadius=4;d.tension=.25;d.fill=(k==="area");}else{d.borderWidth=0;}
       return d;});
-    return new Chart(canvas,{type:"bar",data:{labels,datasets:dsets},
+    return mk(canvas,{type:"bar",data:{labels,datasets:dsets},
       options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
         scales:{x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:tickFont}},
           y:{position:"left",ticks:{font:tickFont}},
@@ -534,23 +558,23 @@ function buildChart(canvas,it){
       d.backgroundColor=isArea?hexA(col,0.55):col;
       d.fill=isArea?(i===0?"origin":"-1"):false;});
     const stackY=isArea&&multi;
-    return new Chart(canvas,{type:"line",data:{labels,datasets:ds},
+    return mk(canvas,{type:"line",data:{labels,datasets:ds},
       options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
         scales:{x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:tickFont}},y:{stacked:stackY,ticks:{font:tickFont},...(pctCap(it)?{min:0,max:100}:{})}}}});
   }
   if(t==="bar"||t==="stacked_bar_h"){
     const st=(t==="stacked_bar_h");ds.forEach(d=>d.borderWidth=0);
-    return new Chart(canvas,{type:"bar",data:{labels,datasets:ds},
+    return mk(canvas,{type:"bar",data:{labels,datasets:ds},
       options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
         scales:{x:{stacked:st,ticks:{font:tickFont},...(pctCap(it)?{min:0,max:100}:{})},y:{stacked:st,grid:{display:false},ticks:{font:tickFontSm,autoSkip:false}}}}});
   }
   if(t==="pie"){
     const pieTip={callbacks:{label:c=>`${c.label}: ${c.formattedValue} ${unit}`.trim()}};
-    return new Chart(canvas,{type:"doughnut",data:{labels,datasets:[{data:it.series[0],backgroundColor:(cs=>labels.map((_,i)=>cs[i]))(colorsFor(labels,it.highlight)),borderColor:"#fff",borderWidth:1}]},
+    return mk(canvas,{type:"doughnut",data:{labels,datasets:[{data:it.series[0],backgroundColor:(cs=>labels.map((_,i)=>cs[i]))(colorsFor(labels,it.highlight)),borderColor:"#fff",borderWidth:1}]},
       options:{responsive:true,maintainAspectRatio:false,cutout:"60%",plugins:{legend:{display:false},tooltip:pieTip}}});
   }
   const stacked=(t==="stacked_bar");ds.forEach(d=>d.borderWidth=0);
-  return new Chart(canvas,{type:"bar",data:{labels,datasets:ds},
+  return mk(canvas,{type:"bar",data:{labels,datasets:ds},
     options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
       scales:{x:{stacked,grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:tickFont}},y:{stacked,ticks:{font:tickFont},...(pctCap(it)?{min:0,max:100}:{})}}}});
 }
