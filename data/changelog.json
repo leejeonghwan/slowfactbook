@@ -677,5 +677,45 @@
   "mode": "manual",
   "note": "키노트에서 스마트폰 점유율 그래프와 한 장에 있던 패널. 단독으로는 맥락이 없고 시의성도 없어 사이트에서 내림(drop). id 는 재사용하지 않도록 남겨 둠.",
   "keynoteSynced": false
+ },
+ {
+  "date": "2026-10-10",
+  "slide": "restored-1465",
+  "id": "c1674",
+  "title": "삼성전자 사업 부문별 매출. — 디스플레이",
+  "category": "기업과 산업",
+  "mode": "manual",
+  "note": "10월호 덱에서 빠져 사이트에서 내려갔던 차트를 직전 덱(1b5ac42^) 내용으로 복구. 44분기, 마지막 4Q25",
+  "keynoteSynced": false
+ },
+ {
+  "date": "2026-10-10",
+  "slide": "restored-1465",
+  "id": "c1675",
+  "title": "삼성전자 사업 부문별 매출. — 반도체",
+  "category": "기업과 산업",
+  "mode": "manual",
+  "note": "10월호 덱에서 빠져 사이트에서 내려갔던 차트를 직전 덱(1b5ac42^) 내용으로 복구. 44분기, 마지막 4Q25",
+  "keynoteSynced": false
+ },
+ {
+  "date": "2026-10-10",
+  "slide": "restored-1465",
+  "id": "c1676",
+  "title": "삼성전자 사업 부문별 매출. — 모바일",
+  "category": "기업과 산업",
+  "mode": "manual",
+  "note": "10월호 덱에서 빠져 사이트에서 내려갔던 차트를 직전 덱(1b5ac42^) 내용으로 복구. 44분기, 마지막 4Q25",
+  "keynoteSynced": false
+ },
+ {
+  "date": "2026-10-10",
+  "slide": "restored-1465",
+  "id": "c1677",
+  "title": "삼성전자 사업 부문별 매출. — 가전",
+  "category": "기업과 산업",
+  "mode": "manual",
+  "note": "10월호 덱에서 빠져 사이트에서 내려갔던 차트를 직전 덱(1b5ac42^) 내용으로 복구. 44분기, 마지막 4Q25",
+  "keynoteSynced": false
  }
 ]
