@@ -537,8 +537,10 @@ function pctCap(it){
       cnt++; if(t<lo)lo=t; if(t>hi)hi=t;
     }
     if(cnt>=2){
-      if(lo>=0.995&&hi<=1.005) return 1;
-      if(lo>=99.5&&hi<=100.5) return 100;
+      // 반올림 때문에 줄마다 합이 100 이나 101 로 갈리는 자료가 흔하다.
+      // 축을 100 에서 끊어 주는 편이 읽기 쉬우므로 101.5 까지 구성비로 본다.
+      if(lo>=0.99&&hi<=1.015) return 1;
+      if(lo>=99&&hi<=101.5) return 100;
     }
   }
   if(!/%|퍼센트|비중|비율/.test(u)) return null;

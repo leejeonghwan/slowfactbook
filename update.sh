@@ -72,6 +72,12 @@ python3 scripts/poll_charts.py realmeter --apply || echo "  리얼미터 갱신 
 echo "▶ 석유류 가격 (오피넷)…"
 python3 scripts/opinet_update.py --apply || echo "  오피넷 갱신 실패/보류 — 기존 값 유지"
 
+echo "▶ 인천공항 월별 통계…"
+python3 scripts/airport_update.py --apply || echo "  인천공항 갱신 실패/보류 — 기존 값 유지"
+
+echo "▶ 미국 물가 (BLS)…"
+python3 scripts/bls_update.py --apply || echo "  BLS 갱신 실패/보류 — 기존 값 유지"
+
 echo "▶ 지수·시세 (야후 파이낸스)…"
 python3 scripts/market_update.py --apply || echo "  시세 갱신 실패/보류 — 기존 값 유지"
 

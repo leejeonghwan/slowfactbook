@@ -1,0 +1,9 @@
+{
+ "c0882": {
+  "series": "CUUR0000SA0",
+  "mode": "yoy",
+  "round": 1,
+  "note": "미국 소비자물가지수(도시 전체, 원계열) 전년 동월 대비",
+  "sourceUrl": "https://www.bls.gov/cpi/"
+ }
+}

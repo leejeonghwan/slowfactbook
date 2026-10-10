@@ -1,0 +1,14 @@
+{
+ "c1354": {
+  "col": "여객-합계",
+  "scale": 0.0001,
+  "note": "인천국제공항 월별 여객(도착+출발) 합계, 만 명",
+  "sourceUrl": "https://www.airport.kr/co_ko/651/subview.do"
+ },
+ "c2205": {
+  "col": "화물-합계",
+  "scale": 0.0001,
+  "note": "인천국제공항 월별 화물(도착+출발) 합계, 만 톤",
+  "sourceUrl": "https://www.airport.kr/co_ko/651/subview.do"
+ }
+}
