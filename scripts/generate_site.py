@@ -502,8 +502,22 @@ function tickFontSm(ctx){
 // 그래프까지 0~100 으로 펴면 오히려 읽기 나빠진다.
 function pctCap(it){
   const u=((it.unit||"")+" "+(it.source||""));
-  if(!/%|퍼센트|비중|비율/.test(u)) return null;
   const st=(it.vizType==="stacked_bar"||it.vizType==="stacked_bar_h"||(it.vizType==="area"&&it.series.length>1));
+  // 누적 그래프는 '줄마다 합이 1(또는 100)' 이면 단위가 안 적혀 있어도 구성비다.
+  if(st){
+    let lo=Infinity,hi=0,cnt=0;
+    for(let i=0;i<it.labels.length;i++){
+      let t=0,any=false;
+      for(const s of it.series){const v=s[i]; if(v!=null){t+=v;any=true;}}
+      if(!any)continue;
+      cnt++; if(t<lo)lo=t; if(t>hi)hi=t;
+    }
+    if(cnt>=2){
+      if(lo>=0.995&&hi<=1.005) return 1;
+      if(lo>=99.5&&hi<=100.5) return 100;
+    }
+  }
+  if(!/%|퍼센트|비중|비율/.test(u)) return null;
   let m=0;
   if(st){
     for(let i=0;i<it.labels.length;i++){
@@ -519,16 +533,8 @@ function pctCap(it){
   }
   return (m>=85&&m<=100.5)?100:null;
 }
-// 목차 카드는 어차피 눌러서 크게 봐야 하므로 마우스오버를 끈다.
-// (처음 그려질 때의 애니메이션은 그대로 둔다 — 카드가 하나씩 차오르는 맛이 있다.)
-// 캔버스에 data-idx 가 붙어 있으면 목차 카드다.
+// 차트 생성 한 군데로 모아 둔다(카드·개별 페이지·임베드 공통).
 function mk(canvas,cfg){
-  if(canvas.hasAttribute("data-idx")){
-    cfg.options=cfg.options||{};
-    cfg.options.events=[];                       // hover/뫼브 이벤트 자체를 받지 않는다
-    cfg.options.plugins=cfg.options.plugins||{};
-    cfg.options.plugins.tooltip={enabled:false};
-  }
   return new Chart(canvas,cfg);
 }
 function buildChart(canvas,it){
@@ -560,13 +566,13 @@ function buildChart(canvas,it){
     const stackY=isArea&&multi;
     return mk(canvas,{type:"line",data:{labels,datasets:ds},
       options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
-        scales:{x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:tickFont}},y:{stacked:stackY,ticks:{font:tickFont},...(pctCap(it)?{min:0,max:100}:{})}}}});
+        scales:{x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:tickFont}},y:{stacked:stackY,ticks:{font:tickFont},...((c=>c?{min:0,max:c}:{})(pctCap(it)))}}}});
   }
   if(t==="bar"||t==="stacked_bar_h"){
     const st=(t==="stacked_bar_h");ds.forEach(d=>d.borderWidth=0);
     return mk(canvas,{type:"bar",data:{labels,datasets:ds},
       options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
-        scales:{x:{stacked:st,ticks:{font:tickFont},...(pctCap(it)?{min:0,max:100}:{})},y:{stacked:st,grid:{display:false},ticks:{font:tickFontSm,autoSkip:false}}}}});
+        scales:{x:{stacked:st,ticks:{font:tickFont},...((c=>c?{min:0,max:c}:{})(pctCap(it)))},y:{stacked:st,grid:{display:false},ticks:{font:tickFontSm,autoSkip:false}}}}});
   }
   if(t==="pie"){
     const pieTip={callbacks:{label:c=>`${c.label}: ${c.formattedValue} ${unit}`.trim()}};
@@ -576,7 +582,7 @@ function buildChart(canvas,it){
   const stacked=(t==="stacked_bar");ds.forEach(d=>d.borderWidth=0);
   return mk(canvas,{type:"bar",data:{labels,datasets:ds},
     options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
-      scales:{x:{stacked,grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:tickFont}},y:{stacked,ticks:{font:tickFont},...(pctCap(it)?{min:0,max:100}:{})}}}});
+      scales:{x:{stacked,grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:tickFont}},y:{stacked,ticks:{font:tickFont},...((c=>c?{min:0,max:c}:{})(pctCap(it)))}}}});
 }
 """
 
