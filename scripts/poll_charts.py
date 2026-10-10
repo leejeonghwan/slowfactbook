@@ -22,6 +22,14 @@ KST = datetime.timezone(datetime.timedelta(hours=9))
 WEEK_RE = re.compile(r"(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})주")
 TOTAL_RE = re.compile(r"◈\s*전\s*체\s*◈\s*\(?\d*\)?\s+" + r"\s+".join([r"([\d.]+)"] * 7))
 PARTY_RE = re.compile(r"^(?:정당\s*)?(\d{1,2})월\s*(\d{1,2})주\s+" + r"\s+".join([r"([\d.]+)"] * 6) + r"\s*$")
+# 성별×연령 교차표. 사례수 '(217)' 가 추출 과정에서 빠지는 호가 있어 선택으로 둔다.
+# 또 숫자 묶음에 \s 를 쓰면 줄바꿈을 넘어 다음 줄의 '20대' 앞머리를 먹어버린다 —
+# 그래서 줄 안의 공백만 뜻하는 [^\S\n] 로 묶는다.
+SEXAGE_RE = re.compile(
+    r"(20대|30대|40대|50대|60대|70대[^\S\n]*이상)[^\S\n]*(남성|여성)"
+    r"[^\S\n]*(?:\(\d[\d,]*\))?((?:[^\S\n]+\.?\d[\d.]*){5,})")
+SEXAGE_KEYS = [a + b for b in ("남성", "여성")
+               for a in ("20대", "30대", "40대", "50대", "60대", "70대이상")]
 
 
 def _get(url, binary=False):
@@ -50,7 +58,7 @@ def parse_realmeter(path, allow_no_party=False):
     import pdfplumber
     with pdfplumber.open(path) as pdf:
         pages = [(p.extract_text() or "") for p in pdf.pages]
-    out = {"week": None, "approve": None, "disapprove": None, "party": []}
+    out = {"week": None, "approve": None, "disapprove": None, "party": [], "sexage": {}}
     for t in pages:
         m = WEEK_RE.search(t)
         if m:
@@ -65,6 +73,18 @@ def parse_realmeter(path, allow_no_party=False):
         if m:
             v = [float(x) for x in m.groups()]
             out["approve"], out["disapprove"] = v[4], v[5]
+            break
+    # 성별×연령 교차표(대통령 평가). 잘함(①+②) 은 사례수 뒤 다섯 번째 숫자다.
+    for t in pages:
+        if "대통령 국정수행 평가" not in t and "국정수행 평가" not in t:
+            continue
+        for m in SEXAGE_RE.finditer(t):
+            age = re.sub(r"\s+", "", m.group(1))
+            nums = [float(x) for x in m.group(3).split()]
+            if len(nums) < 5:
+                continue
+            out["sexage"].setdefault(age + m.group(2), nums[4])
+        if len(out["sexage"]) == 12:
             break
     for t in pages:
         if "정당지지도 : 최근" not in t and "정당지지도: 최근" not in t:
@@ -120,7 +140,8 @@ def main():
     print(f"PDF: {os.path.basename(path)}")
     d = parse_realmeter(path)
     y, mo, wk = d["week"]
-    label = str(mo) if wk == 1 else ""
+    # 라벨은 'YYYY-MM'. 달 숫자만 넣으면 축에 연도가 사라진다.
+    label = f"{y}-{mo:02d}"
     print(f"  {y}년 {mo}월 {wk}주  긍정 {d['approve']} / 부정 {d['disapprove']}  "
           f"민주 {d['party'][-1]['민주당']} / 국힘 {d['party'][-1]['국민의힘']}")
 
@@ -140,19 +161,37 @@ def main():
     pk = [w["국민의힘"] for w in d["party"]]
     fresh571 = (s571[im][-1], s571[ik][-1]) != (pm[-1], pk[-1])
 
+    # ── 3. 성별-연령대별 대통령 지지율
+    ov3, c413, n413 = load_chart("c0413")
+    s413 = [list(x) for x in c413["series"]]
+    sa = d["sexage"]
+    key413 = {n: k for n, k in zip(n413, [re.sub(r"\s+", "", x) for x in n413])}
+    fresh413 = bool(sa) and len(sa) == 12 and \
+        [s413[i][-1] for i in range(len(n413))] != [sa[key413[n]] for n in n413]
+
+    # ── 4. 리얼미터 정당 지지율 추이 (2022년 9월부터)
+    ov4, c1812, n1812 = load_chart("c1812")
+    s1812 = [list(x) for x in c1812["series"]]
+    jm, jk = n1812.index("민주당"), n1812.index("국민의힘")
+    fresh1812 = (s1812[jm][-1], s1812[jk][-1]) != (pm[-1], pk[-1])
+
     # 대조는 '이미 들어 있는 구간'끼리. 새 주가 아직이면 전수, 새 주면 마지막 한 점을 뺀다.
     cut = len(pm) - (1 if fresh571 else 0)
     if cut > 0:
-        tail_m = s571[im][-cut:]
-        tail_k = s571[ik][-cut:]
-        ok &= check("민주당", tail_m, pm[:cut])
-        ok &= check("국민의힘", tail_k, pk[:cut])
+        ok &= check("민주당", s571[im][-cut:], pm[:cut])
+        ok &= check("국민의힘", s571[ik][-cut:], pk[:cut])
+    cut2 = len(pm) - (1 if fresh1812 else 0)
+    if cut2 > 0:
+        ok &= check("민주당(추이)", s1812[jm][-cut2:], pm[:cut2])
+        ok &= check("국민의힘(추이)", s1812[jk][-cut2:], pk[:cut2])
+    if sa and len(sa) != 12:
+        print(f"  성별×연령: 12개 중 {len(sa)}개만 읽혔습니다 — c0413 은 건너뜁니다.")
     if not fresh570:
         print("  대통령 평가: 이번 주 값이 이미 들어 있습니다.")
     if not ok:
         print("\n겹치는 구간이 어긋납니다. 붙이지 않았습니다 — 원자료와 차트를 사람이 대조해야 합니다.")
         return 1
-    if not (fresh570 or fresh571):
+    if not (fresh570 or fresh571 or fresh413 or fresh1812):
         print("\n새로 붙일 주가 없습니다.")
         return 0
     print(f"\n붙일 것: {y}년 {mo}월 {wk}주 (라벨 '{label}')")
@@ -175,7 +214,7 @@ def main():
             if len(ser[i]) < len(labs):
                 ser[i].append(None)
         o = dict(ovf.get(cid) or ovf.get(slide) or {})
-        o.update({"labels": labs, "series": ser, "source": "리얼미터", "unit": "%",
+        o.update({"labels": labs, "series": ser, "source": "리얼미터.", "unit": "%",
                   "sourceUrl": url, "updated": stamp})
         ovf[cid] = o
         cl.append({"date": today, "slide": slide, "id": cid, "title": title,
@@ -190,6 +229,13 @@ def main():
         push("slide-571", c571, s571,
              [(ij, d["approve"]), (im, pm[-1]), (ik, pk[-1])],
              "c2074", "대통령과 정당 지지율(리얼미터)")
+    if fresh413:
+        push("slide-620", c413, s413,
+             [(i, sa[key413[n]]) for i, n in enumerate(n413)],
+             "c0413", "성별-연령대별 대통령 지지율")
+    if fresh1812:
+        push("slide-1812", c1812, s1812, [(jm, pm[-1]), (jk, pk[-1])],
+             "c1812", "리얼미터 정당 지지율 추이")
     json.dump(ovf, open(os.path.join(DATA, "overrides.json"), "w", encoding="utf-8"),
               ensure_ascii=False, indent=2)
     json.dump(cl, open(os.path.join(DATA, "changelog.json"), "w", encoding="utf-8"),

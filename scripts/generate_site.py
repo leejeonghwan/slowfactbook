@@ -74,6 +74,8 @@ def load_items(data_dir):
                 "unit": it.get("unit", ""),
                 # 강조할 계열(이름 또는 0부터 센 번호). overrides 에서 지정한다.
                 "highlight": it.get("highlight"),
+                # 계열 색을 직접 지정할 때 쓴다(overrides 의 "seriesColors").
+                "seriesColors": it.get("seriesColors"),
                 "updated": it.get("updated", ""),
             }
             if it["vizType"] == "combo":
@@ -419,12 +421,17 @@ function colorsFor(names,highlight){
     const col=PALETTE[k%PALETTE.length]; k++; return col;
   });
 }
+// overrides 에 seriesColors 가 있으면 그 자리만 그 색으로 덮는다.
+function withFixed(cs,it){
+  const f=it&&it.seriesColors;
+  return (f&&f.length)?cs.map((c,i)=>f[i]||c):cs;
+}
 function hexA(h,a){const n=parseInt(h.slice(1),16);return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;}
 function dot(s){s=String(s==null?"":s).trim();return (s===""||s.endsWith(".")||s.endsWith("…"))?s:s+".";}
 function legendHTML(it){
   let entries=[];
   if(it.vizType==="pie"){const cs=colorsFor(it.labels,it.highlight);entries=it.labels.map((l,i)=>[l,cs[i],i]);}
-  else if(it.series.length>1){const cs=colorsFor(it.seriesNames,it.highlight);
+  else if(it.series.length>1){const cs=withFixed(colorsFor(it.seriesNames,it.highlight),it);
     const nm=it.seriesNames.map(n=>String(n==null?"":n).trim());
     const named=nm.some(n=>n!=="");
     // 이름 있는 계열과 섞여 있을 때는 이름 없는 쪽을 범례에서 뺀다(뜻을 안 붙이겠다는 표시).
@@ -488,25 +495,28 @@ function sparseTick(it){
   // 눈금을 붙일 후보(연이 바뀌는 지점, 또는 범주가 바뀌는 지점)를 미리 뽑아둔다.
   // autoSkip 에 맡기면 Chart.js 가 전체 인덱스 기준으로 건너뛰어서
   // 빈 문자열만 골라가고 축이 텅 비는 일이 생긴다.
-  const marks=[];
+  // 달이 바뀌는 자리와 해가 바뀌는 자리를 따로 뽑는다.
+  const mMarks=[], yMarks=[];
   for(let i=0;i<L.length;i++){
-    if(isYM){ if(!ym[i])continue;
-      const chg=isYMD?(i===0||!ym[i-1]||ym[i-1][2]!==ym[i][2]||ym[i-1][1]!==ym[i][1])
-                     :(i===0||!ym[i-1]||ym[i-1][1]!==ym[i][1]);
-      if(chg)marks.push(i); }
-    else { if(i===0||L[i]!==L[i-1])marks.push(i); }
+    if(!ym[i])continue;
+    if(i===0||!ym[i-1]||ym[i-1][2]!==ym[i][2]||ym[i-1][1]!==ym[i][1])mMarks.push(i);
+    if(i===0||!ym[i-1]||ym[i-1][1]!==ym[i][1])yMarks.push(i);
   }
+  // 기간이 3년 안쪽이면 YY.MM 으로 달까지, 그보다 길면 연도만 찍는다.
+  // (2025-06 ~ 2026-10 처럼 짧은 구간에서 연도만 찍으면 같은 숫자가 반복된다)
+  const byMonth = isYM && mMarks.length<=36;
+  let marks;
+  if(isYM){ marks = byMonth?mMarks:yMarks; }
+  else { marks=[]; for(let i=0;i<L.length;i++){ if(i===0||L[i]!==L[i-1])marks.push(i); } }
   const at=new Map(marks.map((v,i)=>[v,i]));
-  const dense=isYM&&!isYMD&&L.length<=36;
   return function(val,index){
-    if(dense){ const m=ym[index]; return (m&&index%3===0)?`${m[1].slice(2)}.${m[2]}`:""; }
     const k=at.get(index); if(k===undefined)return "";
     const w=(this&&this.chart&&this.chart.width)||800;
     const target=Math.max(4,Math.min(24,Math.floor(w/72)));
     const step=Math.max(1,Math.ceil(marks.length/target));
     if(k%step!==0)return "";
-    if(isYMD) return `${ym[index][1].slice(2)}.${ym[index][2]}`;
-    return isYM?ym[index][1]:L[index];
+    if(!isYM) return L[index];
+    return byMonth?`${ym[index][1].slice(2)}.${ym[index][2]}`:ym[index][1];
   };
 }
 // 눈금 글자 크기. 가로축과 세로축을 같은 크기로 두고, 차트가 클수록 조금 키운다.
@@ -565,7 +575,7 @@ function mk(canvas,cfg){
 }
 function buildChart(canvas,it){
   const t=it.vizType,labels=it.labels.map(blank);
-  const CS=colorsFor(it.seriesNames||[],it.highlight);
+  const CS=withFixed(colorsFor(it.seriesNames||[],it.highlight),it);
   const ds=it.series.map((vals,i)=>({label:(it.seriesNames[i]||""),data:vals,backgroundColor:CS[i],borderColor:CS[i]}));
   const unit=(it.unit||"").trim()||(it.source.match(/단위:\s*([^,.]+)/)||[])[1]||"";
   const tip={callbacks:{label:c=>((ds.length>1&&c.dataset.label)?`${c.dataset.label}: `:"")+`${c.formattedValue} ${unit}`.trim()}};
@@ -599,6 +609,21 @@ function buildChart(canvas,it){
     return mk(canvas,{type:"bar",data:{labels,datasets:ds},
       options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
         scales:{x:{stacked:st,ticks:{font:tickFont},...((c=>c?{min:0,max:c}:{})(pctCap(it)))},y:{stacked:st,grid:{display:false},ticks:{font:tickFontSm,autoSkip:false}}}}});
+  }
+  // 산점도 — 라벨이 점 이름, 첫 계열이 가로축 값, 둘째 계열이 세로축 값이다.
+  // 단위가 전혀 다른 두 지표를 한 막대에 쌓으면 길이가 뜻을 잃는다. 그럴 때 쓴다.
+  if(t==="scatter"){
+    const xs=it.series[0]||[], ys=it.series[1]||[];
+    const pts=labels.map((l,i)=>({x:xs[i],y:ys[i],name:l}))
+                    .filter(p=>p.x!=null&&p.y!=null);
+    const xn=(it.seriesNames&&it.seriesNames[0])||"", yn=(it.seriesNames&&it.seriesNames[1])||"";
+    return mk(canvas,{type:"scatter",data:{datasets:[{data:pts,
+        backgroundColor:CS[0],borderColor:CS[0],pointRadius:5,pointHoverRadius:8}]},
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},tooltip:{callbacks:{
+          label:c=>`${c.raw.name}: ${xn} ${c.raw.x}, ${yn} ${c.raw.y}`}}},
+        scales:{x:{title:{display:!!xn,text:xn,font:{size:11}},ticks:{font:tickFont}},
+                y:{title:{display:!!yn,text:yn,font:{size:11}},ticks:{font:tickFont}}}}});
   }
   if(t==="pie"){
     const pieTip={callbacks:{label:c=>`${c.label}: ${c.formattedValue} ${unit}`.trim()}};
