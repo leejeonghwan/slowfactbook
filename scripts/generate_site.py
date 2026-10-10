@@ -72,6 +72,8 @@ def load_items(data_dir):
                 "id": it.get("id"),
                 # 단위는 overrides 의 "unit" 을 먼저 보고, 없으면 출처 문자열에서 '단위: …' 를 읽는다.
                 "unit": it.get("unit", ""),
+                # 강조할 계열(이름 또는 0부터 센 번호). overrides 에서 지정한다.
+                "highlight": it.get("highlight"),
                 "updated": it.get("updated", ""),
             }
             if it["vizType"] == "combo":
@@ -326,9 +328,11 @@ render();
 
 # ---- shared chart-rendering core, injected into both the site and embed pages ----
 CORE_JS = r"""
-// 기본색은 #fdad00. 계열이 하나뿐이거나 특별히 뜻이 정해지지 않은 그래프는 다 이 색으로 간다.
-// 정당·진보보수·남녀처럼 색 자체가 뜻인 경우만 아래 고정색 규칙이 먼저 걸린다.
-const PALETTE = ["#fdad00","#2f5e8e","#c0322f","#1f8fd6","#6e6e6e","#7aa86f","#9a6fb0"];
+// 기본색은 짙은 파랑. 흰 배경 대비 6.8:1 이라 가는 선으로 그려도 또렷하다.
+// 강조색 #fdad00 은 1.9:1 밖에 안 돼 본문 색으로는 못 쓴다 — 짚어야 할 계열 하나에만 쓴다.
+// overrides 에 {"highlight": "계열이름"} 또는 {"highlight": 2}(번째) 를 적으면 그 계열이 강조색이 된다.
+const PALETTE = ["#2f5e8e","#c0322f","#f5a623","#1f8fd6","#6e6e6e","#7aa86f","#9a6fb0"];
+const ACCENT = "#fdad00";
 // 정당은 색이 곧 뜻이다. 민주당 계열은 파랑, 국민의힘 계열은 빨강으로 고정한다.
 // 계열 이름(또는 파이 항목 이름)에 아래 말이 들어 있으면 순서와 상관없이 그 색을 쓴다.
 const PARTY_COLOR = [
@@ -354,13 +358,23 @@ function partyColor(name){
 }
 // i 번째 계열의 색. 정당 이름이면 고정색, 아니면 기본 팔레트.
 // 한 차트 안에서 색이 겹치지 않도록, 정당색에 이미 쓰인 색은 팔레트에서 건너뛴다.
-function colorsFor(names){
+function colorsFor(names,highlight){
   const blank=n=>{const s=String(n==null?"":n).trim(); return s===""||s==="None";};
   // 이름 없는 계열은 '뜻을 붙이지 않겠다'는 표시라 회색으로 둔다. 다만 그건
   // 이름 있는 계열과 섞여 있을 때 얘기다. 계열이 전부 이름 없으면(대개 한 줄짜리
   // 그래프) 그냥 기본색으로 그린다.
   const mixed=names.some(n=>!blank(n));
   const fixed=names.map(n=>blank(n)?(mixed?NEUTRAL:null):partyColor(n));
+  // 강조 지정이 있으면 그 자리만 강조색으로 덮는다(고정색보다 우선).
+  if(highlight!=null){
+    const h=String(highlight).trim();
+    names.forEach((n,i)=>{
+      if(h===String(i)||h===String(i+1)&&!/^\d$/.test(h)) return;
+      if(String(n==null?"":n).trim()===h) fixed[i]=ACCENT;
+    });
+    const idx=parseInt(h,10);
+    if(!isNaN(idx)&&String(idx)===h&&idx>=0&&idx<names.length) fixed[idx]=ACCENT;
+  }
   const used=new Set(fixed.filter(Boolean));
   let k=0;
   return fixed.map(c=>{
@@ -373,8 +387,8 @@ function hexA(h,a){const n=parseInt(h.slice(1),16);return `rgba(${(n>>16)&255},$
 function dot(s){s=String(s==null?"":s).trim();return (s===""||s.endsWith(".")||s.endsWith("…"))?s:s+".";}
 function legendHTML(it){
   let entries=[];
-  if(it.vizType==="pie"){const cs=colorsFor(it.labels);entries=it.labels.map((l,i)=>[l,cs[i]]);}
-  else if(it.series.length>1){const cs=colorsFor(it.seriesNames);
+  if(it.vizType==="pie"){const cs=colorsFor(it.labels,it.highlight);entries=it.labels.map((l,i)=>[l,cs[i]]);}
+  else if(it.series.length>1){const cs=colorsFor(it.seriesNames,it.highlight);
     // 이름이 빈 계열은 범례에서도 뺀다 — 색만 회색으로 남는다.
     entries=it.seriesNames.map((n,i)=>[n,cs[i]]).filter(([n])=>String(n==null?"":n).trim()!=="");}
   return entries.map(([l,c])=>`<span class="lg"><i style="background:${c}"></i>${dot(l)}</span>`).join("");
@@ -444,7 +458,7 @@ function pctCap(it){
 }
 function buildChart(canvas,it){
   const t=it.vizType,labels=it.labels.map(blank);
-  const CS=colorsFor(it.seriesNames||[]);
+  const CS=colorsFor(it.seriesNames||[],it.highlight);
   const ds=it.series.map((vals,i)=>({label:(it.seriesNames[i]||""),data:vals,backgroundColor:CS[i],borderColor:CS[i]}));
   const unit=(it.unit||"").trim()||(it.source.match(/단위:\s*([^,.]+)/)||[])[1]||"";
   const tip={callbacks:{label:c=>((ds.length>1&&c.dataset.label)?`${c.dataset.label}: `:"")+`${c.formattedValue} ${unit}`.trim()}};
@@ -481,7 +495,7 @@ function buildChart(canvas,it){
   }
   if(t==="pie"){
     const pieTip={callbacks:{label:c=>`${c.label}: ${c.formattedValue} ${unit}`.trim()}};
-    return new Chart(canvas,{type:"doughnut",data:{labels,datasets:[{data:it.series[0],backgroundColor:(cs=>labels.map((_,i)=>cs[i]))(colorsFor(labels)),borderColor:"#fff",borderWidth:1}]},
+    return new Chart(canvas,{type:"doughnut",data:{labels,datasets:[{data:it.series[0],backgroundColor:(cs=>labels.map((_,i)=>cs[i]))(colorsFor(labels,it.highlight)),borderColor:"#fff",borderWidth:1}]},
       options:{responsive:true,maintainAspectRatio:false,cutout:"60%",plugins:{legend:{display:false},tooltip:pieTip}}});
   }
   const stacked=(t==="stacked_bar");ds.forEach(d=>d.borderWidth=0);
