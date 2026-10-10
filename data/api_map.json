@@ -25,5 +25,21 @@
   "round": 3,
   "source": "한국은행 국제수지, 단위: 억 달러.",
   "sourceUrl": "https://ecos.bok.or.kr/#/Short/6eb4e8"
+ },
+ "c2196": {
+  "label": "‘쉬었음’ 인구(전체)",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1DA7147S",
+  "itmId": "T50+",
+  "objL1": "00+",
+  "objL2": "905+",
+  "prdSe": "M",
+  "startPrdDe": "200301",
+  "endPrdDe": "203512",
+  "scale": 0.1,
+  "round": 2,
+  "source": "국가데이터처 경제활동인구조사, 단위: 만 명.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DA7147S"
  }
 }
