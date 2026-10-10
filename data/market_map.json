@@ -1,0 +1,8 @@
+{
+ "c0496": {
+  "symbol": "^GSPC",
+  "interval": "1mo",
+  "note": "S&P 500 월말 종가 (야후 파이낸스)",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EGSPC/history/?frequency=1mo"
+ }
+}

@@ -37,6 +37,11 @@ def load_items(data_dir):
             ov = overrides.get(it.get("id")) or overrides.get(it.get("slide")) or {}
             if ov:
                 it = {**it, **ov}
+            # overrides 에 {"drop": true} 를 적으면 사이트에서 내린다.
+            # 항목 자체와 ids.json 의 id 는 남겨 둬서 그 id 가 다른 차트에
+            # 다시 쓰이지 않게 한다(옛 embed 주소가 엉뚱한 그래프를 가리키면 곤란하다).
+            if it.get("drop"):
+                continue
             cat = it.get("category") or fallback
             if not it.get("vizType"):
                 continue
@@ -291,7 +296,7 @@ function render(){
     // 슬라이드 번호는 원본 덱을 추적하려고 달아 둔 내부 표시다. 읽는 사람에게는
     // 아무 뜻이 없으므로 카드에 보이지 않게 하고, 속성으로만 남겨 둔다.
     const meta=[it.source].filter(Boolean).join(" · ");
-    card.innerHTML=`<div class="tag" data-cat="${String(it.category).replace(/"/g,'&quot;')}" title="이 카테고리 보기">${dot(it.category)}</div><h2><a href="chart.html?id=${it.id}" title="크게 보기">${dot(it.title)}</a></h2><div class="meta" data-slide="${it.slide||""}">${meta}</div><div class="legendbar">${legendHTML(it)}</div><div class="chartbox"><canvas data-idx="${i}"></canvas></div>`;
+    card.innerHTML=`<div class="tag" data-cat="${String(it.category).replace(/"/g,'&quot;')}" title="이 카테고리 보기">${dot(it.category)}</div><h2><a href="chart.html?id=${it.id}" title="크게 보기">${dot(it.title||it.source||"제목 없음")}</a></h2><div class="meta" data-slide="${it.slide||""}">${meta}</div><div class="legendbar">${legendHTML(it)}</div><div class="chartbox"><canvas data-idx="${i}"></canvas></div>`;
     grid.appendChild(card);observer.observe(card);
   });
 }
@@ -331,8 +336,12 @@ const PARTY_COLOR = [
   [/조국혁신/, "#1f6f8b"], [/개혁신당/, "#e8820c"], [/정의당|진보당/, "#d4a017"],
   [/무당층|없음|모름/, "#9b9b9b"],
 ];
+// 이름을 비워 둔 계열은 "무당층·기권·응답없음"처럼 뜻을 붙이지 않겠다는 표시다.
+// 팔레트 색을 주면 하나의 항목처럼 읽히므로 중립 회색으로 고정한다.
+const NEUTRAL = "#bfbfbf";
 function partyColor(name){
-  const s=String(name||"");
+  const s=String(name==null?"":name).trim();
+  if(s===""||s==="None") return NEUTRAL;
   for(const [re,c] of PARTY_COLOR){ if(re.test(s)) return c; }
   return null;
 }
@@ -353,7 +362,9 @@ function dot(s){s=String(s==null?"":s).trim();return (s===""||s.endsWith(".")||s
 function legendHTML(it){
   let entries=[];
   if(it.vizType==="pie"){const cs=colorsFor(it.labels);entries=it.labels.map((l,i)=>[l,cs[i]]);}
-  else if(it.series.length>1){const cs=colorsFor(it.seriesNames);entries=it.seriesNames.map((n,i)=>[n||("계열 "+(i+1)),cs[i]]);}
+  else if(it.series.length>1){const cs=colorsFor(it.seriesNames);
+    // 이름이 빈 계열은 범례에서도 뺀다 — 색만 회색으로 남는다.
+    entries=it.seriesNames.map((n,i)=>[n,cs[i]]).filter(([n])=>String(n==null?"":n).trim()!=="");}
   return entries.map(([l,c])=>`<span class="lg"><i style="background:${c}"></i>${dot(l)}</span>`).join("");
 }
 function blank(x){return (x==null||x==="None"||x==="none")?"":String(x);}
@@ -365,35 +376,43 @@ function sparseTick(it){
   const L=it.labels.map(blank);
   const ym=L.map(x=>String(x).match(YM));
   const isYM=ym.filter(Boolean).length>=L.length*0.8;
+  // 눈금을 붙일 후보(연이 바뀌는 지점, 또는 범주가 바뀌는 지점)를 미리 뽑아둔다.
+  // autoSkip 에 맡기면 Chart.js 가 전체 인덱스 기준으로 건너뛰어서
+  // 빈 문자열만 골라가고 축이 텅 비는 일이 생긴다.
+  const marks=[];
+  for(let i=0;i<L.length;i++){
+    if(isYM){ if(!ym[i])continue; if(i===0||!ym[i-1]||ym[i-1][1]!==ym[i][1])marks.push(i); }
+    else { if(i===0||L[i]!==L[i-1])marks.push(i); }
+  }
+  const at=new Map(marks.map((v,i)=>[v,i]));
   const dense=isYM&&L.length<=36;
   return function(val,index){
-    if(isYM){
-      const m=ym[index]; if(!m) return "";
-      if(dense) return (index%3===0)?`${m[1].slice(2)}.${m[2]}`:"";
-      const prev=index>0?ym[index-1]:null;
-      return (!prev||prev[1]!==m[1])?m[1]:"";
-    }
-    const cur=L[index], prev=index>0?L[index-1]:null;
-    return (cur!==prev)?cur:"";
+    if(dense){ const m=ym[index]; return (m&&index%3===0)?`${m[1].slice(2)}.${m[2]}`:""; }
+    const k=at.get(index); if(k===undefined)return "";
+    const w=(this&&this.chart&&this.chart.width)||800;
+    const target=Math.max(4,Math.min(24,Math.floor(w/72)));
+    const step=Math.max(1,Math.ceil(marks.length/target));
+    if(k%step!==0)return "";
+    return isYM?ym[index][1]:L[index];
   };
 }
 function buildChart(canvas,it){
   const t=it.vizType,labels=it.labels.map(blank);
   const CS=colorsFor(it.seriesNames||[]);
-  const ds=it.series.map((vals,i)=>({label:it.seriesNames[i]||("계열 "+(i+1)),data:vals,backgroundColor:CS[i],borderColor:CS[i]}));
+  const ds=it.series.map((vals,i)=>({label:(it.seriesNames[i]||""),data:vals,backgroundColor:CS[i],borderColor:CS[i]}));
   const unit=(it.source.match(/단위:\s*([^,.]+)/)||[])[1]||"";
-  const tip={callbacks:{label:c=>(ds.length>1?`${c.dataset.label}: `:"")+`${c.formattedValue} ${unit}`.trim()}};
+  const tip={callbacks:{label:c=>((ds.length>1&&c.dataset.label)?`${c.dataset.label}: `:"")+`${c.formattedValue} ${unit}`.trim()}};
   const interaction={mode:"index",intersect:false};
   const multi=ds.length>1;
   if(t==="combo"){
     const kinds=it.seriesKinds||[],axes=it.seriesAxes||[];
     const dsets=it.series.map((vals,i)=>{const k=kinds[i]||"line",ax=(axes[i]||0),col=CS[i];
-      const d={type:(k==="area"?"line":k),label:it.seriesNames[i]||("계열 "+(i+1)),data:vals,borderColor:col,backgroundColor:(k==="bar"?col:hexA(col,0.5)),yAxisID:ax===1?"y1":"y"};
+      const d={type:(k==="area"?"line":k),label:(it.seriesNames[i]||""),data:vals,borderColor:col,backgroundColor:(k==="bar"?col:hexA(col,0.5)),yAxisID:ax===1?"y1":"y"};
       if(k!=="bar"){d.borderWidth=2;d.pointRadius=0;d.pointHoverRadius=4;d.tension=.25;d.fill=(k==="area");}else{d.borderWidth=0;}
       return d;});
     return new Chart(canvas,{type:"bar",data:{labels,datasets:dsets},
       options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
-        scales:{x:{grid:{display:false},ticks:{autoSkip:true,autoSkipPadding:6,maxRotation:0,callback:sparseTick(it),font:{size:10}}},
+        scales:{x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:{size:10}}},
           y:{position:"left",ticks:{font:{size:10}}},
           y1:{position:"right",grid:{display:false},ticks:{font:{size:10}}}}}});
   }
@@ -406,7 +425,7 @@ function buildChart(canvas,it){
     const stackY=isArea&&multi;
     return new Chart(canvas,{type:"line",data:{labels,datasets:ds},
       options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
-        scales:{x:{grid:{display:false},ticks:{autoSkip:true,autoSkipPadding:6,maxRotation:0,callback:sparseTick(it),font:{size:10}}},y:{stacked:stackY,ticks:{font:{size:10}}}}}});
+        scales:{x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:{size:10}}},y:{stacked:stackY,ticks:{font:{size:10}}}}}});
   }
   if(t==="bar"||t==="stacked_bar_h"){
     const st=(t==="stacked_bar_h");ds.forEach(d=>d.borderWidth=0);
@@ -422,7 +441,7 @@ function buildChart(canvas,it){
   const stacked=(t==="stacked_bar");ds.forEach(d=>d.borderWidth=0);
   return new Chart(canvas,{type:"bar",data:{labels,datasets:ds},
     options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
-      scales:{x:{stacked,grid:{display:false},ticks:{autoSkip:true,autoSkipPadding:6,maxRotation:0,callback:sparseTick(it),font:{size:9}}},y:{stacked,ticks:{font:{size:10}}}}}});
+      scales:{x:{stacked,grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:{size:9}}},y:{stacked,ticks:{font:{size:10}}}}}});
 }
 """
 
@@ -469,7 +488,7 @@ html,body{margin:0;height:100%;background:transparent;
 __CORE__
 const id=new URLSearchParams(location.search).get("id");
 fetch("embed/"+id+".json").then(r=>r.json()).then(it=>{
-  document.getElementById("title").textContent=dot(it.title);
+  document.getElementById("title").textContent=dot(it.title||it.source||"제목 없음");
   document.getElementById("meta").textContent=it.source||"";
   document.getElementById("legend").innerHTML=legendHTML(it);
   buildChart(document.getElementById("cv"),it);
