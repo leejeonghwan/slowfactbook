@@ -1,7 +1,19 @@
 {
  "c0850": {
-  "codes": {"보통 휘발유.": "B027", "자동차용 경유.": "D047"},
+  "codes": {
+   "보통 휘발유.": "B027",
+   "자동차용 경유.": "D047"
+  },
   "note": "오피넷 제품별 평균공급가격(일별)",
+  "sourceUrl": "https://www.opinet.co.kr/user/dopospdrg/dopOsPdrgSelect.do"
+ },
+ "c2193": {
+  "codes": {
+   "보통 휘발유.": "B027",
+   "자동차용 경유.": "D047"
+  },
+  "term": "M",
+  "note": "오피넷 제품별 평균공급가격(월간)",
   "sourceUrl": "https://www.opinet.co.kr/user/dopospdrg/dopOsPdrgSelect.do"
  }
 }

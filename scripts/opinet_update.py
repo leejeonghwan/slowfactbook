@@ -27,9 +27,9 @@ KST = datetime.timezone(datetime.timedelta(hours=9))
 TOL = 0.01          # 원/리터. 소수 둘째자리까지 같아야 한다
 
 
-def fetch(codes, d0, d1):
-    """{날짜: {코드이름: 값}} 을 돌려준다."""
-    q = {"TERM": "D",
+def fetch(codes, d0, d1, term="D"):
+    """{날짜: {코드이름: 값}} 을 돌려준다. term 은 'D'(일별) 또는 'M'(월별)."""
+    q = {"TERM": term,
          "STA_Y": f"{d0.year}", "STA_M": f"{d0.month:02d}", "STA_D": f"{d0.day:02d}",
          "END_Y": f"{d1.year}", "END_M": f"{d1.month:02d}", "END_D": f"{d1.day:02d}",
          "chk_cnt": str(len(codes)), "all_chk_cnt": "5", "INIF_FLAG": "N", "equal": "Y"}
@@ -53,11 +53,11 @@ def fetch(codes, d0, d1):
             head.append(c)
     vals = []
     for c in cells:
-        dm = re.fullmatch(r"(\d{4})년(\d{2})월(\d{2})일", c)
+        dm = re.fullmatch(r"(\d{4})년(\d{2})월(?:(\d{2})일)?", c)
         if dm:
             if cur and vals:
                 out[cur] = vals
-            cur = f"{dm.group(1)}-{dm.group(2)}-{dm.group(3)}"
+            cur = "-".join(x for x in dm.groups() if x)
             vals = []
         elif cur is not None and re.fullmatch(r"-?[\d,]+(\.\d+)?", c):
             vals.append(float(c.replace(",", "")))
@@ -92,15 +92,21 @@ def main():
         it = items.get(cid)
         if not it:
             skips.append((cid, "차트를 찾지 못했습니다")); continue
+        term = spec.get("term", "D")
         labels = [str(x) for x in it["labels"]]
-        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", labels[-1]):
+        want_re = r"\d{4}-\d{2}-\d{2}" if term == "D" else r"\d{4}-\d{2}"
+        if not re.fullmatch(want_re, labels[-1]):
             skips.append((cid, f"라벨이 날짜 꼴이 아닙니다: {labels[-1]}")); continue
-        last = datetime.date.fromisoformat(labels[-1])
+        if term == "D":
+            last = datetime.date.fromisoformat(labels[-1])
+            d0 = last - datetime.timedelta(days=20)   # 겹치는 20일로 대조
+        else:
+            y, mo = (int(x) for x in labels[-1].split("-"))
+            d0 = datetime.date(y - 1, mo, 1)          # 겹치는 12개월로 대조
         codes = spec["codes"]                       # {계열이름: 코드}
         order = list(codes)
-        d0 = last - datetime.timedelta(days=20)     # 겹치는 20일로 대조
         try:
-            head, rows = fetch([codes[k] for k in order], d0, today)
+            head, rows = fetch([codes[k] for k in order], d0, today, term)
         except Exception as e:
             skips.append((cid, f"조회 실패: {e}")); continue
         # 머리글 순서대로 값이 들어오므로, 등록한 코드 순서와 맞춘다
@@ -136,7 +142,7 @@ def main():
 
     print(f"등록 {len(mapping)}건 · 이어붙일 것 {len(plans)}건 · 건너뜀 {len(skips)}건\n")
     for p in plans:
-        print(f"  + {p['title'][:30]:32s} {p['from']} → {p['to']}  ({p['n']}일 추가)")
+        print(f"  + {p['title'][:30]:32s} {p['from']} → {p['to']}  ({p['n']}개 추가)")
     for cid, why in skips:
         print(f"  - {cid}: {why}")
 
