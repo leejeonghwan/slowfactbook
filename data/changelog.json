@@ -874,5 +874,15 @@
   "mode": "manual",
   "note": "코스피·코스닥을 한 장에 겹쳐 보여주는 구성이 뜻이 없어 사이트에서 내림(drop).",
   "keynoteSynced": false
+ },
+ {
+  "date": "2026-10-10",
+  "slide": "slide-190",
+  "id": "c0110",
+  "title": "노년 부양비율",
+  "category": "인구 구조",
+  "mode": "manual",
+  "note": "사용자 요청으로 사이트에서 내림(drop). id 는 재사용하지 않도록 남겨 둠.",
+  "keynoteSynced": false
  }
 ]
