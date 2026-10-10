@@ -487,7 +487,9 @@ h1.title{font-size:30px;font-weight:800;margin:0 0 4px;letter-spacing:-.5px;}
 .legendbar{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:4px 14px;margin:0 0 6px;}
 .legendbar .lg{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#555;white-space:nowrap;}
 .legendbar .lg i{width:12px;height:12px;border-radius:2px;flex:0 0 auto;}
-.chartbox{position:relative;width:100%;aspect-ratio:16/9;max-height:70vh;background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;}
+/* 높이 상한은 화면이 충분히 높을 때만 뜻이 있다. 가로로 누운 휴대폰(예 844×390)에서는
+   70vh 가 273px 이라 차트가 납작한 띠가 된다. 최소 높이를 같이 걸어 둔다. */
+.chartbox{position:relative;width:100%;aspect-ratio:16/9;max-height:70vh;min-height:300px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;}
 @media(min-width:1200px){.chartbox{aspect-ratio:21/9;}}
 @media(min-width:1700px){.chartbox{aspect-ratio:12/4;}}
 .tag a{color:inherit;text-decoration:none;}
@@ -499,7 +501,8 @@ h1.title{font-size:30px;font-weight:800;margin:0 0 4px;letter-spacing:-.5px;}
 .embed-btn:hover{color:var(--blue);border-color:var(--blue);}
 #toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50;}
 #toast.show{opacity:.95;}
-@media(max-width:820px){ main{padding:18px 16px;} h1.title{font-size:23px;} .chartbox{aspect-ratio:4/3;max-height:none;} }
+@media(max-width:900px){ main{padding:18px 16px;} h1.title{font-size:23px;} .chartbox{aspect-ratio:4/3;max-height:none;min-height:0;} }
+@media(max-width:900px) and (orientation:landscape){ .chartbox{aspect-ratio:16/9;} }
 </style></head><body>
 <header>
   <button class="toc-handle" id="tocBtn">☰ 목차</button>
