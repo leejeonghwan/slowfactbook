@@ -756,5 +756,31 @@
   "n": 6,
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DA7102S",
   "keynoteSynced": false
+ },
+ {
+  "date": "2026-10-10",
+  "slide": "slide-1692",
+  "id": "c1151",
+  "title": "CJENM 영화드라마 사업 부문 영업이익 추이",
+  "category": "기업과 산업",
+  "mode": "manual",
+  "from": "2025-Q2",
+  "to": "2026-Q2",
+  "n": 4,
+  "note": "사용자 제공 값. 양수는 증가 계열, 음수는 감소 계열로 나눠 넣음.",
+  "keynoteSynced": false
+ },
+ {
+  "date": "2026-10-10",
+  "slide": "slide-1692",
+  "id": "c1151",
+  "title": "CJENM 영화드라마 사업 부문 영업이익 추이",
+  "category": "기업과 산업",
+  "mode": "manual",
+  "from": "2026-Q1",
+  "to": "2026-Q1",
+  "n": 1,
+  "note": "2026년 1분기 영화드라마 부문 영업이익 90억 → 80억 정정(사용자 확인).",
+  "keynoteSynced": false
  }
 ]
