@@ -194,6 +194,7 @@ main{flex:1;padding:20px 22px;}
 /* 컬럼 수를 화면 폭(media query)이 아니라 본문 영역 폭에 맡긴다. 사이드바가
    빠진 실제 폭으로 계산되므로 맥북 13"(1280)에서도 4컬럼이 들어간다. */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(230px,100%),1fr));gap:12px;}
+.card canvas{max-width:100%;}
 .menu-btn{display:none;background:none;border:1px solid var(--line);border-radius:7px;padding:4px 11px;font-size:16px;cursor:pointer;line-height:1;}
 .scrim{display:none;}
 @media(max-width:820px){
@@ -204,9 +205,11 @@ main{flex:1;padding:20px 22px;}
   body.nav-open aside{transform:translateX(0);}
   body.nav-open .scrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:35;}
   main{padding:16px;}
-  .grid{grid-template-columns:1fr;}
+  .grid{grid-template-columns:minmax(0,1fr);}
 }
-.card{position:relative;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px 10px;box-shadow:0 1px 3px rgba(0,0,0,.03);}
+/* 그리드 칸 안에서 카드가 내용(캔버스)의 고유 폭에 밀려 넘치지 않도록 min-width 를 0 으로.
+   이게 없으면 화면을 좁힐 때 카드가 안 줄고 가로 스크롤이 생긴다. */
+.card{position:relative;min-width:0;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px 10px;box-shadow:0 1px 3px rgba(0,0,0,.03);}
 .embed-btn{position:absolute;top:9px;right:9px;font-size:10px;color:#bbb;background:#f6f6f6;border:1px solid #eaeaea;border-radius:5px;padding:2px 7px;cursor:pointer;opacity:0;transition:opacity .15s;}
 .card:hover .embed-btn,.embed-btn:focus{opacity:1;}
 .embed-btn:hover{color:var(--blue);border-color:var(--blue);}
@@ -218,7 +221,7 @@ main{flex:1;padding:20px 22px;}
 .card .meta{font-size:11px;color:#999;margin-bottom:7px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .card .tag{display:inline-block;font-size:10px;color:var(--blue);background:#eaf1f9;padding:1px 7px;border-radius:20px;margin-bottom:5px;cursor:pointer;}
 .card .tag:hover{background:#d7e6fa;}
-.chartbox{position:relative;width:100%;aspect-ratio:16/9;}
+.chartbox{position:relative;width:100%;min-width:0;aspect-ratio:16/9;}
 .legendbar{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:2px 9px;height:16px;overflow:hidden;margin:1px 0 4px;}
 .legendbar .lg{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:#666;white-space:nowrap;}
 .legendbar .lg i{width:9px;height:9px;border-radius:2px;flex:0 0 auto;}
