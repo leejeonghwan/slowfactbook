@@ -229,6 +229,7 @@ main{flex:1;padding:20px 22px;}
 .card h2 a:hover{color:var(--blue);text-decoration:underline;}
 .card:hover{box-shadow:0 4px 14px rgba(0,0,0,.09);transform:translateY(-1px);}
 .card .tag,.card h2 a,.card .legendbar .lg.pick{cursor:pointer;}
+.legendbar .lg.pick:empty,.legendbar .lg.pick i:only-child{min-width:14px;}
 .card .meta{font-size:11px;color:#999;margin-bottom:7px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .card .tag{display:inline-block;font-size:10px;color:var(--blue);background:#eaf1f9;padding:1px 7px;border-radius:20px;margin-bottom:5px;cursor:pointer;}
 .card .tag:hover{background:#d7e6fa;}
@@ -240,6 +241,7 @@ main{flex:1;padding:20px 22px;}
 .legendbar{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:2px 9px;height:16px;overflow:hidden;margin:1px 0 4px;}
 
 .legendbar .lg.pick{cursor:pointer;}
+.legendbar .lg.pick:empty,.legendbar .lg.pick i:only-child{min-width:14px;}
 .legendbar .lg.dim{opacity:.32;}
 .legendbar .lg{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:#666;white-space:nowrap;}
 .legendbar .lg i{width:9px;height:9px;border-radius:2px;flex:0 0 auto;}
@@ -359,6 +361,9 @@ const PARTY_COLOR = [
   [/더불어민주당|민주당|열린우리|새정치민주연합|통합민주/, "#4a90d9"],
   [/조국혁신/, "#1f6f8b"], [/개혁신당/, "#e8820c"], [/정의당|진보당/, "#d4a017"],
   [/무당층|없음|모름/, "#9b9b9b"],
+  // 증감 그래프는 계열이 하나만 남는 경우(전부 감소)도 있어서 색을 고정해 둔다.
+  // 그래야 짝이 되는 두 차트를 나란히 놓았을 때 같은 뜻이 같은 색으로 읽힌다.
+  [/^증가\.?$/, "#2f5e8e"], [/^감소\.?$/, "#c0322f"],
   // '기타'는 어느 차트에서든 회색. 다만 '기타 종이신문'처럼 뒤에 말이 붙으면
   // 그건 제 몫이 있는 항목이므로 팔레트 색을 준다(같은 차트에 둘 이상 올 수 있다).
   [/^(기타|그\s*외|나머지|무응답|기타등|Other|Others|Etc\.?)[.·\s]*$/i, "#9b9b9b"],
@@ -418,25 +423,29 @@ function hexA(h,a){const n=parseInt(h.slice(1),16);return `rgba(${(n>>16)&255},$
 function dot(s){s=String(s==null?"":s).trim();return (s===""||s.endsWith(".")||s.endsWith("…"))?s:s+".";}
 function legendHTML(it){
   let entries=[];
-  if(it.vizType==="pie"){const cs=colorsFor(it.labels,it.highlight);entries=it.labels.map((l,i)=>[l,cs[i]]);}
+  if(it.vizType==="pie"){const cs=colorsFor(it.labels,it.highlight);entries=it.labels.map((l,i)=>[l,cs[i],i]);}
   else if(it.series.length>1){const cs=colorsFor(it.seriesNames,it.highlight);
-    // 이름이 빈 계열은 범례에서도 뺀다 — 색만 회색으로 남는다.
-    entries=it.seriesNames.map((n,i)=>[n,cs[i]]).filter(([n])=>String(n==null?"":n).trim()!=="");}
+    const nm=it.seriesNames.map(n=>String(n==null?"":n).trim());
+    const named=nm.some(n=>n!=="");
+    // 이름 있는 계열과 섞여 있을 때는 이름 없는 쪽을 범례에서 뺀다(뜻을 안 붙이겠다는 표시).
+    // 전부 이름이 없으면 색칸만 늘어놓는다 — 그래야 계열을 골라 볼 수 있다.
+    entries=nm.map((n,i)=>[n,cs[i],i]).filter(([n])=>!named||n!=="");}
   // 원형 차트는 계열이 하나(조각이 여럿)라 계열 이름으로 골라낼 수가 없다.
+  // 계열을 번호로 고른다. 이름이 비어 있거나 같은 이름이 둘이어도 어긋나지 않는다.
   const many=entries.length>1&&it.vizType!=="pie";
-  return entries.map(([l,c],k)=>`<span class="lg${many?" pick":""}"${many?` data-s="${l}"`:""}><i style="background:${c}"></i>${dot(l)}</span>`).join("");
+  return entries.map(([l,c,i])=>`<span class="lg${many?" pick":""}"${many?` data-i="${i}"`:""}><i style="background:${c}"></i>${dot(l)}</span>`).join("");
 }
 // 아워월드인데이터처럼, 범례를 누르면 그 계열만 또렷하게 두고 나머지는 흐리게 한다.
 // 계열이 스물 몇 개씩 되는 그래프는 이게 없으면 사실상 읽을 수가 없다.
 function fade(h,a){const n=parseInt(String(h).slice(1),16);
   return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;}
-function applyFocus(chart,name){
+function applyFocus(chart,idx){
   if(!chart||!chart.data)return;
   const ds=chart.data.datasets;
   ds.forEach(d=>{ if(d._c0===undefined){d._c0=d.borderColor;d._b0=d.backgroundColor;d._w0=d.borderWidth;} });
-  const on=!!name;
-  ds.forEach(d=>{
-    const me=(String(d.label||"")===String(name));
+  const on=(idx!==""&&idx!=null);
+  ds.forEach((d,k)=>{
+    const me=(k===Number(idx));
     const base=typeof d._c0==="string"&&d._c0[0]==="#"?d._c0:null;
     if(!on){ d.borderColor=d._c0; d.backgroundColor=d._b0; d.borderWidth=d._w0; d.order=0; }
     else if(me){ d.borderColor=d._c0; d.backgroundColor=d._b0;
@@ -457,10 +466,10 @@ function wireLegend(bar,getChart){
   bar.addEventListener("click",e=>{
     const t=e.target.closest(".lg.pick"); if(!t)return;
     const cur=bar.dataset.focus||"";
-    const next=(cur===t.dataset.s)?"":t.dataset.s;
+    const next=(cur===t.dataset.i)?"":t.dataset.i;
     bar.dataset.focus=next;
-    bar.querySelectorAll(".lg").forEach(x=>x.classList.toggle("dim",!!next&&x.dataset.s!==next));
-    applyFocus(getChart(),next);
+    bar.querySelectorAll(".lg").forEach(x=>x.classList.toggle("dim",next!==""&&x.dataset.i!==next));
+    applyFocus(getChart(),next===""?null:next);
   });
 }
 function blank(x){return (x==null||x==="None"||x==="none")?"":String(x);}
@@ -616,6 +625,7 @@ html,body{margin:0;height:100%;background:transparent;
 .legendbar{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:3px 12px;height:22px;overflow:hidden;margin:0 0 4px;}
 
 .legendbar .lg.pick{cursor:pointer;}
+.legendbar .lg.pick:empty,.legendbar .lg.pick i:only-child{min-width:14px;}
 .legendbar .lg.dim{opacity:.32;}
 .legendbar .lg{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#555;white-space:nowrap;}
 .legendbar .lg i{width:11px;height:11px;border-radius:2px;flex:0 0 auto;}
@@ -686,6 +696,7 @@ h1.title{font-size:30px;font-weight:800;margin:0 0 4px;letter-spacing:-.5px;}
 .legendbar{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:4px 14px;margin:0 0 6px;}
 
 .legendbar .lg.pick{cursor:pointer;}
+.legendbar .lg.pick:empty,.legendbar .lg.pick i:only-child{min-width:14px;}
 .legendbar .lg.dim{opacity:.32;}
 .legendbar .lg{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#555;white-space:nowrap;}
 .legendbar .lg i{width:12px;height:12px;border-radius:2px;flex:0 0 auto;}
