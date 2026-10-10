@@ -41,5 +41,48 @@
   "round": 2,
   "source": "국가데이터처 경제활동인구조사, 단위: 만 명.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DA7147S"
+ },
+ "c0029": {
+  "label": "연령대별 고용률",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1DA7012S",
+  "prdSe": "M",
+  "startPrdDe": "199906",
+  "endPrdDe": "203512",
+  "source": "국가데이터처 경제활동인구조사, 단위: %.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DA7012S",
+  "series": [
+   {
+    "name": "15 - 29세",
+    "itmId": "T90+",
+    "objL1": "0+",
+    "objL2": "75+"
+   },
+   {
+    "name": "30 - 39세",
+    "itmId": "T90+",
+    "objL1": "0+",
+    "objL2": "30+"
+   },
+   {
+    "name": "40 - 49세",
+    "itmId": "T90+",
+    "objL1": "0+",
+    "objL2": "40+"
+   },
+   {
+    "name": "50 - 59세",
+    "itmId": "T90+",
+    "objL1": "0+",
+    "objL2": "50+"
+   },
+   {
+    "name": "60세이상",
+    "itmId": "T90+",
+    "objL1": "0+",
+    "objL2": "60+"
+   }
+  ]
  }
 }

@@ -782,5 +782,18 @@
   "n": 1,
   "note": "2026년 1분기 영화드라마 부문 영업이익 90억 → 80억 정정(사용자 확인).",
   "keynoteSynced": false
+ },
+ {
+  "date": "2026-10-10",
+  "slide": "c0029",
+  "id": "c0029",
+  "title": "연령대별 고용률",
+  "category": "노동",
+  "mode": "auto",
+  "from": "2026-05",
+  "to": "2026-08",
+  "n": 3,
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DA7012S",
+  "keynoteSynced": false
  }
 ]
