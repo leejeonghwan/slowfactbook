@@ -326,7 +326,9 @@ render();
 
 # ---- shared chart-rendering core, injected into both the site and embed pages ----
 CORE_JS = r"""
-const PALETTE = ["#2f5e8e","#c0322f","#f5a623","#1f8fd6","#6e6e6e","#7aa86f","#9a6fb0"];
+// 기본색은 #fdad00. 계열이 하나뿐이거나 특별히 뜻이 정해지지 않은 그래프는 다 이 색으로 간다.
+// 정당·진보보수·남녀처럼 색 자체가 뜻인 경우만 아래 고정색 규칙이 먼저 걸린다.
+const PALETTE = ["#fdad00","#2f5e8e","#c0322f","#1f8fd6","#6e6e6e","#7aa86f","#9a6fb0"];
 // 정당은 색이 곧 뜻이다. 민주당 계열은 파랑, 국민의힘 계열은 빨강으로 고정한다.
 // 계열 이름(또는 파이 항목 이름)에 아래 말이 들어 있으면 순서와 상관없이 그 색을 쓴다.
 const PARTY_COLOR = [
@@ -346,14 +348,19 @@ const PARTY_COLOR = [
 const NEUTRAL = "#bfbfbf";
 function partyColor(name){
   const s=String(name==null?"":name).trim();
-  if(s===""||s==="None") return NEUTRAL;
+  if(s===""||s==="None") return null;
   for(const [re,c] of PARTY_COLOR){ if(re.test(s)) return c; }
   return null;
 }
 // i 번째 계열의 색. 정당 이름이면 고정색, 아니면 기본 팔레트.
 // 한 차트 안에서 색이 겹치지 않도록, 정당색에 이미 쓰인 색은 팔레트에서 건너뛴다.
 function colorsFor(names){
-  const fixed=names.map(partyColor);
+  const blank=n=>{const s=String(n==null?"":n).trim(); return s===""||s==="None";};
+  // 이름 없는 계열은 '뜻을 붙이지 않겠다'는 표시라 회색으로 둔다. 다만 그건
+  // 이름 있는 계열과 섞여 있을 때 얘기다. 계열이 전부 이름 없으면(대개 한 줄짜리
+  // 그래프) 그냥 기본색으로 그린다.
+  const mixed=names.some(n=>!blank(n));
+  const fixed=names.map(n=>blank(n)?(mixed?NEUTRAL:null):partyColor(n));
   const used=new Set(fixed.filter(Boolean));
   let k=0;
   return fixed.map(c=>{
@@ -412,6 +419,29 @@ function tickFontSm(ctx){
   const w=(ctx&&ctx.chart&&ctx.chart.width)||800;
   return {size: w>=900?12:(w>=600?11:(w>=420?10:9))};
 }
+// 퍼센트 차트에서 세로축이 100 을 넘어가지 않게 한다.
+// 비중 그래프는 합이 100 인데 Chart.js 가 눈금을 올려 잡아 120 까지 그리는 일이 있다.
+// 값이 100 에 가까울 때만(85 이상) 100 으로 못박는다 — 지지율처럼 40 대에서 노는
+// 그래프까지 0~100 으로 펴면 오히려 읽기 나빠진다.
+function pctCap(it){
+  const u=((it.unit||"")+" "+(it.source||""));
+  if(!/%|퍼센트|비중|비율/.test(u)) return null;
+  const st=(it.vizType==="stacked_bar"||it.vizType==="stacked_bar_h"||(it.vizType==="area"&&it.series.length>1));
+  let m=0;
+  if(st){
+    for(let i=0;i<it.labels.length;i++){
+      let t=0; for(const s of it.series){const v=s[i]; if(v!=null)t+=v;}
+      if(t>m)m=t;
+    }
+  }else{
+    // 누적이 아닌 그래프는 바닥이 낮을 때만 0~100 으로 편다.
+    // 85~95 사이에서만 움직이는 선그래프를 0~100 으로 펴면 변화가 안 보인다.
+    let lo=Infinity;
+    for(const s of it.series)for(const v of s){if(v==null)continue; if(v>m)m=v; if(v<lo)lo=v;}
+    if(lo>30) return null;
+  }
+  return (m>=85&&m<=100.5)?100:null;
+}
 function buildChart(canvas,it){
   const t=it.vizType,labels=it.labels.map(blank);
   const CS=colorsFor(it.seriesNames||[]);
@@ -441,13 +471,13 @@ function buildChart(canvas,it){
     const stackY=isArea&&multi;
     return new Chart(canvas,{type:"line",data:{labels,datasets:ds},
       options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
-        scales:{x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:tickFont}},y:{stacked:stackY,ticks:{font:tickFont}}}}});
+        scales:{x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:tickFont}},y:{stacked:stackY,ticks:{font:tickFont},...(pctCap(it)?{min:0,max:100}:{})}}}});
   }
   if(t==="bar"||t==="stacked_bar_h"){
     const st=(t==="stacked_bar_h");ds.forEach(d=>d.borderWidth=0);
     return new Chart(canvas,{type:"bar",data:{labels,datasets:ds},
       options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
-        scales:{x:{stacked:st,ticks:{font:tickFont}},y:{stacked:st,grid:{display:false},ticks:{font:tickFontSm,autoSkip:false}}}}});
+        scales:{x:{stacked:st,ticks:{font:tickFont},...(pctCap(it)?{min:0,max:100}:{})},y:{stacked:st,grid:{display:false},ticks:{font:tickFontSm,autoSkip:false}}}}});
   }
   if(t==="pie"){
     const pieTip={callbacks:{label:c=>`${c.label}: ${c.formattedValue} ${unit}`.trim()}};
@@ -457,7 +487,7 @@ function buildChart(canvas,it){
   const stacked=(t==="stacked_bar");ds.forEach(d=>d.borderWidth=0);
   return new Chart(canvas,{type:"bar",data:{labels,datasets:ds},
     options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
-      scales:{x:{stacked,grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:tickFont}},y:{stacked,ticks:{font:tickFont}}}}});
+      scales:{x:{stacked,grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:tickFont}},y:{stacked,ticks:{font:tickFont},...(pctCap(it)?{min:0,max:100}:{})}}}});
 }
 """
 
