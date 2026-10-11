@@ -84,6 +84,9 @@ python3 scripts/airport_update.py --apply || echo "  인천공항 갱신 실패/
 echo "▶ 미국 물가 (BLS)…"
 python3 scripts/bls_update.py --apply || echo "  BLS 갱신 실패/보류 — 기존 값 유지"
 
+echo "▶ 미국 거시지표 (FRED)…"
+python3 scripts/fred_update.py --apply || echo "  FRED 갱신 실패/보류 — 기존 값 유지"
+
 echo "▶ 지수·시세 (야후 파이낸스)…"
 python3 scripts/market_update.py --apply || echo "  시세 갱신 실패/보류 — 기존 값 유지"
 

@@ -76,6 +76,9 @@ def load_items(data_dir):
                 "highlight": it.get("highlight"),
                 # 계열 색을 직접 지정할 때 쓴다(overrides 의 "seriesColors").
                 "seriesColors": it.get("seriesColors"),
+                # 계열이 하나인 막대 그래프에서 특정 라벨의 막대만 색을 바꿀 때
+                # 쓴다(overrides 의 "labelColors": {"KOR": "#c0322f"}).
+                "labelColors": it.get("labelColors"),
                 # 띄엄띄엄 찍힌 전망선을 이어 그릴지 (overrides 의 "spanGaps").
                 "spanGaps": bool(it.get("spanGaps")),
                 # 콤보에서 막대를 쌓을지 (overrides 의 "stacked").
@@ -379,6 +382,18 @@ const PARTY_COLOR = [
   // 그건 제 몫이 있는 항목이므로 팔레트 색을 준다(같은 차트에 둘 이상 올 수 있다).
   [/^(기타|그\s*외|나머지|무응답|기타등|Other|Others|Etc\.?)[.·\s]*$/i, "#9b9b9b"],
 ];
+// 나라 이름도 색을 고정해 두면 훑어보기 쉽다. 중국과 일본은 빨강으로 두고,
+// 둘이 한 차트에 같이 나오면 중국을 주황으로 돌려 구분한다. 정당색만큼 엄격한
+// 규칙은 아니어서, 정당·이념 규칙이 먼저 걸리면 그쪽을 따른다.
+const CN_RE = /중국|中國|China/i;
+const JP_RE = /일본|日本|Japan/i;
+function countryColor(name, both){
+  const s=String(name==null?"":name).trim();
+  if(s===""||s==="None") return null;
+  if(JP_RE.test(s)) return "#c0322f";
+  if(CN_RE.test(s)) return both?"#e8820c":"#c0322f";
+  return null;
+}
 // 이름을 비워 둔 계열은 "무당층·기권·응답없음"처럼 뜻을 붙이지 않겠다는 표시다.
 // 팔레트 색을 주면 하나의 항목처럼 읽히므로 중립 회색으로 고정한다.
 const NEUTRAL = "#bfbfbf";
@@ -402,6 +417,14 @@ function colorsFor(names,highlight){
   // 그래프) 그냥 기본색으로 그린다.
   const mixed=names.some(n=>!blank(n));
   const fixed=names.map(n=>blank(n)?(mixed?NEUTRAL:null):partyColor(n));
+  // 정당색이 붙지 않은 자리에만 나라색을 얹는다.
+  const hasCN=names.some(n=>CN_RE.test(String(n==null?"":n)));
+  const hasJP=names.some(n=>JP_RE.test(String(n==null?"":n)));
+  if(hasCN||hasJP) names.forEach((n,i)=>{
+    if(fixed[i]) return;
+    const c=countryColor(n, hasCN&&hasJP);
+    if(c) fixed[i]=c;
+  });
   // 같은 고정색이 한 차트에 여럿이면 선이 겹쳐 보여 못 읽는다(역대 대통령 8명이 그렇다).
   // 색을 버리지 않고 밝기를 단계로 벌려 같은 계열임을 남긴다.
   const dup={};
@@ -612,6 +635,15 @@ function buildChart(canvas,it){
   const t=it.vizType,labels=it.labels.map(blank);
   const CS=withFixed(colorsFor(it.seriesNames||[],it.highlight),it);
   const ds=it.series.map((vals,i)=>({label:(it.seriesNames[i]||""),data:vals,backgroundColor:CS[i],borderColor:CS[i]}));
+  // 막대 하나만 짚어 보여 주려고 계열을 둘로 쪼개 놓은 그래프가 많았다. 그러면
+  // 범례에 뜻 없는 이름이 하나 더 생긴다. 계열은 하나로 두고 그 라벨의 막대만
+  // 색을 바꾼다 — overrides 의 "labelColors": {"KOR":"#c0322f"}.
+  if(it.labelColors && ds.length===1){
+    const lc=it.labelColors, base=CS[0];
+    const key=l=>String(l==null?"":l).trim().replace(/[.·]+$/,"");
+    const arr=it.labels.map(l=>lc[String(l==null?"":l).trim()]||lc[key(l)]||base);
+    ds[0].backgroundColor=arr; ds[0].borderColor=arr;
+  }
   const unit=(it.unit||"").trim()||(it.source.match(/단위:\s*([^,.]+)/)||[])[1]||"";
   const tip={callbacks:{label:c=>((ds.length>1&&c.dataset.label)?`${c.dataset.label}: `:"")+`${fmtVal(tipVal(c))} ${unit}`.trim()}};
   const interaction={mode:"index",intersect:false};
@@ -702,6 +734,11 @@ html,body{margin:0;height:100%;background:transparent;
 
 #credit{font-size:10px;color:#bbb;text-align:right;margin-top:4px;}
 #credit a{color:#bbb;text-decoration:none;}
+#credit a:hover{color:#2f5e8e;text-decoration:underline;}
+/* 제목을 원본 차트로 가는 고리로 쓴다. 차트 바닥을 통째로 누르게 하면
+   마우스오버 수치와 범례 선택이 같이 죽어서 제목과 꼬리말만 고리로 둔다. */
+#title a{color:inherit;text-decoration:none;}
+#title a:hover{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;}
 </style></head><body>
 <div id="wrap">
   <h2 id="title"></h2><div id="meta"></div>
@@ -723,8 +760,14 @@ html,body{margin:0;height:100%;background:transparent;
 __CORE__
 const id=new URLSearchParams(location.search).get("id");
 fetch("embed/"+id+".json").then(r=>r.json()).then(it=>{
-  document.getElementById("title").textContent=dot(it.title||it.source||"제목 없음");
+  // 임베드를 올려 둔 곳 기준으로 원본 주소를 만든다(슬로우뉴스면 슬로우뉴스로).
+  const src=new URL("chart.html?id="+encodeURIComponent(id), location.href).href;
+  const esc=t=>String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
+  document.getElementById("title").innerHTML=
+    '<a href="'+esc(src)+'" target="_blank" rel="noopener">'+esc(dot(it.title||it.source||"제목 없음"))+'</a>';
   document.getElementById("meta").textContent=it.source?dot(it.source):"";
+  document.getElementById("credit").innerHTML=
+    '<a href="'+esc(src)+'" target="_blank" rel="noopener">슬로우팩트북에서 보기 →</a>';
   document.getElementById("legend").innerHTML=legendHTML(it);
   const _ch=buildChart(document.getElementById("cv"),it);
   wireLegend(document.getElementById("legend"),()=>_ch);

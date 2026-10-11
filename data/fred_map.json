@@ -1,0 +1,12 @@
+{
+ "c0543": {
+  "series": [
+   {
+    "id": "SAHMCURRENT"
+   }
+  ],
+  "note": "삼의 법칙 침체 지표(현재 실업률 기준). 실시간판은 SAHMREALTIME.",
+  "sourceUrl": "https://fred.stlouisfed.org/series/SAHMCURRENT",
+  "mode": "replace"
+ }
+}
