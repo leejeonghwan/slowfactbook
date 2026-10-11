@@ -78,6 +78,8 @@ def load_items(data_dir):
                 "seriesColors": it.get("seriesColors"),
                 # 띄엄띄엄 찍힌 전망선을 이어 그릴지 (overrides 의 "spanGaps").
                 "spanGaps": bool(it.get("spanGaps")),
+                # 콤보에서 막대를 쌓을지 (overrides 의 "stacked").
+                "stacked": bool(it.get("stacked")),
                 "updated": it.get("updated", ""),
             }
             if it["vizType"] == "combo":
@@ -587,14 +589,16 @@ function buildChart(canvas,it){
     const kinds=it.seriesKinds||[],axes=it.seriesAxes||[];
     const dsets=it.series.map((vals,i)=>{const k=kinds[i]||"line",ax=(axes[i]||0),col=CS[i];
       const d={type:(k==="area"?"line":k),label:(it.seriesNames[i]||""),data:vals,borderColor:col,backgroundColor:(k==="bar"?col:hexA(col,0.5)),yAxisID:ax===1?"y1":"y"};
+      // 쌓는 콤보에서 선까지 쌓이면 값이 뒤틀린다. 선은 저마다 다른 더미에 둔다.
+      if(it.stacked && k!=="bar") d.stack="line"+i;
       if(k!=="bar"){d.borderWidth=2;d.pointRadius=0;d.pointHoverRadius=4;d.tension=.25;d.fill=(k==="area");
         // 2025·2035·2045… 처럼 띄엄띄엄 찍힌 전망선은 이어 그려야 슬라이드와 같아진다.
         if(it.spanGaps){d.spanGaps=true;d.pointRadius=3;}}else{d.borderWidth=0;}
       return d;});
     return mk(canvas,{type:"bar",data:{labels,datasets:dsets},
       options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
-        scales:{x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:tickFont}},
-          y:{position:"left",ticks:{font:tickFont}},
+        scales:{x:{grid:{display:false},stacked:!!it.stacked,ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:tickFont}},
+          y:{position:"left",stacked:!!it.stacked,ticks:{font:tickFont}},
           y1:{position:"right",grid:{display:false},ticks:{font:tickFont}}}}});
   }
   if(t==="line"||t==="area"||t==="two_axis"){
