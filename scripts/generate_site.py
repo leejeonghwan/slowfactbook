@@ -324,7 +324,7 @@ function render(){
 function toast(m){let t=document.getElementById("toast");if(!t){t=document.createElement("div");t.id="toast";document.body.appendChild(t);}t.textContent=m;t.className="show";clearTimeout(t._t);t._t=setTimeout(()=>t.className="",1800);}
 function copyEmbed(id){
   const url=new URL("embed.html?id="+id, location.href).href;
-  const code=`<iframe src="${url}" style="border:0;width:100%;max-width:680px;aspect-ratio:16/10" loading="lazy"></iframe>`;
+  const code=`<iframe src="${url}" style="border:0;width:100%;max-width:800px;aspect-ratio:4/3;min-height:420px" scrolling="no" loading="lazy"></iframe>`;
   (navigator.clipboard?navigator.clipboard.writeText(code):Promise.reject())
     .then(()=>toast("임베드 코드가 복사되었습니다"))
     .catch(()=>{window.prompt("임베드 코드:",code);});
@@ -722,8 +722,13 @@ EMBED_TEMPLATE = r"""<!DOCTYPE html>
 <script src="vendor/chart.umd.min.js"></script>
 <script>window.Chart||document.write('<scr'+'ipt src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"><\/scr'+'ipt>')</script>
 <style>
-html,body{margin:0;height:100%;background:transparent;
+/* 이 페이지는 iframe 높이에 딱 맞게 짜여 있어 스크롤이 생길 일이 없다. 그런데
+   브라우저 확장이 본문 맨 위에 제 막대를 끼워 넣으면 그만큼 넘쳐서 스크롤바가
+   생긴다. 넘치는 건 잘라 버린다 — 넘칠 내용이 애초에 없는 페이지다. */
+html,body{margin:0;height:100%;overflow:hidden;background:transparent;
   font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",-apple-system,sans-serif;color:#1a1a1a;}
+/* 확장이 끼워 넣은 것이 위로 밀어내지 못하게 본문 상자를 화면에 고정한다. */
+#wrap{position:fixed;inset:0;}
 #wrap{display:flex;flex-direction:column;height:100%;padding:12px 14px;box-sizing:border-box;}
 #title{font-size:17px;font-weight:800;margin:0 0 1px;letter-spacing:-.3px;}
 #meta{font-size:11px;color:#999;margin-bottom:6px;}
@@ -890,7 +895,7 @@ document.addEventListener("mousemove",e=>{if(wide()&&e.clientX<6)openToc();});
 function toast(m){let t=document.getElementById("toast");if(!t){t=document.createElement("div");t.id="toast";document.body.appendChild(t);}t.textContent=m;t.className="show";clearTimeout(t._t);t._t=setTimeout(()=>t.className="",1800);}
 document.getElementById("embedBtn").onclick=()=>{
   const url=new URL("embed.html?id="+id, location.href).href;
-  const code='<iframe src="'+url+'" style="border:0;width:100%;max-width:680px;aspect-ratio:16/10" loading="lazy"></iframe>';
+  const code='<iframe src="'+url+'" style="border:0;width:100%;max-width:800px;aspect-ratio:4/3;min-height:420px" scrolling="no" loading="lazy"></iframe>';
   (navigator.clipboard?navigator.clipboard.writeText(code):Promise.reject()).then(()=>toast("임베드 코드가 복사되었습니다")).catch(()=>window.prompt("임베드 코드:",code));
 };
 function safeName(s){return (String(s||"chart").replace(/[\\/:*?"<>|]+/g,"_").replace(/\.+$/,"").trim())||"chart";}
