@@ -5,7 +5,8 @@
     "col": "30 Yr"
    }
   ],
-  "note": "30년 만기 월평균"
+  "note": "30년 만기 월평균",
+  "sourceUrl": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
  },
  "c2095": {
   "series": [
@@ -16,7 +17,8 @@
     "col": "30 Yr"
    }
   ],
-  "note": "2년·30년 월평균"
+  "note": "2년·30년 월평균",
+  "sourceUrl": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
  },
  "c2094": {
   "series": [
@@ -24,6 +26,7 @@
     "col": "10 Yr"
    }
   ],
-  "note": "10년 만기 월평균"
+  "note": "10년 만기 월평균",
+  "sourceUrl": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
  }
 }

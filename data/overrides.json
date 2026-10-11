@@ -5696,7 +5696,8 @@
     47.6
    ]
   ],
-  "updated": "2026-10-10 15:23"
+  "updated": "2026-10-10 15:23",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DA7012S"
  },
  "c0030": {
   "source": "국가데이터처 경제활동인구조사.",
@@ -20957,7 +20958,8 @@
    "50대 여성",
    "60대 여성",
    "70대 이상 여성"
-  ]
+  ],
+  "sourceUrl": "http://www.realmeter.net/category/pdf/"
  },
  "c0414": {
   "source": "한국갤럽, 월간 평균.",
@@ -21699,7 +21701,8 @@
     38.4
    ]
   ],
-  "updated": "2026-10-10 13:01"
+  "updated": "2026-10-10 13:01",
+  "sourceUrl": "http://www.realmeter.net/category/pdf/"
  },
  "c0444": {
   "source": "행정안전부 장래인구추계.",
@@ -29269,7 +29272,7 @@
  "c0583": {
   "source": "국가데이터처 인구동향조사, 단위: 명.",
   "unit": "명",
-  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B8000F",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B81A17",
   "title": "지역별 합계출산율",
   "revised": "2026-10-10 15:53",
   "labels": [
@@ -29937,7 +29940,27 @@
   "unit": "만 명"
  },
  "c1964": {
-  "source": "2023년 기준."
+  "source": "한국은행 경제통계 스냅숏, 국가데이터처 국민대차대조표, 연합뉴스. 기준 시점은 항목마다 다르다. 코스피+코스닥+코넥스는 코스피 4,265 · 코스닥 608 · 코넥스 3, 회사채+IPO+유상증자는 회사채 276 · IPO 5 · 유상증자 10. 단위: 조 원.",
+  "id": "c1964",
+  "title": "한국의 주요 자산 가격 비교",
+  "labels": [
+   "토지 자산 가치 (2023년)",
+   "주택 시가총액 (2024년 말)",
+   "코스피+코스닥+코넥스 (2026년 2월 5일)",
+   "은행 총자산 (2024년 9월)",
+   "통화량(M2) (2025년 11월)",
+   "GDP (2024년)",
+   "가계부채 (2024년 말)",
+   "부동산 담보대출 (2024년 말)",
+   "전세 보증금 (2022년 말)",
+   "회사채+IPO+유상증자 (2025년 말)"
+  ],
+  "seriesNames": [
+   ""
+  ],
+  "unit": "조 원",
+  "sourceUrl": "https://snapshot.bok.or.kr/dashboard/A5 https://www.yna.co.kr/view/AKR20241223099200518 https://kosis.kr/statHtml/statHtml.do?conn_path=I2&tblId=DT_104Y282&orgId=101",
+  "revised": "2026-10-11 00:00"
  },
  "c0645": {
   "source": "금융감독원 금융통계정보시스템.",
@@ -35792,11 +35815,11 @@
   "revised": "2026-10-10 15:03"
  },
  "c0731": {
-  "source": "명목, 연말 기준, 한국은행.",
+  "source": "한국은행. 명목, 연말 기준. 단위: 조 원.",
   "unit": "조 원",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_104Y282",
   "id": "c0731",
-  "revised": "2026-10-10 22:04",
+  "revised": "2026-10-10 23:55",
   "title": "주택 시가총액"
  },
  "c0732": {
@@ -42740,7 +42763,8 @@
     1842.79
    ]
   ],
-  "updated": "2026-10-10 14:25"
+  "updated": "2026-10-10 14:25",
+  "sourceUrl": "https://www.opinet.co.kr/user/dopospdrg/dopOsPdrgSelect.do"
  },
  "c0851": {
   "source": "국가데이터처 경제활동인구.",
@@ -44767,7 +44791,7 @@
   "seriesNames": [
    ""
   ],
-  "sourceUrl": "https://www.bls.gov/charts/consumer-price-index/consumer-price-index-by-category-line-chart.htm",
+  "sourceUrl": "https://www.bls.gov/cpi/",
   "updated": "2026-10-10 21:10"
  },
  "c0883": {
@@ -56867,7 +56891,8 @@
    "2026-09",
    "2026-10"
   ],
-  "revised": "2026-10-10 13:01"
+  "revised": "2026-10-10 13:01",
+  "sourceUrl": "http://www.realmeter.net/category/pdf/"
  },
  "c2041": {
   "labels": [
@@ -63386,7 +63411,8 @@
    "2026-09"
   ],
   "revised": "2026-10-10 15:24",
-  "unit": "%"
+  "unit": "%",
+  "sourceUrl": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
  },
  "c2094": {
   "labels": [
@@ -64955,7 +64981,7 @@
    ""
   ],
   "source": "미국 재무부 일별 국채 수익률의 월평균. 1990년 이전은 FRED. 단위: %.",
-  "sourceUrl": "https://fred.stlouisfed.org/series/DGS10",
+  "sourceUrl": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve",
   "updated": "2026-10-10 21:19"
  },
  "c2095": {
@@ -66781,7 +66807,8 @@
     5.37
    ]
   ],
-  "updated": "2026-10-10 21:14"
+  "updated": "2026-10-10 21:14",
+  "sourceUrl": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
  },
  "c2096": {
   "labels": [
@@ -77504,7 +77531,8 @@
    "2026-09",
    "2026-09",
    "2026-10"
-  ]
+  ],
+  "sourceUrl": "http://www.realmeter.net/category/pdf/"
  },
  "c2075": {
   "unit": "",
@@ -78698,77 +78726,92 @@
  "c2206": {
   "unit": "",
   "source": "야후 파이낸스.",
-  "revised": "2026-10-10 13:25"
+  "revised": "2026-10-10 13:25",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EKS11/"
  },
  "c2207": {
   "unit": "",
   "source": "야후 파이낸스.",
-  "revised": "2026-10-10 13:25"
+  "revised": "2026-10-10 13:25",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EKS11/"
  },
  "c2208": {
   "unit": "",
   "source": "야후 파이낸스.",
-  "revised": "2026-10-10 13:25"
+  "revised": "2026-10-10 13:25",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EKS11/"
  },
  "c2209": {
   "unit": "",
   "source": "야후 파이낸스.",
-  "revised": "2026-10-10 13:25"
+  "revised": "2026-10-10 13:25",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EKQ11/"
  },
  "c2210": {
   "unit": "",
   "source": "야후 파이낸스.",
-  "revised": "2026-10-10 13:25"
+  "revised": "2026-10-10 13:25",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EKQ11/"
  },
  "c2211": {
   "unit": "",
   "source": "야후 파이낸스.",
-  "revised": "2026-10-10 13:25"
+  "revised": "2026-10-10 13:25",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EKQ11/"
  },
  "c2212": {
   "unit": "",
   "source": "야후 파이낸스.",
-  "revised": "2026-10-10 13:25"
+  "revised": "2026-10-10 13:25",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EIXIC/"
  },
  "c2213": {
   "unit": "",
   "source": "야후 파이낸스.",
-  "revised": "2026-10-10 13:25"
+  "revised": "2026-10-10 13:25",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EIXIC/"
  },
  "c2214": {
   "unit": "",
   "source": "야후 파이낸스.",
-  "revised": "2026-10-10 13:25"
+  "revised": "2026-10-10 13:25",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EIXIC/"
  },
  "c2215": {
   "unit": "",
   "source": "야후 파이낸스.",
-  "revised": "2026-10-10 13:25"
+  "revised": "2026-10-10 13:25",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EGSPC/"
  },
  "c2216": {
   "unit": "",
   "source": "야후 파이낸스.",
-  "revised": "2026-10-10 13:25"
+  "revised": "2026-10-10 13:25",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EGSPC/"
  },
  "c2217": {
   "unit": "",
   "source": "야후 파이낸스.",
-  "revised": "2026-10-10 13:25"
+  "revised": "2026-10-10 13:25",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EGSPC/"
  },
  "c2218": {
   "unit": "",
   "source": "야후 파이낸스.",
-  "revised": "2026-10-10 13:25"
+  "revised": "2026-10-10 13:25",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EDJI/"
  },
  "c2219": {
   "unit": "",
   "source": "야후 파이낸스.",
-  "revised": "2026-10-10 13:25"
+  "revised": "2026-10-10 13:25",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EDJI/"
  },
  "c2220": {
   "unit": "",
   "source": "야후 파이낸스.",
-  "revised": "2026-10-10 13:25"
+  "revised": "2026-10-10 13:25",
+  "sourceUrl": "https://finance.yahoo.com/quote/%5EDJI/"
  },
  "c0691": {
   "labels": [
@@ -80259,5 +80302,17 @@
   "id": "c1710",
   "revised": "2026-10-10 22:04",
   "drop": true
+ },
+ "c2196": {
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DA7147S",
+  "revised": "2026-10-11 00:02"
+ },
+ "c2205": {
+  "sourceUrl": "https://www.airport.kr/co_ko/651/subview.do",
+  "revised": "2026-10-11 00:02"
+ },
+ "c2193": {
+  "sourceUrl": "https://www.opinet.co.kr/user/dopospdrg/dopOsPdrgSelect.do",
+  "revised": "2026-10-11 00:02"
  }
 }

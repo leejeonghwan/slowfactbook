@@ -120,6 +120,10 @@ def main():
         for p in plans:
             o = ov.setdefault(p["id"], {})
             o["labels"] = p["labels"]; o["series"] = p["series"]; o["updated"] = stamp
+            # 자동 갱신에 쓴 참조 주소를 차트에 남긴다 (차트 페이지의 '출처 링크' 버튼).
+            u = (mapping.get(p["id"]) or {}).get("sourceUrl")
+            if u:
+                o["sourceUrl"] = u
         json.dump(ov, open(ovp, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
         print(f"\n→ data/overrides.json 에 {len(plans)}건 반영.")
     elif plans:

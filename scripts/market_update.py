@@ -177,6 +177,9 @@ def main():
             o["labels"] = p["labels"]
             o["series"] = p["series"]
             o["updated"] = stamp
+            # 자동 갱신에 쓴 참조 주소를 차트에 남긴다.
+            if p.get("sourceUrl"):
+                o["sourceUrl"] = p["sourceUrl"]
         json.dump(ov, open(ovp, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
         clp = os.path.join(DATA, "changelog.json")
         cl = json.load(open(clp, encoding="utf-8")) if os.path.exists(clp) else []

@@ -766,13 +766,19 @@ h1.title{font-size:30px;font-weight:800;margin:0 0 4px;letter-spacing:-.5px;}
     <button class="embed-btn" id="csvBtn">⬇ 데이터(CSV)</button>
     <button class="embed-btn" id="copyBtn">⧉ 데이터 복사</button>
     <button class="embed-btn" id="tblBtn">▾ 데이터 표</button>
+    <button class="embed-btn" id="srcBtn" hidden>🔗 출처 링크</button>
     <button class="embed-btn" id="embedBtn">⧉ 임베드 코드 복사</button>
   </div>
   <div class="datawrap" id="datawrap" hidden><div class="datascroll"><table id="datatable"></table></div></div>
+  <div class="srcwrap" id="srcwrap" hidden></div>
 </main>
 <style>
 .datawrap{margin-top:14px;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
 .datascroll{max-height:460px;overflow:auto}
+/* 출처 링크. 상단 설명줄이 두꺼워지지 않게 버튼으로 접어 둔다. */
+.srcwrap{margin-top:14px;border:1px solid var(--line);border-radius:10px;background:#fff;padding:12px 14px;font-size:13px}
+.srcwrap a{display:block;color:var(--blue);word-break:break-all;line-height:1.7;text-decoration:none}
+.srcwrap a:hover{text-decoration:underline}
 #datatable{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
 #datatable th{position:sticky;top:0;background:#f4f4f2;color:#555;font-size:11.5px;font-weight:600;
   text-align:right;padding:8px 10px;border-bottom:1px solid var(--line)}
@@ -829,6 +835,17 @@ document.getElementById("copyBtn").onclick=()=>{
   navigator.clipboard.writeText(tsv).then(()=>toast("데이터를 복사했습니다. 키노트에 붙여넣으세요"))
     .catch(()=>toast("복사에 실패했습니다"));
 };
+// sourceUrl 에 주소가 여럿이면 공백·줄바꿈으로 나눠 적는다.
+function srcLinks(it){
+  return String((it&&it.sourceUrl)||"").split(/\s+/).filter(u=>/^https?:\/\//.test(u));
+}
+document.getElementById("srcBtn").onclick=()=>{
+  const w=document.getElementById("srcwrap"),b=document.getElementById("srcBtn");
+  if(!w.hidden){w.hidden=true;b.textContent="🔗 출처 링크";return;}
+  w.innerHTML=srcLinks(window.CUR).map(u=>'<a href="'+u.replace(/"/g,"&quot;")+'" target="_blank" rel="noopener">'+u.replace(/&/g,"&amp;").replace(/</g,"&lt;")+'</a>').join("");
+  w.hidden=false;b.textContent="▴ 출처 링크 접기";
+  w.scrollIntoView({behavior:"smooth",block:"nearest"});
+};
 document.getElementById("tblBtn").onclick=()=>{
   const w=document.getElementById("datawrap"),b=document.getElementById("tblBtn");
   if(!w.hidden){w.hidden=true;b.textContent="▾ 데이터 표";return;}
@@ -845,6 +862,7 @@ fetch("cats.json").then(r=>r.json()).then(cats=>{
 }).catch(()=>{});
 fetch("embed/"+id+".json").then(r=>r.json()).then(it=>{
   window.CUR=it;
+  document.getElementById("srcBtn").hidden = srcLinks(it).length===0;
   document.getElementById("tag").innerHTML='<a href="index.html?cat='+encodeURIComponent(it.category)+'">'+dot(it.category)+'</a>';
   document.getElementById("title").textContent=dot(it.title);
   document.getElementById("meta").textContent=it.source?dot(it.source):"";
@@ -854,7 +872,8 @@ fetch("embed/"+id+".json").then(r=>r.json()).then(it=>{
     // 항목이 많은 가로 막대는 세로로 늘려야 읽힌다. 비율도 높이 제한도 풀어 준다
     // (시계열용으로 걸어 둔 max-height:70vh 가 여기까지 적용되면 막대가 뭉개진다).
     box.style.aspectRatio="auto";box.style.flex="none";box.style.maxHeight="none";
-    box.style.height=Math.max(360,it.labels.length*30)+"px";
+    // 화면 높이만큼은 쓰고, 항목이 많으면 그만큼 더 늘린다.
+    box.style.height=Math.max(Math.round(window.innerHeight*0.78),it.labels.length*34)+"px";
   }
   const _ch=buildChart(document.getElementById("cv"),it);
   wireLegend(document.getElementById("legend"),()=>_ch);
