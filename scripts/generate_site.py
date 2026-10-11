@@ -76,6 +76,8 @@ def load_items(data_dir):
                 "highlight": it.get("highlight"),
                 # 계열 색을 직접 지정할 때 쓴다(overrides 의 "seriesColors").
                 "seriesColors": it.get("seriesColors"),
+                # 띄엄띄엄 찍힌 전망선을 이어 그릴지 (overrides 의 "spanGaps").
+                "spanGaps": bool(it.get("spanGaps")),
                 "updated": it.get("updated", ""),
             }
             if it["vizType"] == "combo":
@@ -585,7 +587,9 @@ function buildChart(canvas,it){
     const kinds=it.seriesKinds||[],axes=it.seriesAxes||[];
     const dsets=it.series.map((vals,i)=>{const k=kinds[i]||"line",ax=(axes[i]||0),col=CS[i];
       const d={type:(k==="area"?"line":k),label:(it.seriesNames[i]||""),data:vals,borderColor:col,backgroundColor:(k==="bar"?col:hexA(col,0.5)),yAxisID:ax===1?"y1":"y"};
-      if(k!=="bar"){d.borderWidth=2;d.pointRadius=0;d.pointHoverRadius=4;d.tension=.25;d.fill=(k==="area");}else{d.borderWidth=0;}
+      if(k!=="bar"){d.borderWidth=2;d.pointRadius=0;d.pointHoverRadius=4;d.tension=.25;d.fill=(k==="area");
+        // 2025·2035·2045… 처럼 띄엄띄엄 찍힌 전망선은 이어 그려야 슬라이드와 같아진다.
+        if(it.spanGaps){d.spanGaps=true;d.pointRadius=3;}}else{d.borderWidth=0;}
       return d;});
     return mk(canvas,{type:"bar",data:{labels,datasets:dsets},
       options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
