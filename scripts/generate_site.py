@@ -645,7 +645,14 @@ function buildChart(canvas,it){
     ds[0].backgroundColor=arr; ds[0].borderColor=arr;
   }
   const unit=(it.unit||"").trim()||(it.source.match(/단위:\s*([^,.]+)/)||[])[1]||"";
-  const tip={callbacks:{label:c=>((ds.length>1&&c.dataset.label)?`${c.dataset.label}: `:"")+`${fmtVal(tipVal(c))} ${unit}`.trim()}};
+  // 두 축 콤보는 계열 이름이 단위를 달고 있다("수출 중량(천 톤)"). 그런 차트에서
+  // 전체 단위("천 톤, 달러")를 또 붙이면 "399.8 천 톤, 달러" 가 된다. 이름이
+  // 괄호로 끝나면 그 이름을 단위로 믿고 전체 단위는 생략한다.
+  const tip={callbacks:{label:c=>{
+    const nm=(ds.length>1&&c.dataset.label)?String(c.dataset.label):"";
+    const u=/\)\s*\.?$/.test(nm)?"":unit;
+    return (nm?`${nm}: `:"")+`${fmtVal(tipVal(c))} ${u}`.trim();
+  }}};
   const interaction={mode:"index",intersect:false};
   const multi=ds.length>1;
   if(t==="combo"){
