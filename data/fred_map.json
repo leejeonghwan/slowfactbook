@@ -8,5 +8,25 @@
   "note": "삼의 법칙 침체 지표(현재 실업률 기준). 실시간판은 SAHMREALTIME.",
   "sourceUrl": "https://fred.stlouisfed.org/series/SAHMCURRENT",
   "mode": "replace"
+ },
+ "c2254": {
+  "freq": "quarter",
+  "mode": "replace",
+  "drift": 0.4,
+  "series": [
+   {
+    "id": "GDP",
+    "transform": "yoy_ma40",
+    "minobs": 1
+   },
+   {
+    "id": "DGS10",
+    "fold": "mean",
+    "minobs": 50,
+    "round": 2
+   }
+  ],
+  "note": "명목성장률은 전년 동기 대비 성장률의 40분기 이동평균. BEA 가 과거 분기를 개정하므로 전체를 다시 깐다.",
+  "sourceUrl": "https://fred.stlouisfed.org/series/GDP https://fred.stlouisfed.org/series/DGS10"
  }
 }

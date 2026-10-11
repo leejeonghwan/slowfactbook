@@ -15,7 +15,7 @@ fredgraph.csv 는 키가 필요 없다.
 겹치는 달이 어긋나면 그 차트는 건드리지 않는다. 표가 바뀐 게 아니라 다른
 시리즈를 붙이려 한 것일 수 있어서다.
 """
-import argparse, csv, datetime, io, json, os, re, subprocess, sys, urllib.request
+import argparse, collections, csv, datetime, io, json, os, re, subprocess, sys
 from collections import defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -29,8 +29,8 @@ UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"
 CSV = "https://fred.stlouisfed.org/graph/fredgraph.csv?id={sid}"
 
 
-def fetch(sid, fold="mean"):
-    """{"YYYY-MM": 값} 으로 돌려준다. 결측(".")은 버린다."""
+def fetch_rows(sid):
+    """FRED 원자료를 [(날짜, 값)] 로. 결측(".")은 버린다."""
     # urllib 로는 FRED 가 응답을 끝내 주지 않는다(이 망에서 계속 타임아웃).
     # curl 은 멀쩡히 받아 오므로 그쪽에 맡긴다.
     body = subprocess.run(
@@ -40,24 +40,75 @@ def fetch(sid, fold="mean"):
     rows = list(csv.reader(io.StringIO(body)))
     if not rows or len(rows[0]) < 2:
         raise RuntimeError(f"{sid}: 내려온 표가 비었습니다")
-    acc = defaultdict(list)
+    out = []
     for d, v in ((r[0], r[1]) for r in rows[1:] if len(r) >= 2):
-        m = re.match(r"(\d{4})-(\d{2})-(\d{2})", d.strip())
-        if not m:
+        if not re.match(r"\d{4}-\d{2}-\d{2}", d.strip()):
             continue
         try:
-            x = float(v)
+            out.append((d.strip(), float(v)))
         except ValueError:
-            continue                      # FRED 는 결측을 "." 으로 적는다
-        acc[f"{m.group(1)}-{m.group(2)}"].append((d.strip(), x))
+            continue              # FRED 는 결측을 "." 으로 적는다
+    return sorted(out)
+
+
+def bucket(rows, freq, fold, minobs, nd=4):
+    """일·주·월 자료를 월 또는 분기 칸에 담는다. 칸의 열쇠는 그 칸의 첫 달이다.
+
+    minobs 는 아직 안 끝난 칸을 걸러내는 장치다. 분기 평균을 내는데 그 분기에
+    며칠치밖에 없으면 그 점은 쓰면 안 된다.
+    """
+    acc = collections.defaultdict(list)
+    for d, x in rows:
+        y, m, _ = d.split("-")
+        mm = int(m)
+        k = f"{y}-{((mm - 1) // 3) * 3 + 1:02d}" if freq == "quarter" else f"{y}-{mm:02d}"
+        acc[k].append((d, x))
     out = {}
     for k, vs in acc.items():
-        if fold == "last":
-            out[k] = sorted(vs)[-1][1]
-        else:
-            xs = [x for _, x in vs]
-            out[k] = round(sum(xs) / len(xs), 4) if len(xs) > 1 else xs[0]
+        if minobs and len(vs) < minobs:
+            continue
+        out[k] = vs[-1][1] if fold == "last" else (
+            round(sum(x for _, x in vs) / len(vs), nd) if len(vs) > 1 else vs[0][1])
     return out
+
+
+def yoy_ma(series, per_year, win):
+    """전년 동기 대비 성장률(%)을 내고 win 개 구간의 이동평균을 낸다.
+
+    미국 명목성장률 '10년 이동평균'이 이것이다 (분기 자료, per_year=4, win=40).
+    """
+    ks = sorted(series)
+    yoy = []
+    for i, k in enumerate(ks):
+        if i < per_year or series[ks[i - per_year]] == 0:
+            continue
+        yoy.append((k, (series[k] / series[ks[i - per_year]] - 1) * 100))
+    out = {}
+    for i in range(win - 1, len(yoy)):
+        out[yoy[i][0]] = round(sum(x for _, x in yoy[i - win + 1:i + 1]) / win, 2)
+    return out
+
+
+def series_for(spec, sdef, cache):
+    """등록부 한 줄을 {"YYYY-MM": 값} 으로 바꾼다."""
+    sid = sdef["id"]
+    freq = sdef.get("freq", spec.get("freq", "month"))
+    fold = sdef.get("fold", spec.get("fold", "mean"))
+    minobs = sdef.get("minobs", spec.get("minobs", 0))
+    tr = sdef.get("transform", spec.get("transform"))
+    # 원자료가 소수 두 자리인 금리를 평균 내면 끝없이 늘어난다. 자릿수를 정해 둔다.
+    nd = int(sdef.get("round", spec.get("round", 4)))
+    key = (sid, freq, fold, minobs, tr, nd)
+    if key in cache:
+        return cache[key]
+    base = bucket(fetch_rows(sid), freq, fold, minobs, nd)
+    if tr:
+        m = re.fullmatch(r"yoy_ma(\d+)", tr)
+        if not m:
+            raise RuntimeError(f"모르는 transform: {tr}")
+        base = yoy_ma(base, 4 if freq == "quarter" else 12, int(m.group(1)))
+    cache[key] = base
+    return base
 
 
 def main():
@@ -101,14 +152,11 @@ def main():
         tol = float(spec.get("tol", 0.011))
 
         got, err = [], None
-        for s in sers:
-            key = (s["id"], s.get("fold", spec.get("fold", "mean")))
-            if key not in cache:
-                try:
-                    cache[key] = fetch(*key)
-                except Exception as e:
-                    err = f"{s['id']} 조회 실패: {e}"; break
-            got.append(cache[key])
+        for sd in sers:
+            try:
+                got.append(series_for(spec, sd, cache))
+            except Exception as e:
+                err = f"{sd['id']} 조회 실패: {e}"; break
         if err:
             skips.append((cid, err)); continue
 
