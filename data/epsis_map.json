@@ -1,0 +1,104 @@
+{
+ "c1010": {
+  "feed": "bid",
+  "freq": "month",
+  "year": 2024,
+  "series": [
+   "원자력",
+   "석탄",
+   "LNG"
+  ],
+  "unit": "GWh"
+ },
+ "c2244": {
+  "feed": "ptd",
+  "freq": "month",
+  "year": 2024,
+  "series": [
+   "원자력",
+   "석탄",
+   "LNG"
+  ],
+  "unit": "GWh"
+ },
+ "c2245": {
+  "feed": "bid",
+  "freq": "month",
+  "year": 2025,
+  "series": [
+   "원자력",
+   "석탄",
+   "LNG"
+  ],
+  "unit": "GWh"
+ },
+ "c2246": {
+  "feed": "ptd",
+  "freq": "month",
+  "year": 2025,
+  "series": [
+   "원자력",
+   "석탄",
+   "LNG"
+  ],
+  "unit": "GWh"
+ },
+ "c2247": {
+  "feed": "bid",
+  "freq": "allmonth",
+  "series": [
+   "원자력",
+   "석탄",
+   "LNG"
+  ],
+  "unit": "GWh"
+ },
+ "c2248": {
+  "feed": "ptd",
+  "freq": "allmonth",
+  "series": [
+   "원자력",
+   "석탄",
+   "LNG"
+  ],
+  "unit": "GWh"
+ },
+ "c2249": {
+  "feed": "bid",
+  "freq": "year",
+  "series": [
+   "원자력",
+   "석탄",
+   "LNG"
+  ],
+  "unit": "TWh"
+ },
+ "c2250": {
+  "feed": "ptd",
+  "freq": "year",
+  "series": [
+   "원자력",
+   "석탄",
+   "LNG"
+  ],
+  "unit": "TWh"
+ },
+ "c1003": {
+  "feed": "both",
+  "freq": "year",
+  "fuel": "원자력",
+  "unit": "TWh"
+ },
+ "c1002": {
+  "feed": "both",
+  "freq": "year",
+  "fuel": "석탄",
+  "unit": "TWh"
+ },
+ "c1001": {
+  "feed": "both",
+  "freq": "year",
+  "fuel": "LNG",
+  "unit": "TWh"
+ }
+}
