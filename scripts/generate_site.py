@@ -367,6 +367,11 @@ const PARTY_COLOR = [
   [/더불어민주당|민주당|열린우리|새정치민주연합|통합민주/, "#4a90d9"],
   [/조국혁신/, "#1f6f8b"], [/개혁신당/, "#e8820c"], [/정의당|진보당/, "#d4a017"],
   [/무당층|없음|모름/, "#9b9b9b"],
+  // 이념 성향. 정당 규칙 뒤에 둬야 '진보당'이 여기 먼저 걸리지 않는다.
+  // 보수는 빨강, 진보는 파랑, 중도·무응답은 회색으로 고정한다.
+  [/^보수[.·\s]*$/, "#c0322f"],
+  [/^진보[.·\s]*$/, "#4a90d9"],
+  [/^중도(\s*[+＋]\s*무응답)?[.·\s]*$/, "#9b9b9b"],
   // 증감 그래프는 계열이 하나만 남는 경우(전부 감소)도 있어서 색을 고정해 둔다.
   // 그래야 짝이 되는 두 차트를 나란히 놓았을 때 같은 뜻이 같은 색으로 읽힌다.
   [/^증가\.?$/, "#2f5e8e"], [/^감소\.?$/, "#c0322f"],
@@ -455,15 +460,22 @@ function applyFocus(chart,idx){
   const ds=chart.data.datasets;
   ds.forEach(d=>{ if(d._c0===undefined){d._c0=d.borderColor;d._b0=d.backgroundColor;d._w0=d.borderWidth;} });
   const on=(idx!==""&&idx!=null);
+  // 누적 차트(누적 영역·누적 막대)는 옅게 만드는 방식이 통하지 않는다.
+  // 고른 계열이 아래 계열들 높이만큼 떠 있어서 축에 대고 값을 읽을 수 없기 때문이다.
+  // 그래서 누적일 때는 나머지를 숨겨 고른 계열이 바닥에서 시작하게 한다.
+  const sc=chart.options.scales||{};
+  const stacked=Object.keys(sc).some(k=>sc[k]&&sc[k].stacked);
   ds.forEach((d,k)=>{
     const me=(k===Number(idx));
     const base=typeof d._c0==="string"&&d._c0[0]==="#"?d._c0:null;
-    if(!on){ d.borderColor=d._c0; d.backgroundColor=d._b0; d.borderWidth=d._w0; d.order=0; }
+    if(!on){ d.borderColor=d._c0; d.backgroundColor=d._b0; d.borderWidth=d._w0; d.order=0; d.hidden=false; }
+    else if(stacked){ d.borderColor=d._c0; d.backgroundColor=d._b0;
+                      d.borderWidth=d._w0; d.order=0; d.hidden=!me; }
     else if(me){ d.borderColor=d._c0; d.backgroundColor=d._b0;
-                 d.borderWidth=(d._w0||2)+1.5; d.order=-1; }
+                 d.borderWidth=(d._w0||2)+1.5; d.order=-1; d.hidden=false; }
     else { d.borderColor=base?fade(base,0.14):d._c0;
            d.backgroundColor=base?fade(base,0.10):d._b0;
-           d.borderWidth=d._w0; d.order=1; }
+           d.borderWidth=d._w0; d.order=1; d.hidden=false; }
   });
   // 계열이 많을 때 툴팁이 스물몇 줄로 늘어나는 것도 같이 잡는다
   const o=chart.options.plugins.tooltip;
@@ -551,10 +563,10 @@ function pctCap(it){
       cnt++; if(t<lo)lo=t; if(t>hi)hi=t;
     }
     if(cnt>=2){
-      // 반올림 때문에 줄마다 합이 100 이나 101 로 갈리는 자료가 흔하다.
-      // 축을 100 에서 끊어 주는 편이 읽기 쉬우므로 101.5 까지 구성비로 본다.
-      if(lo>=0.99&&hi<=1.015) return 1;
-      if(lo>=99&&hi<=101.5) return 100;
+      // 반올림과 '기타' 누락 때문에 줄마다 합이 98~102 로 흩어지는 자료가 흔하다.
+      // 그래도 구성비이므로 축은 100 에서 끊는다(사용자 요청: 상단을 100으로).
+      if(lo>=0.97&&hi<=1.03) return 1;
+      if(lo>=97&&hi<=103) return 100;
     }
   }
   if(!/%|퍼센트|비중|비율/.test(u)) return null;
@@ -571,7 +583,26 @@ function pctCap(it){
     for(const s of it.series)for(const v of s){if(v==null)continue; if(v>m)m=v; if(v<lo)lo=v;}
     if(lo>30) return null;
   }
-  return (m>=85&&m<=100.5)?100:null;
+  return (m>=85&&m<=(st?103:100.5))?100:null;
+}
+// 툴팁 숫자. 추출 과정에서 소수점 아래가 네 자리까지 끌려와 "3605.0152" 처럼
+// 읽기 힘든 값이 많다. 소수점 아래 한 자리로 끊되, 10 보다 작은 값은 두 자리까지
+// 남긴다 — 합계출산율 0.72 를 0.7 로 깎으면 뜻이 달라지기 때문이다.
+function fmtVal(v){
+  if(v==null||v==="")return "";
+  const n=Number(v);
+  if(!isFinite(n))return String(v);
+  const a=Math.abs(n);
+  const d=a>=10?1:2;
+  return n.toFixed(d).replace(/\.?0+$/,"")
+          .replace(/^(-?\d+)/,m=>Number(m).toLocaleString("ko-KR"));
+}
+// 가로 막대는 값이 parsed.x 에, 나머지는 parsed.y 에 들어온다.
+function tipVal(c){
+  const p=c.parsed;
+  if(p===null||typeof p!=="object")return p;
+  const h=c.chart&&c.chart.options&&c.chart.options.indexAxis==="y";
+  return h?p.x:p.y;
 }
 // 차트 생성 한 군데로 모아 둔다(카드·개별 페이지·임베드 공통).
 function mk(canvas,cfg){
@@ -582,7 +613,7 @@ function buildChart(canvas,it){
   const CS=withFixed(colorsFor(it.seriesNames||[],it.highlight),it);
   const ds=it.series.map((vals,i)=>({label:(it.seriesNames[i]||""),data:vals,backgroundColor:CS[i],borderColor:CS[i]}));
   const unit=(it.unit||"").trim()||(it.source.match(/단위:\s*([^,.]+)/)||[])[1]||"";
-  const tip={callbacks:{label:c=>((ds.length>1&&c.dataset.label)?`${c.dataset.label}: `:"")+`${c.formattedValue} ${unit}`.trim()}};
+  const tip={callbacks:{label:c=>((ds.length>1&&c.dataset.label)?`${c.dataset.label}: `:"")+`${fmtVal(tipVal(c))} ${unit}`.trim()}};
   const interaction={mode:"index",intersect:false};
   const multi=ds.length>1;
   if(t==="combo"){
@@ -634,7 +665,7 @@ function buildChart(canvas,it){
                 y:{title:{display:!!yn,text:yn,font:{size:11}},ticks:{font:tickFont}}}}});
   }
   if(t==="pie"){
-    const pieTip={callbacks:{label:c=>`${c.label}: ${c.formattedValue} ${unit}`.trim()}};
+    const pieTip={callbacks:{label:c=>`${c.label}: ${fmtVal(c.parsed)} ${unit}`.trim()}};
     return mk(canvas,{type:"doughnut",data:{labels,datasets:[{data:it.series[0],backgroundColor:(cs=>labels.map((_,i)=>cs[i]))(colorsFor(labels,it.highlight)),borderColor:"#fff",borderWidth:1}]},
       options:{responsive:true,maintainAspectRatio:false,cutout:"60%",plugins:{legend:{display:false},tooltip:pieTip}}});
   }

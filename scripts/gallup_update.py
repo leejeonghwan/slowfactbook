@@ -130,6 +130,49 @@ def parse(path, section="대통령 직무 수행 평가"):
     return out
 
 
+IDEO_CHART = "c0402"
+IDEO_NAMES = ["진보", "중도+무응답", "보수"]
+# '전체' 행: 사례수 둘 뒤에 매우보수·약간보수·중도적·약간진보·매우진보·유보·보수계·진보계.
+IDEO_ROW = re.compile(r"전\s*체\s+[\d,]+\s+[\d,]+((?:\s+\d+%){8})")
+
+
+def parse_ideology(path):
+    """{'2026-01': (진보, 중도+무응답, 보수)} — 주관적 정치 성향 월별 통합표."""
+    txt = subprocess.run(["pdftotext", "-layout", path, "-"],
+                         capture_output=True, text=True).stdout
+    m = re.search(r"\((\d{4})\d{4}\)", os.path.basename(path)) or \
+        re.search(r"Monthly_(\d{4})", os.path.basename(path))
+    if not m:
+        return {}
+    year = int(m.group(1))
+    lines = txt.split("\n")
+    hits = [i for i, l in enumerate(lines) if "월별 통합 교차집계표" in l]
+    seg = None
+    for n, i in enumerate(hits):
+        end = hits[n + 1] if n + 1 < len(hits) else len(lines)
+        cand = lines[i:end]
+        if "주관적 정치 성향" in "\n".join(cand[:12]) and any(MONTH_RE.search(l) for l in cand):
+            seg = cand
+            break
+    if seg is None:
+        return {}
+    heads = [i for i, l in enumerate(seg) if MONTH_RE.search(l)]
+    out = {}
+    for n, h in enumerate(heads):
+        months = [int(x) for x in MONTH_RE.findall(seg[h])]
+        block = seg[h: heads[n + 1] if n + 1 < len(heads) else len(seg)]
+        got = [[int(v) for v in re.findall(r"(\d+)%", mm.group(1))]
+               for line in block for mm in IDEO_ROW.finditer(line)]
+        for col, mo in enumerate(months):
+            if col < len(got):
+                v = got[col]
+                prog, cons = v[7], v[6]
+                # 중도+무응답은 나머지로 잡는다. 중도적+유보를 더하면 반올림 때문에
+                # 줄 합이 101 이 되는 달이 생긴다.
+                out[f"{year}-{mo:02d}"] = (prog, 100 - prog - cons, cons)
+    return out
+
+
 def read_months(path, section):
     """최신 호 + (필요하면) 지난해 연간 통합 호를 합쳐 월별 값을 돌려준다."""
     months = parse(path, section)
@@ -214,6 +257,49 @@ def main():
         o.setdefault("source", "한국갤럽 갤럽리포트. 월간 평균. 단위: %.")
         ov[cid] = o
         touched.append((cid, base, new, len(labs)))
+
+    # ── 주관적 정치 성향 (전체 행)
+    ideo = parse_ideology(path)
+    if ideo:
+        prev = annual_pdf(int(min(ideo)[:4]) - 1)
+        if prev:
+            ideo = {**parse_ideology(prev), **ideo}
+    base = next((x for x in pool if x.get("id") == IDEO_CHART), None)
+    if ideo and base is not None:
+        it = {**base, **(ov.get(IDEO_CHART) or {})}
+        names = [str(x).strip().rstrip(".") for x in it["seriesNames"]]
+        if names != IDEO_NAMES:
+            print(f"  {IDEO_CHART}: 계열 이름이 예상과 다릅니다 {names} — 건너뜁니다.")
+            fail = True
+        else:
+            labs = list(it["labels"])
+            ser = [list(x) for x in it["series"]]
+            bad = [(L, tuple(ser[k][j] for k in range(3)), ideo[L])
+                   for j, L in enumerate(labs) if L in ideo
+                   and tuple(ser[k][j] for k in range(3)) != ideo[L]]
+            overlap = [L for L in labs if L in ideo]
+            print(f"  {IDEO_CHART} 주관적 정치적 성향 분포: 겹치는 {len(overlap)}개월 대조 — " +
+                  ("일치" if not bad else f"불일치 {len(bad)}건 {bad[:3]}"))
+            if bad:
+                fail = True
+            else:
+                new = [L for L in sorted(ideo) if L not in labs and (not labs or L > labs[-1])]
+                if not new:
+                    print(f"      새로 붙일 달 없음 ({len(labs)}점)")
+                elif a.apply:
+                    for L in new:
+                        labs.append(L)
+                        for k in range(3):
+                            ser[k].append(ideo[L][k])
+                    o = dict(ov.get(IDEO_CHART) or {})
+                    o.pop("revised", None)
+                    o.update({"labels": labs, "series": ser, "unit": "%",
+                              "sourceUrl": url, "updated": stamp})
+                    o.setdefault("source", "한국갤럽. 월간 기준. 단위: %.")
+                    ov[IDEO_CHART] = o
+                    touched.append((IDEO_CHART, base, new, len(labs)))
+                else:
+                    print(f"      붙일 것: {', '.join(new)}")
 
     if fail:
         print("\n겹치는 구간이 어긋나거나 양식이 달라진 차트가 있습니다. "
