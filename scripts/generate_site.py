@@ -324,7 +324,7 @@ function render(){
 function toast(m){let t=document.getElementById("toast");if(!t){t=document.createElement("div");t.id="toast";document.body.appendChild(t);}t.textContent=m;t.className="show";clearTimeout(t._t);t._t=setTimeout(()=>t.className="",1800);}
 function copyEmbed(id){
   const url=new URL("embed.html?id="+id, location.href).href;
-  const code=`<iframe src="${url}" style="border:0;width:100%;max-width:800px;aspect-ratio:4/3;min-height:420px" scrolling="no" loading="lazy"></iframe>`;
+  const code=`<iframe src="${url}" style="border:0;width:100%;aspect-ratio:4/3;min-height:420px;max-height:620px" scrolling="no" loading="lazy"></iframe>`;
   (navigator.clipboard?navigator.clipboard.writeText(code):Promise.reject())
     .then(()=>toast("임베드 코드가 복사되었습니다"))
     .catch(()=>{window.prompt("임베드 코드:",code);});
@@ -895,7 +895,7 @@ document.addEventListener("mousemove",e=>{if(wide()&&e.clientX<6)openToc();});
 function toast(m){let t=document.getElementById("toast");if(!t){t=document.createElement("div");t.id="toast";document.body.appendChild(t);}t.textContent=m;t.className="show";clearTimeout(t._t);t._t=setTimeout(()=>t.className="",1800);}
 document.getElementById("embedBtn").onclick=()=>{
   const url=new URL("embed.html?id="+id, location.href).href;
-  const code='<iframe src="'+url+'" style="border:0;width:100%;max-width:800px;aspect-ratio:4/3;min-height:420px" scrolling="no" loading="lazy"></iframe>';
+  const code='<iframe src="'+url+'" style="border:0;width:100%;aspect-ratio:4/3;min-height:420px;max-height:620px" scrolling="no" loading="lazy"></iframe>';
   (navigator.clipboard?navigator.clipboard.writeText(code):Promise.reject()).then(()=>toast("임베드 코드가 복사되었습니다")).catch(()=>window.prompt("임베드 코드:",code));
 };
 function safeName(s){return (String(s||"chart").replace(/[\\/:*?"<>|]+/g,"_").replace(/\.+$/,"").trim())||"chart";}
