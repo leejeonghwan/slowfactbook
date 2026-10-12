@@ -58,5 +58,47 @@
     "scale": 1e-12
    }
   ]
+ },
+ "c1088": {
+  "freq": "day",
+  "from": "2025-01-02",
+  "sourceUrl": "https://openapi.krx.co.kr",
+  "series": [
+   {
+    "isu": "005930",
+    "field": "TDD_CLSPRC"
+   }
+  ]
+ },
+ "c1089": {
+  "freq": "day",
+  "from": "2025-01-02",
+  "sourceUrl": "https://openapi.krx.co.kr",
+  "series": [
+   {
+    "isu": "000660",
+    "field": "TDD_CLSPRC"
+   }
+  ]
+ },
+ "c1087": {
+  "fold": "last",
+  "from": "2010-01",
+  "sourceUrl": "https://openapi.krx.co.kr",
+  "tol": 60,
+  "series": [
+   {
+    "isu": "000660",
+    "field": "TDD_CLSPRC"
+   },
+   {
+    "isu": "005930",
+    "field": "TDD_CLSPRC",
+    "div_before": [
+     "2018-05",
+     50
+    ]
+   }
+  ]
  }
 }

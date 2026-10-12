@@ -80,6 +80,20 @@ def digest(rows, want):
     return out
 
 
+def day_data(day, want, key, cache):
+    """하루치. 휴장일은 None 으로 쟁여 둬 다시 부르지 않는다.
+
+    day 는 "YYYY-MM-DD". 호출 단위가 하루치 전 종목이라, 한 번 받아 두면
+    등록한 종목이 몇이든 추가 비용이 없다.
+    """
+    ck = day + "|day"
+    if ck in cache:
+        return cache[ck], 0
+    rows = call(day.replace("-", ""), key)
+    cache[ck] = digest(rows, want) if rows else None
+    return cache[ck], 1
+
+
 def days_of(ym, fold):
     """부를 날짜들. last 는 월말부터 거꾸로, mean 은 그 달 전부."""
     y, m = int(ym[:4]), int(ym[5:7])
@@ -116,6 +130,33 @@ def month_data(ym, fold, want, key, cache, budget):
                 acc.setdefault(k, {})[f] = round(sum(vs) / len(vs), 4) if vs else None
         cache[ck] = acc
     return cache[ck], used
+
+
+def dval(d, s):
+    """하루치 묶음에서 계열 하나의 값. val() 과 같은 규칙을 쓴다."""
+    if not d:
+        return None
+    f = s.get("field", "MKTCAP")
+    tot = (d.get("*") or {}).get("MKTCAP")
+    if f in ("SHARE", "SHARE_REST"):
+        if not tot:
+            return None
+        if f == "SHARE":
+            m = (d.get(s["isu"]) or {}).get("MKTCAP")
+            return None if m is None else round(m / tot * 100, 4)
+        mine = [(d.get(x) or {}).get("MKTCAP") for x in s.get("minus", [])]
+        if any(x is None for x in mine):
+            return None
+        return round((tot - sum(mine)) / tot * 100, 4)
+    v = (d.get(s["isu"]) or {}).get(f)
+    if v is None:
+        return None
+    for x in s.get("plus", []):
+        w = (d.get(x) or {}).get(f)
+        if w is None:
+            return None
+        v += w
+    return round(v * float(s.get("scale", 1)), 4)
 
 
 def main():
@@ -155,16 +196,54 @@ def main():
         if not it:
             skips.append((cid, "차트를 찾지 못했습니다")); continue
         labels = [str(x) for x in it["labels"]]
-        if not re.fullmatch(r"\d{4}-\d{2}", labels[-1]):
-            skips.append((cid, f"라벨이 월 꼴이 아닙니다: {labels[-1]}")); continue
+        want_re = r"\d{4}-\d{2}-\d{2}" if spec.get("freq") == "day" else r"\d{4}-\d{2}"
+        if not re.fullmatch(want_re, labels[-1]):
+            skips.append((cid, f"라벨 꼴이 맞지 않습니다: {labels[-1]}")); continue
         sers = spec.get("series") or []
         if len(sers) != len(it["series"]):
             skips.append((cid, f"등록 계열 {len(sers)}개 != 차트 계열 {len(it['series'])}개")); continue
 
         fold = spec.get("fold", "last")
-        lo = max(spec.get("from", FIRST), FIRST)
+        freq = spec.get("freq", "month")
+        lo = max(spec.get("from", FIRST), FIRST if freq == "month" else FIRST + "-04")
         want = {s["isu"] for s in sers if s["isu"] != "*"}
         tol = float(spec.get("tol", 0.5))
+        if freq == "day":
+            fold = "day"
+
+        if freq == "day":
+            # 거래일을 모른다. 주말만 빼고 훑고, 휴장일은 받아 보고 알게 된다.
+            today = now.strftime("%Y-%m-%d")
+            dd, ks_all = datetime.date.fromisoformat(max(lo, labels[0])), []
+            end = datetime.date.fromisoformat(today)
+            while dd <= end:
+                if dd.weekday() < 5:
+                    ks_all.append(dd.isoformat())
+                dd += datetime.timedelta(days=1)
+            err = None
+            for k in ks_all:
+                if budget is not None and budget <= 0:
+                    break
+                try:
+                    _, used = day_data(k, want, key, cache)
+                    if budget is not None:
+                        budget -= used
+                except Exception as e:
+                    err = str(e); break
+            if err:
+                skips.append((cid, err)); continue
+            ks = [k for k in ks_all if cache.get(k + "|day")]
+            ns = [[dval(cache[k + "|day"], sp) for k in ks] for sp in sers]
+            ks = [k for i, k in enumerate(ks) if all(c[i] is not None for c in ns)]
+            ns = [[x for x in c if x is not None] for c in ns]
+            if not ks:
+                skips.append((cid, "받아온 날이 없습니다")); continue
+            if ks == labels and all(ns[i] == it["series"][i] for i in range(len(ns))):
+                skips.append((cid, "이미 최신")); continue
+            plans.append({"id": cid, "title": it["title"], "labels": ks, "series": ns,
+                          "from": labels[-1], "to": ks[-1],
+                          "note": f"일별 {len(ks)}일"})
+            continue
 
         # 손댈 달: 차트에 이미 있는 달 중 from 이후 + 차트 뒤로 새로 붙일 달
         have = [k for k in labels if k >= lo and k < cut]
@@ -229,6 +308,11 @@ def main():
                 if w is None:
                     return None
                 v += w
+            # 액면분할 환산. 거래소는 그날 실제 주가를 주므로 분할 이전 구간은
+            # 나눠 줘야 선이 이어진다 (삼성전자 2018년 5월 50 대 1).
+            db = s.get("div_before")
+            if db and k < db[0]:
+                v /= float(db[1])
             return round(v * float(s.get("scale", 1)), 4)
 
         # 겹치는 달 대조
