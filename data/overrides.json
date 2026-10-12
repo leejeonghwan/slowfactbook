@@ -94738,8 +94738,8 @@
   "updated": "2026-10-12 06:11",
   "sourceUrl": "https://fred.stlouisfed.org/series/GDP https://fred.stlouisfed.org/series/DGS10"
  },
- "c2255": {
-  "id": "c2255",
+ "c2257": {
+  "id": "c2257",
   "drop": true,
   "note": "예전 c1083 의 원자료. c1083 을 한국거래소 월말 시가총액으로 다시 깔면서 밀려났다. 같은 내용이 c1052·c1085 에도 있다."
  }
