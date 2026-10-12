@@ -38,5 +38,25 @@
     ]
    }
   ]
+ },
+ "c1052": {
+  "fold": "last",
+  "from": "2010-01",
+  "sourceUrl": "https://openapi.krx.co.kr",
+  "series": [
+   {
+    "isu": "000660",
+    "field": "MKTCAP",
+    "scale": 1e-12
+   },
+   {
+    "isu": "005930",
+    "field": "MKTCAP",
+    "plus": [
+     "005935"
+    ],
+    "scale": 1e-12
+   }
+  ]
  }
 }

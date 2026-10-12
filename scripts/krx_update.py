@@ -220,7 +220,16 @@ def main():
             if s["isu"] not in d:
                 return None
             v = d[s["isu"]].get(f)
-            return None if v is None else round(v * float(s.get("scale", 1)), 4)
+            if v is None:
+                return None
+            # plus 에 적은 종목을 더한다. 우선주를 포함한 시가총액이 그런 경우다
+            # (삼성전자 005930 + 삼성전자우 005935).
+            for x in s.get("plus", []):
+                w = (d.get(x) or {}).get(f)
+                if w is None:
+                    return None
+                v += w
+            return round(v * float(s.get("scale", 1)), 4)
 
         # 겹치는 달 대조
         bad, seen = [], 0
