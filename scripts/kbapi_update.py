@@ -54,6 +54,36 @@ def fetch(code, jong="01"):
     return out
 
 
+MAP_API = "https://data-api.kbland.kr/bfmstat/wthrchat/avgPrc"
+
+
+def fetch_district(code, dong="1100000000", level=2):
+    """시군구 단위 평균가격. {"구 이름": {"YYYY-MM": 값(만원)}}.
+
+    지도 화면이 쓰는 창구라 응답에 경계 폴리곤이 딸려 와 16MB쯤 된다(한 달에 한 번
+    부르는 것이라 그냥 둔다). 시도 단위와 달리 2022년 11월부터만 준다 — KB 가 구
+    단위로는 그만큼만 공개한다.
+    """
+    import urllib.parse
+    q = {"월간주간구분코드": "01", "조회시작일자": "201106", "조회종료일자": "209912",
+         "단위구분코드": "01", "면적크기코드": "00", "매매전세코드": code,
+         "레벨": str(level), "법정동코드": dong}
+    url = MAP_API + "?" + "&".join(f"{urllib.parse.quote(k)}={urllib.parse.quote(v)}"
+                                   for k, v in q.items())
+    body = subprocess.run(["curl", "-sS", "--max-time", "120", "-A", UA,
+                           "-H", f"Referer: {REF}", url],
+                          capture_output=True, text=True, timeout=180).stdout
+    rows = json.loads(body)["dataBody"]["data"]["depth1"]
+    out = {}
+    for r in rows:
+        ym = str(r["통계기준년월일시"])[:6]
+        v = r.get("현재데이터")
+        if v is None:
+            continue
+        out.setdefault(r["지역명"], {})[f"{ym[:4]}-{ym[4:]}"] = v
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--apply", action="store_true")
@@ -82,13 +112,48 @@ def main():
         if not it:
             skips.append((cid, "차트를 찾지 못했습니다")); continue
         labels = [str(x) for x in it["labels"]]
-        if not re.fullmatch(r"\d{4}-\d{2}", labels[-1]):
+        # 구별 최신값 차트는 라벨이 구 이름이다. 달 꼴 검사는 시계열에만 건다.
+        if not (spec.get("kind") == "district" and spec.get("mode") == "latest") \
+           and not re.fullmatch(r"\d{4}-\d{2}", labels[-1]):
             skips.append((cid, f"라벨이 월 꼴이 아닙니다: {labels[-1]}")); continue
         sers = spec.get("series") or []
-        if len(sers) != len(it["series"]):
-            skips.append((cid, f"등록 계열 {len(sers)}개 != 차트 계열 {len(it['series'])}개")); continue
         sc = float(spec.get("scale", 1))
+        if spec.get("kind") != "district" and len(sers) != len(it["series"]):
+            skips.append((cid, f"등록 계열 {len(sers)}개 != 차트 계열 {len(it['series'])}개")); continue
         tol = float(spec.get("tol", 0.01))
+        nd = int(spec.get("round", 4))
+
+        if spec.get("kind") == "district":
+            key = ("D", spec.get("코드", "02"), spec.get("법정동코드", "1100000000"))
+            if key not in cache:
+                try:
+                    cache[key] = fetch_district(key[1], key[2], spec.get("레벨", 2))
+                except Exception as e:
+                    skips.append((cid, f"조회 실패: {e}")); continue
+            reg = cache[key]
+            months = sorted({m for v in reg.values() for m in v})
+            months = [m for m in months if m != cut]
+            if not months:
+                skips.append((cid, "받아온 달이 없습니다")); continue
+            if spec.get("mode") == "latest":
+                # 최신 달 한 장. 값이 큰 구부터 세워 가로 막대로 읽는다.
+                last = months[-1]
+                rank = sorted(((n, v[last] * sc) for n, v in reg.items() if last in v),
+                              key=lambda x: -x[1])
+                nl = [n for n, _ in rank]
+                ns = [[round(v, nd) for _, v in rank]]
+            else:
+                names = sorted(reg, key=lambda n: -reg[n].get(months[-1], 0))
+                nl = months
+                ns = [[(round(reg[n][m] * sc, nd) if m in reg[n] else None) for m in months]
+                      for n in names]
+                spec["_names"] = names
+            if nl == labels and all(ns[i] == it["series"][i] for i in range(len(ns))):
+                skips.append((cid, "이미 최신")); continue
+            plans.append({"id": cid, "title": it["title"], "labels": nl, "series": ns,
+                          "n": len(nl), "from": labels[-1], "to": nl[-1],
+                          "seriesNames": spec.get("_names")})
+            continue
 
         got, err = [], None
         for s in sers:
@@ -139,6 +204,8 @@ def main():
             o = ov.setdefault(p["id"], {})
             o["id"] = p["id"]
             o["labels"] = p["labels"]; o["series"] = p["series"]; o["updated"] = stamp
+            if p.get("seriesNames"):
+                o["seriesNames"] = p["seriesNames"]
             u = (mapping.get(p["id"]) or {}).get("sourceUrl")
             if u:
                 o["sourceUrl"] = u

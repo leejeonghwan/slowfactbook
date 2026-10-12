@@ -3,8 +3,36 @@
   "scale": 0.0001,
   "sourceUrl": "https://data.kbland.kr/kbstats/wmh?tIdx=HT06&tsIdx=aptSaleAvgPrice",
   "series": [
-   {"name": "매매가격", "지역": "서울", "코드": "01"},
-   {"name": "전세가격", "지역": "서울", "코드": "02"}
+   {
+    "name": "매매가격",
+    "지역": "서울",
+    "코드": "01"
+   },
+   {
+    "name": "전세가격",
+    "지역": "서울",
+    "코드": "02"
+   }
   ]
+ },
+ "c2258": {
+  "kind": "district",
+  "코드": "02",
+  "법정동코드": "1100000000",
+  "레벨": 2,
+  "mode": "latest",
+  "scale": 0.0001,
+  "sourceUrl": "https://data.kbland.kr/kbstats/wmh?tIdx=HT06&tsIdx=aptSaleAvgPrice",
+  "round": 2
+ },
+ "c2259": {
+  "kind": "district",
+  "코드": "02",
+  "법정동코드": "1100000000",
+  "레벨": 2,
+  "mode": "series",
+  "scale": 0.0001,
+  "sourceUrl": "https://data.kbland.kr/kbstats/wmh?tIdx=HT06&tsIdx=aptSaleAvgPrice",
+  "round": 2
  }
 }
