@@ -127,5 +127,13 @@
   "start": "2025-06-04",
   "note": "이재명 정부 출범 이후 코스피 지수(일별)",
   "sourceUrl": "https://finance.yahoo.com/quote/%5EKS11/"
+ },
+ "c1088": {
+  "symbol": "005930.KS",
+  "interval": "1d",
+  "years": 3,
+  "start": "2025-01-01",
+  "note": "삼성전자 일별 종가",
+  "sourceUrl": "https://finance.yahoo.com/quote/005930.KS/"
  }
 }
