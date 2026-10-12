@@ -170,16 +170,30 @@ def build(data_dir, outp):
               ensure_ascii=False)
     embdir = os.path.join(site_dir, "embed")
     os.makedirs(embdir, exist_ok=True)
-    current = set()
+    # 같은 내용을 d/<id>.js 로도 내보낸다. 슬로우뉴스 서버가 .json 을 막고 있어
+    # 그쪽이 실제로 읽히는 경로다. .json 은 깃허브 미러와 외부 이용자를 위해 남긴다.
+    jsdir = os.path.join(site_dir, "d")
+    os.makedirs(jsdir, exist_ok=True)
+    current, curjs = set(), set()
     for it in items:
         fn = it["id"] + ".json"
         current.add(fn)
         json.dump(it, open(os.path.join(embdir, fn), "w", encoding="utf-8"),
                   ensure_ascii=False)
+        jn = it["id"] + ".js"
+        curjs.add(jn)
+        with open(os.path.join(jsdir, jn), "w", encoding="utf-8") as f:
+            f.write("__FB__(" + json.dumps(it, ensure_ascii=False) + ")")
     # prune embeds for charts that were deleted/renamed in the source deck
     removed = 0
     for old in glob.glob(os.path.join(embdir, "*.json")):
         if os.path.basename(old) not in current:
+            try:
+                os.remove(old); removed += 1
+            except OSError:
+                pass
+    for old in glob.glob(os.path.join(jsdir, "*.js")):
+        if os.path.basename(old) not in curjs:
             try:
                 os.remove(old); removed += 1
             except OSError:
@@ -627,6 +641,23 @@ function tipVal(c){
   const h=c.chart&&c.chart.options&&c.chart.options.indexAxis==="y";
   return h?p.x:p.y;
 }
+// 차트 데이터는 d/<id>.js 로 싣는다. 슬로우뉴스 서버가 .json 요청을 403 으로
+// 막아 fetch 가 떨어지기 때문이다(같은 폴더의 .js 는 멀쩡히 나온다). 깃허브
+// 미러처럼 .json 이 열려 있는 곳도 있으니, 실패하면 예전 경로로 한 번 더 간다.
+function loadItem(id){
+  return new Promise((ok,no)=>{
+    let done=false;
+    const back=()=>{ if(done)return; done=true;
+      fetch("embed/"+id+".json").then(r=>r.ok?r.json():Promise.reject())
+        .then(ok,()=>no(new Error("load failed"))); };
+    window.__FB__=function(it){ if(done)return; done=true; ok(it); };
+    const s=document.createElement("script");
+    s.src="d/"+encodeURIComponent(id)+".js";
+    s.onerror=back;
+    s.onload=()=>setTimeout(back,0);   // 파일은 받았는데 __FB__ 를 안 부른 경우
+    document.head.appendChild(s);
+  });
+}
 // 차트 생성 한 군데로 모아 둔다(카드·개별 페이지·임베드 공통).
 function mk(canvas,cfg){
   return new Chart(canvas,cfg);
@@ -771,7 +802,7 @@ html,body{margin:0;height:100%;overflow:hidden;background:transparent;
 <script>
 __CORE__
 const id=new URLSearchParams(location.search).get("id");
-fetch("embed/"+id+".json").then(r=>r.json()).then(it=>{
+loadItem(id).then(it=>{
   // 임베드를 올려 둔 곳 기준으로 원본 주소를 만든다(슬로우뉴스면 슬로우뉴스로).
   const src=new URL("chart.html?id="+encodeURIComponent(id), location.href).href;
   const esc=t=>String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
@@ -954,7 +985,7 @@ document.getElementById("tblBtn").onclick=()=>{
 fetch("cats.json").then(r=>r.json()).then(cats=>{
   cats.forEach(c=>{const a=document.createElement("a");a.textContent=dot(c);a.href="index.html?cat="+encodeURIComponent(c);toc.appendChild(a);});
 }).catch(()=>{});
-fetch("embed/"+id+".json").then(r=>r.json()).then(it=>{
+loadItem(id).then(it=>{
   window.CUR=it;
   document.getElementById("srcBtn").hidden = srcLinks(it).length===0;
   document.getElementById("tag").innerHTML='<a href="index.html?cat='+encodeURIComponent(it.category)+'">'+dot(it.category)+'</a>';

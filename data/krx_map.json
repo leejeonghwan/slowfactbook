@@ -1,0 +1,42 @@
+{
+ "c1083": {
+  "fold": "last",
+  "from": "2010-01",
+  "sourceUrl": "https://openapi.krx.co.kr",
+  "series": [
+   {
+    "isu": "000660",
+    "field": "MKTCAP",
+    "scale": 1e-12
+   },
+   {
+    "isu": "005930",
+    "field": "MKTCAP",
+    "scale": 1e-12
+   }
+  ]
+ },
+ "c1086": {
+  "fold": "last",
+  "from": "2010-01",
+  "sourceUrl": "https://openapi.krx.co.kr",
+  "series": [
+   {
+    "isu": "005930",
+    "field": "SHARE"
+   },
+   {
+    "isu": "000660",
+    "field": "SHARE"
+   },
+   {
+    "isu": "*",
+    "field": "SHARE_REST",
+    "minus": [
+     "005930",
+     "000660"
+    ]
+   }
+  ]
+ }
+}
