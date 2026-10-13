@@ -88,10 +88,21 @@ def day_data(day, want, key, cache):
     """
     ck = day + "|day"
     if ck in cache:
-        return cache[ck], 0
+        d = cache[ck]
+        # 쟁여 둘 때보다 등록 종목이 늘었으면 그 날은 다시 받는다
+        if d is None or not (want - set(d)):
+            return d, 0
+    today = datetime.datetime.now(KST).date().isoformat()
+    if day > today:
+        return None, 0                 # 아직 오지 않은 날
     rows = call(day.replace("-", ""), key)
-    cache[ck] = digest(rows, want) if rows else None
-    return cache[ck], 1
+    out = digest(rows, want) if rows else None
+    # 빈 응답을 휴장일로 쟁여 두는 건 사흘 지난 날부터. 장 마감 전이나
+    # 집계가 올라오기 전에 물어본 날을 영구 휴장일로 박아 두면 안 된다.
+    if out is not None or day < (datetime.date.fromisoformat(today)
+                                 - datetime.timedelta(days=3)).isoformat():
+        cache[ck] = out
+    return out, 1
 
 
 def days_of(ym, fold):
@@ -172,6 +183,10 @@ def main():
         print(".env 에 KRX_API_KEY 가 없습니다."); return 1
     mp = os.path.join(DATA, "krx_map.json")
     mapping = json.load(open(mp, encoding="utf-8")) if os.path.exists(mp) else {}
+    # 쟁여 두는 하루치는 등록부 전체의 종목을 담아야 한다. --only 로 걸러도
+    # 캐시에 반쪽만 남지 않도록 종목 목록은 거르기 전에 모은다.
+    ALL_WANT = {x["isu"] for v in mapping.values()
+                for x in (v.get("series") or []) if x["isu"] != "*"}
     if a.only:
         mapping = {k: v for k, v in mapping.items() if k == a.only}
     if not mapping:
@@ -206,7 +221,7 @@ def main():
         fold = spec.get("fold", "last")
         freq = spec.get("freq", "month")
         lo = max(spec.get("from", FIRST), FIRST if freq == "month" else FIRST + "-04")
-        want = {s["isu"] for s in sers if s["isu"] != "*"}
+        want = ALL_WANT
         tol = float(spec.get("tol", 0.5))
         if freq == "day":
             fold = "day"

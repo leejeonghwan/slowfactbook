@@ -1,0 +1,20 @@
+{
+ "c0828": {
+  "stat": "731Y004",
+  "cycle": "M",
+  "from": "198201",
+  "mode": "replace",
+  "series": [
+   {
+    "items": [
+     "0000001",
+     "0000100"
+    ],
+    "name": "원-달러 환율"
+   }
+  ],
+  "unit": "원",
+  "source": "한국은행 ECOS, 주요국 통화의 대원화환율(평균). 원/미국달러 매매기준율 월평균. 1982년 1월부터. 단위: 원.",
+  "sourceUrl": "https://ecos.bok.or.kr/#/Short/6b3a2c"
+ }
+}
