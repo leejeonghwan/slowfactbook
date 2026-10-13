@@ -133,6 +133,24 @@ def assign_ids(items, idpath):
         m.setdefault(okey, it["id"])            # 예전 열쇠도 남겨 되돌릴 수 있게 한다
     json.dump(m, open(idpath, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
+def write_if_changed(path, text):
+    """내용이 같으면 건드리지 않는다.
+
+    빌드는 매번 1,800장을 전부 다시 쓴다. 내용이 같아도 새로 쓰면 mtime 이 바뀌고,
+    rsync 는 크기와 mtime 으로 비교하므로 한 장만 고쳐도 3,600여 개 25MB 를 통째로
+    다시 올리게 된다. 쓰기 전에 대조해서 달라진 것만 쓴다.
+    """
+    try:
+        with open(path, encoding="utf-8") as f:
+            if f.read() == text:
+                return False
+    except OSError:
+        pass
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(text)
+    return True
+
+
 def build(data_dir, outp):
     items = load_items(data_dir)
     assign_ids(items, os.path.join(data_dir, "ids.json"))
@@ -163,30 +181,29 @@ def build(data_dir, outp):
                    .replace("__N__", nfmt) \
                    .replace("__DATA__", json.dumps(items, ensure_ascii=False)) \
                    .replace("__CATS__", json.dumps(cats, ensure_ascii=False))
-    open(outp, "w", encoding="utf-8").write(html)
+    write_if_changed(outp, html)
     # embeddable single-chart player (iframe) + full-view page (chart.html)
-    open(os.path.join(site_dir, "embed.html"), "w", encoding="utf-8").write(
-        EMBED_TEMPLATE.replace("__CORE__", CORE_JS))
-    open(os.path.join(site_dir, "chart.html"), "w", encoding="utf-8").write(
-        VIEW_TEMPLATE.replace("__CORE__", CORE_JS).replace("__N__", nfmt))
-    json.dump(cats, open(os.path.join(site_dir, "cats.json"), "w", encoding="utf-8"),
-              ensure_ascii=False)
+    write_if_changed(os.path.join(site_dir, "embed.html"),
+                     EMBED_TEMPLATE.replace("__CORE__", CORE_JS))
+    write_if_changed(os.path.join(site_dir, "chart.html"),
+                     VIEW_TEMPLATE.replace("__CORE__", CORE_JS).replace("__N__", nfmt))
+    write_if_changed(os.path.join(site_dir, "cats.json"),
+                     json.dumps(cats, ensure_ascii=False))
     embdir = os.path.join(site_dir, "embed")
     os.makedirs(embdir, exist_ok=True)
     # 같은 내용을 d/<id>.js 로도 내보낸다. 슬로우뉴스 서버가 .json 을 막고 있어
     # 그쪽이 실제로 읽히는 경로다. .json 은 깃허브 미러와 외부 이용자를 위해 남긴다.
     jsdir = os.path.join(site_dir, "d")
     os.makedirs(jsdir, exist_ok=True)
-    current, curjs = set(), set()
+    current, curjs, changed = set(), set(), 0
     for it in items:
+        blob = json.dumps(it, ensure_ascii=False)
         fn = it["id"] + ".json"
         current.add(fn)
-        json.dump(it, open(os.path.join(embdir, fn), "w", encoding="utf-8"),
-                  ensure_ascii=False)
+        changed += write_if_changed(os.path.join(embdir, fn), blob)
         jn = it["id"] + ".js"
         curjs.add(jn)
-        with open(os.path.join(jsdir, jn), "w", encoding="utf-8") as f:
-            f.write("__FB__(" + json.dumps(it, ensure_ascii=False) + ")")
+        changed += write_if_changed(os.path.join(jsdir, jn), "__FB__(" + blob + ")")
     # prune embeds for charts that were deleted/renamed in the source deck
     removed = 0
     for old in glob.glob(os.path.join(embdir, "*.json")):
@@ -201,7 +218,7 @@ def build(data_dir, outp):
                 os.remove(old); removed += 1
             except OSError:
                 pass
-    print(f"items={len(items)} -> {outp}  (+{len(items)} embeds, {removed} pruned)")
+    print(f"items={len(items)} \u00b7 \ubc14\ub01c \ub370\uc774\ud130 \ud30c\uc77c {changed}\uac1c \u00b7 \uc9c0\uc6b4 \uac83 {removed}\uac1c")
     return items
 
 TEMPLATE = r"""<!DOCTYPE html>
@@ -713,7 +730,10 @@ function buildChart(canvas,it){
       if(it.stacked && k!=="bar") d.stack="line"+i;
       if(k!=="bar"){d.borderWidth=2;d.pointRadius=0;d.pointHoverRadius=4;d.tension=.25;d.fill=(k==="area");
         // 2025·2035·2045… 처럼 띄엄띄엄 찍힌 전망선은 이어 그려야 슬라이드와 같아진다.
-        if(it.spanGaps){d.spanGaps=true;d.pointRadius=3;}}else{d.borderWidth=0;}
+        // 띄엄띄엄 찍힌 전망선은 점을 보여야 값이 어디 있는지 읽힌다. 다만 빈 값이
+        // 하나도 없으면 점이 선을 뒤덮기만 하므로(좁은 화면에서 특히) 켜지 않는다.
+        if(it.spanGaps){d.spanGaps=true;
+          if(vals.some(v=>v==null)) d.pointRadius=3;}}else{d.borderWidth=0;}
       return d;});
     return mk(canvas,{type:"bar",data:{labels,datasets:dsets},
       options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
