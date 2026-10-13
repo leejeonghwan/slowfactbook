@@ -157,7 +157,10 @@ def build(data_dir, outp):
         shutil.copyfile(_src, os.path.join(_vend, "chart.umd.min.js"))
     else:
         print("!! assets/chart.umd.min.js 가 없습니다. CDN 대체 경로로만 동작합니다.")
+    # 공유 카드에 적히는 차트 수. 빌드할 때마다 실제 수로 바뀐다.
+    nfmt = f"{len(items):,}"
     html = TEMPLATE.replace("__CORE__", CORE_JS) \
+                   .replace("__N__", nfmt) \
                    .replace("__DATA__", json.dumps(items, ensure_ascii=False)) \
                    .replace("__CATS__", json.dumps(cats, ensure_ascii=False))
     open(outp, "w", encoding="utf-8").write(html)
@@ -165,7 +168,7 @@ def build(data_dir, outp):
     open(os.path.join(site_dir, "embed.html"), "w", encoding="utf-8").write(
         EMBED_TEMPLATE.replace("__CORE__", CORE_JS))
     open(os.path.join(site_dir, "chart.html"), "w", encoding="utf-8").write(
-        VIEW_TEMPLATE.replace("__CORE__", CORE_JS))
+        VIEW_TEMPLATE.replace("__CORE__", CORE_JS).replace("__N__", nfmt))
     json.dump(cats, open(os.path.join(site_dir, "cats.json"), "w", encoding="utf-8"),
               ensure_ascii=False)
     embdir = os.path.join(site_dir, "embed")
@@ -204,7 +207,23 @@ def build(data_dir, outp):
 TEMPLATE = r"""<!DOCTYPE html>
 <html lang="ko"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>슬로우팩트북</title>
+<title>슬로우팩트북 — 한국 사회를 숫자로 읽다</title>
+<link rel="canonical" href="https://slownews.net/factbook/">
+<meta name="description" content="한국 사회를 숫자로 읽습니다. 슬로우뉴스가 모으고 다듬은 __N__개 그래프, 출처와 원자료까지.">
+<meta property="og:site_name" content="슬로우팩트북">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="슬로우팩트북 — 한국 사회를 숫자로 읽다">
+<meta property="og:description" content="한국 사회를 숫자로 읽습니다. 슬로우뉴스가 모으고 다듬은 __N__개 그래프, 출처와 원자료까지.">
+<meta property="og:url" content="https://slownews.net/factbook/">
+<meta property="og:image" content="https://slownews.net/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="슬로우뉴스">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="슬로우팩트북 — 한국 사회를 숫자로 읽다">
+<meta name="twitter:description" content="한국 사회를 숫자로 읽습니다. 슬로우뉴스가 모으고 다듬은 __N__개 그래프, 출처와 원자료까지.">
+<meta name="twitter:image" content="https://slownews.net/og.png">
 <script src="vendor/chart.umd.min.js"></script>
 <script>window.Chart||document.write('<scr'+'ipt src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"><\/scr'+'ipt>')</script>
 <style>
@@ -689,7 +708,7 @@ function buildChart(canvas,it){
   if(t==="combo"){
     const kinds=it.seriesKinds||[],axes=it.seriesAxes||[];
     const dsets=it.series.map((vals,i)=>{const k=kinds[i]||"line",ax=(axes[i]||0),col=CS[i];
-      const d={type:(k==="area"?"line":k),label:(it.seriesNames[i]||""),data:vals,borderColor:col,backgroundColor:(k==="bar"?col:hexA(col,0.5)),yAxisID:ax===1?"y1":"y"};
+      const d={type:(k==="area"?"line":k),label:(it.seriesNames[i]||""),data:vals,borderColor:col,backgroundColor:(k==="bar"?col:hexA(col,0.5)),yAxisID:ax===2?"y2":(ax===1?"y1":"y")};
       // 쌓는 콤보에서 선까지 쌓이면 값이 뒤틀린다. 선은 저마다 다른 더미에 둔다.
       if(it.stacked && k!=="bar") d.stack="line"+i;
       if(k!=="bar"){d.borderWidth=2;d.pointRadius=0;d.pointHoverRadius=4;d.tension=.25;d.fill=(k==="area");
@@ -700,7 +719,12 @@ function buildChart(canvas,it){
       options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
         scales:{x:{grid:{display:false},stacked:!!it.stacked,ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:tickFont}},
           y:{position:"left",stacked:!!it.stacked,ticks:{font:tickFont}},
-          y1:{position:"right",grid:{display:false},ticks:{font:tickFont}}}}});
+          y1:{position:"right",grid:{display:false},ticks:{font:tickFont}},
+          // 축이 셋인 차트. 세 번째는 오른쪽에 하나 더 세운다. 단위가 서로 다른
+          // 계열을 한 그림에 올릴 때 쓰는데, 눈금을 어디에 두느냐로 선의 위치가
+          // 정해지는 터라 꼭 필요할 때만 쓴다.
+          y2:{position:"right",grid:{display:false},ticks:{font:tickFont},
+              display:(it.seriesAxes||[]).some(a=>a===2)}}}});
   }
   if(t==="line"||t==="area"||t==="two_axis"){
     const isArea=(t==="area");
@@ -750,6 +774,7 @@ EMBED_TEMPLATE = r"""<!DOCTYPE html>
 <html lang="ko"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>슬로우팩트북 차트</title>
+<meta name="robots" content="noindex,follow">
 <script src="vendor/chart.umd.min.js"></script>
 <script>window.Chart||document.write('<scr'+'ipt src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"><\/scr'+'ipt>')</script>
 <style>
@@ -822,6 +847,22 @@ VIEW_TEMPLATE = r"""<!DOCTYPE html>
 <html lang="ko"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>슬로우팩트북</title>
+<link rel="canonical" href="https://slownews.net/factbook/chart.html">
+<meta name="description" content="한국 사회를 숫자로 읽습니다. 슬로우뉴스가 모으고 다듬은 __N__개 그래프, 출처와 원자료까지.">
+<meta property="og:site_name" content="슬로우팩트북">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="슬로우팩트북">
+<meta property="og:description" content="한국 사회를 숫자로 읽습니다. 슬로우뉴스가 모으고 다듬은 __N__개 그래프, 출처와 원자료까지.">
+<meta property="og:url" content="https://slownews.net/factbook/chart.html">
+<meta property="og:image" content="https://slownews.net/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="슬로우뉴스">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="슬로우팩트북">
+<meta name="twitter:description" content="한국 사회를 숫자로 읽습니다. 슬로우뉴스가 모으고 다듬은 __N__개 그래프, 출처와 원자료까지.">
+<meta name="twitter:image" content="https://slownews.net/og.png">
 <script src="vendor/chart.umd.min.js"></script>
 <script>window.Chart||document.write('<scr'+'ipt src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"><\/scr'+'ipt>')</script>
 <style>

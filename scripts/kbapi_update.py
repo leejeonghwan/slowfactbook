@@ -124,13 +124,25 @@ def main():
         nd = int(spec.get("round", 4))
 
         if spec.get("kind") == "district":
-            key = ("D", spec.get("코드", "02"), spec.get("법정동코드", "1100000000"))
-            if key not in cache:
-                try:
-                    cache[key] = fetch_district(key[1], key[2], spec.get("레벨", 2))
-                except Exception as e:
-                    skips.append((cid, f"조회 실패: {e}")); continue
-            reg = cache[key]
+            dong, lv = spec.get("법정동코드", "1100000000"), spec.get("레벨", 2)
+            def grab(code):
+                k = ("D", code, dong)
+                if k not in cache:
+                    cache[k] = fetch_district(code, dong, lv)
+                return cache[k]
+            try:
+                if spec.get("ratio"):
+                    # 전세가율처럼 두 값의 비(%). ["02","01"] 이면 전세÷매매.
+                    nu, de = (grab(c) for c in spec["ratio"])
+                    reg = {}
+                    for n in set(nu) & set(de):
+                        reg[n] = {m: nu[n][m] / de[n][m] * 100
+                                  for m in set(nu[n]) & set(de[n]) if de[n][m]}
+                    sc = 1.0
+                else:
+                    reg = grab(spec.get("코드", "02"))
+            except Exception as e:
+                skips.append((cid, f"조회 실패: {e}")); continue
             months = sorted({m for v in reg.values() for m in v})
             months = [m for m in months if m != cut]
             if not months:
