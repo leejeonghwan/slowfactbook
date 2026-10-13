@@ -78,5 +78,106 @@
    "01"
   ],
   "mode": "series"
+ },
+ "c0719": {
+  "kind": "ratio",
+  "round": 4,
+  "tol": 0.3,
+  "sourceUrl": "https://data.kbland.kr/kbstats/wmh?tIdx=HT06&tsIdx=aptSaleAvgPrice",
+  "지역": [
+   "강남11개구",
+   "서울",
+   "강북14개구",
+   "수도권",
+   "전국",
+   "6개광역시",
+   "기타지방"
+  ]
+ },
+ "c0722": {
+  "kind": "ratio",
+  "round": 4,
+  "tol": 0.3,
+  "sourceUrl": "https://data.kbland.kr/kbstats/wmh?tIdx=HT06&tsIdx=aptSaleAvgPrice",
+  "지역": [
+   "강남11개구",
+   "서울",
+   "강북14개구",
+   "수도권",
+   "전국",
+   "6개광역시",
+   "기타지방"
+  ]
+ },
+ "c1973": {
+  "kind": "trend",
+  "menu": "03",
+  "field": "전세수급지수",
+  "round": 2,
+  "tol": 1.0,
+  "sourceUrl": "https://data.kbland.kr/kbstats/wmh?tIdx=HT06&tsIdx=aptSaleAvgPrice",
+  "지역": [
+   "강북14개구",
+   "강남11개구"
+  ]
+ },
+ "c1974": {
+  "scale": 0.0001,
+  "round": 4,
+  "tol": 0.05,
+  "sourceUrl": "https://data.kbland.kr/kbstats/wmh?tIdx=HT06&tsIdx=aptSaleAvgPrice",
+  "series": [
+   {
+    "name": "강남11개구",
+    "지역": "강남11개구",
+    "코드": "01"
+   },
+   {
+    "name": "서울",
+    "지역": "서울",
+    "코드": "01"
+   },
+   {
+    "name": "강북14개구",
+    "지역": "강북14개구",
+    "코드": "01"
+   },
+   {
+    "name": "전국",
+    "지역": "전국",
+    "코드": "01"
+   },
+   {
+    "name": "수도권",
+    "지역": "수도권",
+    "코드": "01"
+   },
+   {
+    "name": "6개광역시",
+    "지역": "6개광역시",
+    "코드": "01"
+   },
+   {
+    "name": "기타지방",
+    "지역": "기타지방",
+    "코드": "01"
+   }
+  ]
+ },
+ "c2120": {
+  "kind": "trend",
+  "menu": "03",
+  "field": "전세수급지수",
+  "wm": "02",
+  "round": 2,
+  "tol": 1.0,
+  "sourceUrl": "https://data.kbland.kr/kbstats/wmh?tIdx=HT06&tsIdx=aptSaleAvgPrice",
+  "지역": [
+   "서울",
+   "강북14개구",
+   "강남11개구",
+   "6개광역시",
+   "기타지방"
+  ]
  }
 }

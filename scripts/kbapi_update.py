@@ -84,6 +84,47 @@ def fetch_district(code, dong="1100000000", level=2):
     return out
 
 
+RATIO_API = "https://data-api.kbland.kr/bfmstat/weekMnthlyHuseTrnd/dealCntstTnantRato"
+TREND_API = "https://data-api.kbland.kr/bfmstat/weekMnthlyHuseTrnd/maktTrnd"
+
+
+def _get(url):
+    body = subprocess.run(["curl", "-sS", "--max-time", "90", "-A", UA,
+                           "-H", f"Referer: {REF}", url],
+                          capture_output=True, text=True, timeout=150).stdout
+    return json.loads(body)["dataBody"]["data"]
+
+
+def fetch_ratio():
+    """매매가격 대비 전세가격 비율. 파라미터 없이 전 구간·전 지역이 온다."""
+    d = _get(RATIO_API)
+    dates = [f"{str(x)[:4]}-{str(x)[4:6]}" for x in d["날짜리스트"]]
+    return {r["지역명"]: {k: v for k, v in zip(dates, r["dataList"]) if v is not None}
+            for r in d["데이터리스트"]}
+
+
+def fetch_trend(menu, field, wm="01"):
+    """시장동향 지수. 메뉴코드 01 매수우위, 02 매매거래, 03 전세수급,
+    04 전세거래, 05 매매상승하락전망. 값은 날짜별 묶음 안에 field 로 들어 있다."""
+    import urllib.parse
+    q = {"메뉴코드": menu, "월간주간구분코드": wm}
+    url = TREND_API + "?" + "&".join(f"{urllib.parse.quote(k)}={urllib.parse.quote(v)}"
+                                     for k, v in q.items())
+    d = _get(url)
+    out = {}
+    for r in d["데이터리스트"]:
+        m = {}
+        for row in r["dataList"]:
+            if not isinstance(row, dict):
+                continue
+            ym = str(row.get("기준날짜") or "")
+            v = row.get(field)
+            if len(ym) >= 6 and v is not None:
+                m[f"{ym[:4]}-{ym[4:6]}"] = v
+        out[r["지역명"]] = m
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--apply", action="store_true")
@@ -118,10 +159,48 @@ def main():
             skips.append((cid, f"라벨이 월 꼴이 아닙니다: {labels[-1]}")); continue
         sers = spec.get("series") or []
         sc = float(spec.get("scale", 1))
-        if spec.get("kind") != "district" and len(sers) != len(it["series"]):
+        if spec.get("kind") not in ("district", "ratio", "trend") and len(sers) != len(it["series"]):
             skips.append((cid, f"등록 계열 {len(sers)}개 != 차트 계열 {len(it['series'])}개")); continue
         tol = float(spec.get("tol", 0.01))
         nd = int(spec.get("round", 4))
+
+        if spec.get("kind") in ("ratio", "trend"):
+            key = ("R",) if spec["kind"] == "ratio" else ("T", spec["menu"], spec["field"])
+            if key not in cache:
+                try:
+                    cache[key] = (fetch_ratio() if spec["kind"] == "ratio"
+                                  else fetch_trend(spec["menu"], spec["field"]))
+                except Exception as e:
+                    skips.append((cid, f"조회 실패: {e}")); continue
+            reg = cache[key]
+            names = spec.get("지역") or (it.get("seriesNames") or [])
+            names = [str(n).strip().rstrip(".") for n in names]
+            miss = [n for n in names if n not in reg]
+            if miss:
+                skips.append((cid, f"응답에 없는 지역: {miss[:3]}")); continue
+            got = [reg[n] for n in names]
+            bad, seen = [], 0
+            for si, d in enumerate(got):
+                for i, lab in enumerate(labels):
+                    a0, b0 = it["series"][si][i], d.get(lab)
+                    if a0 is None or b0 is None:
+                        continue
+                    seen += 1
+                    if abs(a0 - b0 * sc) > tol:
+                        bad.append((lab, names[si], a0, round(b0 * sc, 3)))
+            if seen < 6:
+                skips.append((cid, f"대조할 달이 부족합니다({seen}곳)")); continue
+            if bad:
+                skips.append((cid, f"겹치는 구간 {len(bad)}곳 불일치 (예 {bad[0]})")); continue
+            addk = [k for k in sorted(set.intersection(*[set(d) for d in got]))
+                    if k > labels[-1] and k != cut]
+            if not addk:
+                skips.append((cid, "이미 최신")); continue
+            plans.append({"id": cid, "title": it["title"], "labels": labels + addk,
+                          "series": [list(x) + [round(d[k] * sc, nd) for k in addk]
+                                     for x, d in zip(it["series"], got)],
+                          "n": len(addk), "from": labels[-1], "to": addk[-1]})
+            continue
 
         if spec.get("kind") == "district":
             dong, lv = spec.get("법정동코드", "1100000000"), spec.get("레벨", 2)

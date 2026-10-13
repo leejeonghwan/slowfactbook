@@ -232,5 +232,79 @@
     "objL1": "a702"
    }
   ]
+ },
+ "api-0009": {
+  "origin": "api",
+  "provider": "kosis",
+  "orgId": "408",
+  "prdSe": "M",
+  "cycle": "M",
+  "startPrdDe": "201101",
+  "endPrdDe": "20351231",
+  "scale": 1.0,
+  "category": "부동산",
+  "objL1": "01",
+  "title": "아파트 월세가격지수(부동산원)",
+  "itmId": "rent+",
+  "tblId": "DT_30404_C002",
+  "table": "유형별 월세가격지수",
+  "unit": "2026.6=100",
+  "source": "한국부동산원 전국주택가격동향조사(월간). 아파트 기준.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=408&tblId=DT_30404_C002",
+  "series": [
+   {
+    "name": "전국",
+    "objL2": "a0"
+   },
+   {
+    "name": "수도권",
+    "objL2": "a1"
+   },
+   {
+    "name": "서울",
+    "objL2": "a7"
+   },
+   {
+    "name": "지방",
+    "objL2": "a2"
+   }
+  ]
+ },
+ "api-0010": {
+  "origin": "api",
+  "provider": "kosis",
+  "orgId": "408",
+  "prdSe": "M",
+  "cycle": "M",
+  "startPrdDe": "201101",
+  "endPrdDe": "20351231",
+  "scale": 1.0,
+  "category": "부동산",
+  "objL1": "01",
+  "title": "아파트 전월세전환율(부동산원)",
+  "itmId": "T1+",
+  "tblId": "DT_30404_N0010",
+  "table": "지역별 전월세전환율",
+  "unit": "%",
+  "source": "한국부동산원 전국주택가격동향조사(월간). 아파트 기준. 전세 보증금을 월세로 돌릴 때 적용되는 연이율.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=408&tblId=DT_30404_N0010",
+  "series": [
+   {
+    "name": "전국",
+    "objL2": "a0"
+   },
+   {
+    "name": "수도권",
+    "objL2": "a1"
+   },
+   {
+    "name": "서울",
+    "objL2": "a7"
+   },
+   {
+    "name": "지방",
+    "objL2": "a2"
+   }
+  ]
  }
 }
