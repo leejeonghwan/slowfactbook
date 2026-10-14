@@ -85,6 +85,10 @@ def load_items(data_dir):
                 "stacked": bool(it.get("stacked")),
                 "updated": it.get("updated", ""),
             }
+            # 범례를 아예 감춘다(overrides 의 "hideLegend": true).
+            # 켠 차트에만 키를 붙인다. 늘 붙이면 데이터 파일이 전부 다시 쓰인다.
+            if it.get("hideLegend"):
+                item["hideLegend"] = True
             if it["vizType"] == "combo":
                 item["seriesKinds"], item["seriesAxes"] = kinds, axes
             items.append(item)
@@ -227,6 +231,7 @@ TEMPLATE = r"""<!DOCTYPE html>
 <title>슬로우팩트북 — 한국 사회를 숫자로 읽다</title>
 <link rel="canonical" href="https://slownews.net/factbook/">
 <meta name="description" content="한국 사회를 숫자로 읽습니다. 슬로우뉴스가 모으고 다듬은 __N__개 그래프, 출처와 원자료까지.">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.ko">
 <meta property="og:site_name" content="슬로우팩트북">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ko_KR">
@@ -398,7 +403,7 @@ document.getElementById("scrim").onclick=closeNav;
 const _p=new URLSearchParams(location.search);
 if(_p.get("cat")&&CATEGORIES.includes(_p.get("cat")))activeCat=_p.get("cat");
 if(_p.get("q")){query=_p.get("q");searchEl.value=query;}
-document.getElementById("foot").textContent=`총 ${ITEMS.length}개 인포그래픽 · ${CATEGORIES.length}개 카테고리`;
+document.getElementById("foot").innerHTML=`총 ${ITEMS.length}개 인포그래픽 · ${CATEGORIES.length}개 카테고리 · <a href="rights.html" style="color:#888">이용 범위</a>: 출처를 밝히면 자유롭게 쓸 수 있습니다(CC BY 4.0)`;
 render();
 </script></body></html>"""
 
@@ -511,6 +516,7 @@ function withFixed(cs,it){
 function hexA(h,a){const n=parseInt(h.slice(1),16);return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;}
 function dot(s){s=String(s==null?"":s).trim();return (s===""||s.endsWith(".")||s.endsWith("…"))?s:s+".";}
 function legendHTML(it){
+  if(it.hideLegend) return "";
   let entries=[];
   if(it.vizType==="pie"){const cs=colorsFor(it.labels,it.highlight);entries=it.labels.map((l,i)=>[l,cs[i],i]);}
   else if(it.series.length>1){const cs=withFixed(colorsFor(it.seriesNames,it.highlight),it);
@@ -730,10 +736,14 @@ function buildChart(canvas,it){
       if(it.stacked && k!=="bar") d.stack="line"+i;
       if(k!=="bar"){d.borderWidth=2;d.pointRadius=0;d.pointHoverRadius=4;d.tension=.25;d.fill=(k==="area");
         // 2025·2035·2045… 처럼 띄엄띄엄 찍힌 전망선은 이어 그려야 슬라이드와 같아진다.
-        // 띄엄띄엄 찍힌 전망선은 점을 보여야 값이 어디 있는지 읽힌다. 다만 빈 값이
-        // 하나도 없으면 점이 선을 뒤덮기만 하므로(좁은 화면에서 특히) 켜지 않는다.
+        // 점은 기본으로 찍지 않는다. 화면을 줄이면 점이 선을 뒤덮어 모양이 깨진다.
+        // 다만 앞뒤가 모두 빈 값인 외톨이 점은 점을 안 찍으면 아예 보이지 않으므로
+        // 그 자리에만 찍는다.
         if(it.spanGaps){d.spanGaps=true;
-          if(vals.some(v=>v==null)) d.pointRadius=3;}}else{d.borderWidth=0;}
+          const lone=vals.map((v,i)=>v!=null&&(i===0||vals[i-1]==null)&&
+                                     (i===vals.length-1||vals[i+1]==null));
+          if(lone.some(Boolean)) d.pointRadius=lone.map(x=>x?3:0);
+        }}else{d.borderWidth=0;}
       return d;});
     return mk(canvas,{type:"bar",data:{labels,datasets:dsets},
       options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
@@ -869,6 +879,7 @@ VIEW_TEMPLATE = r"""<!DOCTYPE html>
 <title>슬로우팩트북</title>
 <link rel="canonical" href="https://slownews.net/factbook/chart.html">
 <meta name="description" content="한국 사회를 숫자로 읽습니다. 슬로우뉴스가 모으고 다듬은 __N__개 그래프, 출처와 원자료까지.">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.ko">
 <meta property="og:site_name" content="슬로우팩트북">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ko_KR">
@@ -931,6 +942,8 @@ h1.title{font-size:30px;font-weight:800;margin:0 0 4px;letter-spacing:-.5px;}
 .embed-btn:hover{color:var(--blue);border-color:var(--blue);}
 #toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50;}
 #toast.show{opacity:.95;}
+.licnote{margin:14px 0 0;font-size:12.5px;color:#aaa;}
+.licnote a{color:#888;}
 @media(max-width:900px){ main{padding:18px 16px;} h1.title{font-size:23px;} .chartbox{aspect-ratio:4/3;max-height:none;min-height:0;} }
 @media(max-width:900px) and (orientation:landscape){ .chartbox{aspect-ratio:16/9;} }
 </style></head><body>
@@ -955,6 +968,7 @@ h1.title{font-size:30px;font-weight:800;margin:0 0 4px;letter-spacing:-.5px;}
     <button class="embed-btn" id="srcBtn" hidden>🔗 출처 링크</button>
     <button class="embed-btn" id="embedBtn">⧉ 임베드 코드 복사</button>
   </div>
+  <p class="licnote">출처를 밝히면 영리 목적을 포함해 자유롭게 쓸 수 있습니다. <a href="rights.html">이용 범위</a> · CC BY 4.0</p>
   <div class="datawrap" id="datawrap" hidden><div class="datascroll"><table id="datatable"></table></div></div>
   <div class="srcwrap" id="srcwrap" hidden></div>
 </main>
@@ -1004,11 +1018,19 @@ document.getElementById("csvBtn").onclick=()=>{
   const names=it.series.map((s,i)=>it.seriesNames[i]||("계열 "+(i+1)));
   const rows=[["항목"].concat(names)];
   it.labels.forEach((lab,r)=>rows.push([lab].concat(it.series.map(s=>s[r]==null?"":s[r]))));
-  const csv=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(",")).join("\n");
+  const csv=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(","))
+    .concat(creditLines(it)).join("\n");
   const blob=new Blob(["﻿"+csv],{type:"text/csv;charset=utf-8"});
   const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=safeName(it.title)+".csv";a.click();
   toast("데이터(CSV)를 저장했습니다");
 };
+function creditLines(it){
+  const url=new URL("chart.html?id="+encodeURIComponent(
+    new URLSearchParams(location.search).get("id")||""), location.href).href;
+  const q=t=>'"'+String(t||"").replace(/"/g,'""')+'"';
+  return ["", q(it.title), q(it.source), q(url),
+          q("슬로우팩트북(슬로우뉴스) · CC BY 4.0 · 출처를 밝히면 자유롭게 쓸 수 있습니다")];
+}
 function tableRows(it){
   const names=it.series.map((s,i)=>it.seriesNames[i]||("계열 "+(i+1)));
   const rows=[["항목"].concat(names)];

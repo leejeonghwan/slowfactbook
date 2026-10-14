@@ -37,6 +37,12 @@ deploy_slownews() {
   rsync -az --stats $del \
         -e "ssh $key_opt -o StrictHostKeyChecking=accept-new" \
         site/ "$SLOWNEWS_HOST:$SLOWNEWS_PATH/"
+  # 권한을 맞춘다. 로컬에서 600 으로 떨어진 파일이 그대로 올라가면 웹 서버가
+  # 읽지 못해 403 이 된다. macOS 기본 rsync 2.6.9 는 --chmod 를 모르므로
+  # 올린 뒤 한 번 훑는다. 읽기 권한만 더하고 빼지는 않는다.
+  ssh $key_opt -o StrictHostKeyChecking=accept-new "$SLOWNEWS_HOST" \
+      "chmod -R a+rX '$SLOWNEWS_PATH'" \
+    && echo "  권한 정리 완료" || echo "  권한 정리 실패 — 서버에서 chmod -R a+rX 를 한 번 돌려 주세요"
   echo "✅ slownews 배포 완료 — https://slownews.net/factbook/"
 }
 
@@ -95,6 +101,9 @@ python3 scripts/ecos_update.py --apply || echo "  ECOS 갱신 실패/보류 — 
 
 echo "▶ 미국 거시지표 (FRED)…"
 python3 scripts/fred_update.py --apply || echo "  FRED 갱신 실패/보류 — 기존 값 유지"
+
+echo "▶ IMF World Economic Outlook…"
+python3 scripts/imf_update.py --apply || echo "  IMF 갱신 실패/보류 — 기존 값 유지"
 
 echo "▶ 지수·시세 (야후 파이낸스)…"
 python3 scripts/market_update.py --apply || echo "  시세 갱신 실패/보류 — 기존 값 유지"
