@@ -1,0 +1,13 @@
+{
+ "c0671": {
+  "flow": "WS_TC/2.0",
+  "mode": "replace",
+  "series": [
+   {"key": "Q.KR.H.A.M.770.A", "name": "가계부채"},
+   {"key": "Q.KR.N.A.M.770.A", "name": "기업부채"}
+  ],
+  "unit": "%",
+  "source": "BIS 총신용 통계(Total credit). GDP 대비 가계부채·기업부채 비율, 분기별. 단절 보정 계열. 단위: %.",
+  "sourceUrl": "https://data.bis.org/topics/TOTAL_CREDIT"
+ }
+}

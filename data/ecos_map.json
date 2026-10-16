@@ -261,5 +261,67 @@
   ],
   "source": "한국은행 국민계정. 실질 국내총생산(계절조정) 전 분기 대비 성장률, 2000년부터. 단위: %.",
   "sourceUrl": "https://ecos.bok.or.kr/"
+ },
+ "c0834": {
+  "stat": "311Y001",
+  "cycle": "Q",
+  "from": "1994Q1",
+  "mode": "replace",
+  "slots": [
+   0,
+   1,
+   2
+  ],
+  "series": [
+   {
+    "items": [
+     "1000000"
+    ],
+    "name": "대외금융자산",
+    "scale": 0.01,
+    "round": 1
+   },
+   {
+    "items": [
+     "2000000"
+    ],
+    "name": "대외금융부채",
+    "scale": 0.01,
+    "round": 1
+   },
+   {
+    "stat": "200Y101",
+    "cycle": "A",
+    "from": "1994",
+    "items": [
+     "1010101"
+    ],
+    "name": "GDP",
+    "asQuarter": 4,
+    "sparse": true,
+    "round": 1
+   }
+  ],
+  "unit": "억 달러",
+  "source": "한국은행 ECOS 국제투자대조표(IIP). 대외금융자산·부채는 분기 말 잔액, GDP는 연간 명목(달러표시). 단위: 억 달러.",
+  "sourceUrl": "https://ecos.bok.or.kr/"
+ },
+ "c1042": {
+  "stat": "200Y101",
+  "cycle": "A",
+  "from": "1988",
+  "mode": "replace",
+  "series": [
+   {
+    "items": [
+     "20101"
+    ],
+    "name": "장기 성장률",
+    "roll": 11
+   }
+  ],
+  "unit": "%",
+  "source": "한국은행 국민계정 실질 국내총생산 성장률로 계산. 해당 연도를 가운데 둔 11년 평균. 단위: %.",
+  "sourceUrl": "https://ecos.bok.or.kr/"
  }
 }

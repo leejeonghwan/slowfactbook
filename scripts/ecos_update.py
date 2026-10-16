@@ -13,6 +13,14 @@
 기본은 '이어붙이기'다. 겹치는 달이 어긋나면 그 차트는 건드리지 않는다.
 표가 바뀐 게 아니라 다른 계열을 붙이려 한 것일 수 있어서다.
 
+계열마다 "stat"/"cycle"/"from" 을 따로 적으면 한 차트에 다른 표를 섞을 수 있다.
+연간 값을 분기 차트에 얹을 때는 "asQuarter": 4, "roll": 11 은 가운데 맞춘 11구간 평균이다.
+그 계열이 띄엄띄엄이면
+"sparse": true 를 붙인다(라벨을 고를 때 이 계열은 세지 않는다).
+
+"slots": [0, 1] 은 차트의 몇 번째 계열만 손댈지 고른다. 나머지 계열은
+그대로 둔다. 한 차트에 다른 출처의 계열이 섞여 있을 때 쓴다.
+
 "mode": "replace" 는 겹치는 구간을 대조하지 않고 ECOS 값으로 통째로 바꾼다.
 출처가 없거나 어디서 왔는지 모르는 숫자를 한국은행 값으로 갈아끼울 때만 쓴다.
 
@@ -81,6 +89,16 @@ def ratio(m, lag):
     return out
 
 
+def roll(m, n, nd=2):
+    """{시점: 값} 을 가운데 맞춘 n구간 평균으로. 창이 모자라는 양끝은 버린다."""
+    ks = sorted(m)
+    h = n // 2
+    out = {}
+    for i in range(h, len(ks) - h):
+        out[ks[i]] = round(sum(m[ks[j]] for j in range(i - h, i + h + 1)) / n, nd)
+    return out
+
+
 def label_ok(lab, cycle):
     pat = {"M": r"\d{4}-\d{2}", "Q": r"\d{4}-Q[1-4]",
            "A": r"\d{4}", "D": r"\d{4}-\d{2}-\d{2}"}.get(cycle)
@@ -133,14 +151,26 @@ def main():
         if not label_ok(labels[-1], cyc):
             skips.append((cid, f"라벨이 {cyc} 주기 꼴이 아닙니다: {labels[-1]}")); continue
         sers = spec.get("series") or []
-        want_n = 2 if spec.get("split") == "updown" else len(sers)
-        if want_n != len(it["series"]):
-            skips.append((cid, f"등록 계열 {want_n}개 != 차트 계열 {len(it['series'])}개"))
-            continue
+        nser = len(it["series"])
+        slots = spec.get("slots")
+        if slots is None:
+            want_n = 2 if spec.get("split") == "updown" else len(sers)
+            if want_n != nser:
+                skips.append((cid, f"등록 계열 {want_n}개 != 차트 계열 {nser}개"))
+                continue
+            slots = list(range(len(sers)))
+        else:
+            # 고른 자리만 손대는 차트. split 과는 같이 쓸 수 없다.
+            if spec.get("split") or len(slots) != len(sers):
+                skips.append((cid, "slots 설정이 series 와 맞지 않습니다")); continue
+            if any(not isinstance(x, int) or not 0 <= x < nser for x in slots):
+                skips.append((cid, f"slots 가 차트 계열 {nser}개 범위를 벗어납니다")); continue
+        at = {j: i for i, j in enumerate(slots)}
         mode = spec.get("mode", "append")
         tol = float(spec.get("tol", 0.6))
-        end = spec.get("to") or {"Q": f"{now.year+1}Q4", "A": str(now.year + 1),
-                                 "D": f"{now.year+1}1231"}.get(cyc, (now.year + 1) * 100)
+        def end_of(c):
+            return spec.get("to") or {"Q": f"{now.year+1}Q4", "A": str(now.year + 1),
+                                      "D": f"{now.year+1}1231"}.get(c, (now.year + 1) * 100)
 
         got, err = [], None
         for s in sers:
@@ -148,14 +178,23 @@ def main():
                 # ECOS 단위와 차트 단위가 다를 때가 많다(천 달러 ↔ 억 달러 등).
                 sc = float(s.get("scale", spec.get("scale", 1)))
                 rd = s.get("round", spec.get("round"))
-                raw = fetch(spec["stat"], cyc,
-                            spec.get("from", "1900"), str(end), s["items"])
+                sc_cyc = s.get("cycle", cyc)
+                raw = fetch(s.get("stat", spec["stat"]), sc_cyc,
+                            s.get("from", spec.get("from", "1900")),
+                            str(end_of(sc_cyc)), s["items"])
                 # 전년 같은 구간 대비 등락률. ECOS 가 지수만 줄 때 쓴다.
                 tr = s.get("transform") or spec.get("transform")
                 if tr == "yoy":
                     raw = ratio(raw, 4 if cyc == "Q" else (12 if cyc == "M" else 1))
                 elif tr == "qoq":
                     raw = ratio(raw, 1)
+                # 가운데 맞춘 이동평균. 장기 추세를 그리는 차트에 쓴다.
+                rl = s.get("roll") or spec.get("roll")
+                if rl:
+                    raw = roll(raw, int(rl), 2 if rd is None else rd)
+                # 연간 값을 분기 라벨 한 칸에 얹는다.
+                if s.get("asQuarter"):
+                    raw = {f"{k}-Q{s['asQuarter']}": v for k, v in raw.items()}
                 if sc != 1 or rd is not None:
                     raw = {k: (round(v * sc, rd) if rd is not None else v * sc)
                            for k, v in raw.items()}
@@ -164,16 +203,21 @@ def main():
                 err = f"조회 실패: {e}"; break
         if err:
             skips.append((cid, err)); continue
-        if not got[0]:
+        # 띄엄띄엄한 계열은 라벨을 고를 때 세지 않는다.
+        need = [i for i, s in enumerate(sers) if not s.get("sparse")] or [0]
+        if not got[need[0]]:
             skips.append((cid, "내려온 값이 없습니다")); continue
 
         if mode == "replace":
-            keys = [k for k in sorted(got[0]) if k != cut
-                    and all(d.get(k) is not None for d in got)]
+            keys = [k for k in sorted(got[need[0]]) if k != cut
+                    and all(got[i].get(k) is not None for i in need)]
             if not keys:
                 skips.append((cid, "쓸 달이 없습니다")); continue
             nl = keys
-            ns = [[d[k] for k in keys] for d in got]
+            old = {lab: i for i, lab in enumerate(labels)}
+            ns = [[got[at[j]].get(k) for k in keys] if j in at
+                  else [it["series"][j][old[k]] if k in old else None for k in keys]
+                  for j in range(nser)]
             # 증가는 파랑, 감소는 빨강으로 갈라 그리는 차트가 있다.
             if spec.get("split") == "updown":
                 v = ns[0]
@@ -188,7 +232,7 @@ def main():
                 for k, b0 in d.items():
                     if k not in labels:
                         continue
-                    a0 = it["series"][si][labels.index(k)]
+                    a0 = it["series"][slots[si]][labels.index(k)]
                     if a0 is None:
                         continue
                     seen += 1
@@ -198,17 +242,20 @@ def main():
                 skips.append((cid, f"대조할 달이 부족합니다({seen}곳)")); continue
             if bad:
                 skips.append((cid, f"겹치는 구간 {len(bad)}곳 불일치 (예 {bad[0]})")); continue
-            addk = [k for k in sorted(got[0]) if k > labels[-1] and k != cut
-                    and all(d.get(k) is not None for d in got)]
+            addk = [k for k in sorted(got[need[0]]) if k > labels[-1] and k != cut
+                    and all(got[i].get(k) is not None for i in need)]
             if not addk:
                 skips.append((cid, "이미 최신")); continue
             nl = labels + addk
-            ns = [list(s) + [d[k] for k in addk] for s, d in zip(it["series"], got)]
+            ns = [list(it["series"][j]) + ([got[at[j]].get(k) for k in addk]
+                                           if j in at else [None] * len(addk))
+                  for j in range(nser)]
             note = f"{len(addk)}개월 추가"
 
         plans.append({"id": cid, "title": it["title"], "labels": nl, "series": ns,
                       "from": labels[-1], "to": nl[-1], "note": note,
-                      "names": [s.get("name") for s in sers]})
+                      "names": [s.get("name") for s in sers], "slots": slots,
+                      "was": list(it.get("seriesNames") or [None] * nser)})
 
     print(f"등록 {len(mapping)}건 · 고칠 것 {len(plans)}건 · 건너뜀 {len(skips)}건\n")
     for p in plans:
@@ -223,7 +270,13 @@ def main():
             o["id"] = p["id"]
             o["labels"] = p["labels"]; o["series"] = p["series"]
             if all(p["names"]):
-                o["seriesNames"] = p["names"]
+                nm = list(o.get("seriesNames") or p["was"])
+                while len(nm) < len(p["series"]):
+                    nm.append(None)
+                for j, n in zip(p["slots"], p["names"]):
+                    nm[j] = n
+                if all(nm):
+                    o["seriesNames"] = nm
             for k in ("source", "sourceUrl", "unit"):
                 if spec.get(k):
                     o[k] = spec[k]
