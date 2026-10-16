@@ -100,5 +100,70 @@
     ]
    }
   ]
+ },
+ "c2207": {
+  "freq": "day",
+  "from": "2025-01-02",
+  "sourceUrl": "https://openapi.krx.co.kr",
+  "tol": 0.5,
+  "series": [
+   {
+    "index": "코스피",
+    "name": "코스피"
+   }
+  ],
+  "mode": "append"
+ },
+ "c2208": {
+  "freq": "day",
+  "from": "2026-01-02",
+  "sourceUrl": "https://openapi.krx.co.kr",
+  "tol": 0.5,
+  "series": [
+   {
+    "index": "코스피",
+    "name": "코스피"
+   }
+  ],
+  "mode": "append"
+ },
+ "c2210": {
+  "freq": "day",
+  "from": "2025-01-02",
+  "sourceUrl": "https://openapi.krx.co.kr",
+  "tol": 0.5,
+  "series": [
+   {
+    "index": "코스닥",
+    "name": "코스닥"
+   }
+  ],
+  "mode": "append"
+ },
+ "c2211": {
+  "freq": "day",
+  "from": "2026-01-02",
+  "sourceUrl": "https://openapi.krx.co.kr",
+  "tol": 0.5,
+  "series": [
+   {
+    "index": "코스닥",
+    "name": "코스닥"
+   }
+  ],
+  "mode": "append"
+ },
+ "c0691": {
+  "freq": "day",
+  "from": "2025-06-04",
+  "sourceUrl": "https://openapi.krx.co.kr",
+  "tol": 0.5,
+  "series": [
+   {
+    "index": "코스피",
+    "name": "코스피"
+   }
+  ],
+  "mode": "append"
  }
 }

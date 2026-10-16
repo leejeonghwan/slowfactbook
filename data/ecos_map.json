@@ -16,5 +16,250 @@
   "unit": "원",
   "source": "한국은행 ECOS, 주요국 통화의 대원화환율(평균). 원/미국달러 매매기준율 월평균. 1982년 1월부터. 단위: 원.",
   "sourceUrl": "https://ecos.bok.or.kr/#/Short/6b3a2c"
+ },
+ "c0839": {
+  "stat": "732Y001",
+  "cycle": "M",
+  "from": "197101",
+  "series": [
+   {
+    "items": [
+     "99"
+    ],
+    "name": "외환보유액",
+    "scale": 1e-05,
+    "round": 1
+   }
+  ],
+  "unit": "억 달러",
+  "source": "한국은행 ECOS 외환보유액. 월말 잔액, 단위: 억 달러.",
+  "sourceUrl": "https://ecos.bok.or.kr/"
+ },
+ "c0874": {
+  "stat": "511Y002",
+  "cycle": "M",
+  "from": "200807",
+  "series": [
+   {
+    "items": [
+     "FME"
+    ],
+    "name": "소비자심리지수"
+   }
+  ],
+  "unit": "",
+  "source": "한국은행 ECOS 소비자동향조사. 소비자심리지수(CCSI), 100보다 크면 낙관.",
+  "sourceUrl": "https://ecos.bok.or.kr/"
+ },
+ "c0872": {
+  "stat": "901Y009",
+  "cycle": "M",
+  "from": "196501",
+  "series": [
+   {
+    "items": [
+     "0"
+    ],
+    "name": "소비자물가지수"
+   }
+  ],
+  "unit": "2020=100",
+  "source": "한국은행 ECOS 소비자물가지수 총지수. 2020년=100.",
+  "sourceUrl": "https://ecos.bok.or.kr/"
+ },
+ "c2049": {
+  "stat": "301Y013",
+  "cycle": "M",
+  "from": "198001",
+  "series": [
+   {
+    "items": [
+     "000000"
+    ],
+    "name": "경상수지",
+    "scale": 0.01,
+    "round": 3
+   }
+  ],
+  "unit": "억 달러",
+  "source": "한국은행 ECOS 국제수지. 월별 경상수지(원계열), 단위: 억 달러.",
+  "sourceUrl": "https://ecos.bok.or.kr/"
+ },
+ "c0153": {
+  "stat": "901Y009",
+  "cycle": "M",
+  "from": "196501",
+  "tol": 0.15,
+  "series": [
+   {
+    "items": [
+     "0"
+    ],
+    "name": "물가 상승률",
+    "transform": "yoy"
+   }
+  ],
+  "unit": "%",
+  "source": "한국은행 ECOS 소비자물가지수 총지수로 계산한 전년 동월 대비 상승률. 단위: %.",
+  "sourceUrl": "https://ecos.bok.or.kr/"
+ },
+ "c1034": {
+  "stat": "200Y108",
+  "cycle": "Q",
+  "from": "1960Q1",
+  "mode": "replace",
+  "split": "updown",
+  "title": "실질 GDP 성장률(전 분기 대비)",
+  "unit": "%",
+  "seriesNames": [
+   "증가",
+   "감소"
+  ],
+  "series": [
+   {
+    "items": [
+     "10601"
+    ],
+    "transform": "qoq"
+   }
+  ],
+  "source": "한국은행 국민계정. 실질 국내총생산(계절조정) 전 분기 대비 성장률, 단위: %.",
+  "sourceUrl": "https://ecos.bok.or.kr/"
+ },
+ "c1035": {
+  "stat": "200Y110",
+  "cycle": "Q",
+  "from": "1960Q1",
+  "mode": "replace",
+  "split": "updown",
+  "title": "실질 GDP 성장률(전년 동기 대비)",
+  "unit": "%",
+  "seriesNames": [
+   "증가",
+   "감소"
+  ],
+  "series": [
+   {
+    "items": [
+     "10601"
+    ],
+    "transform": "yoy"
+   }
+  ],
+  "source": "한국은행 국민계정. 실질 국내총생산(원계열) 전년 동기 대비 성장률, 단위: %.",
+  "sourceUrl": "https://ecos.bok.or.kr/"
+ },
+ "c1036": {
+  "stat": "200Y109",
+  "cycle": "Q",
+  "from": "1960Q1",
+  "mode": "replace",
+  "split": "updown",
+  "title": "명목 GDP 성장률(전년 동기 대비)",
+  "unit": "%",
+  "seriesNames": [
+   "증가",
+   "감소"
+  ],
+  "series": [
+   {
+    "items": [
+     "10601"
+    ],
+    "transform": "yoy"
+   }
+  ],
+  "source": "한국은행 국민계정. 명목 국내총생산(원계열) 전년 동기 대비 성장률, 단위: %.",
+  "sourceUrl": "https://ecos.bok.or.kr/"
+ },
+ "c1037": {
+  "stat": "200Y107",
+  "cycle": "Q",
+  "from": "1960Q1",
+  "mode": "replace",
+  "split": "updown",
+  "title": "명목 GDP 성장률(전 분기 대비)",
+  "unit": "%",
+  "seriesNames": [
+   "증가",
+   "감소"
+  ],
+  "series": [
+   {
+    "items": [
+     "10601"
+    ],
+    "transform": "qoq"
+   }
+  ],
+  "source": "한국은행 국민계정. 명목 국내총생산(계절조정) 전 분기 대비 성장률, 단위: %.",
+  "sourceUrl": "https://ecos.bok.or.kr/"
+ },
+ "c1039": {
+  "stat": "200Y104",
+  "cycle": "Q",
+  "from": "1960Q1",
+  "mode": "replace",
+  "split": "updown",
+  "title": "실질 GNI 성장률(전 분기 대비)",
+  "unit": "%",
+  "seriesNames": [
+   "증가",
+   "감소"
+  ],
+  "series": [
+   {
+    "items": [
+     "1600"
+    ],
+    "transform": "qoq"
+   }
+  ],
+  "source": "한국은행 국민계정. 실질 국민총소득(계절조정) 전 분기 대비 성장률, 단위: %.",
+  "sourceUrl": "https://ecos.bok.or.kr/"
+ },
+ "c1040": {
+  "stat": "200Y106",
+  "cycle": "Q",
+  "from": "1960Q1",
+  "mode": "replace",
+  "split": "updown",
+  "title": "실질 GNI 성장률(전년 동기 대비)",
+  "unit": "%",
+  "seriesNames": [
+   "증가",
+   "감소"
+  ],
+  "series": [
+   {
+    "items": [
+     "1600"
+    ],
+    "transform": "yoy"
+   }
+  ],
+  "source": "한국은행 국민계정. 실질 국민총소득(원계열) 전년 동기 대비 성장률, 단위: %.",
+  "sourceUrl": "https://ecos.bok.or.kr/"
+ },
+ "c2143": {
+  "stat": "200Y108",
+  "cycle": "Q",
+  "from": "2000Q1",
+  "mode": "replace",
+  "title": "분기별 GDP 성장률(2000년~)",
+  "unit": "%",
+  "seriesNames": [
+   "성장률"
+  ],
+  "series": [
+   {
+    "items": [
+     "10601"
+    ],
+    "transform": "qoq"
+   }
+  ],
+  "source": "한국은행 국민계정. 실질 국내총생산(계절조정) 전 분기 대비 성장률, 2000년부터. 단위: %.",
+  "sourceUrl": "https://ecos.bok.or.kr/"
  }
 }

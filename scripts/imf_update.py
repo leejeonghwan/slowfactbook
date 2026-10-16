@@ -72,6 +72,24 @@ def main():
         if not it:
             skips.append((cid, "차트를 찾지 못했습니다")); continue
         labels = [str(x) for x in it["labels"]]
+        # series 를 적으면 나라마다 한 계열씩 만든다.
+        multi = spec.get("series")
+        if multi:
+            try:
+                ms = [fetch(spec["indicator"], x["country"]) for x in multi]
+            except Exception as e:
+                skips.append((cid, f"조회 실패: {e}")); continue
+            if len(ms) != len(it["series"]):
+                skips.append((cid, f"계열 {len(ms)}개 != 차트 {len(it['series'])}개")); continue
+            yrs = sorted({y for d in ms for y in d if y.isdigit()}, key=int)
+            lo = str(spec.get("from", yrs[0]))
+            nl = [y for y in sorted(set(labels) | set(yrs), key=int) if y >= lo]
+            ns = [[d.get(y) for y in nl] for d in ms]
+            if nl == labels and ns == it["series"]:
+                skips.append((cid, "이미 최신")); continue
+            plans.append({"id": cid, "title": it["title"], "labels": nl, "series": ns,
+                          "from": labels[-1], "to": nl[-1], "n": len(yrs)})
+            continue
         try:
             m = fetch(spec["indicator"], spec.get("country", "KOR"))
         except Exception as e:

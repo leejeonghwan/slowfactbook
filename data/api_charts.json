@@ -306,5 +306,54 @@
     "objL2": "a2"
    }
   ]
+ },
+ "api-0011": {
+  "origin": "api",
+  "provider": "kosis",
+  "orgId": "408",
+  "prdSe": "M",
+  "cycle": "M",
+  "startPrdDe": "201101",
+  "endPrdDe": "20351231",
+  "scale": 1.0,
+  "category": "부동산",
+  "objL1": "01",
+  "title": "서울 아파트 월세가격지수",
+  "itmId": "rent+",
+  "tblId": "DT_30404_C002",
+  "table": "유형별 월세가격지수",
+  "unit": "2026.6=100",
+  "source": "한국부동산원 전국주택가격동향조사(월간). 서울 아파트 월세가격지수.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=408&tblId=DT_30404_C002",
+  "series": [
+   {
+    "name": "서울",
+    "objL2": "a7"
+   }
+  ]
+ },
+ "api-0012": {
+  "origin": "api",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1DA7002S",
+  "itmId": "T90",
+  "prdSe": "M",
+  "cycle": "M",
+  "startPrdDe": "201801",
+  "endPrdDe": "20351231",
+  "scale": 1.0,
+  "category": "노동",
+  "title": "청년 고용률(15~29세)",
+  "unit": "%",
+  "table": "연령별 경제활동인구",
+  "source": "국가데이터처 경제활동인구조사. 15~29세 고용률, 월별.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DA7002S",
+  "series": [
+   {
+    "name": "15~29세",
+    "objL1": "75"
+   }
+  ]
  }
 }

@@ -10,5 +10,31 @@
   ],
   "source": "IMF World Economic Outlook, 일반정부 총부채(GDP 대비). 한국의 일반정부부채(D2) 기준이라 국가채무(D1)보다 높다. 2024년 D2 49.7%, D1 46.0%. 2024년까지는 실적, 그 뒤는 IMF 전망.",
   "sourceUrl": "https://www.imf.org/external/datamapper/GGXWDG_NGDP/KOR"
+ },
+ "c0526": {
+  "indicator": "NGDPDPC",
+  "from": "1980",
+  "series": [
+   {
+    "country": "KOR",
+    "name": "한국"
+   },
+   {
+    "country": "TWN",
+    "name": "대만"
+   },
+   {
+    "country": "JPN",
+    "name": "일본"
+   }
+  ],
+  "unit": "달러",
+  "seriesNames": [
+   "한국",
+   "대만",
+   "일본"
+  ],
+  "source": "IMF World Economic Outlook, 1인당 명목 GDP(현재 미국 달러). 2024년까지는 실적, 2025년부터는 IMF 전망. 단위: 달러.",
+  "sourceUrl": "https://www.imf.org/external/datamapper/NGDPDPC@WEO/KOR/JPN"
  }
 }

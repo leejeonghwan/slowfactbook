@@ -138,5 +138,18 @@
     "objL1": "26+"
    }
   ]
+ },
+ "c0043": {
+  "label": "20대와 60대 고용률",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1DA7002S",
+  "itmId": "T90",
+  "objL1": "20+91",
+  "prdSe": "M",
+  "startPrdDe": "201801",
+  "endPrdDe": "203512",
+  "source": "국가데이터처 경제활동인구조사. 연령계층별 고용률, 단위: %.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DA7002S"
  }
 }

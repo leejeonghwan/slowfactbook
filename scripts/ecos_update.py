@@ -47,11 +47,55 @@ def fetch(stat, cycle, start, end, items):
     out = {}
     for r in d.get("StatisticSearch", {}).get("row", []):
         v = r.get("DATA_VALUE")
-        t = str(r.get("TIME", ""))
-        if v in (None, "", ".") or not re.fullmatch(r"\d{6}", t):
+        t = str(r.get("TIME", "")).strip()
+        if v in (None, "", "."):
             continue
-        out[f"{t[:4]}-{t[4:6]}"] = float(v)
+        k = stamp_of(t, cycle)
+        if k:
+            out[k] = float(v)
     return out
+
+
+def stamp_of(t, cycle):
+    """ECOS 시점 문자열을 차트 라벨 꼴로. 주기마다 다르게 온다."""
+    if cycle == "M" and re.fullmatch(r"\d{6}", t):
+        return f"{t[:4]}-{t[4:6]}"
+    if cycle == "Q":
+        m = re.fullmatch(r"(\d{4})(?:Q)?([1-4])", t)
+        if m:
+            return f"{m.group(1)}-Q{m.group(2)}"
+    if cycle == "A" and re.fullmatch(r"\d{4}", t):
+        return t
+    if cycle == "D" and re.fullmatch(r"\d{8}", t):
+        return f"{t[:4]}-{t[4:6]}-{t[6:8]}"
+    return None
+
+
+def ratio(m, lag):
+    """{시점: 수준} 을 lag 구간 전 대비 등락률(%)로. 시점 순서로 센다."""
+    ks = sorted(m)
+    out = {}
+    for i, k in enumerate(ks):
+        if i >= lag and m[ks[i - lag]]:
+            out[k] = round(100 * (m[k] / m[ks[i - lag]] - 1), 1)
+    return out
+
+
+def label_ok(lab, cycle):
+    pat = {"M": r"\d{4}-\d{2}", "Q": r"\d{4}-Q[1-4]",
+           "A": r"\d{4}", "D": r"\d{4}-\d{2}-\d{2}"}.get(cycle)
+    return bool(pat and re.fullmatch(pat, lab))
+
+
+def this_period(cycle, now):
+    """아직 끝나지 않은 구간. 이건 붙이지 않는다."""
+    if cycle == "M":
+        return now.strftime("%Y-%m")
+    if cycle == "Q":
+        return f"{now.year}-Q{(now.month - 1) // 3 + 1}"
+    if cycle == "A":
+        return str(now.year)
+    return now.strftime("%Y-%m-%d")
 
 
 def main():
@@ -70,7 +114,6 @@ def main():
         print("data/ecos_map.json 이 비어 있습니다."); return 0
 
     now = datetime.datetime.now(KST)
-    cut = now.strftime("%Y-%m")            # 이번 달은 아직 안 끝났다
     stamp = now.strftime("%Y-%m-%d %H:%M")
 
     _items = g.load_items(DATA)
@@ -85,21 +128,38 @@ def main():
         if not it:
             skips.append((cid, "차트를 찾지 못했습니다")); continue
         labels = [str(x) for x in it["labels"]]
-        if not re.fullmatch(r"\d{4}-\d{2}", labels[-1]):
-            skips.append((cid, f"라벨이 월 꼴이 아닙니다: {labels[-1]}")); continue
+        cyc = spec.get("cycle", "M")
+        cut = this_period(cyc, now)
+        if not label_ok(labels[-1], cyc):
+            skips.append((cid, f"라벨이 {cyc} 주기 꼴이 아닙니다: {labels[-1]}")); continue
         sers = spec.get("series") or []
-        if len(sers) != len(it["series"]):
-            skips.append((cid, f"등록 계열 {len(sers)}개 != 차트 계열 {len(it['series'])}개"))
+        want_n = 2 if spec.get("split") == "updown" else len(sers)
+        if want_n != len(it["series"]):
+            skips.append((cid, f"등록 계열 {want_n}개 != 차트 계열 {len(it['series'])}개"))
             continue
         mode = spec.get("mode", "append")
         tol = float(spec.get("tol", 0.6))
-        end = spec.get("to") or (now.year + 1) * 100
+        end = spec.get("to") or {"Q": f"{now.year+1}Q4", "A": str(now.year + 1),
+                                 "D": f"{now.year+1}1231"}.get(cyc, (now.year + 1) * 100)
 
         got, err = [], None
         for s in sers:
             try:
-                got.append(fetch(spec["stat"], spec.get("cycle", "M"),
-                                 spec.get("from", "190001"), str(end), s["items"]))
+                # ECOS 단위와 차트 단위가 다를 때가 많다(천 달러 ↔ 억 달러 등).
+                sc = float(s.get("scale", spec.get("scale", 1)))
+                rd = s.get("round", spec.get("round"))
+                raw = fetch(spec["stat"], cyc,
+                            spec.get("from", "1900"), str(end), s["items"])
+                # 전년 같은 구간 대비 등락률. ECOS 가 지수만 줄 때 쓴다.
+                tr = s.get("transform") or spec.get("transform")
+                if tr == "yoy":
+                    raw = ratio(raw, 4 if cyc == "Q" else (12 if cyc == "M" else 1))
+                elif tr == "qoq":
+                    raw = ratio(raw, 1)
+                if sc != 1 or rd is not None:
+                    raw = {k: (round(v * sc, rd) if rd is not None else v * sc)
+                           for k, v in raw.items()}
+                got.append(raw)
             except Exception as e:
                 err = f"조회 실패: {e}"; break
         if err:
@@ -114,7 +174,12 @@ def main():
                 skips.append((cid, "쓸 달이 없습니다")); continue
             nl = keys
             ns = [[d[k] for k in keys] for d in got]
-            note = f"통째로 교체 ({len(keys)}개월, {keys[0]}~{keys[-1]})"
+            # 증가는 파랑, 감소는 빨강으로 갈라 그리는 차트가 있다.
+            if spec.get("split") == "updown":
+                v = ns[0]
+                ns = [[x if (x is not None and x >= 0) else None for x in v],
+                      [x if (x is not None and x < 0) else None for x in v]]
+            note = f"통째로 교체 ({len(keys)}개 구간, {keys[0]}~{keys[-1]})"
             if nl == labels and ns == it["series"]:
                 skips.append((cid, "이미 최신")); continue
         else:

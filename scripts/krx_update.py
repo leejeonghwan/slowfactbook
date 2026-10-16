@@ -49,6 +49,41 @@ def auth():
     return os.environ.get("KRX_API_KEY", "")
 
 
+IDX_API = "https://data-dbg.krx.co.kr/svc/apis/idx/{svc}_dd_trd"
+
+
+def call_idx(day, key):
+    """하루치 지수. 코스피·코스닥 두 번 부른다. {지수이름: 종가}."""
+    out = {}
+    for svc in ("kospi", "kosdaq"):
+        r = subprocess.run(["curl", "-sSL", "--max-time", "60", "-H", f"AUTH_KEY: {key}",
+                            IDX_API.format(svc=svc) + f"?basDd={day}"],
+                           capture_output=True, text=True, timeout=90).stdout
+        d = json.loads(r)
+        if d.get("respMsg"):
+            raise RuntimeError(f"{day}: {d['respMsg']}")
+        for row in (d.get("OutBlock_1") or []):
+            v = str(row.get("CLSPRC_IDX", "")).replace(",", "").strip()
+            if v:
+                out[str(row.get("IDX_NM", "")).strip()] = float(v)
+    return out
+
+
+def idx_data(day, key, cache):
+    """하루치 지수를 쟁여 둔 것에서 꺼내거나 받는다."""
+    ck = day + "|idx"
+    if ck in cache:
+        return cache[ck], 0
+    today = datetime.datetime.now(KST).date().isoformat()
+    if day > today:
+        return None, 0
+    out = call_idx(day.replace("-", ""), key) or None
+    if out is not None or day < (datetime.date.fromisoformat(today)
+                                 - datetime.timedelta(days=3)).isoformat():
+        cache[ck] = out
+    return out, 1
+
+
 def call(day, key):
     """하루치를 부른다. 휴장일이면 빈 목록이 온다."""
     r = subprocess.run(["curl", "-sSL", "--max-time", "60", "-H", f"AUTH_KEY: {key}",
@@ -186,7 +221,8 @@ def main():
     # 쟁여 두는 하루치는 등록부 전체의 종목을 담아야 한다. --only 로 걸러도
     # 캐시에 반쪽만 남지 않도록 종목 목록은 거르기 전에 모은다.
     ALL_WANT = {x["isu"] for v in mapping.values()
-                for x in (v.get("series") or []) if x["isu"] != "*"}
+                for x in (v.get("series") or [])
+                if x.get("isu") and x["isu"] != "*"}
     if a.only:
         mapping = {k: v for k, v in mapping.items() if k == a.only}
     if not mapping:
@@ -235,20 +271,44 @@ def main():
                 if dd.weekday() < 5:
                     ks_all.append(dd.isoformat())
                 dd += datetime.timedelta(days=1)
+            # 지수만 쓰는 차트는 지수 쪽만 부른다(종목 전체를 받을 일이 없다).
+            isidx = all(sp.get("index") for sp in sers)
+            # "mode": "append" 는 이미 있는 값을 그대로 두고 뒤에만 붙인다.
+            # 야후로 쌓아 둔 긴 이력을 거래소 호출로 다시 받을 까닭이 없다.
+            tail = spec.get("mode") == "append"
+            if tail:
+                ks_all = [k for k in ks_all if k > labels[-1]]
             err = None
             for k in ks_all:
                 if budget is not None and budget <= 0:
                     break
                 try:
-                    _, used = day_data(k, want, key, cache)
+                    if isidx:
+                        _, used = idx_data(k, key, cache)
+                    else:
+                        _, used = day_data(k, want, key, cache)
                     if budget is not None:
                         budget -= used
                 except Exception as e:
                     err = str(e); break
             if err:
                 skips.append((cid, err)); continue
-            ks = [k for k in ks_all if cache.get(k + "|day")]
-            ns = [[dval(cache[k + "|day"], sp) for k in ks] for sp in sers]
+            tag = "|idx" if isidx else "|day"
+            ks = [k for k in ks_all if cache.get(k + tag)]
+            ns = ([[(cache[k + tag] or {}).get(sp["index"]) for k in ks] for sp in sers]
+                  if isidx else
+                  [[dval(cache[k + "|day"], sp) for k in ks] for sp in sers])
+            if tail:
+                keep = [i for i in range(len(ks)) if all(c[i] is not None for c in ns)]
+                ks = labels + [ks[i] for i in keep]
+                ns = [list(it["series"][si]) + [c[i] for i in keep]
+                      for si, c in enumerate(ns)]
+                if ks == labels:
+                    skips.append((cid, "이미 최신")); continue
+                plans.append({"id": cid, "title": it["title"], "labels": ks, "series": ns,
+                              "from": labels[-1], "to": ks[-1],
+                              "note": f"일별 {len(ks)}일"})
+                continue
             ks = [k for i, k in enumerate(ks) if all(c[i] is not None for c in ns)]
             ns = [[x for x in c if x is not None] for c in ns]
             if not ks:
