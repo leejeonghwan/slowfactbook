@@ -99,6 +99,9 @@ python3 scripts/krx_update.py --apply || echo "  KRX 갱신 실패/보류 — �
 echo "▶ 한국은행 ECOS…"
 python3 scripts/ecos_update.py --apply || echo "  ECOS 갱신 실패/보류 — 기존 값 유지"
 
+echo "▶ 역대 정부 누적 물가…"
+python3 scripts/admin_cpi.py --apply || echo "  누적 물가 갱신 실패/보류 — 기존 값 유지"
+
 echo "▶ 국제결제은행 (BIS)…"
 python3 scripts/bis_update.py --apply || echo "  BIS 갱신 실패/보류 — 기존 값 유지"
 
