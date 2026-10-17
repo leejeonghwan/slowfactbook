@@ -39,6 +39,7 @@ run "한국거래소"          python3 scripts/krx_update.py --apply
 run "한국은행 ECOS"       python3 scripts/ecos_update.py --apply
 run "IMF WEO"             python3 scripts/imf_update.py --apply
 run "BIS 총신용"          python3 scripts/bis_update.py --apply
+run "한국공항공사"        python3 scripts/kac_update.py --apply
 run "역대 정부 누적 물가" python3 scripts/admin_cpi.py --apply
 run "FRED"                python3 scripts/fred_update.py --apply
 run "지수·시세"           python3 scripts/market_update.py --apply

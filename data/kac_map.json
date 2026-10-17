@@ -1,0 +1,21 @@
+{
+ "c2271": {
+  "airport": "CJU",
+  "col": "여객",
+  "scale": 0.0001,
+  "round": 1,
+  "tol": 0.2,
+  "unit": "만 명",
+  "source": "한국공항공사 항공통계 시계열. 제주국제공항 도착·출발 여객 합계, 월별. 단위: 만 명.",
+  "sourceUrl": "https://www.airport.co.kr/www/cms/frFlightStatsCon/timeSeriesStats.do?MENU_ID=1250"
+ },
+ "c2272": {
+  "airport": "CJU",
+  "col": "화물",
+  "round": 0,
+  "tol": 1,
+  "unit": "톤",
+  "source": "한국공항공사 항공통계 시계열. 제주국제공항 도착·출발 화물(수하물·우편 포함) 합계, 월별. 단위: 톤.",
+  "sourceUrl": "https://www.airport.co.kr/www/cms/frFlightStatsCon/timeSeriesStats.do?MENU_ID=1250"
+ }
+}
