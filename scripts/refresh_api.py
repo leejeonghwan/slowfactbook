@@ -19,7 +19,7 @@ overrides.json 훅에 최신 수치를 얹는 방식이라, 차트 id(=임베드
   KOSIS_API_KEY=... python3 scripts/refresh_api.py            # 갱신 + 리포트
   KOSIS_API_KEY=... python3 scripts/refresh_api.py --dry-run  # 뭐가 바뀔지만 출력
 """
-import os, sys, json, time, datetime, urllib.parse, urllib.request
+import re, os, sys, json, time, datetime, urllib.parse, urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "data")
@@ -73,29 +73,64 @@ def fetch_ecos(spec):
 
 
 def to_series(rows, spec):
-    """API 응답을 (labels, series) 로 정규화."""
+    """API 응답을 (labels, series, 계열이름) 으로 정규화.
+
+    objL1 에 분류 코드를 여럿 적으면(예 "20+91+") 한 시점에 행이 여럿 온다.
+    예전에는 시점이 겹친다고 뒤엣것을 버려서, 두 분류 가운데 그때그때
+    작은 값만 남은 잡종 계열이 만들어졌다. 분류마다 계열을 따로 만든다.
+    """
     prov = spec.get("provider", "kosis")
     scale = float(spec.get("scale", 1))
     nd = spec.get("round", 3)
+
+    # 어느 칸이 분류인지 찾는다. objL1 → C1, objL2 → C2 …
+    grp = None
     if prov == "kosis":
-        pairs = [(r["PRD_DE"], r["DT"]) for r in rows if r.get("DT") not in (None, "")]
-    else:
-        pairs = [(r["TIME"], r["DATA_VALUE"]) for r in rows if r.get("DATA_VALUE") not in (None, "")]
-    seen, out = set(), []
-    for p, v in sorted(pairs):
-        if p in seen:
+        for i in range(1, 5):
+            v = str(spec.get(f"objL{i}") or "")
+            if len([x for x in v.replace("+", " ").split() if x]) > 1:
+                grp = f"C{i}"
+                break
+
+    def norm(p, v):
+        return (p, round(float(v) * scale, nd))
+
+    buckets = {}        # 분류코드 -> {시점: 값}
+    names = {}
+    order = []
+    for r in rows:
+        if prov == "kosis":
+            p, v = r.get("PRD_DE"), r.get("DT")
+        else:
+            p, v = r.get("TIME"), r.get("DATA_VALUE")
+        if v in (None, ""):
             continue
-        seen.add(p)
-        out.append((p, round(float(v) * scale, nd)))
+        key = (r.get(grp) or "") if grp else ""
+        if key not in buckets:
+            buckets[key] = {}
+            names[key] = (r.get(grp + "_NM") if grp else "") or ""
+            order.append(key)
+        pp, vv = norm(p, v)
+        buckets[key].setdefault(pp, vv)
+
+    # 등록부에 적힌 순서대로 세운다. 색과 범례가 적을 때마다 뒤바뀌지 않게.
+    if grp:
+        want = [x for x in str(spec.get("objL" + grp[1:])).replace("+", " ").split() if x]
+        order = [k for k in want if k in buckets] + [k for k in order if k not in want]
+
     ps = spec.get("prdSe", "Y")
+    keys = sorted({p for b in buckets.values() for p in b})
     if ps == "Y":
-        labels = [p[:4] for p, _ in out]
+        labels = [p[:4] for p in keys]
     elif ps == "M":
         # 199001 → 1990-01. 차트 가로축이 월을 알아보려면 이 꼴이어야 한다.
-        labels = [(f"{p[:4]}-{p[4:6]}" if len(p) >= 6 and p[4:6].isdigit() else p) for p, _ in out]
+        labels = [(f"{p[:4]}-{p[4:6]}" if len(p) >= 6 and p[4:6].isdigit() else p)
+                  for p in keys]
     else:
-        labels = [p for p, _ in out]
-    return labels, [[v for _, v in out]]
+        labels = list(keys)
+    series = [[buckets[k].get(p) for p in keys] for k in order]
+    snames = [re.sub(r"\s+", " ", names[k]).strip() for k in order] if grp else []
+    return labels, series, snames
 
 
 def main():
@@ -120,7 +155,7 @@ def main():
             continue
         try:
             rows = fetch_kosis(spec) if spec.get("provider", "kosis") == "kosis" else fetch_ecos(spec)
-            labels, series = to_series(rows, spec)
+            labels, series, snames = to_series(rows, spec)
         except Exception as e:
             report.append({"slide": slide, "status": "error", "detail": str(e)[:200]})
             print(f"  ✗ {slide}  {spec.get('label','')}: {e}")
@@ -146,6 +181,10 @@ def main():
             ov.update({"labels": labels, "series": series,
                        "source": spec.get("source", ov.get("source", "")),
                        "sourceUrl": spec.get("sourceUrl", ov.get("sourceUrl", ""))})
+            # 분류를 여럿 부른 차트는 계열 이름도 붙여 준다(등록부의 names 가 우선).
+            nm = spec.get("names") or snames
+            if len(series) > 1 and len(nm) == len(series) and all(nm):
+                ov["seriesNames"] = nm
             # 값이 그대로면 updated 를 다시 찍지 않는다 — '최근 업데이트'가 오염된다.
             if diff:
                 ov["updated"] = datetime.datetime.now(

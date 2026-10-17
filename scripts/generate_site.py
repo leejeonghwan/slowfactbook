@@ -1009,13 +1009,13 @@ document.getElementById("embedBtn").onclick=()=>{
 };
 function safeName(s){return (String(s||"chart").replace(/[\\/:*?"<>|]+/g,"_").replace(/\.+$/,"").trim())||"chart";}
 // 내려받은 파일이 폴더에 섞여도 어디서 온 것인지 알아보게 이름에 출처를 붙인다.
-function fileName(title,ext){return safeName(title)+" (슬로우팩트북)."+ext;}
+function fileName(title,ext){return "[슬로우팩트북] "+safeName(title)+"."+ext;}
 // 내려받는 PNG 는 화면에 보이는 카드를 그대로 담는다.
 // 그림만 떼어 내면 제목도 출처도 없이 떠돌아서, 받아 쓰는 쪽이 출처를 밝히기 어렵다.
 // 크기는 화면 해상도를 따르지 않고 고정한다. 어느 기기에서 받아도 같은 그림이 나와야 한다.
 const FONT='"Pretendard","Apple SD Gothic Neo","Malgun Gothic",-apple-system,sans-serif';
 const PNG_W=1200, PNG_H=560, PNG_K=2;   // 카드 가로, 그래프 높이(논리 px), 배수
-const PNG_CREDIT="슬로우팩트북(슬로우뉴스). 출처를 밝히면 영리 목적을 포함해 "
+const PNG_CREDIT="슬로우팩트북(슬로우뉴스): 출처를 밝히면 영리 목적을 포함해 "
                 +"자유롭게 쓸 수 있습니다. CC BY 4.0.";
 // 그래프를 화면 캔버스에서 긁어오지 않고 고정 크기로 새로 그린다.
 // 화면에서 꺼 둔 계열은 그대로 꺼진 채로 옮긴다.
@@ -1124,7 +1124,7 @@ function pngCard(){
   const url=new URL("chart.html?id="+encodeURIComponent(
     new URLSearchParams(location.search).get("id")||""),location.href).href
     .replace(/^https?:\/\//,"");
-  x.font=F(12.5,600);x.fillStyle="#6b6b6b";
+  x.font=F(12.5);x.fillStyle="#6b6b6b";
   const cw=x.measureText(PNG_CREDIT).width;
   x.fillText(PNG_CREDIT,pad,y);
   x.font=F(12.5);x.fillStyle="#9a9a9a";
