@@ -1,0 +1,32 @@
+{
+ "c1190": {
+  "engines": [
+   "네이버",
+   "구글",
+   "다음",
+   "줌"
+  ],
+  "from": 2015,
+  "title": "한국의 검색엔진 점유율",
+  "vizType": "line",
+  "unit": "%",
+  "source": "인터넷트렌드(InternetTrend) 검색엔진 점유율. 로거를 설치한 국내 웹사이트의 검색엔진별 유입 구성비로, 시장 점유율과는 다르다. 연간 평균. 단위: %.",
+  "sourceUrl": "https://internettrend.co.kr/reports/search-engine"
+ },
+ "c2274": {
+  "engines": [
+   "네이버",
+   "구글",
+   "다음",
+   "줌"
+  ],
+  "from": 2015,
+  "etc": true,
+  "title": "한국의 검색엔진 점유율 구성비",
+  "vizType": "stacked_bar_h",
+  "stacked": true,
+  "unit": "%",
+  "source": "인터넷트렌드(InternetTrend) 검색엔진 점유율. 로거를 설치한 국내 웹사이트의 검색엔진별 유입 구성비로, 시장 점유율과는 다르다. 연간 평균. 단위: %.",
+  "sourceUrl": "https://internettrend.co.kr/reports/search-engine"
+ }
+}

@@ -75,7 +75,7 @@ def load_items(data_dir):
                 # 강조할 계열(이름 또는 0부터 센 번호). overrides 에서 지정한다.
                 "highlight": it.get("highlight"),
                 # 계열 색을 직접 지정할 때 쓴다(overrides 의 "seriesColors").
-                "seriesColors": it.get("seriesColors"),
+                "seriesColors": top_colors(it) or it.get("seriesColors"),
                 # 계열이 하나인 막대 그래프에서 특정 라벨의 막대만 색을 바꿀 때
                 # 쓴다(overrides 의 "labelColors": {"KOR": "#c0322f"}).
                 "labelColors": it.get("labelColors"),
@@ -93,6 +93,48 @@ def load_items(data_dir):
                 item["seriesKinds"], item["seriesAxes"] = kinds, axes
             items.append(item)
     return items
+
+# 선이 열 개를 넘어가면 색이 돌고 돌아 같은 빨강이 셋씩 생긴다. 그때는 상위
+# 몇 개만 색을 주고 나머지는 회색으로 깔아야 읽힌다.
+#   overrides 의 "topColors": 5        마지막 값 기준 상위 5개
+#   overrides 의 "topColors": {"n": 5, "by": "max"}   구간 최고값 기준
+# 회색(#6e6e6e)은 빼 둔다. 나머지를 깔 회색과 헷갈리기 때문이다.
+# 파랑 둘(#2f5e8e, #1f8fd6)이 나란히 뽑히지 않게 순서를 벌려 둔다.
+PALETTE_PY = ["#2f5e8e", "#c0322f", "#f5a623", "#7aa86f",
+              "#9a6fb0", "#1f8fd6"]
+MUTED = "#d0d0d0"
+
+
+def top_colors(it):
+    """상위 n개만 팔레트 색, 나머지는 회색인 seriesColors 를 만든다."""
+    spec = it.get("topColors")
+    if not spec:
+        return None
+    if isinstance(spec, dict):
+        n, by = int(spec.get("n", 5)), spec.get("by", "last")
+        mute = spec.get("muted", MUTED)
+    else:
+        n, by, mute = int(spec), "last", MUTED
+    sers = it.get("series") or []
+    if n < 1 or n >= len(sers):
+        return None
+
+    def rank(vals):
+        nums = [v for v in vals if isinstance(v, (int, float))]
+        if not nums:
+            return float("-inf")
+        if by == "max":
+            return max(nums)
+        if by == "sum":
+            return sum(nums)
+        return nums[-1]          # 기본은 마지막 값
+
+    order = sorted(range(len(sers)), key=lambda i: rank(sers[i]), reverse=True)
+    out = [mute] * len(sers)
+    for k, i in enumerate(order[:n]):
+        out[i] = PALETTE_PY[k % len(PALETTE_PY)]
+    return out
+
 
 SEP = "\x1f"
 
@@ -729,6 +771,9 @@ function buildChart(canvas,it){
     return (nm?`${nm}: `:"")+`${fmtVal(tipVal(c))} ${u}`.trim();
   }}};
   const interaction={mode:"index",intersect:false};
+  // 가로 막대는 항목이 세로로 늘어선다. axis 를 일러 주지 않으면 Chart.js 가
+  // 가로 위치로 항목을 찾아서, 마우스를 올린 줄과 다른 해의 값을 띄운다.
+  const interactionY={mode:"index",intersect:false,axis:"y"};
   const multi=ds.length>1;
   if(t==="combo"){
     const kinds=it.seriesKinds||[],axes=it.seriesAxes||[];
@@ -772,7 +817,8 @@ function buildChart(canvas,it){
   if(t==="bar"||t==="stacked_bar_h"){
     const st=(t==="stacked_bar_h");ds.forEach(d=>d.borderWidth=0);
     return mk(canvas,{type:"bar",data:{labels,datasets:ds},
-      options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
+      options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,
+        interaction:interactionY,plugins:{legend:{display:false},tooltip:tip},
         scales:{x:{stacked:st,ticks:{font:tickFont},...((c=>c?{min:0,max:c}:{})(pctCap(it)))},y:{stacked:st,grid:{display:false},ticks:{font:tickFontSm,autoSkip:false}}}}});
   }
   // 산점도 — 라벨이 점 이름, 첫 계열이 가로축 값, 둘째 계열이 세로축 값이다.
