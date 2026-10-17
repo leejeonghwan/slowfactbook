@@ -1017,7 +1017,8 @@ const FONT='"Pretendard","Apple SD Gothic Neo","Malgun Gothic",-apple-system,san
 // 카드 전체를 16:9 로 고정한다. 그래프 높이는 제목·범례가 몇 줄이냐에 따라
 // 남는 만큼 가져간다. 그래야 범례가 두 줄인 차트와 없는 차트가 같은 비율로 나온다.
 // 16:9 는 키노트 한 장과 같고 소셜 카드(1.91:1)와도 가까워 어디에 놓아도 잘린 데가 없다.
-const PNG_W=1200, PNG_RATIO=16/9, PNG_MINH=400, PNG_K=2;
+// 아래 여백(PNG_PADB)은 좌우 여백과 눈으로 같아 보이는 값을 재서 맞췄다.
+const PNG_W=1200, PNG_RATIO=16/9, PNG_MINH=400, PNG_PADB=4, PNG_K=2;
 const PNG_CREDIT="슬로우팩트북(슬로우뉴스): 출처를 밝히면 영리 목적을 포함해 "
                 +"자유롭게 쓸 수 있습니다. CC BY 4.0.";
 // 그래프를 화면 캔버스에서 긁어오지 않고 고정 크기로 새로 그린다.
@@ -1089,7 +1090,8 @@ function pngCard(){
   // 글자가 차지하는 높이를 먼저 셈하고, 16:9 에서 남는 만큼을 그래프에 준다.
   const titleH=36*k,metaH=19*k,lgH=21*k,footH=18*k;
   const chrome=pad+titleLines.length*titleH+2*k+metaLines.length*metaH
-        +(rows.length?6*k+rows.length*lgH:0)+6*k+6*k+1+12*k+footH+pad;
+        +(rows.length?6*k+rows.length*lgH:0)+6*k+6*k+1+12*k
+        +footH*0.74+PNG_PADB*k;
   let ch=Math.max(PNG_MINH*k,Math.round(PNG_W*k/PNG_RATIO-chrome));
   // 가로 막대는 항목이 많으면 비율을 깨고 세로로 늘린다. 안 그러면 막대가 뭉개진다.
   if(it.vizType==="bar"||it.vizType==="stacked_bar_h"){
