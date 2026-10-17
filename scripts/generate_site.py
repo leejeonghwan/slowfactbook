@@ -1028,14 +1028,29 @@ function pngChart(it){
   const cv=document.createElement("canvas");
   cv.style.width=PNG_W+"px";cv.style.height=h+"px";
   host.appendChild(cv);document.body.appendChild(host);
-  const ch=buildChart(cv,it);
+  // 애니메이션과 배수는 차트를 만들 때 읽어 간다. 만든 뒤에 바꾸면 늦어서
+  // 첫 프레임이 그려지기 전의 빈 캔버스를 그대로 퍼 가게 된다.
+  const was={an:Chart.defaults.animation,dpr:Chart.defaults.devicePixelRatio,
+             rs:Chart.defaults.responsive};
+  Chart.defaults.animation=false;
+  Chart.defaults.devicePixelRatio=PNG_K;
+  Chart.defaults.responsive=false;
+  let ch;
+  try{ ch=buildChart(cv,it); }
+  finally{ Chart.defaults.animation=was.an;
+           Chart.defaults.devicePixelRatio=was.dpr;
+           Chart.defaults.responsive=was.rs; }
   ch.options.animation=false;
+  ch.options.responsive=false;
+  // 배수는 기본값으로 안 먹는다(Chart.js 가 window.devicePixelRatio 를 먼저 본다).
+  // 차트에 직접 박고 크기를 다시 잡아야 캔버스가 두 배로 커진다.
   ch.options.devicePixelRatio=PNG_K;
   if(window.CHART){
     ch.data.datasets.forEach((d,i)=>ch.setDatasetVisibility(i,window.CHART.isDatasetVisible(i)));
   }
   ch.resize(PNG_W,h);
   ch.update("none");
+  ch.draw();
   return {chart:ch,host:host,canvas:cv,h:h};
 }
 function pngCard(){
