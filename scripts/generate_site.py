@@ -1014,7 +1014,7 @@ function fileName(title,ext){return "[슬로우팩트북] "+safeName(title)+"."+
 // 그림만 떼어 내면 제목도 출처도 없이 떠돌아서, 받아 쓰는 쪽이 출처를 밝히기 어렵다.
 // 크기는 화면 해상도를 따르지 않고 고정한다. 어느 기기에서 받아도 같은 그림이 나와야 한다.
 const FONT='"Pretendard","Apple SD Gothic Neo","Malgun Gothic",-apple-system,sans-serif';
-const PNG_W=1200, PNG_H=560, PNG_K=2;   // 카드 가로, 그래프 높이(논리 px), 배수
+const PNG_W=1200, PNG_H=660, PNG_K=2;   // 카드 가로, 그래프 높이(논리 px), 배수
 const PNG_CREDIT="슬로우팩트북(슬로우뉴스): 출처를 밝히면 영리 목적을 포함해 "
                 +"자유롭게 쓸 수 있습니다. CC BY 4.0.";
 // 그래프를 화면 캔버스에서 긁어오지 않고 고정 크기로 새로 그린다.
@@ -1089,7 +1089,7 @@ function pngCard(){
   const gh=G.canvas.height;                       // 실제 그려진 픽셀 높이
   const titleH=36*k,metaH=19*k,lgH=21*k,footH=18*k;
   const H=Math.round(pad+titleLines.length*titleH+2*k+metaLines.length*metaH
-        +(rows.length?6*k+rows.length*lgH:0)+6*k+gh+12*k+1+12*k+footH+pad);
+        +(rows.length?6*k+rows.length*lgH:0)+6*k+gh+6*k+1+12*k+footH+pad);
 
   const cv=document.createElement("canvas");cv.width=W;cv.height=H;
   const x=cv.getContext("2d");
@@ -1118,7 +1118,7 @@ function pngCard(){
   y+=gh*(maxw/G.canvas.width);
   G.chart.destroy();G.host.remove();
 
-  y+=12*k;
+  y+=6*k;
   x.fillStyle="#e6e6e6";x.fillRect(pad,Math.round(y),maxw,1);
   y+=12*k+footH*0.74;
   const url=new URL("chart.html?id="+encodeURIComponent(
