@@ -1007,12 +1007,106 @@ document.getElementById("embedBtn").onclick=()=>{
   (navigator.clipboard?navigator.clipboard.writeText(code):Promise.reject()).then(()=>toast("임베드 코드가 복사되었습니다")).catch(()=>window.prompt("임베드 코드:",code));
 };
 function safeName(s){return (String(s||"chart").replace(/[\\/:*?"<>|]+/g,"_").replace(/\.+$/,"").trim())||"chart";}
+// 내려받는 PNG 는 화면에 보이는 카드 그대로 담는다.
+// 그림만 떼어 내면 제목도 출처도 없이 떠돌아서, 받아 쓰는 쪽이 출처를 밝히기 어렵다.
+const FONT='"Pretendard","Apple SD Gothic Neo","Malgun Gothic",-apple-system,sans-serif';
+function pngCard(){
+  const it=window.CUR, src=document.getElementById("cv");
+  const r=src.getBoundingClientRect();
+  const k=Math.max(1,src.width/Math.max(1,r.width));   // 화면 1px 이 PNG 몇 픽셀인지
+  const pad=Math.round(30*k), W=src.width+pad*2, maxw=W-pad*2;
+  const F=(px,w)=>(w||400)+" "+(px*k).toFixed(1)+"px "+FONT;
+  const mm=document.createElement("canvas").getContext("2d");
+  function wrap(text,font){
+    mm.font=font; const out=[]; let line="";
+    for(const ch of String(text||"")){
+      const t=line+ch;
+      if(mm.measureText(t).width>maxw && line){out.push(line);line=ch;} else line=t;
+    }
+    if(line)out.push(line);
+    return out;
+  }
+  const tag=(document.getElementById("tag").textContent||"").trim();
+  const titleLines=wrap(it.title||"",F(30,700));
+  const metaLines=wrap((document.getElementById("meta").textContent||"").trim(),F(13.5));
+  // 범례는 화면에 그려진 것을 그대로 읽는다. 꺼 둔 계열의 흐린 상태까지 따라간다.
+  const lgEls=[...document.querySelectorAll("#legend .lg")];
+  mm.font=F(13);
+  const sw=12*k, gap=6*k, colGap=16*k;
+  const lgs=lgEls.map(e=>{
+    const i=e.querySelector("i");
+    const t=(e.textContent||"").trim();
+    return {t:t, c:i?getComputedStyle(i).backgroundColor:"#999",
+            dim:e.classList.contains("dim"),
+            w:sw+(t?gap+mm.measureText(t).width:0)};
+  });
+  const rows=[]; let row=[], rw=0;
+  for(const g of lgs){
+    const add=(row.length?colGap:0)+g.w;
+    if(row.length && rw+add>maxw){rows.push({items:row,w:rw});row=[];rw=0;}
+    row.push(g); rw+=(row.length>1?colGap:0)+g.w;
+  }
+  if(row.length)rows.push({items:row,w:rw});
+
+  const tagH=tag?22*k:0, titleH=38*k, metaH=20*k, lgH=22*k, footH=19*k;
+  let H=pad+tagH+titleLines.length*titleH+6*k+metaLines.length*metaH
+        +(rows.length?10*k+rows.length*lgH:0)+8*k
+        +src.height+20*k+1+16*k+footH*2+pad;
+  H=Math.round(H);
+
+  const cv=document.createElement("canvas");cv.width=W;cv.height=H;
+  const x=cv.getContext("2d");
+  x.fillStyle="#fff";x.fillRect(0,0,W,H);
+  x.textBaseline="alphabetic";
+  let y=pad;
+  if(tag){
+    x.font=F(13,600); x.fillStyle="#2f5e8e";
+    y+=15*k; x.fillText(tag,pad,y); y+=7*k;
+  }
+  x.font=F(30,700); x.fillStyle="#1a1a1a";
+  for(const l of titleLines){y+=titleH*0.78;x.fillText(l,pad,y);y+=titleH*0.22;}
+  y+=6*k;
+  x.font=F(13.5); x.fillStyle="#8c8c8c";
+  for(const l of metaLines){y+=metaH*0.75;x.fillText(l,pad,y);y+=metaH*0.25;}
+  if(rows.length){
+    y+=10*k; x.font=F(13);
+    for(const rr of rows){
+      let cx0=W-pad-rr.w;
+      const base=y+lgH*0.72;
+      for(const g of rr.items){
+        x.globalAlpha=g.dim?0.32:1;
+        x.fillStyle=g.c; x.fillRect(cx0,base-sw*0.85,sw,sw);
+        if(g.t){x.fillStyle="#555";x.fillText(g.t,cx0+sw+gap,base);}
+        x.globalAlpha=1;
+        cx0+=g.w+colGap;
+      }
+      y+=lgH;
+    }
+  }
+  y+=8*k;
+  x.drawImage(src,pad,y); y+=src.height;
+
+  y+=20*k;
+  x.fillStyle="#e6e6e6"; x.fillRect(pad,Math.round(y),maxw,1);
+  y+=16*k;
+  const url=new URL("chart.html?id="+encodeURIComponent(
+    new URLSearchParams(location.search).get("id")||""),location.href).href
+    .replace(/^https?:\/\//,"");
+  x.font=F(13,600); x.fillStyle="#1a1a1a";
+  y+=footH*0.75; x.fillText("슬로우팩트북 · 슬로우뉴스",pad,y);
+  x.font=F(12.5); x.fillStyle="#9a9a9a";
+  x.textAlign="right"; x.fillText(url,W-pad,y); x.textAlign="left";
+  y+=footH;
+  x.font=F(12.5); x.fillStyle="#aaaaaa";
+  y+=footH*0.72;
+  x.fillText("출처를 밝히면 영리 목적을 포함해 자유롭게 쓸 수 있습니다 · CC BY 4.0",pad,y);
+  return cv;
+}
 document.getElementById("pngBtn").onclick=()=>{
   if(!window.CUR)return;
-  const src=document.getElementById("cv");
-  const tmp=document.createElement("canvas");tmp.width=src.width;tmp.height=src.height;
-  const cx=tmp.getContext("2d");cx.fillStyle="#fff";cx.fillRect(0,0,tmp.width,tmp.height);cx.drawImage(src,0,0);
-  const a=document.createElement("a");a.href=tmp.toDataURL("image/png");a.download=safeName(window.CUR.title)+".png";a.click();
+  const a=document.createElement("a");
+  a.href=pngCard().toDataURL("image/png");
+  a.download=safeName(window.CUR.title)+".png";a.click();
   toast("이미지를 저장했습니다");
 };
 document.getElementById("csvBtn").onclick=()=>{

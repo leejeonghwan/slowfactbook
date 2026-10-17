@@ -72759,7 +72759,7 @@
    "2026-08",
    "2026-09"
   ],
-  "revised": "2026-10-10 08:40",
+  "revised": "2026-10-17 10:30",
   "series": [
    [
     274.0,
@@ -72969,7 +72969,9 @@
    ""
   ],
   "sourceUrl": "https://www.airport.kr/co_ko/651/subview.do",
-  "updated": "2026-10-10 21:05"
+  "updated": "2026-10-10 21:05",
+  "id": "c1354",
+  "category": "교통"
  },
  "c1355": {
   "source": "넥스포드대.",
@@ -110630,7 +110632,9 @@
  },
  "c2205": {
   "sourceUrl": "https://www.airport.kr/co_ko/651/subview.do",
-  "revised": "2026-10-11 00:02"
+  "revised": "2026-10-17 10:30",
+  "id": "c2205",
+  "category": "교통"
  },
  "c2193": {
   "sourceUrl": "https://www.opinet.co.kr/user/dopospdrg/dopOsPdrgSelect.do",

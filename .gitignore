@@ -34,3 +34,6 @@ gender-video/
 Claude outputs/
 Claude outputs/
 data/krx_cache.json
+
+# 자동 갱신 로그
+logs/

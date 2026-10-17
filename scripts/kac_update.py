@@ -14,8 +14,15 @@
   화물(톤) = (FF 화물 + BF 수하물 + MF 우편) / 1000     ← kg 로 온다
 합계 식은 화면의 표(엑셀 내려받기)와 한 자리까지 맞춰 확인했다.
 
+노선은 전체/국내선/국제선으로 가를 수 있다("line": "0" 국내, "1" 국제, 없으면 전체).
+국내선과 국제선을 더하면 전체와 한 명까지 맞는 것을 249개월에서 확인했다.
+
 등록부는 data/kac_map.json. 열쇠는 차트 id.
   {"c2271": {"airport": "CJU", "col": "여객", "scale": 0.0001, "round": 1}}
+계열이 여럿이면 series 에 적는다. 계열마다 col·line 을 따로 둘 수 있다.
+  {"c2273": {"airport": "CJU", "col": "여객", "scale": 0.0001, "round": 1,
+             "series": [{"line": "0", "name": "국내선"},
+                        {"line": "1", "name": "국제선"}]}}
 
 겹치는 달이 어긋나면 그 차트는 건드리지 않는다.
 
@@ -44,13 +51,15 @@ COLS = {"운항": (["OC"], 1), "여객": (["FP", "NP", "TS"], 1),
         "화물": (["FF", "BF", "MF"], 1000)}
 
 
-def fetch(airport, y0, m0, y1, m1):
+def fetch(airport, y0, m0, y1, m1, line=None):
     """{"YYYY-MM": {"운항": .., "여객": .., "화물": ..}}"""
-    body = urllib.parse.urlencode({
-        "MENU_ID": "1250", "pageNo": "1", "YM_TYPE": "YYYYMM",
-        "ST_YY": str(y0), "ST_MM": f"{m0:02d}",
-        "EN_YY": str(y1), "EN_MM": f"{m1:02d}",
-        "AIRPORT_CHK": airport})
+    q = {"MENU_ID": "1250", "pageNo": "1", "YM_TYPE": "YYYYMM",
+         "ST_YY": str(y0), "ST_MM": f"{m0:02d}",
+         "EN_YY": str(y1), "EN_MM": f"{m1:02d}",
+         "AIRPORT_CHK": airport}
+    if line:
+        q["LINE_TYPE"] = str(line)
+    body = urllib.parse.urlencode(q)
     req = urllib.request.Request(URL, data=body.encode(), headers={
         "User-Agent": UA, "X-Requested-With": "XMLHttpRequest", "Referer": PAGE,
         "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"})
@@ -99,62 +108,74 @@ def main():
         it = items.get(cid)
         if not it:
             skips.append((cid, "차트를 찾지 못했습니다")); continue
-        if len(it["series"]) != 1:
-            skips.append((cid, f"계열이 {len(it['series'])}개입니다(1개만 지원)")); continue
-        col = spec.get("col")
-        if col not in COLS:
-            skips.append((cid, f"col 이 {list(COLS)} 중에 없습니다")); continue
+        sers = spec.get("series") or [{}]
+        if len(sers) != len(it["series"]):
+            skips.append((cid, f"등록 계열 {len(sers)}개 != 차트 계열 "
+                               f"{len(it['series'])}개")); continue
         air = spec.get("airport")
         if air not in AIRPORTS:
             skips.append((cid, f"공항 코드 {air} 를 모릅니다")); continue
 
-        if air not in cache:
-            try:
-                cache[air] = fetch(air, spec.get("fromYear", 2006), 1,
-                                   now.year, 12)
-            except Exception as e:
-                cache[air] = e
-        got = cache[air]
-        if isinstance(got, Exception):
-            skips.append((cid, f"조회 실패: {got}")); continue
-
-        sc = float(spec.get("scale", 1))
-        rd = spec.get("round")
-        src = {k: (round(v[col] * sc, rd) if rd is not None else v[col] * sc)
-               for k, v in got.items() if v.get(col) is not None}
-        if not src:
+        srcs, err = [], None
+        for sp in sers:
+            col = sp.get("col", spec.get("col"))
+            if col not in COLS:
+                err = f"col 이 {list(COLS)} 중에 없습니다"; break
+            line = sp.get("line", spec.get("line"))
+            ck = (air, str(line or ""))
+            if ck not in cache:
+                try:
+                    cache[ck] = fetch(air, spec.get("fromYear", 2006), 1,
+                                      now.year, 12, line)
+                except Exception as e:
+                    cache[ck] = e
+            got = cache[ck]
+            if isinstance(got, Exception):
+                err = f"조회 실패: {got}"; break
+            sc = float(sp.get("scale", spec.get("scale", 1)))
+            rd = sp.get("round", spec.get("round"))
+            srcs.append({k: (round(v[col] * sc, rd) if rd is not None else v[col] * sc)
+                         for k, v in got.items() if v.get(col) is not None})
+        if err:
+            skips.append((cid, err)); continue
+        if not srcs[0]:
             skips.append((cid, "내려온 값이 없습니다")); continue
+        src = srcs[0]
 
         labels = [str(x) for x in it["labels"]]
         mode = spec.get("mode", "append")
         tol = float(spec.get("tol", 0.6))
 
         if mode == "replace":
-            keys = [k for k in sorted(src) if k != cut and src[k]]
-            nl, ns = keys, [[src[k] for k in keys]]
+            keys = [k for k in sorted(src) if k != cut
+                    and all(d.get(k) for d in srcs)]
+            nl, ns = keys, [[d[k] for k in keys] for d in srcs]
             note = f"통째로 교체 ({len(keys)}개월, {keys[0]}~{keys[-1]})"
             if nl == labels and ns == it["series"]:
                 skips.append((cid, "이미 최신")); continue
         else:
             bad, seen = [], 0
-            for k, b0 in src.items():
-                if k not in labels:
-                    continue
-                a0 = it["series"][0][labels.index(k)]
-                if a0 is None:
-                    continue
-                seen += 1
-                if abs(a0 - b0) > tol:
-                    bad.append((k, a0, b0))
+            for si, d in enumerate(srcs):
+                for k, b0 in d.items():
+                    if k not in labels:
+                        continue
+                    a0 = it["series"][si][labels.index(k)]
+                    if a0 is None:
+                        continue
+                    seen += 1
+                    if abs(a0 - b0) > tol:
+                        bad.append((k, a0, b0))
             if seen < 6:
                 skips.append((cid, f"대조할 달이 부족합니다({seen}곳)")); continue
             if bad:
                 skips.append((cid, f"겹치는 달 {len(bad)}곳 불일치 (예 {bad[0]})")); continue
-            addk = [k for k in sorted(src) if k > labels[-1] and k != cut and src[k]]
+            addk = [k for k in sorted(src) if k > labels[-1] and k != cut
+                    and all(d.get(k) for d in srcs)]
             if not addk:
                 skips.append((cid, "이미 최신")); continue
             nl = labels + addk
-            ns = [list(it["series"][0]) + [src[k] for k in addk]]
+            ns = [list(s) + [d[k] for k in addk]
+                  for s, d in zip(it["series"], srcs)]
             note = f"{len(addk)}개월 추가"
 
         plans.append({"id": cid, "title": it["title"], "labels": nl, "series": ns,
@@ -172,6 +193,8 @@ def main():
             o = ov.setdefault(p["id"], {})
             o["id"] = p["id"]
             o["labels"] = p["labels"]; o["series"] = p["series"]
+            if all(sp.get("name") for sp in (spec.get("series") or [])):
+                o["seriesNames"] = [sp["name"] for sp in spec["series"]]
             for k in ("title", "source", "sourceUrl", "unit"):
                 if spec.get(k):
                     o[k] = spec[k]
