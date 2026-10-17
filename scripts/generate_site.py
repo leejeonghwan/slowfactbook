@@ -870,6 +870,7 @@ loadItem(id).then(it=>{
     '<a href="'+esc(src)+'" target="_blank" rel="noopener">슬로우팩트북에서 보기 →</a>';
   document.getElementById("legend").innerHTML=legendHTML(it);
   const _ch=buildChart(document.getElementById("cv"),it);
+  window.CHART=_ch;   // PNG 를 뽑을 때 꺼 둔 계열을 그대로 옮기려고 들고 있는다.
   wireLegend(document.getElementById("legend"),()=>_ch);
   document.title=it.title+" — 슬로우팩트북";
 }).catch(()=>{document.getElementById("title").textContent="차트를 불러올 수 없습니다.";});
@@ -1007,106 +1008,121 @@ document.getElementById("embedBtn").onclick=()=>{
   (navigator.clipboard?navigator.clipboard.writeText(code):Promise.reject()).then(()=>toast("임베드 코드가 복사되었습니다")).catch(()=>window.prompt("임베드 코드:",code));
 };
 function safeName(s){return (String(s||"chart").replace(/[\\/:*?"<>|]+/g,"_").replace(/\.+$/,"").trim())||"chart";}
-// 내려받는 PNG 는 화면에 보이는 카드 그대로 담는다.
+// 내려받은 파일이 폴더에 섞여도 어디서 온 것인지 알아보게 이름에 출처를 붙인다.
+function fileName(title,ext){return safeName(title)+" (슬로우팩트북)."+ext;}
+// 내려받는 PNG 는 화면에 보이는 카드를 그대로 담는다.
 // 그림만 떼어 내면 제목도 출처도 없이 떠돌아서, 받아 쓰는 쪽이 출처를 밝히기 어렵다.
+// 크기는 화면 해상도를 따르지 않고 고정한다. 어느 기기에서 받아도 같은 그림이 나와야 한다.
 const FONT='"Pretendard","Apple SD Gothic Neo","Malgun Gothic",-apple-system,sans-serif';
+const PNG_W=1200, PNG_H=560, PNG_K=2;   // 카드 가로, 그래프 높이(논리 px), 배수
+const PNG_CREDIT="슬로우팩트북(슬로우뉴스). 출처를 밝히면 영리 목적을 포함해 "
+                +"자유롭게 쓸 수 있습니다. CC BY 4.0.";
+// 그래프를 화면 캔버스에서 긁어오지 않고 고정 크기로 새로 그린다.
+// 화면에서 꺼 둔 계열은 그대로 꺼진 채로 옮긴다.
+function pngChart(it){
+  const h=(it.vizType==="bar"||it.vizType==="stacked_bar_h")
+      ? Math.min(2400,Math.max(PNG_H,it.labels.length*30)) : PNG_H;
+  const host=document.createElement("div");
+  host.style.cssText="position:fixed;left:-99999px;top:0;background:#fff;"
+    +"width:"+PNG_W+"px;height:"+h+"px;";
+  const cv=document.createElement("canvas");
+  cv.style.width=PNG_W+"px";cv.style.height=h+"px";
+  host.appendChild(cv);document.body.appendChild(host);
+  const ch=buildChart(cv,it);
+  ch.options.animation=false;
+  ch.options.devicePixelRatio=PNG_K;
+  if(window.CHART){
+    ch.data.datasets.forEach((d,i)=>ch.setDatasetVisibility(i,window.CHART.isDatasetVisible(i)));
+  }
+  ch.resize(PNG_W,h);
+  ch.update("none");
+  return {chart:ch,host:host,canvas:cv,h:h};
+}
 function pngCard(){
-  const it=window.CUR, src=document.getElementById("cv");
-  const r=src.getBoundingClientRect();
-  const k=Math.max(1,src.width/Math.max(1,r.width));   // 화면 1px 이 PNG 몇 픽셀인지
-  const pad=Math.round(30*k), W=src.width+pad*2, maxw=W-pad*2;
+  const it=window.CUR;
+  const k=PNG_K, pad=22*k, W=PNG_W*k, maxw=W-pad*2;
   const F=(px,w)=>(w||400)+" "+(px*k).toFixed(1)+"px "+FONT;
   const mm=document.createElement("canvas").getContext("2d");
   function wrap(text,font){
-    mm.font=font; const out=[]; let line="";
+    mm.font=font;const out=[];let line="";
     for(const ch of String(text||"")){
       const t=line+ch;
-      if(mm.measureText(t).width>maxw && line){out.push(line);line=ch;} else line=t;
+      if(mm.measureText(t).width>maxw&&line){out.push(line);line=ch;}else line=t;
     }
     if(line)out.push(line);
     return out;
   }
-  const tag=(document.getElementById("tag").textContent||"").trim();
-  const titleLines=wrap(it.title||"",F(30,700));
-  const metaLines=wrap((document.getElementById("meta").textContent||"").trim(),F(13.5));
+  const titleLines=wrap(dot(it.title||""),F(28,700));
+  const metaLines=wrap((document.getElementById("meta").textContent||"").trim(),F(13));
   // 범례는 화면에 그려진 것을 그대로 읽는다. 꺼 둔 계열의 흐린 상태까지 따라간다.
-  const lgEls=[...document.querySelectorAll("#legend .lg")];
   mm.font=F(13);
-  const sw=12*k, gap=6*k, colGap=16*k;
-  const lgs=lgEls.map(e=>{
-    const i=e.querySelector("i");
-    const t=(e.textContent||"").trim();
-    return {t:t, c:i?getComputedStyle(i).backgroundColor:"#999",
+  const sw=12*k,gap=6*k,colGap=16*k;
+  const lgs=[...document.querySelectorAll("#legend .lg")].map(e=>{
+    const i=e.querySelector("i"),t=(e.textContent||"").trim();
+    return {t:t,c:i?getComputedStyle(i).backgroundColor:"#999",
             dim:e.classList.contains("dim"),
             w:sw+(t?gap+mm.measureText(t).width:0)};
   });
-  const rows=[]; let row=[], rw=0;
+  const rows=[];let row=[],rw=0;
   for(const g of lgs){
-    const add=(row.length?colGap:0)+g.w;
-    if(row.length && rw+add>maxw){rows.push({items:row,w:rw});row=[];rw=0;}
-    row.push(g); rw+=(row.length>1?colGap:0)+g.w;
+    if(row.length&&rw+colGap+g.w>maxw){rows.push({items:row,w:rw});row=[];rw=0;}
+    rw+=(row.length?colGap:0)+g.w;row.push(g);
   }
   if(row.length)rows.push({items:row,w:rw});
 
-  const tagH=tag?22*k:0, titleH=38*k, metaH=20*k, lgH=22*k, footH=19*k;
-  let H=pad+tagH+titleLines.length*titleH+6*k+metaLines.length*metaH
-        +(rows.length?10*k+rows.length*lgH:0)+8*k
-        +src.height+20*k+1+16*k+footH*2+pad;
-  H=Math.round(H);
+  const G=pngChart(it);
+  const gh=G.canvas.height;                       // 실제 그려진 픽셀 높이
+  const titleH=36*k,metaH=19*k,lgH=21*k,footH=18*k;
+  const H=Math.round(pad+titleLines.length*titleH+2*k+metaLines.length*metaH
+        +(rows.length?6*k+rows.length*lgH:0)+6*k+gh+12*k+1+12*k+footH+pad);
 
   const cv=document.createElement("canvas");cv.width=W;cv.height=H;
   const x=cv.getContext("2d");
   x.fillStyle="#fff";x.fillRect(0,0,W,H);
-  x.textBaseline="alphabetic";
   let y=pad;
-  if(tag){
-    x.font=F(13,600); x.fillStyle="#2f5e8e";
-    y+=15*k; x.fillText(tag,pad,y); y+=7*k;
-  }
-  x.font=F(30,700); x.fillStyle="#1a1a1a";
+  x.font=F(28,700);x.fillStyle="#1a1a1a";
   for(const l of titleLines){y+=titleH*0.78;x.fillText(l,pad,y);y+=titleH*0.22;}
-  y+=6*k;
-  x.font=F(13.5); x.fillStyle="#8c8c8c";
+  y+=2*k;
+  x.font=F(13);x.fillStyle="#8c8c8c";
   for(const l of metaLines){y+=metaH*0.75;x.fillText(l,pad,y);y+=metaH*0.25;}
   if(rows.length){
-    y+=10*k; x.font=F(13);
+    y+=6*k;x.font=F(13);
     for(const rr of rows){
-      let cx0=W-pad-rr.w;
-      const base=y+lgH*0.72;
+      let cx0=W-pad-rr.w;const base=y+lgH*0.72;
       for(const g of rr.items){
         x.globalAlpha=g.dim?0.32:1;
-        x.fillStyle=g.c; x.fillRect(cx0,base-sw*0.85,sw,sw);
+        x.fillStyle=g.c;x.fillRect(cx0,base-sw*0.85,sw,sw);
         if(g.t){x.fillStyle="#555";x.fillText(g.t,cx0+sw+gap,base);}
-        x.globalAlpha=1;
-        cx0+=g.w+colGap;
+        x.globalAlpha=1;cx0+=g.w+colGap;
       }
       y+=lgH;
     }
   }
-  y+=8*k;
-  x.drawImage(src,pad,y); y+=src.height;
+  y+=6*k;
+  x.drawImage(G.canvas,pad,y,maxw,gh*(maxw/G.canvas.width));
+  y+=gh*(maxw/G.canvas.width);
+  G.chart.destroy();G.host.remove();
 
-  y+=20*k;
-  x.fillStyle="#e6e6e6"; x.fillRect(pad,Math.round(y),maxw,1);
-  y+=16*k;
+  y+=12*k;
+  x.fillStyle="#e6e6e6";x.fillRect(pad,Math.round(y),maxw,1);
+  y+=12*k+footH*0.74;
   const url=new URL("chart.html?id="+encodeURIComponent(
     new URLSearchParams(location.search).get("id")||""),location.href).href
     .replace(/^https?:\/\//,"");
-  x.font=F(13,600); x.fillStyle="#1a1a1a";
-  y+=footH*0.75; x.fillText("슬로우팩트북 · 슬로우뉴스",pad,y);
-  x.font=F(12.5); x.fillStyle="#9a9a9a";
-  x.textAlign="right"; x.fillText(url,W-pad,y); x.textAlign="left";
-  y+=footH;
-  x.font=F(12.5); x.fillStyle="#aaaaaa";
-  y+=footH*0.72;
-  x.fillText("출처를 밝히면 영리 목적을 포함해 자유롭게 쓸 수 있습니다 · CC BY 4.0",pad,y);
+  x.font=F(12.5,600);x.fillStyle="#6b6b6b";
+  const cw=x.measureText(PNG_CREDIT).width;
+  x.fillText(PNG_CREDIT,pad,y);
+  x.font=F(12.5);x.fillStyle="#9a9a9a";
+  if(maxw-cw-14*k>x.measureText(url).width){
+    x.textAlign="right";x.fillText(url,W-pad,y);x.textAlign="left";
+  }
   return cv;
 }
 document.getElementById("pngBtn").onclick=()=>{
   if(!window.CUR)return;
   const a=document.createElement("a");
   a.href=pngCard().toDataURL("image/png");
-  a.download=safeName(window.CUR.title)+".png";a.click();
+  a.download=fileName(window.CUR.title,"png");a.click();
   toast("이미지를 저장했습니다");
 };
 document.getElementById("csvBtn").onclick=()=>{
@@ -1117,7 +1133,7 @@ document.getElementById("csvBtn").onclick=()=>{
   const csv=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(","))
     .concat(creditLines(it)).join("\n");
   const blob=new Blob(["﻿"+csv],{type:"text/csv;charset=utf-8"});
-  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=safeName(it.title)+".csv";a.click();
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=fileName(it.title,"csv");a.click();
   toast("데이터(CSV)를 저장했습니다");
 };
 function creditLines(it){
@@ -1180,6 +1196,7 @@ loadItem(id).then(it=>{
     box.style.height=Math.max(Math.round(window.innerHeight*0.78),it.labels.length*34)+"px";
   }
   const _ch=buildChart(document.getElementById("cv"),it);
+  window.CHART=_ch;   // PNG 를 뽑을 때 꺼 둔 계열을 그대로 옮기려고 들고 있는다.
   wireLegend(document.getElementById("legend"),()=>_ch);
   document.title=it.title+" — 슬로우팩트북";
 }).catch(()=>{document.getElementById("title").textContent="차트를 불러올 수 없습니다.";});
