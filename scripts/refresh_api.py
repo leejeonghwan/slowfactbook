@@ -119,6 +119,13 @@ def to_series(rows, spec):
         order = [k for k in want if k in buckets] + [k for k in order if k not in want]
 
     ps = spec.get("prdSe", "Y")
+    # 수준을 전년 같은 구간 대비 등락률(%)로. 등록부의 "transform": "yoy".
+    if spec.get("transform") == "yoy":
+        lag = {"M": 12, "Q": 4}.get(ps, 1)
+        for key, bb in list(buckets.items()):
+            ks = sorted(bb)
+            buckets[key] = {ks[i]: round(100 * (bb[ks[i]] / bb[ks[i - lag]] - 1), 1)
+                            for i in range(lag, len(ks)) if bb[ks[i - lag]]}
     keys = sorted({p for b in buckets.values() for p in b})
     if ps == "Y":
         labels = [p[:4] for p in keys]
@@ -130,6 +137,22 @@ def to_series(rows, spec):
         labels = list(keys)
     series = [[buckets[k].get(p) for p in keys] for k in order]
     snames = [re.sub(r"\s+", " ", names[k]).strip() for k in order] if grp else []
+
+    # 장래추계처럼 실적과 전망이 한 계열에 이어진 표가 있다. 가른 해를 적으면
+    # 분류마다 '실적'과 '전망' 두 계열로 쪼갠다. 가른 해는 양쪽에 모두 넣어
+    # 선이 끊기지 않게 한다. 등록부의 "splitAt": "2022".
+    cutp = spec.get("splitAt")
+    if cutp:
+        cutp = str(cutp)
+        tags = spec.get("splitNames") or ["실적", "전망"]
+        ns, nn = [], []
+        for si, vals in enumerate(series):
+            base = snames[si] if si < len(snames) else ""
+            ns.append([v if keys[i] <= cutp else None for i, v in enumerate(vals)])
+            ns.append([v if keys[i] >= cutp else None for i, v in enumerate(vals)])
+            nn.append(f"{base} {tags[0]}".strip())
+            nn.append(f"{base} {tags[1]}".strip())
+        series, snames = ns, nn
     return labels, series, snames
 
 

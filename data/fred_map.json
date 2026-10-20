@@ -28,5 +28,20 @@
   ],
   "note": "명목성장률은 전년 동기 대비 성장률의 40분기 이동평균. BEA 가 과거 분기를 개정하므로 전체를 다시 깐다.",
   "sourceUrl": "https://fred.stlouisfed.org/series/GDP https://fred.stlouisfed.org/series/DGS10"
+ },
+ "c2276": {
+  "freq": "year",
+  "tol": 0.11,
+  "series": [
+   {
+    "id": "FYOINT",
+    "scale": 0.01,
+    "round": 1
+   }
+  ],
+  "unit": "억 달러",
+  "note": "미국 연방정부 이자 지출. 회계연도, 백만 달러를 억 달러로 환산.",
+  "source": "세인트루이스 연은 FRED, 미국 연방정부 이자 지출(FYOINT). 회계연도 기준. 단위: 억 달러.",
+  "sourceUrl": "https://fred.stlouisfed.org/series/FYOINT"
  }
 }

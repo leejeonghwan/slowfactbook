@@ -12,6 +12,9 @@ fredgraph.csv 는 키가 필요 없다.
 일별·주별 시리즈는 월평균으로 접는다("fold": "mean", 기본) 또는 그 달의
 마지막 값을 쓴다("fold": "last"). 월별 시리즈는 그대로 들어온다.
 
+"freq": "quarter" 는 분기 칸("YYYY-MM"), "freq": "year" 는 해("YYYY")로 담는다.
+연간 자료는 회계연도 끝 날짜(9월 30일 등)로 와도 해로만 센다.
+
 겹치는 달이 어긋나면 그 차트는 건드리지 않는다. 표가 바뀐 게 아니라 다른
 시리즈를 붙이려 한 것일 수 있어서다.
 """
@@ -61,7 +64,12 @@ def bucket(rows, freq, fold, minobs, nd=4):
     for d, x in rows:
         y, m, _ = d.split("-")
         mm = int(m)
-        k = f"{y}-{((mm - 1) // 3) * 3 + 1:02d}" if freq == "quarter" else f"{y}-{mm:02d}"
+        if freq == "year":
+            k = y                       # 연간 자료. 회계연도 끝 날짜가 와도 해로만 센다.
+        elif freq == "quarter":
+            k = f"{y}-{((mm - 1) // 3) * 3 + 1:02d}"
+        else:
+            k = f"{y}-{mm:02d}"
         acc[k].append((d, x))
     out = {}
     for k, vs in acc.items():
@@ -98,7 +106,9 @@ def series_for(spec, sdef, cache):
     tr = sdef.get("transform", spec.get("transform"))
     # 원자료가 소수 두 자리인 금리를 평균 내면 끝없이 늘어난다. 자릿수를 정해 둔다.
     nd = int(sdef.get("round", spec.get("round", 4)))
-    key = (sid, freq, fold, minobs, tr, nd)
+    # FRED 단위와 차트 단위가 다를 때가 많다(백만 달러 ↔ 억 달러 등).
+    sc = float(sdef.get("scale", spec.get("scale", 1)))
+    key = (sid, freq, fold, minobs, tr, nd, sc)
     if key in cache:
         return cache[key]
     base = bucket(fetch_rows(sid), freq, fold, minobs, nd)
@@ -107,6 +117,8 @@ def series_for(spec, sdef, cache):
         if not m:
             raise RuntimeError(f"모르는 transform: {tr}")
         base = yoy_ma(base, 4 if freq == "quarter" else 12, int(m.group(1)))
+    if sc != 1:
+        base = {k: round(v * sc, nd) for k, v in base.items()}
     cache[key] = base
     return base
 
@@ -129,6 +141,7 @@ def main():
 
     now = datetime.datetime.now(KST)
     cut = now.strftime("%Y-%m")            # 이번 달은 아직 안 끝났다
+    cutY = str(now.year)                   # 연간 자료는 올해를 넣지 않는다
 
     _items = g.load_items(DATA)
     g.assign_ids(_items, os.path.join(DATA, "ids.json"))
@@ -144,8 +157,10 @@ def main():
         if not it:
             skips.append((cid, "차트를 찾지 못했습니다")); continue
         labels = [str(x) for x in it["labels"]]
-        if not re.fullmatch(r"\d{4}-\d{2}", labels[-1]):
-            skips.append((cid, f"라벨이 월 꼴이 아닙니다: {labels[-1]}")); continue
+        yearly = spec.get("freq") == "year"
+        pat = r"\d{4}" if yearly else r"\d{4}-\d{2}"
+        if not re.fullmatch(pat, labels[-1]):
+            skips.append((cid, f"라벨 꼴이 맞지 않습니다: {labels[-1]}")); continue
         sers = spec.get("series") or []
         if len(sers) != len(it["series"]):
             skips.append((cid, f"등록 계열 {len(sers)}개 != 차트 계열 {len(it['series'])}개")); continue
@@ -188,7 +203,7 @@ def main():
                 skips.append((cid, f"다른 시리즈로 보입니다 (어긋남 {len(bad)}/{seen}곳"
                                    + (f", 예 {far[0]}" if far else "") + ")")); continue
             ks = sorted(set(got[0]) & set.intersection(*[set(d) for d in got]))
-            ks = [k for k in ks if k != cut]
+            ks = [k for k in ks if k != (cutY if yearly else cut)]
             if not ks:
                 skips.append((cid, "받아온 달이 없습니다")); continue
             ns = [[d[k] for k in ks] for d in got]
@@ -202,7 +217,8 @@ def main():
         if bad:
             skips.append((cid, f"겹치는 구간 {len(bad)}곳 불일치 (예 {bad[0]})")); continue
 
-        addk = [k for k in sorted(got[0]) if k > labels[-1] and k != cut]
+        addk = [k for k in sorted(got[0]) if k > labels[-1]
+                and k != (cutY if yearly else cut)]
         addk = [k for k in addk if all(d.get(k) is not None for d in got)]
         if not addk:
             skips.append((cid, "이미 최신")); continue
