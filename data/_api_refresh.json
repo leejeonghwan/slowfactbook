@@ -118,5 +118,140 @@
   ],
   "n_old": 165,
   "n_new": 165
+ },
+ {
+  "slide": "c2277",
+  "label": "서울과 경기 인구, 과거와 전망",
+  "status": "same",
+  "old_last": [
+   "2052",
+   null
+  ],
+  "new_last": [
+   "2052",
+   null
+  ],
+  "n_old": 63,
+  "n_new": 63
+ },
+ {
+  "slide": "c0067",
+  "label": "정규직과 비정규직",
+  "status": "same",
+  "old_last": [
+   "2026",
+   8670.9
+  ],
+  "new_last": [
+   "2026",
+   8670.9
+  ],
+  "n_old": 24,
+  "n_new": 24
+ },
+ {
+  "slide": "c0068",
+  "label": "비정규직 비율",
+  "status": "same",
+  "old_last": [
+   "2026",
+   31.0
+  ],
+  "new_last": [
+   "2026",
+   31.0
+  ],
+  "n_old": 24,
+  "n_new": 24
+ },
+ {
+  "slide": "c0069",
+  "label": "정규직과 비정규직 현황",
+  "status": "same",
+  "old_last": [
+   "2026",
+   1385.5
+  ],
+  "new_last": [
+   "2026",
+   1385.5
+  ],
+  "n_old": 24,
+  "n_new": 24
+ },
+ {
+  "slide": "c0066",
+  "label": "정규직과 비정규직 추이",
+  "status": "same",
+  "old_last": [
+   "2026",
+   370.8
+  ],
+  "new_last": [
+   "2026",
+   370.8
+  ],
+  "n_old": 24,
+  "n_new": 24
+ },
+ {
+  "slide": "c0042",
+  "label": "연령별 비정규직 비율",
+  "status": "same",
+  "old_last": [
+   "2026",
+   43.8
+  ],
+  "new_last": [
+   "2026",
+   43.8
+  ],
+  "n_old": 24,
+  "n_new": 24
+ },
+ {
+  "slide": "c2278",
+  "label": "정규직과 비정규직 월평균임금",
+  "status": "same",
+  "old_last": [
+   "2026",
+   405.2
+  ],
+  "new_last": [
+   "2026",
+   405.2
+  ],
+  "n_old": 23,
+  "n_new": 23
+ },
+ {
+  "slide": "c2279",
+  "label": "비정규직 사회보험 가입률",
+  "status": "same",
+  "old_last": [
+   "2026",
+   36.5
+  ],
+  "new_last": [
+   "2026",
+   36.5
+  ],
+  "n_old": 23,
+  "n_new": 23
+ },
+ {
+  "slide": "c2280",
+  "label": "정규직과 비정규직 퇴직급여 수혜율",
+  "status": "same",
+  "old_last": [
+   "2026",
+   96.2
+  ],
+  "new_last": [
+   "2026",
+   96.2
+  ],
+  "n_old": 23,
+  "n_new": 23
  }
 ]

@@ -91,6 +91,15 @@ def to_series(rows, spec):
             if len([x for x in v.replace("+", " ").split() if x]) > 1:
                 grp = f"C{i}"
                 break
+        # 분류가 하나뿐인데 항목(itmId)을 여럿 부른 표도 있다. 그때는 항목으로 가른다.
+        # 안 그러면 한 시점에 행이 여럿 와서 뒤엣것이 버려진다.
+        nitm = len([x for x in str(spec.get("itmId") or "").replace("+", " ").split() if x])
+        if grp is None and nitm > 1:
+            grp = "ITM_ID"
+        # 항목과 분류를 동시에 여럿 부르는 차트가 있다(성별 × 정규직·비정규직).
+        # "cross": true 를 적으면 (항목, 분류) 짝마다 계열을 만든다. 항목이 바깥이다.
+        elif grp and nitm > 1 and spec.get("cross"):
+            grp = ("ITM_ID", grp)
 
     def norm(p, v):
         return (p, round(float(v) * scale, nd))
@@ -98,6 +107,9 @@ def to_series(rows, spec):
     buckets = {}        # 분류코드 -> {시점: 값}
     names = {}
     order = []
+    # 한 해에 조사가 두 번 있는 표가 있다(근로형태별 부가조사는 3월·8월).
+    # "keepMonth": "08" 을 적으면 그 달 조사만 쓴다.
+    keep = str(spec.get("keepMonth") or "")
     for r in rows:
         if prov == "kosis":
             p, v = r.get("PRD_DE"), r.get("DT")
@@ -105,17 +117,56 @@ def to_series(rows, spec):
             p, v = r.get("TIME"), r.get("DATA_VALUE")
         if v in (None, ""):
             continue
-        key = (r.get(grp) or "") if grp else ""
+        if keep and str(p)[4:6] != keep:
+            continue
+        if isinstance(grp, tuple):
+            key = tuple(r.get(x) or "" for x in grp)
+        else:
+            key = (r.get(grp) or "") if grp else ""
         if key not in buckets:
             buckets[key] = {}
-            names[key] = (r.get(grp + "_NM") if grp else "") or ""
+            if isinstance(grp, tuple):
+                nm = [(r.get("ITM_NM") if x == "ITM_ID" else r.get(x + "_NM")) or ""
+                      for x in grp]
+                names[key] = " ".join(y for y in nm if y)
+            else:
+                nmk = "ITM_NM" if grp == "ITM_ID" else (grp + "_NM" if grp else None)
+                names[key] = (r.get(nmk) if nmk else "") or ""
             order.append(key)
         pp, vv = norm(p, v)
         buckets[key].setdefault(pp, vv)
 
     # 등록부에 적힌 순서대로 세운다. 색과 범례가 적을 때마다 뒤바뀌지 않게.
-    if grp:
-        want = [x for x in str(spec.get("objL" + grp[1:])).replace("+", " ").split() if x]
+    def codes(src):
+        return [x for x in str(src).replace("+", " ").split() if x]
+
+    # 두 항목의 비(比)를 내는 차트가 있다(연령대별 비정규직 비율 = 비정규직/임금근로자).
+    # "ratio": {"num": "T03", "den": "T01"} 을 적으면 분류마다 한 계열로 줄인다.
+    rt = spec.get("ratio")
+    if rt and isinstance(grp, tuple):
+        num, den = rt["num"], rt["den"]
+        mul = float(rt.get("mul", 100))
+        rnd = int(rt.get("round", 1))
+        nb, nn, no = {}, {}, []
+        for cls in codes(spec.get("objL" + grp[1][1:])):
+            a_, b_ = buckets.get((num, cls)), buckets.get((den, cls))
+            if not a_ or not b_:
+                continue
+            nb[cls] = {k: round(a_[k] / b_[k] * mul, rnd)
+                       for k in a_ if b_.get(k)}
+            nn[cls] = names.get((num, cls), "").replace(
+                names.get((num, cls), "").split(" ")[0], "", 1).strip() or cls
+            no.append(cls)
+        buckets, names, order, grp = nb, nn, no, grp[1]
+
+    if isinstance(grp, tuple):
+        wi = codes(spec.get("itmId"))
+        wo = codes(spec.get("objL" + grp[1][1:]))
+        want = [(a, b) for a in wi for b in wo]
+        order = [k for k in want if k in buckets] + [k for k in order if k not in want]
+    elif grp:
+        src = spec.get("itmId") if grp == "ITM_ID" else spec.get("objL" + grp[1:])
+        want = codes(src)
         order = [k for k in want if k in buckets] + [k for k in order if k not in want]
 
     ps = spec.get("prdSe", "Y")

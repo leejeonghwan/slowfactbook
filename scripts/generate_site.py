@@ -1065,8 +1065,7 @@ const FONT='"Pretendard","Apple SD Gothic Neo","Malgun Gothic",-apple-system,san
 // 16:9 는 키노트 한 장과 같고 소셜 카드(1.91:1)와도 가까워 어디에 놓아도 잘린 데가 없다.
 // 아래 여백(PNG_PADB)은 좌우 여백과 눈으로 같아 보이는 값을 재서 맞췄다.
 const PNG_W=1200, PNG_RATIO=16/9, PNG_MINH=400, PNG_PADB=4, PNG_K=2;
-const PNG_CREDIT="슬로우팩트북(슬로우뉴스): 출처를 밝히면 영리 목적을 포함해 "
-                +"자유롭게 쓸 수 있습니다. CC BY 4.0.";
+const PNG_CREDIT="슬로우뉴스 CC BY 4.0.";
 // 그래프를 화면 캔버스에서 긁어오지 않고 고정 크기로 새로 그린다.
 // 화면에서 꺼 둔 계열은 그대로 꺼진 채로 옮긴다.
 function pngChart(it,h){

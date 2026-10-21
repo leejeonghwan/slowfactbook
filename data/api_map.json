@@ -139,5 +139,179 @@
   "unit": "만 명",
   "source": "국가데이터처 장래인구추계 시도편(2022년 기준), 중위 추계. 1990~2022년은 확정 추계인구, 2023년부터는 전망. 단위: 만 명.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1BPB002"
+ },
+ "c0067": {
+  "label": "정규직과 비정규직",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1DE7106S",
+  "prdSe": "Y",
+  "startPrdDe": "2003",
+  "endPrdDe": "2035",
+  "keepMonth": "08",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DE7106S",
+  "itmId": "T20+T10+",
+  "objL1": "0+",
+  "round": 1,
+  "names": [
+   "비정규직",
+   "정규직"
+  ],
+  "unit": "1000명",
+  "source": "국가데이터처 경제활동인구조사 근로형태별 부가조사. 해마다 8월 기준. 단위: 천 명."
+ },
+ "c0068": {
+  "label": "비정규직 비율",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1DE7106S",
+  "prdSe": "Y",
+  "startPrdDe": "2003",
+  "endPrdDe": "2035",
+  "keepMonth": "08",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DE7106S",
+  "itmId": "T21+",
+  "objL1": "1+2+",
+  "round": 1,
+  "names": [
+   "남성",
+   "여성"
+  ],
+  "unit": "%",
+  "source": "국가데이터처 경제활동인구조사 근로형태별 부가조사. 임금근로자 대비 비정규직 비중, 해마다 8월 기준. 단위: %."
+ },
+ "c0069": {
+  "label": "정규직과 비정규직 현황",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1DE7106S",
+  "prdSe": "Y",
+  "startPrdDe": "2003",
+  "endPrdDe": "2035",
+  "keepMonth": "08",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DE7106S",
+  "itmId": "T10+T30+T40+",
+  "objL1": "0+",
+  "scale": 0.1,
+  "round": 1,
+  "names": [
+   "정규직",
+   "한시적",
+   "시간제"
+  ],
+  "unit": "만 명",
+  "source": "국가데이터처 경제활동인구조사 근로형태별 부가조사. 해마다 8월 기준. 단위: 만 명."
+ },
+ "c0066": {
+  "label": "정규직과 비정규직 추이",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1DE7106S",
+  "itmId": "T20+T10+",
+  "objL1": "1+2+",
+  "cross": true,
+  "prdSe": "Y",
+  "startPrdDe": "2003",
+  "endPrdDe": "2035",
+  "keepMonth": "08",
+  "scale": 0.1,
+  "round": 1,
+  "names": [
+   "남성 비정규직",
+   "여성 비정규직",
+   "남성 정규직",
+   "여성 정규직"
+  ],
+  "unit": "만 명",
+  "source": "국가데이터처 경제활동인구조사 근로형태별 부가조사. 성별 정규직·비정규직 규모, 해마다 8월 기준. 단위: 만 명.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DE7106S"
+ },
+ "c0042": {
+  "label": "연령별 비정규직 비율",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1DE7006S",
+  "itmId": "T03+T01+",
+  "objL1": "0+",
+  "objL2": "20+30+40+50+",
+  "cross": true,
+  "ratio": {
+   "num": "T03",
+   "den": "T01"
+  },
+  "prdSe": "Y",
+  "startPrdDe": "2003",
+  "endPrdDe": "2035",
+  "keepMonth": "08",
+  "names": [
+   "20-29세",
+   "30-39세",
+   "40-49세",
+   "50-59세"
+  ],
+  "unit": "%",
+  "source": "국가데이터처 경제활동인구조사 근로형태별 부가조사. 연령대별 임금근로자 대비 비정규직 비중, 해마다 8월 기준. 단위: %.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DE7006S"
+ },
+ "c2278": {
+  "label": "정규직과 비정규직 월평균임금",
+  "provider": "kosis",
+  "orgId": "101",
+  "prdSe": "Y",
+  "startPrdDe": "2003",
+  "endPrdDe": "2035",
+  "keepMonth": "08",
+  "round": 1,
+  "tblId": "DT_1DE7082S",
+  "itmId": "T10+",
+  "objL1": "01+02+",
+  "names": [
+   "정규직",
+   "비정규직"
+  ],
+  "unit": "만 원",
+  "source": "국가데이터처 경제활동인구조사 근로형태별 부가조사. 최근 3개월 월평균임금, 해마다 8월 기준. 단위: 만 원.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DE7082S"
+ },
+ "c2279": {
+  "label": "비정규직 사회보험 가입률",
+  "provider": "kosis",
+  "orgId": "101",
+  "prdSe": "Y",
+  "startPrdDe": "2003",
+  "endPrdDe": "2035",
+  "keepMonth": "08",
+  "round": 1,
+  "tblId": "DT_1DE7081S",
+  "itmId": "T10+T30+T50+",
+  "objL1": "02+",
+  "names": [
+   "국민연금",
+   "건강보험",
+   "고용보험"
+  ],
+  "unit": "%",
+  "source": "국가데이터처 경제활동인구조사 근로형태별 부가조사. 비정규직 노동자의 직장 사회보험 가입률, 해마다 8월 기준. 단위: %.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DE7081S"
+ },
+ "c2280": {
+  "label": "정규직과 비정규직 퇴직급여 수혜율",
+  "provider": "kosis",
+  "orgId": "101",
+  "prdSe": "Y",
+  "startPrdDe": "2003",
+  "endPrdDe": "2035",
+  "keepMonth": "08",
+  "round": 1,
+  "tblId": "DT_1DE7080S",
+  "itmId": "T90+",
+  "objL1": "01+02+",
+  "names": [
+   "정규직",
+   "비정규직"
+  ],
+  "unit": "%",
+  "source": "국가데이터처 경제활동인구조사 근로형태별 부가조사. 퇴직급여를 받는 노동자 비율, 해마다 8월 기준. 단위: %.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DE7080S"
  }
 }
