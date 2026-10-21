@@ -2294,5 +2294,18 @@
   "sourceUrl": "https://finance.yahoo.com/quote/%5EDJI/",
   "keynoteSynced": false,
   "note": ""
+ },
+ {
+  "date": "2026-10-21",
+  "slide": "c0743",
+  "id": "c0743",
+  "title": "서울과 수도권 아파트 평균 분양가",
+  "category": "부동산",
+  "mode": "auto",
+  "from": "2026-08",
+  "to": "2026-09",
+  "n": 1,
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=414&tblId=DT_41401N_005",
+  "keynoteSynced": false
  }
 ]
