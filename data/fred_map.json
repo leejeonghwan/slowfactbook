@@ -43,5 +43,16 @@
   "note": "미국 연방정부 이자 지출. 회계연도, 백만 달러를 억 달러로 환산.",
   "source": "세인트루이스 연은 FRED, 미국 연방정부 이자 지출(FYOINT). 회계연도 기준. 단위: 억 달러.",
   "sourceUrl": "https://fred.stlouisfed.org/series/FYOINT"
+ },
+ "c2284": {
+  "label": "프랑스 10년 만기 국채 수익률",
+  "series": [
+   {
+    "id": "IRLTLT01FRM156N"
+   }
+  ],
+  "round": 2,
+  "source": "FRED, OECD 장기 국채 수익률(10년 만기) 월평균. 단위: %.",
+  "sourceUrl": "https://fred.stlouisfed.org/series/IRLTLT01FRM156N"
  }
 }

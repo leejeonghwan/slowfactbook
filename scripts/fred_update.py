@@ -75,8 +75,11 @@ def bucket(rows, freq, fold, minobs, nd=4):
     for k, vs in acc.items():
         if minobs and len(vs) < minobs:
             continue
-        out[k] = vs[-1][1] if fold == "last" else (
-            round(sum(x for _, x in vs) / len(vs), nd) if len(vs) > 1 else vs[0][1])
+        # 칸에 값이 하나뿐일 때도 자릿수를 맞춘다. 월별 시리즈를 그대로 받으면
+        # FRED 가 주는 소수 네 자리가 그대로 남아서, 차트에 3.7416 처럼 뜬다.
+        out[k] = round(vs[-1][1], nd) if fold == "last" else (
+            round(sum(x for _, x in vs) / len(vs), nd) if len(vs) > 1
+            else round(vs[0][1], nd))
     return out
 
 
