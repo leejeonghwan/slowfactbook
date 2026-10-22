@@ -179,10 +179,15 @@ def main():
             skips.append((cid, err)); continue
 
         # 겹치는 달 대조. 어긋나면 손대지 않는다.
+        # 옛 구간을 다른 빈티지로 이어붙인 차트가 있다(10년물은 1990년 이전이
+        # 월별 시리즈, 그 뒤가 일별의 월평균이라 소수 둘째 자리가 조금 다르다).
+        # "checkFrom": "1990-01" 을 적으면 그 달부터만 대조한다. 뒤에 붙일 달은
+        # 어차피 맨 끝이므로, 머리의 옛 빈티지는 그대로 두는 게 맞다.
+        cfrom = str(spec.get("checkFrom") or "")
         bad, seen = [], 0
         for si, d in enumerate(got):
             for k, b0 in d.items():
-                if k not in labels:
+                if k not in labels or (cfrom and k < cfrom):
                     continue
                 i = labels.index(k)
                 a0 = it["series"][si][i]

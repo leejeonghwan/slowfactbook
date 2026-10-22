@@ -54,5 +54,51 @@
   "round": 2,
   "source": "FRED, OECD 장기 국채 수익률(10년 만기) 월평균. 단위: %.",
   "sourceUrl": "https://fred.stlouisfed.org/series/IRLTLT01FRM156N"
+ },
+ "c2093": {
+  "label": "30년 만기 미국 국채 수익률",
+  "series": [
+   {
+    "id": "DGS30",
+    "fold": "mean",
+    "minobs": 15,
+    "round": 2
+   }
+  ],
+  "sourceUrl": "https://fred.stlouisfed.org/series/DGS30",
+  "mode": "replace",
+  "note": "마지막 점이 달 중간에 손으로 더해진 적이 있어 전체를 DGS30 월평균으로 다시 깐다."
+ },
+ "c2094": {
+  "label": "10년 만기 미국 국채 수익률",
+  "series": [
+   {
+    "id": "DGS10",
+    "fold": "mean",
+    "minobs": 15,
+    "round": 2
+   }
+  ],
+  "sourceUrl": "https://fred.stlouisfed.org/series/DGS10",
+  "checkFrom": "1990-01",
+  "note": "1990년 이전은 월별 시리즈로 붙인 옛 빈티지라 대조에서 뺀다. 그 뒤는 DGS10 일별의 월평균."
+ },
+ "c2095": {
+  "label": "2년과 30년 미국 국채 수익률",
+  "series": [
+   {
+    "id": "DGS2",
+    "fold": "mean",
+    "minobs": 15,
+    "round": 2
+   },
+   {
+    "id": "DGS30",
+    "fold": "mean",
+    "minobs": 15,
+    "round": 2
+   }
+  ],
+  "sourceUrl": "https://fred.stlouisfed.org/series/DGS2 https://fred.stlouisfed.org/series/DGS30"
  }
 }
