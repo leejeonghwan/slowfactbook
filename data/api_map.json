@@ -313,5 +313,23 @@
   "unit": "%",
   "source": "국가데이터처 경제활동인구조사 근로형태별 부가조사. 퇴직급여를 받는 노동자 비율, 해마다 8월 기준. 단위: %.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DE7080S"
+ },
+ "c2281": {
+  "label": "국민연금 추납보험료",
+  "provider": "kosis",
+  "orgId": "322",
+  "tblId": "DT_32202_B042",
+  "itmId": "H001+",
+  "objL1": "A001+",
+  "objL2": "B008+",
+  "prdSe": "Y",
+  "startPrdDe": "2012",
+  "endPrdDe": "2035",
+  "fillYears": true,
+  "scale": 0.01,
+  "round": 0,
+  "unit": "억 원",
+  "source": "국민연금공단 국민연금통계 월별 수납 현황. 추후납부 보험료 수납액, 2020년과 2021년은 원본 통계에 없다. 단위: 억 원.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=322&tblId=DT_32202_B042"
  }
 }

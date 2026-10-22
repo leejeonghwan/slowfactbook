@@ -178,6 +178,12 @@ def to_series(rows, spec):
             buckets[key] = {ks[i]: round(100 * (bb[ks[i]] / bb[ks[i - lag]] - 1), 1)
                             for i in range(lag, len(ks)) if bb[ks[i - lag]]}
     keys = sorted({p for b in buckets.values() for p in b})
+    # 원본 표에 아예 빠진 해가 있는 통계가 있다(국민연금 추납보험료는 2020년과 2021년이 없다).
+    # 그냥 두면 빠진 해가 눈에 안 보이게 접혀서 2019년 다음 칸이 2022년이 된다.
+    # "fillYears": true 를 적으면 처음부터 끝까지 모든 해를 깔고 없는 해는 빈 값으로 둔다.
+    if ps == "Y" and spec.get("fillYears") and keys and all(len(str(k)) == 4 for k in keys):
+        ys = [int(k) for k in keys]
+        keys = [str(y) for y in range(min(ys), max(ys) + 1)]
     if ps == "Y":
         labels = [p[:4] for p in keys]
     elif ps == "M":
