@@ -331,5 +331,55 @@
   "unit": "억 원",
   "source": "국민연금공단 국민연금통계 월별 수납 현황. 추후납부 보험료 수납액, 2020년과 2021년은 원본 통계에 없다. 단위: 억 원.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=322&tblId=DT_32202_B042"
+ },
+ "c2282": {
+  "label": "국민연금 수급자 수",
+  "provider": "kosis",
+  "orgId": "322",
+  "tblId": "DT_32202_A015",
+  "itmId": "16322AAA2+",
+  "objL1": "11101HJG00+",
+  "objL2": "15322AA8AB+15322AA8AD+15322AA8AE+15322AA8AC+15322AA8AF+15322AA8AG+",
+  "prdSe": "Y",
+  "startPrdDe": "2012",
+  "endPrdDe": "2035",
+  "scale": 0.0001,
+  "round": 1,
+  "names": [
+   "노령연금",
+   "유족연금",
+   "반환일시금",
+   "장애연금",
+   "사망일시금",
+   "장애일시보상금"
+  ],
+  "unit": "만 명",
+  "source": "국민연금공단 국민연금통계 급여종류별 급여지급 현황. 급여종류별 수급자 수, 해마다 12월 기준. 단위: 만 명.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=322&tblId=DT_32202_A015"
+ },
+ "c2283": {
+  "label": "국민연금 급여 지급액",
+  "provider": "kosis",
+  "orgId": "322",
+  "tblId": "DT_32202_A015",
+  "itmId": "H002+",
+  "objL1": "11101HJG00+",
+  "objL2": "15322AA8AB+15322AA8AD+15322AA8AE+15322AA8AC+15322AA8AF+15322AA8AG+",
+  "prdSe": "Y",
+  "startPrdDe": "2012",
+  "endPrdDe": "2035",
+  "scale": 1e-09,
+  "round": 2,
+  "names": [
+   "노령연금",
+   "유족연금",
+   "반환일시금",
+   "장애연금",
+   "사망일시금",
+   "장애일시보상금"
+  ],
+  "unit": "조 원",
+  "source": "국민연금공단 국민연금통계 급여종류별 급여지급 현황. 급여종류별 연간 지급액. 단위: 조 원.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=322&tblId=DT_32202_A015"
  }
 }
