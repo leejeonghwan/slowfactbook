@@ -78,6 +78,7 @@ python3 scripts/poll_charts.py realmeter --apply || echo "  리얼미터 갱신 
 echo "▶ 여론조사 지지율 (한국갤럽 월별 통합)…"
 python3 scripts/gallup_update.py --apply || echo "  한국갤럽 갱신 실패/보류 — 기존 값 유지"
 python3 scripts/gallup_weekly.py --apply || echo "  한국갤럽 주간 갱신 실패/보류 — 기존 값 유지"
+python3 scripts/realmeter_weekly.py --apply || echo "  리얼미터 주간 갱신 실패/보류 — 기존 값 유지"
 
 echo "▶ 발전원별 입찰량·거래량 (전력통계정보시스템)…"
 python3 scripts/epsis_update.py --apply || echo "  EPSIS 갱신 실패/보류 — 기존 값 유지"
