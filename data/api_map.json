@@ -381,5 +381,21 @@
   "unit": "조 원",
   "source": "국민연금공단 국민연금통계 급여종류별 급여지급 현황. 급여종류별 연간 지급액. 단위: 조 원.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=322&tblId=DT_32202_A015"
+ },
+ "c2289": {
+  "label": "반도체 수출",
+  "provider": "kosis",
+  "orgId": "127",
+  "tblId": "DT_092_115_2009_S023",
+  "itmId": "13103131003T1+",
+  "objL1": "13102131003A.AF11100000+",
+  "prdSe": "M",
+  "startPrdDe": "199601",
+  "endPrdDe": "203512",
+  "scale": 1e-08,
+  "round": 1,
+  "unit": "억 달러",
+  "source": "과학기술정보통신부 ICT수출입통계, IT산업별 월별 수출 현황. 통관 기준 반도체 수출액, 월별. 단위: 억 달러.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=127&tblId=DT_092_115_2009_S023"
  }
 }

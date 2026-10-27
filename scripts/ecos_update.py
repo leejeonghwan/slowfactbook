@@ -182,6 +182,14 @@ def main():
                 raw = fetch(s.get("stat", spec["stat"]), sc_cyc,
                             s.get("from", spec.get("from", "1900")),
                             str(end_of(sc_cyc)), s["items"])
+                # "minus": ["T004"] 를 적으면 그 항목을 빼서 차를 낸다.
+                # 무역수지처럼 ECOS 가 수출과 수입만 줄 뿐 수지를 따로 안 주는 표가 있다.
+                # 한쪽에만 있는 구간은 버린다. 반쪽짜리 차를 내면 안 되기 때문이다.
+                if s.get("minus"):
+                    sub = fetch(s.get("stat", spec["stat"]), sc_cyc,
+                                s.get("from", spec.get("from", "1900")),
+                                str(end_of(sc_cyc)), s["minus"])
+                    raw = {k: v - sub[k] for k, v in raw.items() if k in sub}
                 # 전년 같은 구간 대비 등락률. ECOS 가 지수만 줄 때 쓴다.
                 tr = s.get("transform") or spec.get("transform")
                 if tr == "yoy":

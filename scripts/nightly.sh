@@ -28,6 +28,8 @@ run() {                     # 하나가 엎어져도 나머지는 돈다
 }
 
 run "한국갤럽"            python3 scripts/gallup_update.py --apply
+run "한국갤럽 주간"       python3 scripts/gallup_weekly.py --apply
+run "리얼미터 주간"       python3 scripts/realmeter_weekly.py --apply
 run "전력거래소"          python3 scripts/epsis_update.py --apply
 run "오피넷 기름값"       python3 scripts/opinet_update.py --apply
 run "공항 여객"           python3 scripts/airport_update.py --apply
@@ -37,6 +39,7 @@ run "KOSIS 차트 갱신"     python3 scripts/refresh_api.py
 run "KB부동산"            python3 scripts/kbapi_update.py --apply
 run "한국거래소"          python3 scripts/krx_update.py --apply
 run "한국은행 ECOS"       python3 scripts/ecos_update.py --apply
+run "반도체 수출 비중"    python3 scripts/semi_share.py --apply
 run "IMF WEO"             python3 scripts/imf_update.py --apply
 run "BIS 총신용"          python3 scripts/bis_update.py --apply
 run "한국공항공사"        python3 scripts/kac_update.py --apply
