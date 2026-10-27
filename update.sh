@@ -101,6 +101,7 @@ python3 scripts/krx_update.py --apply || echo "  KRX 갱신 실패/보류 — �
 echo "▶ 한국은행 ECOS…"
 python3 scripts/ecos_update.py --apply || echo "  ECOS 갱신 실패/보류 — 기존 값 유지"
 python3 scripts/semi_share.py --apply || echo "  반도체 수출 비중 갱신 실패/보류 — 기존 값 유지"
+python3 scripts/gdp_contrib.py --apply || echo "  성장기여도 갱신 실패/보류 — 기존 값 유지"
 
 echo "▶ 인터넷트렌드 검색엔진 점유율…"
 python3 scripts/ittrend_update.py --apply || echo "  검색엔진 갱신 실패/보류 — 기존 값 유지"

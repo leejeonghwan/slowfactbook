@@ -39,6 +39,7 @@ run "KOSIS 차트 갱신"     python3 scripts/refresh_api.py
 run "KB부동산"            python3 scripts/kbapi_update.py --apply
 run "한국거래소"          python3 scripts/krx_update.py --apply
 run "한국은행 ECOS"       python3 scripts/ecos_update.py --apply
+run "성장기여도"          python3 scripts/gdp_contrib.py --apply
 run "반도체 수출 비중"    python3 scripts/semi_share.py --apply
 run "IMF WEO"             python3 scripts/imf_update.py --apply
 run "BIS 총신용"          python3 scripts/bis_update.py --apply

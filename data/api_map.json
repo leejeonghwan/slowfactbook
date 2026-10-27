@@ -397,5 +397,20 @@
   "unit": "억 달러",
   "source": "과학기술정보통신부 ICT수출입통계, IT산업별 월별 수출 현황. 통관 기준 반도체 수출액, 월별. 단위: 억 달러.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=127&tblId=DT_092_115_2009_S023"
+ },
+ "c2295": {
+  "label": "소매판매액지수 증감률",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1K41012",
+  "itmId": "T2+",
+  "objL1": "G0+",
+  "prdSe": "M",
+  "startPrdDe": "199501",
+  "endPrdDe": "203512",
+  "transform": "yoy",
+  "unit": "%",
+  "source": "국가데이터처 서비스업동향조사, 재별 및 상품군별 소매판매액지수(2020=100) 총지수 불변지수. 전년 같은 달 대비 증감률. 단위: %.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1K41012"
  }
 }
