@@ -195,6 +195,21 @@ def to_series(rows, spec):
     series = [[buckets[k].get(p) for p in keys] for k in order]
     snames = [re.sub(r"\s+", " ", names[k]).strip() for k in order] if grp else []
 
+    # 한 표 안의 두 분류를 나눠 비중 한 줄로 줄인다.
+    # "ratioPair": {"num": "15110AA000", "den": "15110AA0AA"} 처럼 적는다.
+    # 기존 "ratio" 는 항목과 분류를 교차한 차트용이라 여기엔 못 쓴다.
+    rp = spec.get("ratioPair")
+    if rp and grp and not isinstance(grp, tuple):
+        try:
+            i, j = order.index(rp["num"]), order.index(rp["den"])
+        except ValueError:
+            raise RuntimeError(f"ratioPair 의 분류를 찾지 못했습니다: {rp}")
+        mul = float(rp.get("mul", 100))
+        nd = int(rp.get("round", 2))
+        series = [[None if (a is None or not b) else round(a / b * mul, nd)
+                   for a, b in zip(series[i], series[j])]]
+        snames = [rp.get("name") or ""]
+
     period = None
     # 장래추계처럼 실적과 전망이 한 계열에 이어진 표가 있다. 가른 해를 적으면
     # 분류마다 '실적'과 '전망' 두 계열로 쪼갠다. 가른 해는 양쪽에 모두 넣어

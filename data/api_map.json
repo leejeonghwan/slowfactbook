@@ -507,5 +507,74 @@
   "source": "국가데이터처 e-지방지표, 인구 천명당 외국인수. 등록외국인을 주민등록인구로 나눈 값이다. 단기체류자와 외국국적동포 거소신고자는 빠져 있어 법무부 체류외국인 총계보다 작다. 전남광주통합특별시는 통합 이후 값이 아직 없어 빠져 있다. 단위: %.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1YL21271",
   "sortDesc": true
+ },
+ "c2301": {
+  "label": "외국인주민 구성",
+  "provider": "kosis",
+  "orgId": "110",
+  "tblId": "TX_11025_A000_A",
+  "itmId": "16110AAA0+",
+  "objL1": "1110100A00+",
+  "objL3": "A001A+",
+  "prdSe": "Y",
+  "startPrdDe": "2015",
+  "endPrdDe": "2035",
+  "objL2": "15110AA0AD+15110AA0AF+15110AA0AM+",
+  "scale": 0.0001,
+  "round": 1,
+  "names": [
+   "한국 국적 없음",
+   "귀화자",
+   "자녀"
+  ],
+  "unit": "만 명",
+  "source": "행정안전부 지방자치단체 외국인주민 현황. 외국인주민은 한국 국적이 없는 사람과 한국 국적을 취득한 사람, 그 자녀를 합한 수다. 해마다 11월 1일 기준. 단위: 만 명.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=110&tblId=TX_11025_A000_A"
+ },
+ "c2302": {
+  "label": "외국인주민 비율",
+  "provider": "kosis",
+  "orgId": "110",
+  "tblId": "TX_11025_A000_A",
+  "itmId": "16110AAA0+",
+  "objL1": "1110100A00+",
+  "objL3": "A001A+",
+  "prdSe": "Y",
+  "startPrdDe": "2015",
+  "endPrdDe": "2035",
+  "objL2": "15110AA000+15110AA0AA+",
+  "ratioPair": {
+   "num": "15110AA000",
+   "den": "15110AA0AA",
+   "round": 2,
+   "name": "외국인주민 비율"
+  },
+  "unit": "%",
+  "source": "행정안전부 지방자치단체 외국인주민 현황. 외국인주민은 한국 국적이 없는 사람과 한국 국적을 취득한 사람, 그 자녀를 합한 수다. 해마다 11월 1일 기준. 총인구 대비 비율. 단위: %.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=110&tblId=TX_11025_A000_A"
+ },
+ "c0844": {
+  "label": "외국인 주민 현황",
+  "provider": "kosis",
+  "orgId": "110",
+  "tblId": "TX_11025_A000_A",
+  "itmId": "16110AAA0+",
+  "objL1": "1110100A00+",
+  "objL3": "A001A+",
+  "prdSe": "Y",
+  "startPrdDe": "2015",
+  "endPrdDe": "2035",
+  "objL2": "15110AA0ADAA+15110AA0ADAK+15110AA0ADAC+15110AA0ADAL+15110AA0ADAD+",
+  "round": 0,
+  "names": [
+   "외국인근로자",
+   "결혼이민자",
+   "유학생",
+   "외국국적동포",
+   "기타외국인"
+  ],
+  "unit": "명",
+  "source": "행정안전부 지방자치단체 외국인주민 현황. 외국인주민은 한국 국적이 없는 사람과 한국 국적을 취득한 사람, 그 자녀를 합한 수다. 해마다 11월 1일 기준. 한국 국적이 없는 사람을 체류 자격으로 나눈 것이다. 단위: 명.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=110&tblId=TX_11025_A000_A"
  }
 }
