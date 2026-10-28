@@ -195,6 +195,7 @@ def to_series(rows, spec):
     series = [[buckets[k].get(p) for p in keys] for k in order]
     snames = [re.sub(r"\s+", " ", names[k]).strip() for k in order] if grp else []
 
+    period = None
     # 장래추계처럼 실적과 전망이 한 계열에 이어진 표가 있다. 가른 해를 적으면
     # 분류마다 '실적'과 '전망' 두 계열로 쪼갠다. 가른 해는 양쪽에 모두 넣어
     # 선이 끊기지 않게 한다. 등록부의 "splitAt": "2022".
@@ -210,7 +211,21 @@ def to_series(rows, spec):
             nn.append(f"{base} {tags[0]}".strip())
             nn.append(f"{base} {tags[1]}".strip())
         series, snames = ns, nn
-    return labels, series, snames
+
+    # 지역별 한 해 치를 막대로 세우는 차트가 많다(시도별 외국인 비율 등).
+    # 해마다 손으로 고쳐 넣다 보니 다들 몇 해씩 묵어 있었다.
+    # "latestByClass": true 를 적으면 가로축을 분류 이름으로 바꾸고
+    # 값이 있는 가장 최근 시점의 값만 한 계열로 세운다. 어느 시점인지는
+    # 네 번째 반환값으로 넘겨 출처 문구에 적는다.
+    if spec.get("latestByClass") and grp and series:
+        last = next((i for i in range(len(keys) - 1, -1, -1)
+                     if any(s[i] is not None for s in series)), None)
+        if last is not None:
+            period = labels[last]
+            labels = snames or [str(k) for k in order]
+            series = [[s[last] for s in series]]
+            snames = []
+    return labels, series, snames, period
 
 
 def main():
@@ -235,7 +250,7 @@ def main():
             continue
         try:
             rows = fetch_kosis(spec) if spec.get("provider", "kosis") == "kosis" else fetch_ecos(spec)
-            labels, series, snames = to_series(rows, spec)
+            labels, series, snames, period = to_series(rows, spec)
         except Exception as e:
             report.append({"slide": slide, "status": "error", "detail": str(e)[:200]})
             print(f"  ✗ {slide}  {spec.get('label','')}: {e}")
@@ -258,8 +273,12 @@ def main():
         if not dry:
             key = (old or {}).get("id") or slide     # overrides 의 열쇠는 차트 id 다
             ov = overrides.get(key, overrides.get(slide, {}))
-            ov.update({"labels": labels, "series": series,
-                       "source": spec.get("source", ov.get("source", "")),
+            src = spec.get("source", ov.get("source", ""))
+            # latestByClass 차트는 어느 시점 값인지가 출처 문구에만 남는다.
+            if period:
+                src = f"{src} {period}년 기준." if not src.endswith(".") else \
+                      f"{src[:-1]}, {period}년 기준."
+            ov.update({"labels": labels, "series": series, "source": src,
                        "sourceUrl": spec.get("sourceUrl", ov.get("sourceUrl", ""))})
             # 분류를 여럿 부른 차트는 계열 이름도 붙여 준다(등록부의 names 가 우선).
             nm = spec.get("names") or snames
