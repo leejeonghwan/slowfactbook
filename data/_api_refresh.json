@@ -332,22 +332,22 @@
  {
   "slide": "c0094",
   "label": "월별 출생아 수와 혼인 건수",
-  "status": "changed",
+  "status": "same",
   "old_last": [
-   "2026-07",
-   24275.0
+   "2026-08",
+   23703.0
   ],
   "new_last": [
    "2026-08",
    23703.0
   ],
-  "n_old": 547,
+  "n_old": 548,
   "n_new": 548
  },
  {
   "slide": "c0095",
   "label": "혼인건수와 이혼건수",
-  "status": "changed",
+  "status": "same",
   "old_last": [
    "2025",
    24.0326
@@ -356,22 +356,52 @@
    "2025",
    24.0326
   ],
-  "n_old": 32,
+  "n_old": 45,
   "n_new": 45
  },
  {
-  "slide": "c2029",
-  "label": "합계출산율",
-  "status": "changed",
+  "slide": "c2296",
+  "label": "외국인 비율",
+  "status": "same",
   "old_last": [
    "2025",
-   0.799
+   3.14
   ],
   "new_last": [
    "2025",
-   0.799
+   3.14
   ],
-  "n_old": 26,
-  "n_new": 33
+  "n_old": 23,
+  "n_new": 23
+ },
+ {
+  "slide": "c2297",
+  "label": "등록외국인과 주민등록인구",
+  "status": "same",
+  "old_last": [
+   "2025",
+   160.5
+  ],
+  "new_last": [
+   "2025",
+   160.5
+  ],
+  "n_old": 23,
+  "n_new": 23
+ },
+ {
+  "slide": "c2298",
+  "label": "시도별 외국인 비율",
+  "status": "same",
+  "old_last": [
+   "세종특별자치시",
+   1.68
+  ],
+  "new_last": [
+   "세종특별자치시",
+   1.68
+  ],
+  "n_old": 15,
+  "n_new": 15
  }
 ]

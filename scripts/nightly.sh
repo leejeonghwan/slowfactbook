@@ -36,6 +36,7 @@ run "공항 여객"           python3 scripts/airport_update.py --apply
 run "미국 고용(BLS)"      python3 scripts/bls_update.py --apply
 run "KOSIS API 트랙"      python3 scripts/build_api_charts.py
 run "KOSIS 차트 갱신"     python3 scripts/refresh_api.py
+run "다문화 혼인과 출생"    python3 scripts/multicultural.py --apply
 run "KB부동산"            python3 scripts/kbapi_update.py --apply
 run "한국거래소"          python3 scripts/krx_update.py --apply
 run "한국은행 ECOS"       python3 scripts/ecos_update.py --apply

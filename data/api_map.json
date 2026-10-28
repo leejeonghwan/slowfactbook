@@ -453,5 +453,59 @@
   "unit": "만 건",
   "source": "국가데이터처 인구동향조사, 월.분기.연간 인구동향. 전국 연간 혼인 건수와 이혼 건수. 단위: 만 건.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B8000G"
+ },
+ "c2296": {
+  "label": "외국인 비율",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1YL21271",
+  "itmId": "T10+",
+  "objL1": "00+",
+  "prdSe": "Y",
+  "startPrdDe": "2003",
+  "endPrdDe": "2035",
+  "scale": 0.1,
+  "round": 2,
+  "unit": "%",
+  "source": "국가데이터처 e-지방지표, 인구 천명당 외국인수. 등록외국인을 주민등록인구로 나눈 값이다. 단기체류자와 외국국적동포 거소신고자는 빠져 있어 법무부 체류외국인 총계보다 작다. 단위: %.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1YL21271"
+ },
+ "c2297": {
+  "label": "등록외국인과 주민등록인구",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1YL21271",
+  "itmId": "T001+T002+",
+  "objL1": "00+",
+  "prdSe": "Y",
+  "startPrdDe": "2003",
+  "endPrdDe": "2035",
+  "scale": 0.0001,
+  "round": 1,
+  "names": [
+   "등록외국인",
+   "주민등록인구"
+  ],
+  "unit": "만 명",
+  "source": "국가데이터처 e-지방지표, 인구 천명당 외국인수. 등록외국인을 주민등록인구로 나눈 값이다. 단기체류자와 외국국적동포 거소신고자는 빠져 있어 법무부 체류외국인 총계보다 작다. 막대가 등록외국인(왼쪽 축), 선이 주민등록인구(오른쪽 축)다. 단위: 만 명.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1YL21271"
+ },
+ "c2298": {
+  "label": "시도별 외국인 비율",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1YL21271",
+  "itmId": "T10+",
+  "objL1": "11+12+21+22+23+25+26+29+31+32+33+34+35+37+38+39+",
+  "prdSe": "Y",
+  "startPrdDe": "2003",
+  "endPrdDe": "2035",
+  "scale": 0.1,
+  "round": 2,
+  "latestByClass": true,
+  "unit": "%",
+  "source": "국가데이터처 e-지방지표, 인구 천명당 외국인수. 등록외국인을 주민등록인구로 나눈 값이다. 단기체류자와 외국국적동포 거소신고자는 빠져 있어 법무부 체류외국인 총계보다 작다. 전남광주통합특별시는 통합 이후 값이 아직 없어 빠져 있다. 단위: %.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1YL21271",
+  "sortDesc": true
  }
 }

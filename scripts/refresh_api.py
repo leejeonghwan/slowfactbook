@@ -223,7 +223,14 @@ def to_series(rows, spec):
         if last is not None:
             period = labels[last]
             labels = snames or [str(k) for k in order]
-            series = [[s[last] for s in series]]
+            vals = [s[last] for s in series]
+            # 막대는 큰 것부터 세워야 읽힌다. 등록부의 "sortDesc": true.
+            # 해마다 순위가 바뀌므로 코드 순서를 손으로 고쳐 두는 것으로는 안 된다.
+            if spec.get("sortDesc"):
+                pair = sorted(((l, v) for l, v in zip(labels, vals) if v is not None),
+                              key=lambda z: -z[1])
+                labels, vals = [l for l, _ in pair], [v for _, v in pair]
+            series = [vals]
             snames = []
     return labels, series, snames, period
 
