@@ -412,5 +412,46 @@
   "unit": "%",
   "source": "국가데이터처 서비스업동향조사, 재별 및 상품군별 소매판매액지수(2020=100) 총지수 불변지수. 전년 같은 달 대비 증감률. 단위: %.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1K41012"
+ },
+ "c0094": {
+  "label": "월별 출생아 수와 혼인 건수",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1B8000G",
+  "itmId": "T1+",
+  "objL1": "00+",
+  "objL2": "10+20+",
+  "prdSe": "M",
+  "startPrdDe": "198101",
+  "endPrdDe": "203512",
+  "round": 0,
+  "names": [
+   "출생아수(명)",
+   "혼인건수(건)"
+  ],
+  "unit": "명, 건",
+  "source": "국가데이터처 인구동향조사, 월.분기.연간 인구동향. 전국 월별 출생아 수와 혼인 건수. 단위: 명, 건.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B8000G"
+ },
+ "c0095": {
+  "label": "혼인건수와 이혼건수",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1B8000G",
+  "itmId": "T1+",
+  "objL1": "00+",
+  "objL2": "20+30+",
+  "prdSe": "Y",
+  "startPrdDe": "1981",
+  "endPrdDe": "2035",
+  "scale": 0.0001,
+  "round": 4,
+  "names": [
+   "혼인건수",
+   "이혼건수"
+  ],
+  "unit": "만 건",
+  "source": "국가데이터처 인구동향조사, 월.분기.연간 인구동향. 전국 연간 혼인 건수와 이혼 건수. 단위: 만 건.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B8000G"
  }
 }
