@@ -100,5 +100,16 @@
    }
   ],
   "sourceUrl": "https://fred.stlouisfed.org/series/DGS2 https://fred.stlouisfed.org/series/DGS30"
+ },
+ "c1822": {
+  "label": "미국 기준금리",
+  "series": [
+   {
+    "id": "FEDFUNDS",
+    "round": 2
+   }
+  ],
+  "source": "세인트루이스 연은 FRED, 실효 연방기금금리(FEDFUNDS) 월평균. 1954년 7월부터. 단위: %.",
+  "sourceUrl": "https://fred.stlouisfed.org/series/FEDFUNDS"
  }
 }
