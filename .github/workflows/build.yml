@@ -23,6 +23,7 @@ jobs:
     env:
       KOSIS_API_KEY: ${{ secrets.KOSIS_API_KEY }}
       ECOS_API_KEY: ${{ secrets.ECOS_API_KEY }}
+      KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -31,21 +32,58 @@ jobs:
         with:
           python-version: "3.11"
       - run: pip install -r requirements.txt
+      # 갤럽과 리얼미터는 보도자료 PDF 를 글자로 풀어서 읽는다.
+      - name: pdftotext 설치
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
+      # 받아 둔 PDF 를 실행마다 다시 내려받지 않게 캐시한다.
+      # 리얼미터 주간통계표는 한 건이 3MB 가 넘어서 캐시가 없으면 매번 수십 MB 를 받는다.
+      - name: 수집 캐시
+        uses: actions/cache@v4
+        with:
+          path: .cache
+          key: factbook-cache-${{ github.run_id }}
+          restore-keys: factbook-cache-
+
       - name: API 차트 최신값 수집
         run: python scripts/build_api_charts.py
-      - name: 확정 매칭 차트 제자리 갱신 (KOSIS)
-        run: python scripts/refresh_charts.py --apply || echo "갱신 실패 — 기존 데이터로 빌드"
-      - name: 여론조사 지지율 (리얼미터)
-        run: python scripts/poll_charts.py realmeter --apply || echo "리얼미터 갱신 실패/보류 — 기존 값 유지"
+
+      # 어댑터는 하나가 엎어져도 나머지는 돌아야 한다. 실패하면 그 차트만 직전 값을 유지한다.
+      - name: 어댑터 일괄 갱신
+        run: |
+          run() { echo "──── $1"; shift; "$@" || echo "   (실패 — 기존 값 유지)"; }
+          run "확정 매칭 차트"      python scripts/refresh_charts.py --apply
+          run "정권별 비교 차트"    python scripts/term_charts.py --apply
+          run "한국갤럽 월별 통합"  python scripts/gallup_update.py --apply
+          run "한국갤럽 주간"       python scripts/gallup_weekly.py --apply
+          run "리얼미터 주간"       python scripts/realmeter_weekly.py --apply
+          run "전력거래소"          python scripts/epsis_update.py --apply
+          run "오피넷 기름값"       python scripts/opinet_update.py --apply
+          run "공항 여객"           python scripts/airport_update.py --apply
+          run "미국 고용(BLS)"      python scripts/bls_update.py --apply
+          run "KOSIS 차트 갱신"     python scripts/refresh_api.py
+          run "KB부동산"            python scripts/kbapi_update.py --apply
+          run "한국거래소"          python scripts/krx_update.py --apply
+          run "한국은행 ECOS"       python scripts/ecos_update.py --apply
+          run "반도체 수출 비중"    python scripts/semi_share.py --apply
+          run "성장기여도"          python scripts/gdp_contrib.py --apply
+          run "다문화 혼인과 출생"  python scripts/multicultural.py --apply
+          run "인터넷트렌드"        python scripts/ittrend_update.py --apply
+          run "한국공항공사"        python scripts/kac_update.py --apply
+          run "역대 정부 누적 물가" python scripts/admin_cpi.py --apply
+          run "BIS 총신용"          python scripts/bis_update.py --apply
+          run "FRED"                python scripts/fred_update.py --apply
+          run "IMF WEO"             python scripts/imf_update.py --apply
+          run "지수와 시세"         python scripts/market_update.py --apply
+
       - name: 갱신분 커밋
         run: |
           git config user.name "slowfactbook-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/overrides.json data/changelog.json data/api.json   # api.json 도 저장소에 남겨 KOSIS 장애 때 직전 성공본으로 버틴다
+          git add data/              # 어댑터가 건드리는 등록부와 데이터를 모두 담는다
           if git diff --cached --quiet; then echo "자동 갱신 변경 없음"; else
             git commit -m "자동 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d')"
             git pull --rebase || true
-            git push || echo "커밋 되돌리기 실패 — 사이트는 그대로 빌드"
+            git push || echo "푸시 실패 — 사이트는 그대로 빌드"
           fi
       - name: Build site
         run: python scripts/build.py
