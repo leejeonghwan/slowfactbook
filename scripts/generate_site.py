@@ -861,8 +861,10 @@ EMBED_TEMPLATE = r"""<!DOCTYPE html>
    생긴다. 넘치는 건 잘라 버린다 — 넘칠 내용이 애초에 없는 페이지다. */
 html,body{margin:0;height:100%;overflow:hidden;background:transparent;
   font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",-apple-system,sans-serif;color:#1a1a1a;}
-/* 확장이 끼워 넣은 것이 위로 밀어내지 못하게 본문 상자를 화면에 고정한다. */
-#wrap{position:fixed;inset:0;}
+/* 확장이 끼워 넣은 것이 위로 밀어내지 못하게 본문 상자를 화면에 고정한다.
+   바탕은 흰색으로 덮는다. 투명하게 두면 임베드한 쪽 페이지의 글자나
+   워터마크가 제목 뒤로 비쳐 보인다(슬로우뉴스 본문에서 그런 일이 있었다). */
+#wrap{position:fixed;inset:0;background:#fff;}
 #wrap{display:flex;flex-direction:column;height:100%;padding:12px 14px;box-sizing:border-box;}
 #title{font-size:17px;font-weight:800;margin:0 0 1px;letter-spacing:-.3px;}
 #meta{font-size:11px;color:#999;margin-bottom:6px;}
