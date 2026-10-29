@@ -599,5 +599,24 @@
   "unit": "명",
   "source": "행정안전부 주민등록인구현황. 월말 주민등록인구, 2011년 1월부터. 여섯 군 모두 농어촌 기본소득이나 그에 준하는 현금 지급 사업을 벌이고 있거나 벌였다. 단위: 명.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B040A3"
+ },
+ "c2123": {
+  "label": "월별 자살자 수",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1B34E17",
+  "itmId": "T2+",
+  "objL1": "1+2+",
+  "prdSe": "M",
+  "startPrdDe": "201901",
+  "endPrdDe": "203512",
+  "round": 0,
+  "names": [
+   "남성",
+   "여성"
+  ],
+  "unit": "명",
+  "source": "국가데이터처 사망원인통계, 성별 월별 고의적 자해 사망자 수. 2019년 1월부터. 최근 분기는 잠정치라 나중에 바뀔 수 있다. 단위: 명.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B34E17"
  }
 }
