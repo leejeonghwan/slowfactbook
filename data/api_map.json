@@ -618,5 +618,50 @@
   "unit": "명",
   "source": "국가데이터처 사망원인통계, 성별 월별 고의적 자해 사망자 수. 2019년 1월부터. 최근 분기는 잠정치라 나중에 바뀔 수 있다. 단위: 명.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B34E17"
+ },
+ "c2305": {
+  "label": "소득분위 이동 분포",
+  "provider": "kosis",
+  "orgId": "101",
+  "prdSe": "Y",
+  "startPrdDe": "2018",
+  "endPrdDe": "2035",
+  "tblId": "DT_IMEMIA001",
+  "itmId": "T21+T22+T23+",
+  "objL1": "00+",
+  "objL2": "0000+",
+  "objL3": "00+",
+  "round": 2,
+  "names": [
+   "상향",
+   "유지",
+   "하향"
+  ],
+  "unit": "%",
+  "source": "국가데이터처 소득이동통계. 전년 대비 소득분위 변동, 15세 이상 소득이 있는 사람 기준. 상향과 유지, 하향을 더하면 100이 된다. 단위: %.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_IMEMIA001"
+ },
+ "c2307": {
+  "label": "연령대별 소득 상향 이동 비율",
+  "provider": "kosis",
+  "orgId": "101",
+  "prdSe": "Y",
+  "startPrdDe": "2018",
+  "endPrdDe": "2035",
+  "tblId": "DT_IMEMIA001",
+  "itmId": "T21+",
+  "objL1": "00+",
+  "objL2": "0000+1539+4064+6500+",
+  "objL3": "00+",
+  "round": 2,
+  "names": [
+   "전체",
+   "15~39세",
+   "40~64세",
+   "65세 이상"
+  ],
+  "unit": "%",
+  "source": "국가데이터처 소득이동통계. 전년 대비 소득분위 변동, 15세 이상 소득이 있는 사람 기준. 소득분위가 전년보다 올라간 사람의 비율. 단위: %.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_IMEMIA001"
  }
 }
