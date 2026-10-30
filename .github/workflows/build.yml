@@ -55,7 +55,6 @@ jobs:
           run "정권별 비교 차트"    python scripts/term_charts.py --apply
           run "한국갤럽 월별 통합"  python scripts/gallup_update.py --apply
           run "한국갤럽 주간"       python scripts/gallup_weekly.py --apply
-          run "한국갤럽 부동산"     python scripts/gallup_realestate.py --apply
           run "리얼미터 주간"       python scripts/realmeter_weekly.py --apply
           run "전력거래소"          python scripts/epsis_update.py --apply
           run "오피넷 기름값"       python scripts/opinet_update.py --apply
