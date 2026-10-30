@@ -2929,7 +2929,7 @@
      null
     ]
    ],
-   "updated": "2026-10-30 14:07",
+   "updated": "2026-10-30 14:15",
    "slide": "m-0003"
   },
   {
@@ -3581,7 +3581,7 @@
      null
     ]
    ],
-   "updated": "2026-10-30 14:07",
+   "updated": "2026-10-30 14:15",
    "slide": "m-0004"
   },
   {
@@ -45650,7 +45650,7 @@
    "slide": "manual-gallup-house-outlook",
    "title": "향후 1년 집값 전망",
    "category": "부동산",
-   "source": "한국갤럽 데일리 오피니언. 전국 유권자 약 1,000명 전화조사. '비슷할 것'과 의견 유보를 뺀 수치여서 둘을 더해도 100이 되지 않는다. 단위: %.",
+   "source": "한국갤럽 데일리 오피니언 제680호. 전국 유권자 약 1,000명 전화조사. '비슷할 것'과 의견 유보를 뺀 수치여서 둘을 더해도 100이 되지 않는다. 단위: %.",
    "sourceUrl": "https://www.gallup.co.kr/gallupdb/reportContent.asp?seqNo=1665",
    "vizType": "line",
    "unit": "%",
@@ -45796,7 +45796,7 @@
     "#c0322f",
     "#2a5ca8"
    ],
-   "updated": "2026-10-30 14:00"
+   "updated": "2026-10-30 14:15"
   },
   {
    "slide": "manual-gallup-house-outlook-vs-price",
