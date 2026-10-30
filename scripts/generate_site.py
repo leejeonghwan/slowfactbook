@@ -978,7 +978,7 @@ a.home span{color:var(--blue);}
    폭이 곧 해상도다. 다만 높이가 같이 커지면 화면을 넘기므로 70vh 로 묶는다. */
 main{max-width:1680px;margin:0 auto;padding:26px 32px;}
 .tag{display:inline-block;font-size:12px;color:var(--blue);background:#eaf1f9;padding:3px 10px;border-radius:20px;margin-bottom:12px;}
-h1.title{font-size:30px;font-weight:800;margin:0 0 4px;letter-spacing:-.5px;}
+h1.title{font-size:45px;font-weight:800;margin:0 0 6px;letter-spacing:-1px;line-height:1.15;}
 .meta{font-size:13px;color:#999;margin-bottom:14px;}
 .legendbar{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:4px 14px;margin:0 0 6px;}
 
@@ -1007,7 +1007,7 @@ h1.title{font-size:30px;font-weight:800;margin:0 0 4px;letter-spacing:-.5px;}
 #toast.show{opacity:.95;}
 .licnote{margin:14px 0 0;font-size:12.5px;color:#aaa;}
 .licnote a{color:#888;}
-@media(max-width:900px){ main{padding:18px 16px;} h1.title{font-size:23px;} .chartbox{aspect-ratio:4/3;max-height:none;min-height:0;} }
+@media(max-width:900px){ main{padding:18px 16px;} h1.title{font-size:34px;} .chartbox{aspect-ratio:4/3;max-height:none;min-height:0;} }
 @media(max-width:900px) and (orientation:landscape){ .chartbox{aspect-ratio:16/9;} }
 </style></head><body>
 <header>
