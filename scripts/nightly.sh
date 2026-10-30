@@ -40,6 +40,7 @@ run "다문화 혼인과 출생"    python3 scripts/multicultural.py --apply
 run "KB부동산"            python3 scripts/kbapi_update.py --apply
 run "한국거래소"          python3 scripts/krx_update.py --apply
 run "한국은행 ECOS"       python3 scripts/ecos_update.py --apply
+run "한국과 미국 기준금리"  python3 scripts/policy_rates.py --apply
 run "성장기여도"          python3 scripts/gdp_contrib.py --apply
 run "반도체 수출 비중"    python3 scripts/semi_share.py --apply
 run "IMF WEO"             python3 scripts/imf_update.py --apply

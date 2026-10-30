@@ -64,6 +64,7 @@ jobs:
           run "KB부동산"            python scripts/kbapi_update.py --apply
           run "한국거래소"          python scripts/krx_update.py --apply
           run "한국은행 ECOS"       python scripts/ecos_update.py --apply
+          run "한국과 미국 기준금리"  python scripts/policy_rates.py --apply
           run "반도체 수출 비중"    python scripts/semi_share.py --apply
           run "성장기여도"          python scripts/gdp_contrib.py --apply
           run "다문화 혼인과 출생"  python scripts/multicultural.py --apply
