@@ -91403,7 +91403,7 @@
   "sourceUrl": "https://ecos.bok.or.kr/",
   "title": "역대 정부 누적 물가 상승률",
   "unit": "%",
-  "updated": "2026-10-30 11:21"
+  "updated": "2026-10-30 14:36"
  },
  "c1978": {
   "source": "2023년 기준.",
@@ -124188,7 +124188,7 @@
   ],
   "source": "국가데이터처 경제활동인구조사 산업별 취업자. 건설업 취업자 수, 월별. 단위: 만 명.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DA7E06S_NEW",
-  "updated": "2026-10-30 11:17"
+  "updated": "2026-10-30 14:27"
  },
  "c2277": {
   "labels": [
@@ -126766,7 +126766,7 @@
   "source": "한국은행 ECOS 예금은행 가중평균금리, 둘 다 잔액 기준. 대출은 가계대출, 예금은 저축성수신(금융채 제외)이다. 두 선의 간격이 예대금리차다. 2001년 9월부터. 단위: 연 %.",
   "sourceUrl": "https://ecos.bok.or.kr/",
   "unit": "%",
-  "updated": "2026-10-30 11:20"
+  "updated": "2026-10-30 14:34"
  },
  "c2295": {
   "labels": [
@@ -127515,7 +127515,7 @@
   ],
   "source": "국가데이터처 서비스업동향조사, 재별 및 상품군별 소매판매액지수(2020=100) 총지수 불변지수. 전년 같은 달 대비 증감률. 단위: %.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1K41012",
-  "updated": "2026-10-30 11:18"
+  "updated": "2026-10-30 14:31"
  },
  "c2296": {
   "labels": [
