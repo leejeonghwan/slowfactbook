@@ -45961,8 +45961,8 @@
    "slide": "manual-bluefin-tuna",
    "title": "참다랑어 어획량",
    "category": "식량",
-   "source": "국가데이터처 어업생산동향조사. 단위: 톤.",
-   "sourceUrl": "https://leejeonghwan.github.io/korea-fisheries/",
+   "source": "국가데이터처 어업생산동향조사(KOSIS 표 DT_1EW0001, DT_1EW0004). 2025년은 확정치로 KOSIS 최종 수정 2026년 4월 29일 기준. 단위: 톤.",
+   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EW0001 https://leejeonghwan.github.io/korea-fisheries/",
    "vizType": "column",
    "unit": "톤",
    "labels": [
@@ -46009,7 +46009,7 @@
    "seriesColors": [
     "#2a5ca8"
    ],
-   "updated": "2026-10-30 16:25"
+   "updated": "2026-10-30 16:27"
   }
  ]
 }
