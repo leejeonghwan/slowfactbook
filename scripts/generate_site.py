@@ -371,14 +371,6 @@ __CORE__
 let activeCat=null,query="",charts=[];
 const grid=document.getElementById("grid"),sidebar=document.getElementById("sidebar"),
       countEl=document.getElementById("count"),searchEl=document.getElementById("search");
-// 최종 갱신 표시. updated 는 자료가 바뀐 날, revised 는 표기만 손본 날이다.
-// 둘 중 늦은 쪽을 날짜까지만 보여 준다. 도장이 없으면 아무것도 적지 않는다
-// (키노트에서 옮겨만 오고 손댄 적 없는 차트가 아직 많다).
-function stampText(it){
-  const u=String((it&&it.updated)||""), r=String((it&&it.revised)||"");
-  const d=(u>r?u:r).slice(0,10);
-  return d?"최종 업데이트: "+d:"";
-}
 const RECENT="최근 업데이트";
 // 페이지를 열 때마다 한 번 섞어 둔다. 1,800개를 늘 같은 순서로 보여주면 앞쪽 몇십 개만
 // 눈에 띄고 나머지는 영영 안 보인다. 같은 방문 안에서는 순서가 유지돼야 스크롤이 튀지
@@ -463,6 +455,14 @@ render();
 
 # ---- shared chart-rendering core, injected into both the site and embed pages ----
 CORE_JS = r"""
+// 최종 갱신 표시. updated 는 자료가 바뀐 날, revised 는 표기만 손본 날이다.
+// 둘 중 늦은 쪽을 날짜까지만 보여 준다. 도장이 없으면 아무것도 적지 않는다
+// (키노트에서 옮겨만 오고 손댄 적 없는 차트가 아직 많다).
+function stampText(it){
+  const u=String((it&&it.updated)||""), r=String((it&&it.revised)||"");
+  const d=(u>r?u:r).slice(0,10);
+  return d?"최종 업데이트: "+d:"";
+}
 // 기본색은 짙은 파랑. 흰 배경 대비 6.8:1 이라 가는 선으로 그려도 또렷하다.
 // 강조색 #fdad00 은 1.9:1 밖에 안 돼 본문 색으로는 못 쓴다 — 짚어야 할 계열 하나에만 쓴다.
 // overrides 에 {"highlight": "계열이름"} 또는 {"highlight": 2}(번째) 를 적으면 그 계열이 강조색이 된다.
