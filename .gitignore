@@ -37,3 +37,8 @@ data/krx_cache.json
 
 # 자동 갱신 로그
 logs/
+
+# 빌드 보고서 — build.py 가 돌 때마다 새로 쓴다. 사람이 고칠 일이 없는데
+# 추적되고 있어서, 빌드만 해도 작업 트리가 더러워져 git pull --rebase 가 막혔다.
+data/_report.json
+data/_title_review.json
