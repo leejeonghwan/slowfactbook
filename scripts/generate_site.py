@@ -84,6 +84,8 @@ def load_items(data_dir):
                 # 콤보에서 막대를 쌓을지 (overrides 의 "stacked").
                 "stacked": bool(it.get("stacked")),
                 "updated": it.get("updated", ""),
+                # 사람이 손본 날짜. 자료 갱신일(updated)과 뜻이 달라 따로 싣는다.
+                "revised": it.get("revised", ""),
             }
             # 범례를 아예 감춘다(overrides 의 "hideLegend": true).
             # 켠 차트에만 키를 붙인다. 늘 붙이면 데이터 파일이 전부 다시 쓰인다.
@@ -336,6 +338,7 @@ main{flex:1;padding:20px 22px;}
 .card:hover{box-shadow:0 4px 14px rgba(0,0,0,.09);transform:translateY(-1px);}
 .card .tag,.card h2 a,.card .legendbar .lg.pick{cursor:pointer;}
 .legendbar .lg.pick:empty,.legendbar .lg.pick i:only-child{min-width:14px;}
+.stamp{color:#bbb;white-space:nowrap;}
 .card .meta{font-size:11px;color:#999;margin-bottom:7px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .card .tag{display:inline-block;font-size:10px;color:var(--blue);background:#eaf1f9;padding:1px 7px;border-radius:20px;margin-bottom:5px;cursor:pointer;}
 .card .tag:hover{background:#d7e6fa;}
@@ -368,6 +371,14 @@ __CORE__
 let activeCat=null,query="",charts=[];
 const grid=document.getElementById("grid"),sidebar=document.getElementById("sidebar"),
       countEl=document.getElementById("count"),searchEl=document.getElementById("search");
+// 최종 갱신 표시. updated 는 자료가 바뀐 날, revised 는 표기만 손본 날이다.
+// 둘 중 늦은 쪽을 날짜까지만 보여 준다. 도장이 없으면 아무것도 적지 않는다
+// (키노트에서 옮겨만 오고 손댄 적 없는 차트가 아직 많다).
+function stampText(it){
+  const u=String((it&&it.updated)||""), r=String((it&&it.revised)||"");
+  const d=(u>r?u:r).slice(0,10);
+  return d?"최종 업데이트: "+d:"";
+}
 const RECENT="최근 업데이트";
 // 페이지를 열 때마다 한 번 섞어 둔다. 1,800개를 늘 같은 순서로 보여주면 앞쪽 몇십 개만
 // 눈에 띄고 나머지는 영영 안 보인다. 같은 방문 안에서는 순서가 유지돼야 스크롤이 튀지
@@ -413,8 +424,9 @@ function render(){
     const card=document.createElement("div");card.className="card";
     // 슬라이드 번호는 원본 덱을 추적하려고 달아 둔 내부 표시다. 읽는 사람에게는
     // 아무 뜻이 없으므로 카드에 보이지 않게 하고, 속성으로만 남겨 둔다.
-    const meta=it.source?dot(it.source):"";
-    card.innerHTML=`<div class="tag" data-cat="${String(it.category).replace(/"/g,'&quot;')}" title="이 카테고리 보기">${dot(it.category)}</div><h2><a href="chart.html?id=${it.id}" title="크게 보기">${dot(it.title||it.source||"제목 없음")}</a></h2><div class="meta" data-slide="${it.slide||""}">${meta}</div><div class="legendbar">${legendHTML(it)}</div><div class="chartbox"><canvas data-idx="${i}"></canvas></div>`;
+    const st=stampText(it);
+    const meta=(it.source?dot(it.source):"")+(st?' <span class="stamp">('+st+')</span>':"");
+    card.innerHTML=`<div class="tag" data-cat="${String(it.category).replace(/"/g,'&quot;')}" title="이 카테고리 보기">${dot(it.category)}</div><h2><a href="chart.html?id=${it.id}" title="크게 보기">${dot(it.title||it.source||"제목 없음")}</a></h2><div class="meta" data-slide="${it.slide||''}">${meta}</div><div class="legendbar">${legendHTML(it)}</div><div class="chartbox"><canvas data-idx="${i}"></canvas></div>`;
     grid.appendChild(card);observer.observe(card);
   });
 }
@@ -1257,7 +1269,10 @@ loadItem(id).then(it=>{
   document.getElementById("srcBtn").hidden = srcLinks(it).length===0;
   document.getElementById("tag").innerHTML='<a href="index.html?cat='+encodeURIComponent(it.category)+'">'+dot(it.category)+'</a>';
   document.getElementById("title").textContent=dot(it.title);
-  document.getElementById("meta").textContent=it.source?dot(it.source):"";
+  {const st=stampText(it);
+   document.getElementById("meta").innerHTML=
+     (it.source?String(dot(it.source)).replace(/&/g,"&amp;").replace(/</g,"&lt;"):"")
+     +(st?' <span class="stamp">('+st+')</span>':"");}
   document.getElementById("legend").innerHTML=legendHTML(it);
   if(it.vizType==="bar"||it.vizType==="stacked_bar_h"){
     const box=document.querySelector(".chartbox");
