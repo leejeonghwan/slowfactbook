@@ -29,6 +29,7 @@ run() {                     # 하나가 엎어져도 나머지는 돈다
 
 run "한국갤럽"            python3 scripts/gallup_update.py --apply
 run "한국갤럽 주간"       python3 scripts/gallup_weekly.py --apply
+run "한국갤럽 부동산"     python3 scripts/gallup_realestate.py --apply
 run "리얼미터 주간"       python3 scripts/realmeter_weekly.py --apply
 run "전력거래소"          python3 scripts/epsis_update.py --apply
 run "오피넷 기름값"       python3 scripts/opinet_update.py --apply
