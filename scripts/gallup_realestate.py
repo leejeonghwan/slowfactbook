@@ -138,7 +138,9 @@ def main():
     else:
         doc["items"].append(item)
     if a.apply:
-        json.dump(doc, open(mp, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+        with open(mp, "w", encoding="utf-8") as fh:
+            json.dump(doc, fh, ensure_ascii=False, indent=1)
+            fh.write("\n")
         print("-> data/manual.json 에 반영했습니다. (%d시점)" % len(keys))
     else:
         print("\n(미리보기입니다. 반영하려면 --apply)")
