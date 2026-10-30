@@ -45,10 +45,12 @@ jobs:
           restore-keys: factbook-cache-
 
       - name: API 차트 최신값 수집
+        if: github.event_name != 'push'
         run: python scripts/build_api_charts.py
 
       # 어댑터는 하나가 엎어져도 나머지는 돌아야 한다. 실패하면 그 차트만 직전 값을 유지한다.
       - name: 어댑터 일괄 갱신
+        if: github.event_name != 'push'
         run: |
           run() { echo "──── $1"; shift; "$@" || echo "   (실패 — 기존 값 유지)"; }
           run "확정 매칭 차트"      python scripts/refresh_charts.py --apply
@@ -77,6 +79,7 @@ jobs:
           run "지수와 시세"         python scripts/market_update.py --apply
 
       - name: 갱신분 커밋
+        if: github.event_name != 'push'
         run: |
           git config user.name "slowfactbook-bot"
           git config user.email "actions@users.noreply.github.com"
@@ -116,7 +119,9 @@ jobs:
           # 서버에서 사라진 차트까지 지우려면 저장소 변수 SLOWNEWS_DELETE 를 1 로 둔다.
           del=""
           [ "$MIRROR_DELETE" = "1" ] && del="--delete"
-          rsync -az --stats $del \
+          # 올릴 때부터 권한을 준다. 새로 생긴 파일이 좁은 권한으로 올라가면
+          # 웹서버가 못 읽어, 목차에는 뜨는데 차트 페이지만 안 열린다.
+          rsync -az --stats $del --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r \
                 -e "ssh -i ~/.ssh/slowkey -o StrictHostKeyChecking=accept-new" \
                 site/ "$MIRROR_HOST:$MIRROR_PATH/"
           # rsync 로 올라간 파일은 기본 권한이 좁아 웹서버가 못 읽고 403 이 된다.
