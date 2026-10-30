@@ -95,6 +95,35 @@ jobs:
         with:
           path: site
 
+      # slownews.net 미러. Pages 올리기가 끝난 뒤에 돌리고, 실패해도 배포는 계속한다
+      # (미러가 막혔다고 GitHub Pages 까지 멈추면 손해가 크다).
+      # Secrets: SLOWNEWS_HOST, SLOWNEWS_PATH, SLOWNEWS_KEY(개인키 전문).
+      - name: 미러 배포 (slownews.net)
+        continue-on-error: true
+        env:
+          MIRROR_HOST: ${{ secrets.SLOWNEWS_HOST }}
+          MIRROR_PATH: ${{ secrets.SLOWNEWS_PATH }}
+          MIRROR_KEY: ${{ secrets.SLOWNEWS_KEY }}
+          MIRROR_DELETE: ${{ vars.SLOWNEWS_DELETE }}
+        run: |
+          if [ -z "$MIRROR_HOST" ] || [ -z "$MIRROR_PATH" ] || [ -z "$MIRROR_KEY" ]; then
+            echo "미러 설정 없음 — Secrets 에 SLOWNEWS_HOST / SLOWNEWS_PATH / SLOWNEWS_KEY 를 넣으십시오."
+            exit 0
+          fi
+          mkdir -p ~/.ssh
+          printf '%s\n' "$MIRROR_KEY" > ~/.ssh/slowkey
+          chmod 600 ~/.ssh/slowkey
+          # 서버에서 사라진 차트까지 지우려면 저장소 변수 SLOWNEWS_DELETE 를 1 로 둔다.
+          del=""
+          [ "$MIRROR_DELETE" = "1" ] && del="--delete"
+          rsync -az --stats $del \
+                -e "ssh -i ~/.ssh/slowkey -o StrictHostKeyChecking=accept-new" \
+                site/ "$MIRROR_HOST:$MIRROR_PATH/"
+          # rsync 로 올라간 파일은 기본 권한이 좁아 웹서버가 못 읽고 403 이 된다.
+          ssh -i ~/.ssh/slowkey -o StrictHostKeyChecking=accept-new "$MIRROR_HOST" \
+              "chmod -R a+rX '$MIRROR_PATH'"
+          rm -f ~/.ssh/slowkey
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
