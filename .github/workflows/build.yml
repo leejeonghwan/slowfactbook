@@ -83,7 +83,10 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add data/              # 어댑터가 건드리는 등록부와 데이터를 모두 담는다
           if git diff --cached --quiet; then echo "자동 갱신 변경 없음"; else
-            git commit -m "자동 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d')"
+            # [skip ci] 가 없으면 이 푸시가 새 실행을 띄우고, 그 실행이
+            # concurrency(cancel-in-progress) 로 지금 돌고 있는 자신을 취소한다.
+            # 커밋 직후·배포 직전에 잘려서 사이트가 갱신되지 않는다.
+            git commit -m "자동 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d') [skip ci]"
             git pull --rebase || true
             git push || echo "푸시 실패 — 사이트는 그대로 빌드"
           fi
