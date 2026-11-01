@@ -136,6 +136,31 @@ IDEO_NAMES = ["진보", "중도+무응답", "보수"]
 IDEO_ROW = re.compile(r"전\s*체\s+[\d,]+\s+[\d,]+((?:\s+\d+%){8})")
 
 
+# 정당 지지도 월별 통합표의 '전체' 줄. 더불어민주당과 국민의힘 두 칸만 읽는다.
+PARTY_HEAD = re.compile(r"정당 지지도 \(현재 지지하는 정당\)")
+PARTY_TOT = re.compile(r"전체\s+[\d,]+\s+[\d,]+\s+(\d+)%\s+(\d+)%")
+YEAR_RE = re.compile(r"(20\d\d)년")
+
+
+def parse_party_total(path):
+    """{'YYYY-MM': (더불어민주당, 국민의힘)} — 월별 통합표의 전체 응답자 줄."""
+    txt = subprocess.run(["pdftotext", "-layout", path, "-"],
+                         capture_output=True, text=True).stdout
+    out = {}
+    for m in PARTY_HEAD.finditer(txt):
+        b = m.start()
+        year = YEAR_RE.search(txt[max(0, b - 300):b + 300])
+        if not year:
+            continue
+        seg = txt[b:b + 2600]
+        for mo in MONTH_RE.finditer(seg):
+            t = PARTY_TOT.search(seg, mo.end())
+            if t:
+                key = "%s-%02d" % (year.group(1), int(mo.group(1)))
+                out.setdefault(key, (float(t.group(1)), float(t.group(2))))
+    return out
+
+
 def parse_ideology(path):
     """{'2026-01': (진보, 중도+무응답, 보수)} — 주관적 정치 성향 월별 통합표."""
     txt = subprocess.run(["pdftotext", "-layout", path, "-"],
@@ -201,6 +226,53 @@ def main():
     pool = (man["items"] if isinstance(man, dict) else man) + full["items"]
     cache, touched, fail = {}, [], False
     stamp = datetime.datetime.now(KST).strftime("%Y-%m-%d %H:%M")
+
+    # ── c2071 정당 지지율 추이 (월별, 전체 응답자)
+    try:
+        pt = parse_party_total(path)
+    except Exception as e:
+        print("  정당 지지도 월별 통합표를 읽지 못했습니다: %s" % e); pt = {}
+    if pt:
+        it = next((x for x in pool if x.get("id") == "c2071"), None)
+        cur = {**(it or {}), **(ov.get("c2071") or {})}
+        lab = [str(x) for x in (cur.get("labels") or [])]
+        ser = [list(x) for x in (cur.get("series") or [[], []])]
+        # 계열 순서: 0 국민의힘 계열, 1 민주당 계열
+        bad = [y for y in sorted(set(lab) & set(pt))
+               if (ser[1][lab.index(y)] is not None and ser[1][lab.index(y)] != pt[y][0])
+               or (ser[0][lab.index(y)] is not None and ser[0][lab.index(y)] != pt[y][1])]
+        for y in bad:
+            i = lab.index(y)
+            print("  어긋남 c2071 %s: 차트 민주 %s 국힘 %s / 통합표 민주 %s 국힘 %s"
+                  % (y, ser[1][i], ser[0][i], pt[y][0], pt[y][1]))
+        # 2016년 이전은 바른정당·국민의당 등을 더한 '계열' 값이라 통합표와 다르다.
+        # 그 구간은 건드리지 않고, 통합표에 나오는 달만 덮거나 잇는다.
+        for y in sorted(pt):
+            dem, ppp = pt[y]
+            if y in lab:
+                i = lab.index(y); ser[0][i] = ppp; ser[1][i] = dem
+            else:
+                lab.append(y); ser[0].append(ppp); ser[1].append(dem)
+        order = sorted(range(len(lab)), key=lambda i: lab[i])
+        o = ov.setdefault("c2071", {}); o["id"] = "c2071"
+        o["labels"] = [lab[i] for i in order]
+        o["series"] = [[x[i] for i in order] for x in ser]
+        o["source"] = ("한국갤럽 데일리 오피니언 월별 통합. 전국 만 18세 이상 전화조사. "
+                       "단위: %.")
+        o["sourceUrl"] = "https://www.gallup.co.kr/gallupdb/report.asp"
+        o["notes"] = [
+            "한국갤럽 데일리 오피니언의 월별 통합 교차집계표에서 전체 응답자 기준 "
+            "정당 지지도를 읽습니다. 주 단위 조사를 한 달치로 묶은 값입니다.",
+            "2016년 이전 구간은 바른정당과 국민의당처럼 지금은 없는 정당을 더한 "
+            "'계열' 값입니다. 최근 구간은 더불어민주당과 국민의힘 단독 수치여서 "
+            "같은 기준이 아닙니다. 장기 흐름으로만 읽으십시오.",
+            "무당층이 25~30%대여서 두 계열을 더해도 100이 되지 않습니다.",
+        ]
+        o["updated"] = stamp
+        touched.append(("c2071", it or {"slide": "slide-563", "title": "정당 지지율 추이"},
+                        sorted(pt), len(o["labels"])))
+        print("  c2071 정당 지지율 추이: 통합표 %d개월 반영, 마지막 %s (민주 %s, 국힘 %s)"
+              % (len(pt), max(pt), pt[max(pt)][0], pt[max(pt)][1]))
 
     for cid, section, keys, col in CHARTS:
         if section not in cache:
