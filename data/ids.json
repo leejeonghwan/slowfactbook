@@ -4735,5 +4735,9 @@
  "S\u001fmanual-reading-rate-by-income-trend\u001f가구소득별 독서율 추이": "c2322",
  "미디어와 저널리즘\u001f가구소득별 독서율 추이": "c2322",
  "S\u001fmanual-ott-time-by-age\u001f연령대별 OTT 이용 시간": "c2323",
- "미디어와 저널리즘\u001f연령대별 OTT 이용 시간": "c2323"
+ "미디어와 저널리즘\u001f연령대별 OTT 이용 시간": "c2323",
+ "S\u001fmanual-ott-time-dist-by-age\u001f연령대별 OTT 이용 시간 분포": "c2324",
+ "미디어와 저널리즘\u001f연령대별 OTT 이용 시간 분포": "c2324",
+ "S\u001fmanual-reading-vs-ott\u001f연령대별 독서율과 OTT 이용 시간": "c2325",
+ "미디어와 저널리즘\u001f연령대별 독서율과 OTT 이용 시간": "c2325"
 }
