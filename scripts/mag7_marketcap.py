@@ -160,10 +160,22 @@ def main():
             row.append(vals[-1] if vals else None)
         series.append(row)
 
-    for (name, _, _), row in zip(FIRMS, series):
-        got = [v for v in row if v is not None]
-        print("  %-8s %s 분기 %3d개, 최근 %.3f조 달러 (%s)"
-              % (name, "", len(got), got[-1], tags[name]))
+    TAGNAME = {"CommonStockSharesOutstanding": "보통주발행주식수",
+               "EntityCommonStockSharesOutstanding": "표지 기재 발행주식수",
+               "WeightedAverageNumberOfSharesOutstandingBasic": "가중평균주식수"}
+    notes = ["회사별 발행주식수 출처와 마지막으로 반영한 분기입니다."]
+    for (name, sym, _), row in zip(FIRMS, series):
+        got = [(labels[i], v) for i, v in enumerate(row) if v is not None]
+        print("  %-8s 분기 %3d개, 최근 %.3f조 달러 (%s)"
+              % (name, len(got), got[-1][1], tags[name]))
+        notes.append("%s(%s) — %s 기준. %s ~ %s, %d분기. 최근 %.2f조 달러."
+                     % (name, sym, TAGNAME.get(tags[name], tags[name]),
+                        got[0][0], got[-1][0], len(got), got[-1][1]))
+    notes.append("가중평균주식수를 쓴 회사는 분기 평균이라 기말 기준보다 조금 "
+                 "작게 잡힙니다. 자사주를 많이 사들인 회사일수록 차이가 큽니다.")
+    notes.append("액면분할은 소급 반영했습니다. 야후 주가가 분할을 소급 반영한 "
+                 "값이라, 각 분기 뒤에 일어난 분할 배수를 주식수에 곱해 기준을 "
+                 "맞췄습니다.")
     print("  가로축 %s ~ %s (%d분기)" % (labels[0], labels[-1], len(labels)))
 
     item = {
@@ -177,6 +189,7 @@ def main():
                    "그 경우 자사주 매입분만큼 기말 기준보다 조금 작게 잡힌다. "
                    "단위: 조 달러."),
         "sourceUrl": "https://www.sec.gov/edgar/sec-api-documentation",
+        "notes": notes,
         "vizType": "line",
         "unit": "조 달러",
         "labels": labels,

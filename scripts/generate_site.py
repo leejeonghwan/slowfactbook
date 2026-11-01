@@ -86,6 +86,10 @@ def load_items(data_dir):
                 "updated": it.get("updated", ""),
                 # 사람이 손본 날짜. 자료 갱신일(updated)과 뜻이 달라 따로 싣는다.
                 "revised": it.get("revised", ""),
+                # 비고. 출처 한 줄에 다 적기 어려운 메모를 따로 접어 둔다
+                # (어느 태그를 썼는지, 어느 해부터 기준이 바뀌었는지 같은 것).
+                # 문자열 하나 또는 ["...", "..."] 로 적는다.
+                "notes": it.get("notes") or "",
             }
             # 범례를 아예 감춘다(overrides 의 "hideLegend": true).
             # 켠 차트에만 키를 붙인다. 늘 붙이면 데이터 파일이 전부 다시 쓰인다.
@@ -1028,11 +1032,13 @@ h1.title{font-size:45px;font-weight:800;margin:0 0 6px;letter-spacing:-1px;line-
     <button class="embed-btn" id="csvBtn">⬇ 데이터(CSV)</button>
     <button class="embed-btn" id="copyBtn">⧉ 데이터 복사</button>
     <button class="embed-btn" id="tblBtn">▾ 데이터 표</button>
+    <button class="embed-btn" id="noteBtn" hidden>📝 비고</button>
     <button class="embed-btn" id="srcBtn" hidden>🔗 출처 링크</button>
     <button class="embed-btn" id="embedBtn">⧉ 임베드 코드 복사</button>
   </div>
   <p class="licnote">출처를 밝히면 영리 목적을 포함해 자유롭게 쓸 수 있습니다. <a href="rights.html">이용 범위</a> · CC BY 4.0</p>
   <div class="datawrap" id="datawrap" hidden><div class="datascroll"><table id="datatable"></table></div></div>
+  <div class="srcwrap" id="notewrap" hidden></div>
   <div class="srcwrap" id="srcwrap" hidden></div>
 </main>
 <style>
@@ -1041,6 +1047,7 @@ h1.title{font-size:45px;font-weight:800;margin:0 0 6px;letter-spacing:-1px;line-
 /* 출처 링크. 상단 설명줄이 두꺼워지지 않게 버튼으로 접어 둔다. */
 .srcwrap{margin-top:14px;border:1px solid var(--line);border-radius:10px;background:#fff;padding:12px 14px;font-size:13px}
 .srcwrap a{display:block;color:var(--blue);word-break:break-all;line-height:1.7;text-decoration:none}
+#notewrap{color:#444;line-height:1.75;white-space:pre-wrap;word-break:keep-all}
 .srcwrap a:hover{text-decoration:underline}
 #datatable{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
 #datatable th{position:sticky;top:0;background:#f4f4f2;color:#555;font-size:11.5px;font-weight:600;
@@ -1243,6 +1250,17 @@ document.getElementById("copyBtn").onclick=()=>{
 function srcLinks(it){
   return String((it&&it.sourceUrl)||"").split(/\s+/).filter(u=>/^https?:\/\//.test(u));
 }
+function noteText(it){
+  const n=(it&&it.notes)||"";
+  return Array.isArray(n)? n.filter(Boolean).join("\n") : String(n);
+}
+document.getElementById("noteBtn").onclick=()=>{
+  const w=document.getElementById("notewrap"),b=document.getElementById("noteBtn");
+  if(!w.hidden){w.hidden=true;b.textContent="📝 비고";return;}
+  w.textContent=noteText(window.CUR);
+  w.hidden=false;b.textContent="▴ 비고 접기";
+  w.scrollIntoView({behavior:"smooth",block:"nearest"});
+};
 document.getElementById("srcBtn").onclick=()=>{
   const w=document.getElementById("srcwrap"),b=document.getElementById("srcBtn");
   if(!w.hidden){w.hidden=true;b.textContent="🔗 출처 링크";return;}
@@ -1267,6 +1285,7 @@ fetch("cats.json").then(r=>r.json()).then(cats=>{
 loadItem(id).then(it=>{
   window.CUR=it;
   document.getElementById("srcBtn").hidden = srcLinks(it).length===0;
+  document.getElementById("noteBtn").hidden = !noteText(it);
   document.getElementById("tag").innerHTML='<a href="index.html?cat='+encodeURIComponent(it.category)+'">'+dot(it.category)+'</a>';
   document.getElementById("title").textContent=dot(it.title);
   {const st=stampText(it);
