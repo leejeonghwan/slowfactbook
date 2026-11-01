@@ -33,6 +33,11 @@ PDF_RE = re.compile(r"https://www\.gallup\.co\.kr/dir/GallupKoreaDaily/"
 # '전체   1,001  잘하고 있다  40%' / 다음 줄 '잘못하고 있다  50%'
 POS_RE = re.compile(r"전체\s+[\d,]+\s+잘하고 있다\s+(\d+)%")
 NEG_RE = re.compile(r"잘못하고 있다\s+(\d+)%")
+# 정당 지지도. '주요 정당 지지도 표준오차' 표의 전체 응답자 줄을 읽는다.
+# 대통령 평가 표에도 '전체 1,000' 줄이 있어서, 그 머리글 뒤부터 찾는다.
+PARTY_HEAD = "주요 정당 지지도 표준오차"
+DEM_RE = re.compile(r"전체\s+[\d,]+\s+더불어민주당\s+(\d+)%")
+PPP_RE = re.compile(r"국민의힘\s+(\d+)%")
 KST = datetime.timezone(datetime.timedelta(hours=9))
 
 
@@ -72,6 +77,36 @@ def rates(no, date, url):
     return float(mp.group(1)), float(mn.group(1))
 
 
+def parties(no, date, url):
+    """한 호의 전체 응답자 기준 더불어민주당·국민의힘 지지율."""
+    os.makedirs(CACHE, exist_ok=True)
+    path = os.path.join(CACHE, f"GallupKoreaDailyOpinion_{no}({date}).pdf")
+    if not os.path.exists(path):
+        open(path, "wb").write(_get(url))
+    txt = subprocess.run(["pdftotext", "-layout", path, "-"],
+                         capture_output=True, text=True, timeout=180).stdout
+    head = txt.find(PARTY_HEAD)
+    if head < 0:
+        raise RuntimeError(f"{no}호: 정당 지지도 표를 찾지 못했습니다")
+    md = DEM_RE.search(txt, head)
+    if not md:
+        raise RuntimeError(f"{no}호: 더불어민주당 지지율을 찾지 못했습니다")
+    mk = PPP_RE.search(txt, md.end())
+    if not mk:
+        raise RuntimeError(f"{no}호: 국민의힘 지지율을 찾지 못했습니다")
+    return float(md.group(1)), float(mk.group(1))
+
+
+def read(kind, no, date, url):
+    """차트 종류에 맞는 계열 값 묶음."""
+    if kind == "approval_party":
+        pos, _ = rates(no, date, url)
+        dem, ppp = parties(no, date, url)
+        return [pos, dem, ppp]
+    pos, neg = rates(no, date, url)
+    return [pos, neg]
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--apply", action="store_true")
@@ -103,14 +138,15 @@ def main():
         if last not in found:
             print(f"  - {cid} {title}: 마지막 호({last})가 목록에서 내려가 대조할 수 없습니다")
             continue
+        kind = spec.get("kind", "approval")
         try:
-            pos, neg = rates(last, *found[last])
+            got = read(kind, last, *found[last])
         except Exception as e:
             print(f"  - {cid} {title}: {e}"); continue
-        have = (it["series"][0][-1], it["series"][1][-1])
-        if (pos, neg) != have:
+        have = [s[-1] for s in it["series"][:len(got)]]
+        if got != have:
             print(f"  - {cid} {title}: {last}호 대조 어긋남 "
-                  f"차트 {have} vs 원문 ({pos}, {neg}) — 손대지 않습니다")
+                  f"차트 {have} vs 원문 {got} — 손대지 않습니다")
             continue
 
         new = sorted(n for n in found if n > last)
@@ -124,17 +160,19 @@ def main():
         for n in new:
             date, url = found[n]
             try:
-                p, q = rates(n, date, url)
+                vals = read(kind, n, date, url)
             except Exception as e:
                 print(f"  - {cid} {title}: {e} — 여기서 멈춥니다"); break
             labels.append(f"{date[:4]}-{date[4:6]}")
-            series[0].append(p); series[1].append(q)
-            added.append((n, date, p, q))
+            for j, v in enumerate(vals):
+                series[j].append(v)
+            added.append((n, date, vals))
             last = n
         if not added:
             continue
-        for n, d, p, q in added:
-            print(f"  + {cid} {title}: {n}호({d[:4]}-{d[4:6]}-{d[6:]}) 긍정 {p:.0f} 부정 {q:.0f}")
+        for n, d, vals in added:
+            print(f"  + {cid} {title}: {n}호({d[:4]}-{d[4:6]}-{d[6:]}) "
+                  + " ".join("%.0f" % v for v in vals))
         if a.apply:
             o = ov.setdefault(cid, {}); o["id"] = cid
             o["labels"] = labels; o["series"] = series; o["updated"] = stamp
