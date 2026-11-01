@@ -33,6 +33,15 @@ CHARTS = {
 }
 SEX = [("2", "여성"), ("1", "남성")]     # 차트의 계열 순서
 
+# c2046 남녀 월 임금 총액. 같은 조사의 같은 표에서 '월임금총액'을 읽는다.
+# 2009년부터만 다시 깐다. 1993~2008년은 옛 표의 '월급여총액'이라 정의가 달라
+# (특별급여 처리가 다르다) 이어 붙이면 어긋난다. 그 구간은 손대지 않는다.
+WAGE_CHART = "c2046"
+WAGE_FROM = "2009"
+WAGE_ITM = "16118DD_10"
+# c2046 은 차트 계열이 남성 먼저다. 근속 차트(여성 먼저)와 순서가 반대라 따로 둔다.
+WAGE_SEX = [("1", "남성"), ("2", "여성")]
+
 
 def pull(tbl, itm, age, s, e, key):
     url = ("https://kosis.kr/openapi/Param/statisticsParameterData.do?method=getList"
@@ -62,6 +71,12 @@ def series(age, key):
     return merged
 
 
+def wage(key):
+    """{'1': {연도: 만원}, '2': {...}} — 2009년 이후 월임금총액."""
+    out = pull("DT_118N_PAY0004", WAGE_ITM, "00", WAGE_FROM, "2035", key)
+    return {sx: {y: round(v / 10, 1) for y, v in m.items()} for sx, m in out.items()}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--apply", action="store_true")
@@ -82,7 +97,7 @@ def main():
             continue
         if isinstance(doc, dict) and "items" in doc:
             for it in doc["items"]:
-                if it.get("id") in CHARTS:
+                if it.get("id") in CHARTS or it.get("id") == WAGE_CHART:
                     full[it["id"]] = it
 
     touched = 0
@@ -135,6 +150,64 @@ def main():
             "updated": datetime.datetime.now(KST).strftime("%Y-%m-%d %H:%M"),
         }
         touched += 1
+
+    # ── c2046 남녀 월 임금 총액
+    w = wage(key)
+    if len(w) == 2:
+        cur = {**full.get(WAGE_CHART, {}), **(ov.get(WAGE_CHART) or {})}
+        lab = [str(x) for x in (cur.get("labels") or [])]
+        ser = [list(s) for s in (cur.get("series") or [[], []])]
+        bad = 0
+        for j, (code, _) in enumerate(WAGE_SEX):
+            for i, y in enumerate(lab):
+                if y < WAGE_FROM or i >= len(ser[j]):
+                    continue
+                v, g = ser[j][i], w[code].get(y)
+                if v is None or g is None:
+                    continue
+                if abs(g - v) > max(0.5, abs(v) * 0.004):
+                    print("  어긋남 %s %s: 차트 %s / KOSIS %s" % (WAGE_CHART, y, v, g))
+                    bad += 1
+        if bad:
+            print("  %s 는 건드리지 않습니다(%d군데)." % (WAGE_CHART, bad))
+        else:
+            years = sorted(set(lab) | set(w["1"]) | set(w["2"]))
+            keep = {sx: {y: ser[j][lab.index(y)] for y in lab
+                         if y < WAGE_FROM and lab.index(y) < len(ser[j])}
+                    for j, (sx, _) in enumerate(WAGE_SEX)}
+            new = []
+            for j, (sx, _) in enumerate(WAGE_SEX):
+                new.append([(w[sx].get(y) if y >= WAGE_FROM else keep[sx].get(y))
+                            for y in years])
+            print("  %s 남녀 월 임금 총액: %s ~ %s (%d해), 최근 여성 %s 남성 %s"
+                  % (WAGE_CHART, years[0], years[-1], len(years),
+                     w["2"].get(years[-1]), w["1"].get(years[-1])))
+            ov[WAGE_CHART] = {
+                **(ov.get(WAGE_CHART) or {}), "id": WAGE_CHART,
+                "title": "남녀 월 임금 총액", "unit": "만 원",
+                "source": ("고용노동부 고용형태별근로실태조사. 상용근로자 5인 이상 사업체의 "
+                           "월 임금총액. 단위: 만 원."),
+                "sourceUrl": ("https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_PAY0004 "
+                              "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_PAY0004"),
+                "labels": years, "series": new,
+                "seriesNames": ["남성", "여성"],
+                "seriesColors": ["#2a5ca8", "#c0322f"],
+                "notes": [
+                    "고용노동부 고용형태별근로실태조사(옛 임금구조기본통계조사)입니다. "
+                    "상용근로자 5인 이상 사업체가 대상이라 5인 미만 사업장과 자영업자는 "
+                    "빠집니다.",
+                    "월 임금총액은 정액급여와 초과급여에 전년도 연간특별급여를 열두 달로 "
+                    "나눈 몫을 더한 값입니다. 상여금이 많은 해에는 그만큼 올라갑니다.",
+                    "2009년부터는 KOSIS 표에서 직접 받아 옵니다. 1993~2008년은 옛 표의 "
+                    "'월급여총액' 기준이라 특별급여 처리가 달라 2009년 앞뒤를 바로 잇기 "
+                    "어렵습니다. 장기 추세로만 읽으십시오.",
+                    "같은 조사의 '전체근로자' 집계(비정규직 포함)는 이보다 낮습니다. "
+                    "2025년 남성 450.3만원, 여성 295.9만원입니다. 다른 기사에서 본 숫자와 "
+                    "다르면 어느 쪽 모집단인지 확인해야 합니다.",
+                ],
+                "updated": datetime.datetime.now(KST).strftime("%Y-%m-%d %H:%M"),
+            }
+            touched += 1
 
     if a.apply and touched:
         with open(ovp, "w", encoding="utf-8") as fh:
