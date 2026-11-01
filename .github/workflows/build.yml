@@ -65,6 +65,7 @@ jobs:
           run "KOSIS 차트 갱신"     python scripts/refresh_api.py
           run "평균 근속연수"      python scripts/tenure.py --apply
           run "임금과 근로시간"    python scripts/labor_wage.py --apply
+          run "산업재해"          python scripts/safety.py --apply
           run "KB부동산"            python scripts/kbapi_update.py --apply
           run "한국거래소"          python scripts/krx_update.py --apply
           run "한국은행 ECOS"       python scripts/ecos_update.py --apply
