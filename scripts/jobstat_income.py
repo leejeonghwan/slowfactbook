@@ -12,9 +12,9 @@
   DT_1EP_2001  기업규모별 소득
   DT_1EP_2014  기업규모별 연령대별 소득
 
-네 표 모두 '가장 최근 한 해'만 담는다. 그래서 통째로 다시 까는 대신 표에
-담긴 해를 차트에 이어 붙인다. 이미 들어 있으면 값이 맞는지만 보고 넘어가고,
-어긋나면 그 차트는 건드리지 않는다.
+네 표 모두 2016년부터 담고 있다. 처음에는 newEstPrdCnt=1 로 한 해만 받아
+'한 해치만 있는 표'로 잘못 알았다. 지금은 전 구간을 받아 겹치는 해를 전수
+대조하고, 어긋나면 그 차트는 건드리지 않는다.
 
 연도별 추이 차트(c0184, c0185, c0186, c0191)는 해마다 한 점씩 늘고,
 연령대별 스냅샷(c0188)은 해가 바뀌면 통째로 갈린다.
@@ -66,13 +66,14 @@ REGISTRY = {
 def pull(tbl, itm, o1, o2, key):
     url = ("https://kosis.kr/openapi/Param/statisticsParameterData.do?method=getList"
            "&apiKey=%s&format=json&jsonVD=Y&orgId=101&tblId=%s&prdSe=Y&itmId=%s+"
-           "&objL1=%s&objL2=%s&newEstPrdCnt=1" % (key, tbl, itm, o1, o2))
+           "&objL1=%s&objL2=%s&startPrdDe=2010&endPrdDe=2035" % (key, tbl, itm, o1, o2))
     with urllib.request.urlopen(url, timeout=120) as r:
         doc = json.loads(r.read().decode("utf-8"))
     if isinstance(doc, dict):
         return [], None
     rows = [x for x in doc if x.get("DT")]
-    return rows, (rows[0]["PRD_DE"] if rows else None)
+    years = sorted({x["PRD_DE"] for x in rows})
+    return rows, (years[-1] if years else None)
 
 
 def main():
@@ -111,41 +112,38 @@ def main():
                     updated=datetime.datetime.now(KST).strftime("%Y-%m-%d %H:%M"))
 
         if sp["kind"] == "year":
-            vals = []
+            got = []
             for col, nm in sp["keys"]:
-                v = [float(x["DT"]) for x in rows if x.get(col) == nm]
-                vals.append(round(v[0], 1) if v else None)
-            if None in vals:
+                got.append({x["PRD_DE"]: round(float(x["DT"]), 1)
+                            for x in rows if x.get(col) == nm})
+            if any(not g for g in got):
                 print("  %s 계열을 못 찾았습니다." % cid)
                 continue
             lab = [str(x) for x in (cur.get("labels") or [])]
             ser = [list(s) for s in (cur.get("series") or [])]
-            if len(ser) != len(vals):
-                print("  %s 계열 수가 다릅니다." % cid)
+            bad = 0
+            for j, g in enumerate(got):
+                if j >= len(ser):
+                    break
+                for y, v in zip(lab, ser[j]):
+                    k = g.get(y)
+                    if v is None or k is None:
+                        continue
+                    if abs(k - v) > max(1.0, abs(v) * 0.01):
+                        print("  어긋남 %s %s: 차트 %s / KOSIS %s" % (cid, y, v, k))
+                        bad += 1
+            if bad:
+                print("  %s 는 건드리지 않습니다(%d군데)." % (cid, bad))
                 continue
-            if year in lab:
-                i = lab.index(year)
-                bad = [j for j, v in enumerate(vals)
-                       if ser[j][i] is not None and abs(ser[j][i] - v) > max(1.0, abs(v) * 0.01)]
-                if bad:
-                    for j in bad:
-                        print("  어긋남 %s %s: 차트 %s / KOSIS %s" % (cid, year, ser[j][i], vals[j]))
-                    print("  %s 는 건드리지 않습니다." % cid)
-                    continue
-                ov[cid] = {**(ov.get(cid) or {}), **meta}
-                print("  %s 이미 %s년 반영됨 (출처와 비고만 갱신)" % (cid, year))
-                touched += 1
-                continue
-            lab.append(year)
-            for j, v in enumerate(vals):
-                ser[j].append(v)
-            order = sorted(range(len(lab)), key=lambda i: lab[i])
-            ov[cid] = {**(ov.get(cid) or {}), **meta,
-                       "labels": [lab[i] for i in order],
-                       "series": [[s[i] for i in order] for s in ser]}
-            print("  %s 에 %s년 추가 (%s)" % (cid, year, vals))
+            years = sorted(set().union(*[set(g) for g in got]))
+            ov[cid] = {**(ov.get(cid) or {}), **meta, "labels": years,
+                       "series": [[g.get(y) for y in years] for g in got]}
+            print("  %s %s ~ %s (%d해) — 겹치는 구간 일치"
+                  % (cid, years[0], years[-1], len(years)))
             touched += 1
         else:
+            # 전 구간을 받아 오므로 가장 최근 해만 골라야 한다.
+            rows = [x for x in rows if x["PRD_DE"] == year]
             big, sml = [], []
             for nm, _ in AGE:
                 b = [float(x["DT"]) for x in rows if x.get("C1_NM") == nm.replace("20대", "20~29세")
