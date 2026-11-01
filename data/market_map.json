@@ -127,5 +127,110 @@
   "start": "2025-06-04",
   "note": "이재명 정부 출범 이후 코스피 지수(일별)",
   "sourceUrl": "https://finance.yahoo.com/quote/%5EKS11/"
+ },
+ "c2327": {
+  "symbol": "AAPL",
+  "interval": "1d",
+  "note": "애플 주가 (야후 파이낸스)",
+  "sourceUrl": "https://finance.yahoo.com/quote/AAPL/",
+  "start": "2025-01-01",
+  "years": 3
+ },
+ "c2328": {
+  "symbol": "AAPL",
+  "interval": "1mo",
+  "note": "애플 주가 (월간) (야후 파이낸스)",
+  "sourceUrl": "https://finance.yahoo.com/quote/AAPL/",
+  "years": 45
+ },
+ "c2329": {
+  "symbol": "MSFT",
+  "interval": "1d",
+  "note": "마이크로소프트 주가 (야후 파이낸스)",
+  "sourceUrl": "https://finance.yahoo.com/quote/MSFT/",
+  "start": "2025-01-01",
+  "years": 3
+ },
+ "c2330": {
+  "symbol": "MSFT",
+  "interval": "1mo",
+  "note": "마이크로소프트 주가 (월간) (야후 파이낸스)",
+  "sourceUrl": "https://finance.yahoo.com/quote/MSFT/",
+  "years": 45
+ },
+ "c2331": {
+  "symbol": "GOOGL",
+  "interval": "1d",
+  "note": "알파벳 주가 (야후 파이낸스)",
+  "sourceUrl": "https://finance.yahoo.com/quote/GOOGL/",
+  "start": "2025-01-01",
+  "years": 3
+ },
+ "c2332": {
+  "symbol": "GOOGL",
+  "interval": "1mo",
+  "note": "알파벳 주가 (월간) (야후 파이낸스)",
+  "sourceUrl": "https://finance.yahoo.com/quote/GOOGL/",
+  "years": 45
+ },
+ "c2333": {
+  "symbol": "AMZN",
+  "interval": "1d",
+  "note": "아마존 주가 (야후 파이낸스)",
+  "sourceUrl": "https://finance.yahoo.com/quote/AMZN/",
+  "start": "2025-01-01",
+  "years": 3
+ },
+ "c2334": {
+  "symbol": "AMZN",
+  "interval": "1mo",
+  "note": "아마존 주가 (월간) (야후 파이낸스)",
+  "sourceUrl": "https://finance.yahoo.com/quote/AMZN/",
+  "years": 45
+ },
+ "c2335": {
+  "symbol": "NVDA",
+  "interval": "1d",
+  "note": "엔비디아 주가 (야후 파이낸스)",
+  "sourceUrl": "https://finance.yahoo.com/quote/NVDA/",
+  "start": "2025-01-01",
+  "years": 3
+ },
+ "c2336": {
+  "symbol": "NVDA",
+  "interval": "1mo",
+  "note": "엔비디아 주가 (월간) (야후 파이낸스)",
+  "sourceUrl": "https://finance.yahoo.com/quote/NVDA/",
+  "years": 45
+ },
+ "c2337": {
+  "symbol": "META",
+  "interval": "1d",
+  "note": "메타 주가 (야후 파이낸스)",
+  "sourceUrl": "https://finance.yahoo.com/quote/META/",
+  "start": "2025-01-01",
+  "years": 3
+ },
+ "c2338": {
+  "symbol": "META",
+  "interval": "1mo",
+  "note": "메타 주가 (월간) (야후 파이낸스)",
+  "sourceUrl": "https://finance.yahoo.com/quote/META/",
+  "years": 45
+ },
+ "c2339": {
+  "symbol": "TSLA",
+  "interval": "1d",
+  "note": "테슬라 주가 (야후 파이낸스)",
+  "sourceUrl": "https://finance.yahoo.com/quote/TSLA/",
+  "start": "2025-01-01",
+  "years": 3
+ },
+ "c2340": {
+  "symbol": "TSLA",
+  "interval": "1mo",
+  "note": "테슬라 주가 (월간) (야후 파이낸스)",
+  "sourceUrl": "https://finance.yahoo.com/quote/TSLA/",
+  "years": 45
  }
 }

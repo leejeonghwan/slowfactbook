@@ -53,14 +53,31 @@ def fetch(symbol, interval, years=20):
                 raise
             time.sleep(2 + attempt * 3)
     res = doc["chart"]["result"][0]
-    off = res["meta"].get("gmtoffset") or 0
     ts = res["timestamp"]
     close = res["indicators"]["quote"][0]["close"]
+    # 야후가 주는 시각은 거래소 현지 기준의 캔들 시작이다. 전에는 meta 의
+    # gmtoffset 을 더했는데, 그 값은 '지금'의 시차라서 서머타임이 있는 미국
+    # 거래소는 과거 달이 한 칸씩 밀렸다(애플 2020년 8월 말 종가가 7월 칸에
+    # 들어갔다). 한국은 서머타임이 없어 드러나지 않았다. 거래소 시간대로
+    # 제대로 환산한다.
+    tz = None
+    name = res["meta"].get("exchangeTimezoneName")
+    if name:
+        try:
+            from zoneinfo import ZoneInfo
+            tz = ZoneInfo(name)
+        except Exception:
+            tz = None
+    if tz is None:                       # 시간대를 모르면 예전 방식으로 떨어진다
+        off = res["meta"].get("gmtoffset") or 0
+        tz, shift = datetime.timezone.utc, off
+    else:
+        shift = 0
     out = {}
     for t, c in zip(ts, close):
         if c is None:
             continue
-        d = datetime.datetime.fromtimestamp(t + off, datetime.timezone.utc)
+        d = datetime.datetime.fromtimestamp(t + shift, tz)
         out[key_of(d, interval)] = round(c, 2)
     return out
 
