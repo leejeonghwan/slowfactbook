@@ -50,6 +50,7 @@ run "인터넷트렌드"        python3 scripts/ittrend_update.py --apply
 run "역대 정부 누적 물가" python3 scripts/admin_cpi.py --apply
 run "FRED"                python3 scripts/fred_update.py --apply
 run "지수·시세"           python3 scripts/market_update.py --apply
+run "매그니피센트 7"      python3 scripts/mag7_marketcap.py --apply
 
 echo "──── 빌드"
 python3 scripts/build.py || { echo "빌드 실패 — 여기서 멈춘다"; exit 1; }
