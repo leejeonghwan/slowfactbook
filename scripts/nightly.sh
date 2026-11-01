@@ -36,10 +36,12 @@ run "공항 여객"           python3 scripts/airport_update.py --apply
 run "미국 고용(BLS)"      python3 scripts/bls_update.py --apply
 run "KOSIS API 트랙"      python3 scripts/build_api_charts.py
 run "KOSIS 차트 갱신"     python3 scripts/refresh_api.py
+run "평균 근속연수"      python3 scripts/tenure.py --apply
 run "다문화 혼인과 출생"    python3 scripts/multicultural.py --apply
 run "KB부동산"            python3 scripts/kbapi_update.py --apply
 run "한국거래소"          python3 scripts/krx_update.py --apply
 run "한국은행 ECOS"       python3 scripts/ecos_update.py --apply
+run "주택시총과 출산율"   python3 scripts/house_gdp_tfr.py --apply
 run "한국과 미국 기준금리"  python3 scripts/policy_rates.py --apply
 run "성장기여도"          python3 scripts/gdp_contrib.py --apply
 run "반도체 수출 비중"    python3 scripts/semi_share.py --apply

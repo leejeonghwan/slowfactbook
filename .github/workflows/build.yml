@@ -63,9 +63,11 @@ jobs:
           run "공항 여객"           python scripts/airport_update.py --apply
           run "미국 고용(BLS)"      python scripts/bls_update.py --apply
           run "KOSIS 차트 갱신"     python scripts/refresh_api.py
+          run "평균 근속연수"      python scripts/tenure.py --apply
           run "KB부동산"            python scripts/kbapi_update.py --apply
           run "한국거래소"          python scripts/krx_update.py --apply
           run "한국은행 ECOS"       python scripts/ecos_update.py --apply
+          run "주택시총과 출산율"   python scripts/house_gdp_tfr.py --apply
           run "한국과 미국 기준금리"  python scripts/policy_rates.py --apply
           run "반도체 수출 비중"    python scripts/semi_share.py --apply
           run "성장기여도"          python scripts/gdp_contrib.py --apply
