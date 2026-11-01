@@ -79,6 +79,10 @@ def load_items(data_dir):
                 # 계열이 하나인 막대 그래프에서 특정 라벨의 막대만 색을 바꿀 때
                 # 쓴다(overrides 의 "labelColors": {"KOR": "#c0322f"}).
                 "labelColors": it.get("labelColors"),
+                # 값의 부호로 막대 색을 가른다(overrides 의
+                # "signColors": {"plus":"#2a5ca8","minus":"#c0322f"}).
+                # 증감률처럼 0 을 넘나드는 계열에 쓴다. 계열이 하나일 때만 듣는다.
+                "signColors": it.get("signColors"),
                 # 띄엄띄엄 찍힌 전망선을 이어 그릴지 (overrides 의 "spanGaps").
                 "spanGaps": bool(it.get("spanGaps")),
                 # 콤보에서 막대를 쌓을지 (overrides 의 "stacked").
@@ -771,6 +775,12 @@ function buildChart(canvas,it){
   // 막대 하나만 짚어 보여 주려고 계열을 둘로 쪼개 놓은 그래프가 많았다. 그러면
   // 범례에 뜻 없는 이름이 하나 더 생긴다. 계열은 하나로 두고 그 라벨의 막대만
   // 색을 바꾼다 — overrides 의 "labelColors": {"KOR":"#c0322f"}.
+  // 오르면 한 색, 내리면 다른 색. 0 은 상승 쪽으로 둔다.
+  if(it.signColors && ds.length===1){
+    const up=it.signColors.plus||"#2a5ca8", dn=it.signColors.minus||"#c0322f";
+    const arr=(ds[0].data||[]).map(v=>(v==null?up:(v<0?dn:up)));
+    ds[0].backgroundColor=arr; ds[0].borderColor=arr;
+  }
   if(it.labelColors && ds.length===1){
     const lc=it.labelColors, base=CS[0];
     const key=l=>String(l==null?"":l).trim().replace(/[.·]+$/,"");
