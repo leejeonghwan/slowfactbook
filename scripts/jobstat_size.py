@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""종사자 규모별 남녀 일자리(c0192 수, c0197 비율).
+"""종사자 규모별 남녀 일자리(c0192).
 
   python3 scripts/jobstat_size.py            # 미리보기
   python3 scripts/jobstat_size.py --apply
 
 국가데이터처 일자리행정통계, KOSIS 표 DT_1EP_3021(종사자규모별 성별 일자리).
-2016년부터 담겨 있고 해마다 한 해씩 는다. 가장 최근 해로 두 장을 다시 깐다.
+2016년부터 담겨 있고 해마다 한 해씩 는다. 가장 최근 해로 다시 깐다.
+
+비율 차트(c0197, c0199)는 내렸다. 남녀 분포가 소수점 차이밖에 나지 않아
+보여 줄 것이 없었다. 규모별 분포가 아니라 같은 규모 안의 임금과 직급 차이를
+봐야 한다.
 
 원표는 규모를 아홉 칸으로 나눈다. 차트는 여섯 칸이라 아래 BANDS 대로 합친다.
 합치는 규칙을 여기 적어 두는 것은, 나중에 '왜 300명 이상이 한 칸인가'를 다시
@@ -28,10 +32,6 @@ BANDS = [("1∼4명", ["1~4명"]), ("5∼9명", ["5~9명"]), ("10∼29명", ["10
          ("100∼299명", ["100~199명", "200~299명"]),
          ("300명 이상", ["300~999명", "1000명 이상"])]
 CODES = ["00", "10", "20", "30", "40", "50", "60", "70", "80", "90"]
-# c0199 는 세 칸으로 더 거칠게 묶는다.
-BANDS3 = [("30명 미만", ["1~4명", "5~9명", "10~29명"]),
-          ("30명 이상 100명 미만", ["30~49명", "50~99명"]),
-          ("100명 이상", ["100~199명", "200~299명", "300~999명", "1000명 이상"])]
 
 
 def fetch(key):
@@ -102,33 +102,11 @@ def main():
                    "seriesNames": ["남성", "여성"],
                    "seriesColors": ["#2a5ca8", "#c0322f"],
                    "notes": notes, "updated": stamp}
-    ov["c0197"] = {**(ov.get("c0197") or {}), "id": "c0197",
-                   "title": "%s년 종사자 규모별 남녀 일자리 비율" % year,
-                   "source": src + " 단위: %.", "sourceUrl": URL, "unit": "%",
-                   "vizType": "stacked_bar_h", "labels": ["남성", "여성"],
-                   "series": [[pct["남자"][i], pct["여자"][i]] for i in range(len(BANDS))],
-                   "seriesNames": [n for n, _ in BANDS],
-                   "notes": notes, "updated": stamp}
-    cnt3 = {sx: [round(sum(cur[sx][n] for n in parts), 1) for _, parts in BANDS3]
-            for sx in ("남자", "여자")}
-    pct3 = {sx: [round(v / tot[sx] * 100, 1) for v in cnt3[sx]] for sx in cnt3}
-    print("  세 칸 묶음: 남 %s / 여 %s" % (pct3["남자"], pct3["여자"]))
-    src3 = ("국가데이터처 일자리행정통계 종사자규모별 성별 일자리(KOSIS 표 %s). %s년. "
-            "30명 미만은 1∼4명과 5∼9명, 10∼29명을, 30명 이상 100명 미만은 30∼49명과 "
-            "50∼99명을, 100명 이상은 나머지를 합쳤다. 단위: %%." % (TBL, year))
-    ov["c0199"] = {**(ov.get("c0199") or {}), "id": "c0199",
-                   "title": "%s년 종사자 규모별 남녀 일자리 비율(세 구간)" % year,
-                   "source": src3, "sourceUrl": URL, "unit": "%",
-                   "vizType": "stacked_bar_h", "labels": ["여성", "남성"],
-                   "series": [[pct3["여자"][i], pct3["남자"][i]] for i in range(len(BANDS3))],
-                   "seriesNames": [n for n, _ in BANDS3],
-                   "notes": notes, "updated": stamp}
-
     if a.apply:
         with open(ovp, "w", encoding="utf-8") as fh:
             json.dump(ov, fh, ensure_ascii=False, indent=1, sort_keys=True)
             fh.write("\n")
-        print("-> data/overrides.json 에 반영했습니다(3장).")
+        print("-> data/overrides.json 에 반영했습니다(1장).")
     else:
         print("\n(미리보기입니다. 반영하려면 --apply)")
 
