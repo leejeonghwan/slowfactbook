@@ -45961,7 +45961,7 @@
    "slide": "manual-bluefin-tuna",
    "title": "참다랑어 어획량",
    "category": "식량",
-   "source": "국가데이터처 어업생산동향조사(KOSIS 표 DT_1EW0001, DT_1EW0004). 연근해, 원양, 양식을 모두 합친 어업 전체 생산량. 2025년은 확정치로 KOSIS 최종 수정 2026년 4월 29일 기준. 단위: 톤.",
+   "source": "국가데이터처 어업생산동향조사(KOSIS 표 DT_1EW0001, DT_1EW0004). 연근해어업과 해면양식업을 합친 값. 원양에서 잡는 북방참다랑어와 남방참다랑어는 다른 품종으로 집계돼 빠져 있다. 참다랑어를 따로 세기 시작한 2010년부터 그렸다. 2025년은 확정치로 KOSIS 최종 수정 2026년 4월 29일 기준. 단위: 톤.",
    "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EW0001 https://leejeonghwan.github.io/korea-fisheries/",
    "vizType": "column",
    "unit": "톤",
@@ -46009,7 +46009,41 @@
    "seriesColors": [
     "#2a5ca8"
    ],
-   "updated": "2026-10-30 16:30"
+   "updated": "2026-10-30 16:59"
+  },
+  {
+   "slide": "manual-reading-rate-by-age",
+   "title": "2025년 연령대별 독서율",
+   "category": "미디어와 저널리즘",
+   "source": "문화체육관광부 국민독서실태조사(KOSIS 표 DT_113_STBL_1029672). 2025년 조사, 만 19세 이상 5,000명. 종이책과 전자책, 오디오북을 모두 포함한 연간 종합독서율. 성인 전체는 38.5%. 단위: %.",
+   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=113&tblId=DT_113_STBL_1029672",
+   "vizType": "column",
+   "unit": "%",
+   "labels": [
+    "20대 이하",
+    "30대",
+    "40대",
+    "50대",
+    "60대",
+    "70대 이상"
+   ],
+   "series": [
+    [
+     75.3,
+     66.4,
+     41.0,
+     26.9,
+     17.4,
+     10.9
+    ]
+   ],
+   "seriesNames": [
+    "독서율"
+   ],
+   "seriesColors": [
+    "#2a5ca8"
+   ],
+   "updated": "2026-11-01 11:13"
   }
  ]
 }
