@@ -79,7 +79,7 @@ def shares(ciks):
     """{분기말: 주식수} — 가장 많은 분기를 담은 태그를 고른다."""
     best = (None, {})
     for ns, tag in CHAIN:
-        m = collections.defaultdict(float)
+        m = {}
         for cik in ciks:
             try:
                 doc = _facts(cik)
@@ -87,9 +87,16 @@ def shares(ciks):
                 continue
             rows = doc.get("facts", {}).get(ns, {}).get(tag, {}).get("units", {}).get("shares")
             for r in rows or []:
-                # 같은 날짜에 여러 줄이면 가장 큰 값을 쓴다. 종류별로 쪼갠 줄보다
-                # 합계 줄이 크다.
-                m[r["end"]] = max(m[r["end"]], r["val"])
+                # 같은 분기가 여러 보고서에 나온다. 가장 늦게 제출된 보고서의 값을
+                # 쓰고, 그 제출일을 함께 들고 있는다 — 액면분할을 소급해야 하는지
+                # 가리는 데 쓴다. 회사는 분할 뒤에 내는 보고서에서 과거 분기
+                # 주식수를 분할 기준으로 다시 적는다. 제출일만 보면 그 값이
+                # 이미 분할을 반영한 것인지 아닌지 알 수 있다.
+                # 같은 보고서 안에 종류별로 쪼갠 줄이 있으면 합계 줄이 가장 크다.
+                filed = r.get("filed", "")
+                cur = m.get(r["end"])
+                if cur is None or filed > cur[1] or (filed == cur[1] and r["val"] > cur[0]):
+                    m[r["end"]] = (r["val"], filed)
         if len(m) > len(best[1]):
             best = (tag, dict(m))
     return best
@@ -121,10 +128,13 @@ def caps():
             raise SystemExit("%s 주식수를 받지 못했습니다." % name)
         sp, px = splits(sym), prices(sym)
         m = {}
-        for end, n in sh.items():
+        for end, (n, filed) in sh.items():
             f = 1.0
-            for dt, ratio in sp:          # 그 분기 뒤에 일어난 분할만 소급한다
-                if dt > end:
+            # 보고서가 나온 뒤에 일어난 분할만 소급한다. 보고서보다 앞선 분할은
+            # 그 보고서의 주식수에 이미 반영돼 있다. 여기를 '분기말 뒤'로 잡으면
+            # 분할을 두 번 곱하게 된다(애플 2018년이 네 배로 부풀었다).
+            for dt, ratio in sp:
+                if dt > (filed or end):
                     f *= ratio
             p = px.get(end[:7])
             if p:
