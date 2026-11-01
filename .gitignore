@@ -42,3 +42,4 @@ logs/
 # 추적되고 있어서, 빌드만 해도 작업 트리가 더러워져 git pull --rebase 가 막혔다.
 data/_report.json
 data/_title_review.json
+data/_api_refresh.json
