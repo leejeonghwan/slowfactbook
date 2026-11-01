@@ -663,5 +663,18 @@
   "unit": "%",
   "source": "국가데이터처 소득이동통계. 전년 대비 소득분위 변동, 15세 이상 소득이 있는 사람 기준. 소득분위가 전년보다 올라간 사람의 비율. 단위: %.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_IMEMIA001"
+ },
+ "c0859": {
+  "label": "근원인플레이션율",
+  "provider": "kosis",
+  "orgId": "101",
+  "tblId": "DT_1J22041",
+  "itmId": "T+",
+  "objL1": "3+",
+  "prdSe": "Y",
+  "startPrdDe": "1970",
+  "endPrdDe": "2030",
+  "source": "국가데이터처 소비자물가조사. 농산물및석유류제외지수의 전년 대비 등락률. 단위: %.",
+  "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1J22041"
  }
 }
