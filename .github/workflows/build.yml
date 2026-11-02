@@ -68,6 +68,8 @@ jobs:
           run "산업재해"          python scripts/safety.py --apply
           run "일자리행정 소득"    python scripts/jobstat_income.py --apply
           run "종사자규모 일자리"  python scripts/jobstat_size.py --apply
+          run "노사협력"          python scripts/labor_relations.py --apply
+          run "연령대별 임금"      python scripts/wage_by_age.py --apply
           run "KB부동산"            python scripts/kbapi_update.py --apply
           run "한국거래소"          python scripts/krx_update.py --apply
           run "한국은행 ECOS"       python scripts/ecos_update.py --apply

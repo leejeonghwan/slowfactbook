@@ -41,6 +41,8 @@ run "임금과 근로시간"    python3 scripts/labor_wage.py --apply
 run "산업재해"          python3 scripts/safety.py --apply
 run "일자리행정 소득"    python3 scripts/jobstat_income.py --apply
 run "종사자규모 일자리"  python3 scripts/jobstat_size.py --apply
+run "노사협력"          python3 scripts/labor_relations.py --apply
+run "연령대별 임금"      python3 scripts/wage_by_age.py --apply
 run "다문화 혼인과 출생"    python3 scripts/multicultural.py --apply
 run "KB부동산"            python3 scripts/kbapi_update.py --apply
 run "한국거래소"          python3 scripts/krx_update.py --apply
