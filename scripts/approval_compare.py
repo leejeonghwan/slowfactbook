@@ -100,6 +100,8 @@ def main():
                    "발표값을 달마다 단순 평균한 값. 단위: %."),
         "sourceUrl": "https://www.gallup.co.kr/gallupdb/report.asp",
         "vizType": "line", "unit": "%",
+        # 두 선이 30~60 사이에서만 움직여서 0 부터 그리면 격차가 눌린다.
+        "yMin": 20,
         "labels": months,
         "series": [g, r],
         "seriesNames": ["한국갤럽", "리얼미터"],
@@ -126,6 +128,9 @@ def main():
             f"{round(statistics.fmean(gaps), 1)}%p입니다. 가장 벌어진 달은 "
             f"{wide}로 {abs(round(gal[wide][0] - rea[wide][0], 1))}%p 차이였습니다. "
             f"{last}에는 한국갤럽 {gal[last][0]}%, 리얼미터 {rea[last][0]}%입니다.",
+            "세로축은 0 이 아니라 20에서 시작합니다. 0 부터 그리면 두 선이 "
+            "겹쳐 보여 격차를 읽을 수 없습니다. 축을 끊은 만큼 등락이 실제보다 "
+            "커 보이는 점은 감안해 주십시오.",
             "두 기관의 절대 수치보다 방향이 같은지를 보는 쪽이 낫습니다. 한쪽만 "
             "꺾이면 표본이나 그 주의 사건 탓일 수 있고, 둘이 같이 꺾이면 흐름이 "
             "바뀐 것으로 읽을 여지가 커집니다.",

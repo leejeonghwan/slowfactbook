@@ -82,6 +82,7 @@ jobs:
           run "인터넷트렌드"        python scripts/ittrend_update.py --apply
           run "한국공항공사"        python scripts/kac_update.py --apply
           run "역대 정부 누적 물가" python scripts/admin_cpi.py --apply
+          run "역대 정부 코스피"   python scripts/kospi_terms.py --apply
           run "BIS 총신용"          python scripts/bis_update.py --apply
           run "FRED"                python scripts/fred_update.py --apply
           run "IMF WEO"             python scripts/imf_update.py --apply

@@ -83,6 +83,12 @@ def load_items(data_dir):
                 # "signColors": {"plus":"#2a5ca8","minus":"#c0322f"}).
                 # 증감률처럼 0 을 넘나드는 계열에 쓴다. 계열이 하나일 때만 듣는다.
                 "signColors": it.get("signColors"),
+                # 세로축을 0 이 아닌 데서 끊는다. 0 부터 그리면 변화가 눌려
+                # 안 보이는 지표가 있다(지지율처럼 30~60 사이에서만 움직이는 것).
+                # 축을 끊으면 변화가 커 보이므로 꼭 필요할 때만 쓴다
+                # (overrides 의 "yMin": 20, "yMax": 60).
+                "yMin": it.get("yMin"),
+                "yMax": it.get("yMax"),
                 # 띄엄띄엄 찍힌 전망선을 이어 그릴지 (overrides 의 "spanGaps").
                 "spanGaps": bool(it.get("spanGaps")),
                 # 콤보에서 막대를 쌓을지 (overrides 의 "stacked").
@@ -693,6 +699,15 @@ function tickFontSm(ctx){
 // 비중 그래프는 합이 100 인데 Chart.js 가 눈금을 올려 잡아 120 까지 그리는 일이 있다.
 // 값이 100 에 가까울 때만(85 이상) 100 으로 못박는다 — 지지율처럼 40 대에서 노는
 // 그래프까지 0~100 으로 펴면 오히려 읽기 나빠진다.
+// overrides 의 yMin/yMax 를 세로축에 얹는다. pctCap 이 정한 0~100 보다 뒤에
+// 적용해서 손으로 적은 값이 이긴다. 가로 막대(bar)는 값이 x 축에 있어서 여기
+// 해당하지 않는다.
+function yRange(it){
+  const o={};
+  if(it&&it.yMin!=null) o.min=it.yMin;
+  if(it&&it.yMax!=null) o.max=it.yMax;
+  return o;
+}
 function pctCap(it){
   const u=((it.unit||"")+" "+(it.source||""));
   const st=(it.vizType==="stacked_bar"||it.vizType==="stacked_bar_h"||(it.vizType==="area"&&it.series.length>1));
@@ -821,7 +836,7 @@ function buildChart(canvas,it){
     return mk(canvas,{type:"bar",data:{labels,datasets:dsets},
       options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
         scales:{x:{grid:{display:false},stacked:!!it.stacked,ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:tickFont}},
-          y:{position:"left",stacked:!!it.stacked,ticks:{font:tickFont}},
+          y:{position:"left",stacked:!!it.stacked,ticks:{font:tickFont},...yRange(it)},
           y1:{position:"right",grid:{display:false},ticks:{font:tickFont}},
           // 축이 셋인 차트. 세 번째는 오른쪽에 하나 더 세운다. 단위가 서로 다른
           // 계열을 한 그림에 올릴 때 쓰는데, 눈금을 어디에 두느냐로 선의 위치가
@@ -838,7 +853,7 @@ function buildChart(canvas,it){
     const stackY=isArea&&multi;
     return mk(canvas,{type:"line",data:{labels,datasets:ds},
       options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
-        scales:{x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:tickFont}},y:{stacked:stackY,ticks:{font:tickFont},...((c=>c?{min:0,max:c}:{})(pctCap(it)))}}}});
+        scales:{x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:tickFont}},y:{stacked:stackY,ticks:{font:tickFont},...((c=>c?{min:0,max:c}:{})(pctCap(it))),...yRange(it)}}}});
   }
   if(t==="bar"||t==="stacked_bar_h"){
     const st=(t==="stacked_bar_h");ds.forEach(d=>d.borderWidth=0);
@@ -870,7 +885,7 @@ function buildChart(canvas,it){
   const stacked=(t==="stacked_bar");ds.forEach(d=>d.borderWidth=0);
   return mk(canvas,{type:"bar",data:{labels,datasets:ds},
     options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
-      scales:{x:{stacked,grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:tickFont}},y:{stacked,ticks:{font:tickFont},...((c=>c?{min:0,max:c}:{})(pctCap(it)))}}}});
+      scales:{x:{stacked,grid:{display:false},ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:tickFont}},y:{stacked,ticks:{font:tickFont},...((c=>c?{min:0,max:c}:{})(pctCap(it))),...yRange(it)}}}});
 }
 """
 
