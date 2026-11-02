@@ -86,7 +86,7 @@ jobs:
           run "BIS 총신용"          python scripts/bis_update.py --apply
           run "FRED"                python scripts/fred_update.py --apply
           run "IMF WEO"             python scripts/imf_update.py --apply
-          run "OECD 국가부채"      python scripts/oecd_debt.py --apply
+          run "국가부채 비교"      python scripts/debt_compare.py --apply
           run "지수와 시세"         python scripts/market_update.py --apply
           run "매그니피센트 7"      python scripts/mag7_marketcap.py --apply
 
