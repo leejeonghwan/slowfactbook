@@ -255,8 +255,12 @@ def main():
                 lab.append(y); ser[0].append(ppp); ser[1].append(dem)
         order = sorted(range(len(lab)), key=lambda i: lab[i])
         o = ov.setdefault("c2071", {}); o["id"] = "c2071"
+        # 바뀐 게 없으면 changelog 를 더럽히지 않는다. 날마다 도는 어댑터라
+        # '반영했다'는 기록만 쌓이면 나중에 무엇이 실제로 움직였는지 못 읽는다.
+        was = (list(o.get("labels") or []), [list(x) for x in (o.get("series") or [])])
         o["labels"] = [lab[i] for i in order]
         o["series"] = [[x[i] for i in order] for x in ser]
+        moved = was != (o["labels"], o["series"])
         o["source"] = ("한국갤럽 데일리 오피니언 월별 통합. 전국 만 18세 이상 전화조사. "
                        "단위: %.")
         o["sourceUrl"] = "https://www.gallup.co.kr/gallupdb/report.asp"
@@ -269,8 +273,9 @@ def main():
             "무당층이 25~30%대여서 두 계열을 더해도 100이 되지 않습니다.",
         ]
         o["updated"] = stamp
-        touched.append(("c2071", it or {"slide": "slide-563", "title": "정당 지지율 추이"},
-                        sorted(pt), len(o["labels"])))
+        if moved:
+            touched.append(("c2071", it or {"slide": "slide-563", "title": "정당 지지율 추이"},
+                            sorted(pt), len(o["labels"])))
         print("  c2071 정당 지지율 추이: 통합표 %d개월 반영, 마지막 %s (민주 %s, 국힘 %s)"
               % (len(pt), max(pt), pt[max(pt)][0], pt[max(pt)][1]))
 
@@ -388,8 +393,11 @@ def main():
     cl_path = os.path.join(DATA, "changelog.json")
     cl = json.load(open(cl_path, encoding="utf-8"))
     for cid, base, new, n in touched:
+        # full.json 의 원본 제목은 슬라이드 캡션이 섞여 있다(c2071 이 '조국 사태.').
+        # overrides 가 덮은 제목이 실제 차트 제목이다.
+        title = (ov.get(cid) or {}).get("title") or base.get("title")
         cl.append({"date": datetime.date.today().isoformat(), "slide": base.get("slide"),
-                   "id": cid, "title": base.get("title"), "category": "정치",
+                   "id": cid, "title": title, "category": "정치",
                    "mode": "자동 갱신", "n": len(new),
                    "note": "한국갤럽 월별 통합 " + ", ".join(new), "url": url})
         print(f"→ {cid}: {n}점")
