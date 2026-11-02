@@ -879,7 +879,7 @@ function buildChart(canvas,it){
   }
   if(t==="pie"){
     const pieTip={callbacks:{label:c=>`${c.label}: ${fmtVal(c.parsed)} ${unit}`.trim()}};
-    return mk(canvas,{type:"doughnut",data:{labels,datasets:[{data:it.series[0],backgroundColor:(cs=>labels.map((_,i)=>cs[i]))(colorsFor(labels,it.highlight)),borderColor:"#fff",borderWidth:1}]},
+    return mk(canvas,{type:"doughnut",data:{labels,datasets:[{data:it.series[0],backgroundColor:(cs=>labels.map((_,i)=>cs[i]))(withFixed(colorsFor(labels,it.highlight),it)),borderColor:"#fff",borderWidth:1}]},
       options:{responsive:true,maintainAspectRatio:false,cutout:"60%",plugins:{legend:{display:false},tooltip:pieTip}}});
   }
   const stacked=(t==="stacked_bar");ds.forEach(d=>d.borderWidth=0);
