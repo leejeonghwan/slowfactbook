@@ -32,7 +32,7 @@ jobs:
         with:
           python-version: "3.11"
       - run: pip install -r requirements.txt
-      # 갤럽과 리얼미터는 보도자료 PDF 를 글자로 풀어서 읽는다.
+      # 한국갤럽과 리얼미터는 보도자료 PDF 를 글자로 풀어서 읽는다.
       - name: pdftotext 설치
         run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
       # 받아 둔 PDF 를 실행마다 다시 내려받지 않게 캐시한다.
@@ -58,7 +58,7 @@ jobs:
           run "한국갤럽 월별 통합"  python scripts/gallup_update.py --apply
           run "한국갤럽 주간"       python scripts/gallup_weekly.py --apply
           run "리얼미터 주간"       python scripts/realmeter_weekly.py --apply
-          run "갤럽과 리얼미터 비교" python scripts/approval_compare.py --apply
+          run "한국갤럽과 리얼미터 비교" python scripts/approval_compare.py --apply
           run "전력거래소"          python scripts/epsis_update.py --apply
           run "오피넷 기름값"       python scripts/opinet_update.py --apply
           run "공항 여객"           python scripts/airport_update.py --apply
