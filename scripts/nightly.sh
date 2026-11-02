@@ -53,6 +53,7 @@ run "한국과 미국 기준금리"  python3 scripts/policy_rates.py --apply
 run "성장기여도"          python3 scripts/gdp_contrib.py --apply
 run "반도체 수출 비중"    python3 scripts/semi_share.py --apply
 run "IMF WEO"             python3 scripts/imf_update.py --apply
+run "OECD 국가부채"      python3 scripts/oecd_debt.py --apply
 run "BIS 총신용"          python3 scripts/bis_update.py --apply
 run "한국공항공사"        python3 scripts/kac_update.py --apply
 run "인터넷트렌드"        python3 scripts/ittrend_update.py --apply
