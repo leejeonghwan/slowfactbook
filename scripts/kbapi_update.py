@@ -279,9 +279,15 @@ def main():
                 if k > labels[-1] and k != cut]
         if not addk:
             skips.append((cid, "이미 최신")); continue
+        # 계열마다 끊는 달. 정의가 바뀐 계열을 그 뒤로는 비워 둔다.
+        # (KB 가 2026-07 표본 개편으로 6개광역시를 5개광역시 값으로 채운다.)
+        scut = spec.get("seriesCutoff") or {}
+        def tail(si, d):
+            stop = scut.get(sers[si]["name"])
+            return [None if (stop and k > stop) else round(d[k] * sc, 4) for k in addk]
         plans.append({"id": cid, "title": it["title"], "labels": labels + addk,
-                      "series": [list(s) + [round(d[k] * sc, 4) for k in addk]
-                                 for s, d in zip(it["series"], got)],
+                      "series": [list(x) + tail(si, d)
+                                 for si, (x, d) in enumerate(zip(it["series"], got))],
                       "n": len(addk), "from": labels[-1], "to": addk[-1]})
 
     print(f"등록 {len(mapping)}건 · 이어붙일 것 {len(plans)}건 · 건너뜀 {len(skips)}건\n")

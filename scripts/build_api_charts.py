@@ -153,6 +153,10 @@ def main():
     ).strftime("%Y-%m-%d %H:%M")
     # 직전 성공본. 값이 그대로면 updated 를 다시 찍지 않으려고 들고 있는다.
     prevmap = {it.get("slide"): it for it in prev}
+    try:
+        IDS = json.load(open(os.path.join(DATA, "ids.json"), encoding="utf-8"))
+    except Exception:
+        IDS = {}
     items, errs = [], 0
     streak = 0                               # 연속 실패 — 3번 연달아 실패하면 KOSIS 장애로 보고 그만둔다
     for key, c in reg.items():
@@ -190,8 +194,12 @@ def main():
         p0 = prevmap.get(key)
         unchanged = bool(p0) and p0.get("labels") == labels \
             and p0.get("series") == series and p0.get("seriesNames") == names
+        # id 를 항목 안에 적어 둔다. 없으면 build.py 가 ids.json 에만 배정하고,
+        # cNNNN 키로 쓴 overrides 가 조용히 먹지 않는다(단위와 비고가 사라진다).
+        cid = (p0 or {}).get("id") or IDS.get("S\x1f%s\x1f%s" % (key, c["title"]))
         items.append({
             "slide": key,
+            **({"id": cid} if cid else {}),
             "title": c["title"],
             "category": c.get("category", "새 데이터"),
             # 겹낫표는 쓰지 않는다. 문장 끝에는 마침표를 찍는다.

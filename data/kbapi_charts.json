@@ -121,7 +121,23 @@
    "강남11개구"
   ]
  },
- "c1974": {
+ "c2120": {
+  "kind": "trend",
+  "menu": "03",
+  "field": "전세수급지수",
+  "wm": "02",
+  "round": 2,
+  "tol": 1.0,
+  "sourceUrl": "https://data.kbland.kr/kbstats/wmh?tIdx=HT06&tsIdx=aptSaleAvgPrice",
+  "지역": [
+   "서울",
+   "강북14개구",
+   "강남11개구",
+   "6개광역시",
+   "기타지방"
+  ]
+ },
+ "c0718": {
   "scale": 0.0001,
   "round": 4,
   "tol": 0.05,
@@ -162,22 +178,10 @@
     "지역": "기타지방",
     "코드": "01"
    }
-  ]
- },
- "c2120": {
-  "kind": "trend",
-  "menu": "03",
-  "field": "전세수급지수",
-  "wm": "02",
-  "round": 2,
-  "tol": 1.0,
-  "sourceUrl": "https://data.kbland.kr/kbstats/wmh?tIdx=HT06&tsIdx=aptSaleAvgPrice",
-  "지역": [
-   "서울",
-   "강북14개구",
-   "강남11개구",
-   "6개광역시",
-   "기타지방"
-  ]
+  ],
+  "seriesCutoff": {
+   "6개광역시": "2026-06"
+  },
+  "_note": "KB 가 2026-07 표본 개편으로 6개광역시를 5개광역시와 같은 값으로 채운다. 정의가 바뀌었으므로 그 계열만 2026-06 에서 끊는다."
  }
 }
