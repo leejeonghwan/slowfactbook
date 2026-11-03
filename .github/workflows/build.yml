@@ -79,6 +79,7 @@ jobs:
           run "반도체 수출 비중"    python scripts/semi_share.py --apply
           run "성장기여도"          python scripts/gdp_contrib.py --apply
           run "다문화 혼인과 출생"  python scripts/multicultural.py --apply
+          run "공공사회복지지출"    python scripts/socx.py --apply
           run "인터넷트렌드"        python scripts/ittrend_update.py --apply
           run "한국공항공사"        python scripts/kac_update.py --apply
           run "역대 정부 누적 물가" python scripts/admin_cpi.py --apply
