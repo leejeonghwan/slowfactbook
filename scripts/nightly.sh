@@ -46,6 +46,7 @@ run "노사협력"          python3 scripts/labor_relations.py --apply
 run "연령대별 임금"      python3 scripts/wage_by_age.py --apply
 run "다문화 혼인과 출생"    python3 scripts/multicultural.py --apply
 run "공공사회복지지출"    python3 scripts/socx.py --apply
+run "정부 R&D 예산"      python3 scripts/govt_rnd.py --apply
 run "KB부동산"            python3 scripts/kbapi_update.py --apply
 run "한국거래소"          python3 scripts/krx_update.py --apply
 run "한국은행 ECOS"       python3 scripts/ecos_update.py --apply
