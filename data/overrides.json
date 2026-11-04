@@ -2706,7 +2706,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_LCE0002",
   "title": "남녀 노동시간 격차",
   "unit": "시간",
-  "updated": "2026-11-04 08:16"
+  "updated": "2026-11-04 14:25"
  },
  "c0027": {
   "id": "c0027",
@@ -2794,7 +2794,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_LCE0002",
   "title": "남녀 시간당 임금 총액",
   "unit": "원",
-  "updated": "2026-11-04 08:16"
+  "updated": "2026-11-04 14:25"
  },
  "c0028": {
   "source": "노동부 근로 실태 조사.",
@@ -9332,7 +9332,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_LCE0002",
   "title": "정규직과 비정규직 시간당 임금",
   "unit": "원",
-  "updated": "2026-11-04 08:17"
+  "updated": "2026-11-04 14:25"
  },
  "c0065": {
   "category": "노동",
@@ -9964,7 +9964,7 @@
   "source": "고용노동부",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_11806_N013",
   "unit": "명, 고용노동부",
-  "updated": "2026-11-04 08:17"
+  "updated": "2026-11-04 14:25"
  },
  "c0082": {
   "category": "노동",
@@ -10046,7 +10046,7 @@
   "source": "고용노동부.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_11806_N013",
   "unit": "명",
-  "updated": "2026-11-04 08:17"
+  "updated": "2026-11-04 14:25"
  },
  "c0084": {
   "category": "노동",
@@ -10115,7 +10115,7 @@
   "source": "고용노동부.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_11806_N013",
   "unit": "명",
-  "updated": "2026-11-04 08:17"
+  "updated": "2026-11-04 14:25"
  },
  "c0085": {
   "category": "건강과 보건",
@@ -13895,7 +13895,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_PAY0004 https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_PAY0004",
   "title": "50~54세 남녀 평균 근속 연수",
   "unit": "년",
-  "updated": "2026-11-04 08:16"
+  "updated": "2026-11-04 14:24"
  },
  "c0130": {
   "id": "c0130",
@@ -14024,7 +14024,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_PAY0004 https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_PAY0004",
   "title": "남녀 평균 근속 연수",
   "unit": "년",
-  "updated": "2026-11-04 08:16"
+  "updated": "2026-11-04 14:24"
  },
  "c0131": {
   "source": "OECD.",
@@ -16921,7 +16921,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EP_2005",
   "title": "성별 연도별 임금 격차",
   "unit": "만 원",
-  "updated": "2026-11-04 08:17"
+  "updated": "2026-11-04 14:25"
  },
  "c0185": {
   "id": "c0185",
@@ -16969,7 +16969,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EP_2012",
   "title": "대기업 성별 연도별 임금 격차",
   "unit": "만 원",
-  "updated": "2026-11-04 08:17"
+  "updated": "2026-11-04 14:25"
  },
  "c0186": {
   "id": "c0186",
@@ -17017,7 +17017,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EP_2012",
   "title": "중소기업 성별 연도별 임금 격차",
   "unit": "만 원",
-  "updated": "2026-11-04 08:17"
+  "updated": "2026-11-04 14:25"
  },
  "c0187": {
   "drop": true,
@@ -17077,7 +17077,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EP_2014",
   "title": "2024년 대기업과 중소기업 연령대별 임금 격차",
   "unit": "만 원",
-  "updated": "2026-11-04 08:17"
+  "updated": "2026-11-04 14:25"
  },
  "c0189": {
   "drop": true,
@@ -17145,7 +17145,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EP_2001",
   "title": "기업규모별 연도별 임금 격차",
   "unit": "만 원",
-  "updated": "2026-11-04 08:17"
+  "updated": "2026-11-04 14:25"
  },
  "c0192": {
   "id": "c0192",
@@ -17194,7 +17194,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EP_3021",
   "title": "2024년 종사자 규모별 남녀 일자리 수",
   "unit": "만 개",
-  "updated": "2026-11-04 08:17",
+  "updated": "2026-11-04 14:25",
   "vizType": "column"
  },
  "c0193": {
@@ -17560,7 +17560,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=117&tblId=DT_11777_N220",
   "title": "GDP 대비 공공사회복지지출",
   "unit": "%",
-  "updated": "2026-11-04 08:20"
+  "updated": "2026-11-04 14:28"
  },
  "c0232": {
   "source": "질병관리청 국민건강영양조사.",
@@ -38244,7 +38244,7 @@
   "sourceUrl": "https://ecos.bok.or.kr/#/Short/7a6d1c",
   "title": "역대 정부 코스피 지수",
   "unit": "p",
-  "updated": "2026-11-04 08:21"
+  "updated": "2026-11-04 14:30"
  },
  "c0689": {
   "labels": [
@@ -41150,6 +41150,7 @@
   "unit": "%"
  },
  "c0718": {
+  "id": "c0718",
   "labels": [
    "2008-12",
    "2009-01",
@@ -41367,6 +41368,7 @@
    "2026-09",
    "2026-10"
   ],
+  "revised": "2026-11-04 07:50",
   "series": [
    [
     6.2364,
@@ -42891,9 +42893,7 @@
   "source": "KB부동산 데이터허브 월간 아파트 매매평균가격, 단위: 억 원.",
   "sourceUrl": "https://data.kbland.kr/kbstats/wmh?tIdx=HT06&tsIdx=aptSaleAvgPrice",
   "unit": "억 원",
-  "updated": "2026-11-04 07:45",
-  "id": "c0718",
-  "revised": "2026-11-04 07:50"
+  "updated": "2026-11-04 07:45"
  },
  "c0719": {
   "id": "c0719",
@@ -48616,7 +48616,7 @@
   "sourceUrl": "https://ecos.bok.or.kr/ https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B81A17",
   "title": "GDP 대비 주택 시가총액과 합계출산율",
   "unit": "배",
-  "updated": "2026-11-04 08:19",
+  "updated": "2026-11-04 14:28",
   "vizType": "combo"
  },
  "c0740": {
@@ -49844,8 +49844,15 @@
    "2026-09",
    "2026-10"
   ],
+  "notes": [
+   "경기도 연천군 청산면입니다. 농어촌 기본소득 시범 지역이어서 인구가 어떻게 움직이는지를 보려고 그린 차트입니다.",
+   "한 면 단위라 숫자가 작습니다. 20대가 400명대인데, 몇십 명이 들고 나는 것만으로도 선이 눈에 띄게 흔들립니다. 한두 달의 등락보다 방향을 보는 편이 낫습니다.",
+   "5세 구간을 열 살 단위로 더한 값입니다. 더한 값이 표의 '계' 와 맞는 것을 모든 달에서 확인했습니다.",
+   "첫 계열 이름을 '10세 이하'에서 '9세 이하'로 고쳤습니다. 원자료가 0~4세와 5~9세로 나뉘어 있어 실제로 담긴 것은 9세까지입니다.",
+   "주민등록 기준입니다. 실제로 살고 있는 사람과 다를 수 있습니다. 기본소득 같은 현금 지급 사업은 주소를 옮길 유인을 만들기도 해서, 이 지표만으로 정책 효과를 판단하기는 어렵습니다.",
+   "군 전체 인구는 따로 있습니다. 기본소득 실험 지자체의 인구 차트에서 연천군을 보면 됩니다."
+  ],
   "revised": "2026-10-11 02:57",
-  "title": "연천군 청산면 연령대별 인구",
   "series": [
    [
     250.0,
@@ -51250,18 +51257,11 @@
    "60대",
    "70대 이상"
   ],
-  "unit": "명",
   "source": "행정안전부 주민등록인구현황, 읍면동 5세별(KOSIS 표 DT_1B04005N) 가운데 연천군 청산면. 5세 구간을 열 살 단위로 더했다. 2012-07~2026-10. 단위: 명.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B04005N",
-  "notes": [
-   "경기도 연천군 청산면입니다. 농어촌 기본소득 시범 지역이어서 인구가 어떻게 움직이는지를 보려고 그린 차트입니다.",
-   "한 면 단위라 숫자가 작습니다. 20대가 400명대인데, 몇십 명이 들고 나는 것만으로도 선이 눈에 띄게 흔들립니다. 한두 달의 등락보다 방향을 보는 편이 낫습니다.",
-   "5세 구간을 열 살 단위로 더한 값입니다. 더한 값이 표의 '계' 와 맞는 것을 모든 달에서 확인했습니다.",
-   "첫 계열 이름을 '10세 이하'에서 '9세 이하'로 고쳤습니다. 원자료가 0~4세와 5~9세로 나뉘어 있어 실제로 담긴 것은 9세까지입니다.",
-   "주민등록 기준입니다. 실제로 살고 있는 사람과 다를 수 있습니다. 기본소득 같은 현금 지급 사업은 주소를 옮길 유인을 만들기도 해서, 이 지표만으로 정책 효과를 판단하기는 어렵습니다.",
-   "군 전체 인구는 따로 있습니다. 기본소득 실험 지자체의 인구 차트에서 연천군을 보면 됩니다."
-  ],
-  "updated": "2026-11-04 12:01"
+  "title": "연천군 청산면 연령대별 인구",
+  "unit": "명",
+  "updated": "2026-11-04 14:28"
  },
  "c0759": {
   "category": "지역",
@@ -79724,7 +79724,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_2OEST001",
   "title": "GDP 대비 연구개발비, 나라 비교",
   "unit": "%",
-  "updated": "2026-11-04 08:20",
+  "updated": "2026-11-04 14:29",
   "vizType": "bar"
  },
  "c1120": {
@@ -80174,7 +80174,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=127&tblId=DT_KBA0001",
   "title": "GDP 대비 연구개발비, 재원별",
   "unit": "%",
-  "updated": "2026-11-04 08:20",
+  "updated": "2026-11-04 14:29",
   "vizType": "line"
  },
  "c1131": {
@@ -95680,7 +95680,7 @@
   "sourceUrl": "https://ecos.bok.or.kr/",
   "title": "역대 정부 누적 물가 상승률",
   "unit": "%",
-  "updated": "2026-11-04 08:20"
+  "updated": "2026-11-04 14:29"
  },
  "c1978": {
   "source": "2023년 기준.",
@@ -97791,7 +97791,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_PAY0004 https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_PAY0004",
   "title": "남녀 월 임금 총액",
   "unit": "만 원",
-  "updated": "2026-11-04 08:16"
+  "updated": "2026-11-04 14:24"
  },
  "c2047": {
   "category": "노동",
