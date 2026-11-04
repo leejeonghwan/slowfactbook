@@ -151,7 +151,10 @@ def days_of(ym, fold):
 def month_data(ym, fold, want, key, cache, budget):
     """한 달치를 쟁여 둔 것에서 꺼내거나, 없으면 부른다."""
     ck = f"{ym}|{fold}"
-    if ck in cache:
+    # 쟁여 둔 것이 그때 필요했던 종목만 담고 있을 수 있다. 등록부에 종목이
+    # 늘면(우선주를 더하게 되면) 그 달은 다시 받아야 한다. 안 그러면 값이
+    # 영영 None 이고 차트는 '이미 최신' 이라고만 말한다.
+    if ck in cache and not (set(want) - set(cache[ck] or {})):
         return cache[ck], 0
     got, used = [], 0
     for day in days_of(ym, fold):
@@ -220,9 +223,14 @@ def main():
     mapping = json.load(open(mp, encoding="utf-8")) if os.path.exists(mp) else {}
     # 쟁여 두는 하루치는 등록부 전체의 종목을 담아야 한다. --only 로 걸러도
     # 캐시에 반쪽만 남지 않도록 종목 목록은 거르기 전에 모은다.
-    ALL_WANT = {x["isu"] for v in mapping.values()
-                for x in (v.get("series") or [])
-                if x.get("isu") and x["isu"] != "*"}
+    # plus 와 minus 에 적은 종목도 받아야 한다. 빼먹으면 digest 가 그 종목을
+    # 걸러내고, 우선주를 더하는 계열(c1052 삼성전자 005930+005935)은 새 달을
+    # 영영 못 붙인 채 '이미 최신' 이라고만 말한다.
+    ALL_WANT = {x for v in mapping.values()
+                for ser in (v.get("series") or [])
+                for x in ([ser.get("isu")] + list(ser.get("plus") or [])
+                          + list(ser.get("minus") or []))
+                if x and x != "*"}
     if a.only:
         mapping = {k: v for k, v in mapping.items() if k == a.only}
     if not mapping:
