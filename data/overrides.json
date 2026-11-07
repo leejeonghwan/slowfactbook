@@ -2706,7 +2706,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_LCE0002",
   "title": "남녀 노동시간 격차",
   "unit": "시간",
-  "updated": "2026-11-07 14:25"
+  "updated": "2026-11-08 08:16"
  },
  "c0027": {
   "id": "c0027",
@@ -2794,7 +2794,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_LCE0002",
   "title": "남녀 시간당 임금 총액",
   "unit": "원",
-  "updated": "2026-11-07 14:25"
+  "updated": "2026-11-08 08:16"
  },
  "c0028": {
   "source": "노동부 근로 실태 조사.",
@@ -9332,7 +9332,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_LCE0002",
   "title": "정규직과 비정규직 시간당 임금",
   "unit": "원",
-  "updated": "2026-11-07 14:25"
+  "updated": "2026-11-08 08:16"
  },
  "c0065": {
   "category": "노동",
@@ -9964,7 +9964,7 @@
   "source": "고용노동부",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_11806_N013",
   "unit": "명, 고용노동부",
-  "updated": "2026-11-07 14:26"
+  "updated": "2026-11-08 08:16"
  },
  "c0082": {
   "category": "노동",
@@ -10046,7 +10046,7 @@
   "source": "고용노동부.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_11806_N013",
   "unit": "명",
-  "updated": "2026-11-07 14:26"
+  "updated": "2026-11-08 08:16"
  },
  "c0084": {
   "category": "노동",
@@ -10115,7 +10115,7 @@
   "source": "고용노동부.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_11806_N013",
   "unit": "명",
-  "updated": "2026-11-07 14:26"
+  "updated": "2026-11-08 08:16"
  },
  "c0085": {
   "category": "건강과 보건",
@@ -13895,7 +13895,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_PAY0004 https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_PAY0004",
   "title": "50~54세 남녀 평균 근속 연수",
   "unit": "년",
-  "updated": "2026-11-07 14:25"
+  "updated": "2026-11-08 08:16"
  },
  "c0130": {
   "id": "c0130",
@@ -14024,7 +14024,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_PAY0004 https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_PAY0004",
   "title": "남녀 평균 근속 연수",
   "unit": "년",
-  "updated": "2026-11-07 14:25"
+  "updated": "2026-11-08 08:15"
  },
  "c0131": {
   "source": "OECD.",
@@ -16921,7 +16921,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EP_2005",
   "title": "성별 연도별 임금 격차",
   "unit": "만 원",
-  "updated": "2026-11-07 14:26"
+  "updated": "2026-11-08 08:16"
  },
  "c0185": {
   "id": "c0185",
@@ -16969,7 +16969,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EP_2012",
   "title": "대기업 성별 연도별 임금 격차",
   "unit": "만 원",
-  "updated": "2026-11-07 14:26"
+  "updated": "2026-11-08 08:16"
  },
  "c0186": {
   "id": "c0186",
@@ -17017,7 +17017,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EP_2012",
   "title": "중소기업 성별 연도별 임금 격차",
   "unit": "만 원",
-  "updated": "2026-11-07 14:26"
+  "updated": "2026-11-08 08:16"
  },
  "c0187": {
   "drop": true,
@@ -17077,7 +17077,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EP_2014",
   "title": "2024년 대기업과 중소기업 연령대별 임금 격차",
   "unit": "만 원",
-  "updated": "2026-11-07 14:26"
+  "updated": "2026-11-08 08:16"
  },
  "c0189": {
   "drop": true,
@@ -17145,7 +17145,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EP_2001",
   "title": "기업규모별 연도별 임금 격차",
   "unit": "만 원",
-  "updated": "2026-11-07 14:26"
+  "updated": "2026-11-08 08:16"
  },
  "c0192": {
   "id": "c0192",
@@ -17194,7 +17194,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EP_3021",
   "title": "2024년 종사자 규모별 남녀 일자리 수",
   "unit": "만 개",
-  "updated": "2026-11-07 14:26",
+  "updated": "2026-11-08 08:16",
   "vizType": "column"
  },
  "c0193": {
@@ -17560,7 +17560,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=117&tblId=DT_11777_N220",
   "title": "GDP 대비 공공사회복지지출",
   "unit": "%",
-  "updated": "2026-11-07 14:29"
+  "updated": "2026-11-08 08:19"
  },
  "c0232": {
   "source": "질병관리청 국민건강영양조사.",
@@ -38246,7 +38246,7 @@
   "sourceUrl": "https://ecos.bok.or.kr/#/Short/7a6d1c",
   "title": "역대 정부 코스피 지수",
   "unit": "p",
-  "updated": "2026-11-07 14:30"
+  "updated": "2026-11-08 08:20"
  },
  "c0689": {
   "labels": [
@@ -48624,7 +48624,7 @@
   "sourceUrl": "https://ecos.bok.or.kr/ https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B81A17",
   "title": "GDP 대비 주택 시가총액과 합계출산율",
   "unit": "배",
-  "updated": "2026-11-07 14:28",
+  "updated": "2026-11-08 08:19",
   "vizType": "combo"
  },
  "c0740": {
@@ -51269,7 +51269,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B04005N",
   "title": "연천군 청산면 연령대별 인구",
   "unit": "명",
-  "updated": "2026-11-07 14:29"
+  "updated": "2026-11-08 08:19"
  },
  "c0759": {
   "category": "지역",
@@ -57648,7 +57648,8 @@
    "2026-11-03",
    "2026-11-04",
    "2026-11-05",
-   "2026-11-06"
+   "2026-11-06",
+   "2026-11-07"
   ],
   "revised": "2026-10-11 02:57",
   "series": [
@@ -57931,7 +57932,8 @@
     1855.42,
     1855.31,
     1855.27,
-    1855.43
+    1855.43,
+    1855.29
    ],
    [
     1581.51,
@@ -58212,13 +58214,14 @@
     1842.12,
     1842.01,
     1841.89,
-    1841.76
+    1841.76,
+    1841.68
    ]
   ],
   "source": "오피넷.",
   "sourceUrl": "https://www.opinet.co.kr/user/dopospdrg/dopOsPdrgSelect.do",
   "unit": "원/리터",
-  "updated": "2026-11-07 08:14"
+  "updated": "2026-11-08 08:13"
  },
  "c0851": {
   "source": "국가데이터처 경제활동인구.",
@@ -79745,7 +79748,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_2OEST001",
   "title": "GDP 대비 연구개발비, 나라 비교",
   "unit": "%",
-  "updated": "2026-11-07 14:29",
+  "updated": "2026-11-08 08:20",
   "vizType": "bar"
  },
  "c1120": {
@@ -80352,7 +80355,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=127&tblId=DT_KBA0001",
   "title": "GDP 대비 연구개발비, 재원별",
   "unit": "%",
-  "updated": "2026-11-07 14:29",
+  "updated": "2026-11-08 08:20",
   "vizType": "line"
  },
  "c1131": {
@@ -95858,7 +95861,7 @@
   "sourceUrl": "https://ecos.bok.or.kr/",
   "title": "역대 정부 누적 물가 상승률",
   "unit": "%",
-  "updated": "2026-11-07 14:29"
+  "updated": "2026-11-08 08:20"
  },
  "c1978": {
   "source": "2023년 기준.",
@@ -97969,7 +97972,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_PAY0004 https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_PAY0004",
   "title": "남녀 월 임금 총액",
   "unit": "만 원",
-  "updated": "2026-11-07 14:25"
+  "updated": "2026-11-08 08:16"
  },
  "c2047": {
   "category": "노동",
