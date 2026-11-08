@@ -82,6 +82,8 @@ jobs:
           run "다문화 혼인과 출생"  python scripts/multicultural.py --apply
           run "육류 소비량"        python scripts/meat.py --apply
           run "영양소 섭취량"      python scripts/khidi_nutrition.py --apply
+          run "NYT 공시 수집"     python scripts/nyt_fetch.py
+          run "NYT 분기 실적"     python scripts/nyt_update.py --apply
           run "청산면 인구"        python scripts/cheongsan_pop.py --apply
           run "공공사회복지지출"    python scripts/socx.py --apply
           run "정부 R&D 예산"      python scripts/govt_rnd.py --apply

@@ -48,6 +48,8 @@ run "연령대별 임금"      python3 scripts/wage_by_age.py --apply
 run "다문화 혼인과 출생"    python3 scripts/multicultural.py --apply
 run "육류 소비량"        python3 scripts/meat.py --apply
 run "영양소 섭취량"      python3 scripts/khidi_nutrition.py --apply
+run "NYT 공시 수집"     python3 scripts/nyt_fetch.py
+run "NYT 분기 실적"     python3 scripts/nyt_update.py --apply
 run "청산면 인구"        python3 scripts/cheongsan_pop.py --apply
 run "공공사회복지지출"    python3 scripts/socx.py --apply
 run "정부 R&D 예산"      python3 scripts/govt_rnd.py --apply
