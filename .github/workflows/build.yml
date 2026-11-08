@@ -80,6 +80,7 @@ jobs:
           run "반도체 수출 비중"    python scripts/semi_share.py --apply
           run "성장기여도"          python scripts/gdp_contrib.py --apply
           run "다문화 혼인과 출생"  python scripts/multicultural.py --apply
+          run "육류 소비량"        python scripts/meat.py --apply
           run "청산면 인구"        python scripts/cheongsan_pop.py --apply
           run "공공사회복지지출"    python scripts/socx.py --apply
           run "정부 R&D 예산"      python scripts/govt_rnd.py --apply
