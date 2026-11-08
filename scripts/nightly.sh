@@ -47,6 +47,7 @@ run "노사협력"          python3 scripts/labor_relations.py --apply
 run "연령대별 임금"      python3 scripts/wage_by_age.py --apply
 run "다문화 혼인과 출생"    python3 scripts/multicultural.py --apply
 run "육류 소비량"        python3 scripts/meat.py --apply
+run "영양소 섭취량"      python3 scripts/khidi_nutrition.py --apply
 run "청산면 인구"        python3 scripts/cheongsan_pop.py --apply
 run "공공사회복지지출"    python3 scripts/socx.py --apply
 run "정부 R&D 예산"      python3 scripts/govt_rnd.py --apply
