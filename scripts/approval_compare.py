@@ -71,6 +71,11 @@ def main():
     a = ap.parse_args()
     ov = json.load(open(os.path.join(DATA, "overrides.json"), encoding="utf-8"))
     gal, rea = monthly(ov, GALLUP), monthly(ov, REALMETER)
+    # 진행 중인 달은 뺀다. 첫째 주 조사 하나를 월평균이라고 내놓으면 한 기관만
+    # 값이 있는 달이 생기고, 그 한 점이 추세를 꺾는 것처럼 보인다.
+    now = datetime.datetime.now(KST).strftime("%Y-%m")
+    gal = {m: v for m, v in gal.items() if m < now}
+    rea = {m: v for m, v in rea.items() if m < now}
     months = sorted(set(gal) | set(rea))
     if not months:
         raise SystemExit("묶을 달이 없습니다.")
@@ -113,6 +118,10 @@ def main():
             "한국갤럽이 따로 내는 '월별 통합' 수치는 쓰지 않았습니다. 그것은 주간값의 "
             "평균이 아니라 한 달치 표본을 다시 가중한 값입니다. 한쪽만 공식 "
             "통합값을 쓰면 가중 방식이 어긋나 비교가 흐려집니다.",
+            "달이 끝나기 전에는 그달을 넣지 않습니다. 첫째 주 조사 하나를 "
+            "월평균으로 내놓으면 한 기관만 값이 있는 달이 생기고, 그 한 점이 "
+            "추세를 꺾는 것처럼 보입니다. 최근 조사는 각 기관의 주간 차트에서 "
+            "보십시오.",
             "한 달에 들어간 조사 수가 기관마다 다릅니다. 한국갤럽은 보통 3~4주, "
             "리얼미터는 4~5주입니다. 조사 수가 적은 달은 평균이 흔들립니다.",
             "조사 방식이 다릅니다. 한국갤럽은 전화 면접원이 직접 묻고, 리얼미터는 "

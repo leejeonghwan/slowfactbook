@@ -802,7 +802,11 @@ function buildChart(canvas,it){
   if(it.labelColors && ds.length===1){
     const lc=it.labelColors, base=CS[0];
     const key=l=>String(l==null?"":l).trim().replace(/[.·]+$/,"");
-    const arr=it.labels.map(l=>lc[String(l==null?"":l).trim()]||lc[key(l)]||base);
+    // 적어 둔 라벨만 덮는다. 나머지는 앞서 정해진 색(signColors 결과)을 그대로
+    // 둔다. 통째로 갈아 끼우면 부호별 색이 같이 지워진다.
+    const prev=Array.isArray(ds[0].backgroundColor)?ds[0].backgroundColor:null;
+    const arr=it.labels.map((l,i)=>lc[String(l==null?"":l).trim()]||lc[key(l)]
+                                   ||(prev?prev[i]:base));
     ds[0].backgroundColor=arr; ds[0].borderColor=arr;
   }
   const unit=(it.unit||"").trim()||(it.source.match(/단위:\s*([^,.]+)/)||[])[1]||"";
@@ -910,8 +914,12 @@ html,body{margin:0;height:100%;overflow:hidden;background:transparent;
    워터마크가 제목 뒤로 비쳐 보인다(슬로우뉴스 본문에서 그런 일이 있었다). */
 #wrap{position:fixed;inset:0;background:#fff;}
 #wrap{display:flex;flex-direction:column;height:100%;padding:12px 14px;box-sizing:border-box;}
-#title{font-size:17px;font-weight:800;margin:0 0 1px;letter-spacing:-.3px;}
-#meta{font-size:11px;color:#999;margin-bottom:6px;}
+/* 제목 크기를 임베드 높이에 매단다. vh 는 iframe 자기 높이라, 낮게 넣은
+   임베드는 제목이 작게 남아 차트 영역을 뺏기지 않고 크게 넣은 임베드는
+   제목이 같이 커진다. 고정 크기로 키우면 400px 짜리 임베드에서 그래프가
+   눌린다. */
+#title{font-size:clamp(19px,4.6vh,26px);line-height:1.2;font-weight:800;margin:0 0 2px;letter-spacing:-.5px;}
+#meta{font-size:clamp(11px,2.2vh,12.5px);color:#999;margin-bottom:6px;}
 .legendbar{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:3px 12px;height:22px;overflow:hidden;margin:0 0 4px;}
 
 .legendbar .lg.pick{cursor:pointer;}
