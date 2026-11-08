@@ -737,7 +737,10 @@
  "c0004": {
   "source": "교육부.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1YL21241",
-  "unit": "만 명"
+  "unit": "만 명",
+  "id": "c0004",
+  "yMin": 0,
+  "revised": "2026-11-09 05:34"
  },
  "c0005": {
   "source": "국가데이터처 경제활동인구조사.",
