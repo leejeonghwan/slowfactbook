@@ -85,6 +85,8 @@ jobs:
           run "NYT 공시 수집"     python scripts/nyt_fetch.py
           run "NYT 분기 실적"     python scripts/nyt_update.py --apply
           run "입학 연령 인구"    python scripts/school_entry_age.py --apply
+          run "철강 탄소배출"     python scripts/steel_co2.py --apply
+          run "국세 세목별 세수"   python scripts/tax_revenue.py --apply
           run "청산면 인구"        python scripts/cheongsan_pop.py --apply
           run "공공사회복지지출"    python scripts/socx.py --apply
           run "정부 R&D 예산"      python scripts/govt_rnd.py --apply

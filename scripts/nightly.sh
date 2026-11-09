@@ -51,6 +51,8 @@ run "영양소 섭취량"      python3 scripts/khidi_nutrition.py --apply
 run "NYT 공시 수집"     python3 scripts/nyt_fetch.py
 run "NYT 분기 실적"     python3 scripts/nyt_update.py --apply
 run "입학 연령 인구"    python3 scripts/school_entry_age.py --apply
+run "철강 탄소배출"     python3 scripts/steel_co2.py --apply
+run "국세 세목별 세수"   python3 scripts/tax_revenue.py --apply
 run "청산면 인구"        python3 scripts/cheongsan_pop.py --apply
 run "공공사회복지지출"    python3 scripts/socx.py --apply
 run "정부 R&D 예산"      python3 scripts/govt_rnd.py --apply
