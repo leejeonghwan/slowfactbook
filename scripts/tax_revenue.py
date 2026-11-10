@@ -64,13 +64,25 @@ C = {
 }
 
 
+def envkey(name):
+    """환경변수를 먼저 보고 없으면 .env 를 읽는다.
+
+    깃허브 액션은 secrets 를 환경변수로 넘기고 .env 는 저장소에 없다.
+    맥에서 손으로 돌릴 때는 .env 에 들어 있다. 둘 다 되게 한다.
+    """
+    v = os.environ.get(name)
+    if v:
+        return v.strip()
+    p = os.path.join(ROOT, ".env")
+    if os.path.exists(p):
+        for line in open(p, encoding="utf-8"):
+            if line.startswith(name + "="):
+                return line.split("=", 1)[1].strip().strip("'\"")
+    raise SystemExit(f"{name} 가 필요합니다(환경변수 또는 .env).")
+
+
 def fetch():
-    key = None
-    for line in open(os.path.join(ROOT, ".env"), encoding="utf-8"):
-        if line.startswith("KOSIS_API_KEY"):
-            key = line.split("=", 1)[1].strip().strip("'\"")
-    if not key:
-        raise SystemExit(".env 에 KOSIS_API_KEY 가 없습니다.")
+    key = envkey("KOSIS_API_KEY")
     now = datetime.datetime.now(KST).year
     u = ("https://kosis.kr/openapi/Param/statisticsParameterData.do?method=getList"
          f"&apiKey={key}&format=json&jsonVD=Y&orgId={ORG}&tblId={TBL}"
