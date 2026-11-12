@@ -128,6 +128,32 @@ def main():
             "포트워치는 요충지마다 정해 둔 구역에 들어온 배를 하루 단위로 "
             "셉니다. 되돌아 나간 배도 들어갑니다.")
 
+    # 전쟁 뒤 수치를 '실제 통항' 으로 읽으면 크게 틀린다. 적재능력을 배럴로
+    # 바꿔 보면 평년에는 알려진 통과량과 맞는데 전쟁 뒤에는 20분의 1 로
+    # 떨어진다. 배가 사라진 게 아니라 AIS 신호가 꺼진 것이다.
+    BBL_T = 0.136                       # 원유 1배럴 ≈ 0.136톤
+    cap_norm = statistics.fmean(H[k]["capacity"] for k in ks
+                                if int(k[:4]) in base_years)
+    sep = [k for k in ks if k.startswith("2026-09")]
+    cap_sep = statistics.fmean(H[k]["capacity"] for k in sep) if sep else 0
+    DARK = ("이 숫자를 '실제로 지난 배' 로 읽으면 안 됩니다. 포트워치는 선박 "
+            "자동식별장치(AIS) 신호로 셉니다. 전쟁 구역에서는 배가 신호를 끄고 "
+            "다니기 때문에 집계에서 빠집니다. 2026년 3월 이후 수치에는 통항이 "
+            "줄어든 몫과 신호를 끈 몫이 섞여 있고, 둘을 이 자료만으로는 "
+            "가를 수 없습니다.")
+    GAP = (f"얼마나 어긋나는지 가늠할 수 있습니다. 평년에는 이 방식이 잘 "
+           f"맞았습니다. {base_years[0]}~{base_years[-1]}년 하루 적재능력 "
+           f"{cap_norm / 1e4:,.0f}만 톤을 배럴로 바꾸면 하루 "
+           f"{cap_norm / BBL_T / 1e4:,.0f}만 배럴로, 호르무즈 통과량으로 알려진 "
+           "하루 2,000만 배럴 안팎과 들어맞습니다. 적재능력은 실제 실은 화물보다 "
+           "크니 조금 높게 나오는 것이 맞습니다. "
+           + (f"그런데 전쟁 뒤에는 어긋납니다. 뉴욕타임스가 전한 선박 추적업체 "
+              f"케이플러 집계로는 2026년 9월에도 하루 1,000만 배럴이 해협을 "
+              f"지났는데, 같은 달 포트워치 적재능력을 배럴로 바꾸면 하루 "
+              f"{cap_sep / BBL_T / 1e4:,.0f}만 배럴입니다. 기사 수치의 "
+              f"{cap_sep / BBL_T / 1e4 / 1000 * 100:.0f}% 수준입니다. 차이의 "
+              "상당 부분은 꺼진 AIS 로 보입니다." if sep else ""))
+
     ov = json.load(open(os.path.join(DATA, "overrides.json"), encoding="utf-8"))
     out = {}
 
@@ -140,6 +166,7 @@ def main():
         "seriesColors": [RED, GRAY],
         "source": SRC + " 단위: 척.", "sourceUrl": PAGE,
         "notes": [
+            DARK, GAP,
             f"{YEAR}년 하루 평균 {cur:.0f}척입니다. 2019년부터 "
             f"{base_years[-1]}년까지 평균이 {norm:.0f}척이었으니 "
             f"{cur / norm * 100:.0f}% 수준입니다. 가장 최근인 {last}에는 "
@@ -168,6 +195,7 @@ def main():
         "source": SRC + " 통과 선박의 화물 적재능력 합계. 단위: 만 톤.",
         "sourceUrl": PAGE,
         "notes": [
+            DARK, GAP,
             f"{YEAR}년 하루 평균 {capc / 10000:.0f}만 톤입니다. 2019년부터 "
             f"{base_years[-1]}년까지 평균 {capn / 10000:.0f}만 톤의 "
             f"{capc / capn * 100:.0f}% 입니다.",
@@ -200,6 +228,7 @@ def main():
                    f"{mlab[0]}~{mlab[-1]}. 단위: 척."),
         "sourceUrl": PAGE,
         "notes": [
+            DARK, GAP,
             f"{mlab[-1]}에 {M[mlab[-1]]:,}척입니다. 가장 많았던 달은 "
             + (lambda m: f"{m}의 {M[m]:,}척")(max(mlab, key=lambda m: M[m])) + "입니다.",
             "달이 끝나기 전에는 그달을 넣지 않습니다. 며칠치만 더한 값이 "
@@ -219,6 +248,7 @@ def main():
         "seriesColors": [RED],
         "source": SRC + " 유조선만. 단위: 척.", "sourceUrl": PAGE,
         "notes": [
+            DARK, GAP,
             f"2019년부터 {last}까지 {len(ks):,}일입니다. 하루 유조선은 "
             f"{base_years[0]}~{base_years[-1]}년 평균 "
             f"{statistics.fmean(H[k]['n_tanker'] for k in ks if int(k[:4]) in base_years):.0f}척"
