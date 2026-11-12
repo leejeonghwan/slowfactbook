@@ -1,23 +1,36 @@
 #!/usr/bin/env bash
-# 자동 갱신. launchd 가 하루 한 번 부른다.
+# 어댑터를 전부 한 번에 돌린다. 손으로 부르는 스크립트다.
 #
-#   수집 어댑터 → 빌드 → data/ 만 커밋 → push → slownews 배포
+#   수집 어댑터 → 빌드. 여기까지만 한다.
 #
-# 손으로 돌리는 ./update.sh 와 다른 점이 둘이다.
-#   1) git add 를 data/ 로 좁힌다. 손대는 중인 스크립트나 다른 작업 폴더가
-#      한밤중에 통째로 딸려 올라가지 않게 한다.
-#   2) 모든 출력을 logs/ 에 남긴다. 아침에 무엇이 바뀌었는지 볼 수 있다.
+# 2026년 11월, 맥의 launchd 자동 실행을 접었다. 자동 갱신은 깃허브 액션
+# (.github/workflows/build.yml) 하나가 맡는다. 액션은 하루 두 번(08:00,
+# 14:00 KST) 돌고, 커밋과 푸시와 slownews.net 미러까지 거기서 한다.
+#
+# 접은 이유는 data/ 에 쓰는 주체가 둘이어서다. 맥과 액션이 같은
+# overrides.json 을 번갈아 고치면 손으로 작업하던 것과 리베이스 충돌이
+# 난다. 액션의 어댑터 목록이 이 파일을 완전히 포함하므로(액션 52개,
+# 이 파일 50개, 여기에만 있는 것 없음) 맥 쪽은 없어도 빠지는 게 없다.
+#
+# 그래서 이 파일은 커밋도 푸시도 배포도 하지 않는다. 바뀐 data/ 를
+# 확인하고 올리는 일은 사람이 한다.
+#
+#   bash scripts/nightly.sh        # 전부 돌리고 로그는 logs/ 에
+#   git add -A && git commit && git push   # 확인한 뒤 직접
+#
+# 평소 갱신은 액션에 맡기고, 이 스크립트는 어댑터를 손본 뒤 전부 한 번
+# 돌려 볼 때나 액션이 며칠 멈췄을 때 쓴다.
 set -uo pipefail
 cd "$(dirname "$0")/.."
 ROOT="$PWD"
 
-# launchd 는 로그인 셸이 아니라 PATH 가 거의 비어 있다.
+# PATH 를 못박아 둔다. 어디서 불러도 같은 파이썬을 쓰게 한다.
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
 mkdir -p logs
-LOG="logs/nightly-$(date '+%Y%m%d').log"
+LOG="logs/nightly-$(date '+%Y%m%d-%H%M%S').log"
 exec >>"$LOG" 2>&1
-echo "════════ $(date '+%Y-%m-%d %H:%M:%S %Z') 자동 갱신 시작"
+echo "════════ $(date '+%Y-%m-%d %H:%M:%S %Z') 전체 갱신 시작"
 
 [ -f .env ] && set -a && . ./.env && set +a
 
@@ -80,18 +93,11 @@ run "매그니피센트 7"      python3 scripts/mag7_marketcap.py --apply
 echo "──── 빌드"
 python3 scripts/build.py || { echo "빌드 실패 — 여기서 멈춘다"; exit 1; }
 
-echo "──── 커밋"
-git add data/
-if git diff --cached --quiet; then
-  echo "바뀐 데이터 없음 — 커밋도 배포도 건너뛴다."
-  echo "════════ $(date '+%H:%M:%S') 끝"
-  exit 0
-fi
-git commit -q -m "자동 데이터 갱신 $(date '+%Y-%m-%d')"
-git pull --rebase --quiet && git push --quiet && echo "push 완료"
-
-echo "──── 배포"
-./update.sh --deploy-only
+echo "──── 끝"
+git --no-pager status --short data/ | head -20
+echo
+echo "커밋과 푸시, 배포는 하지 않았습니다. 바뀐 data/ 를 확인한 뒤"
+echo "직접 올리십시오. 평소 갱신은 깃허브 액션이 합니다."
 
 # 로그는 30일치만 둔다
 find logs -name 'nightly-*.log' -mtime +30 -delete 2>/dev/null
