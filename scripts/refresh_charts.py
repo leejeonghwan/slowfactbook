@@ -80,6 +80,9 @@ def main():
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--min-score", type=float, default=MINSCORE)
+    # 어느 차트가 왜 안 붙는지 봐야 고칠 수 있다. 숫자만 세고 넘어가면
+    # 등록해 놓고도 몇 달씩 조용히 밀린다(c2120 이 그랬다).
+    ap.add_argument("--why", action="store_true", help="건너뛴 차트를 모두 적는다")
     a = ap.parse_args()
     if not a.apply and not a.dry_run:
         a.dry_run = True
@@ -173,6 +176,14 @@ def main():
     print(f"  계열 정렬 불일치 : {len(skip_align)}")
     print(f"  값 대조 미달     : {len(skip_score)}")
     print(f"  조회 실패        : {len(errs)}")
+    if a.why:
+        for nm, lst in (("계열 축 미등록", skip_multi), ("값 대조 미달", skip_score),
+                        ("계열 정렬 불일치", skip_align), ("조회 실패", errs)):
+            if not lst:
+                continue
+            print(f"\n  [{nm}] {len(lst)}건")
+            for x in lst:
+                print("    -", x if isinstance(x, str) else " | ".join(map(str, x)))
     print()
     for e in sorted(ext, key=lambda x: -x["n"]):
         print(f"  + {e['title'][:28]:30s} {e['from']} → {e['to']}  ({e['n']}점 추가"

@@ -201,5 +201,43 @@
    "성동구",
    "마포구"
   ]
+ },
+ "c2371": {
+  "kind": "district",
+  "코드": "02",
+  "법정동코드": "1100000000",
+  "레벨": 2,
+  "mode": "series",
+  "scale": 0.0001,
+  "sourceUrl": "https://data.kbland.kr/kbstats/wmh?tIdx=HT06&tsIdx=aptSaleAvgPrice",
+  "round": 2,
+  "pick": [
+   "강남구",
+   "서초구",
+   "송파구",
+   "용산구",
+   "성동구",
+   "마포구"
+  ]
+ },
+ "c2372": {
+  "kind": "district",
+  "법정동코드": "1100000000",
+  "레벨": 2,
+  "round": 2,
+  "sourceUrl": "https://data.kbland.kr/kbstats/wmh?tIdx=HT06&tsIdx=aptSaleAvgPrice",
+  "ratio": [
+   "02",
+   "01"
+  ],
+  "mode": "series",
+  "pick": [
+   "강남구",
+   "서초구",
+   "송파구",
+   "용산구",
+   "성동구",
+   "마포구"
+  ]
  }
 }
