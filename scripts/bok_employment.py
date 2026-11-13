@@ -88,6 +88,36 @@ def rate(pop, act, ys):
     return [round(act[y] / pop[y] * 100, 1) for y in ys]
 
 
+def pullq(tbl, itm, obj):
+    """분기 자료를 {'YYYY-QN': 값} 으로 돌려준다."""
+    q = "&".join(f"objL{i + 1}={v}" for i, v in enumerate(obj))
+    u = ("https://kosis.kr/openapi/Param/statisticsParameterData.do?method=getList"
+         f"&apiKey={KEY}&format=json&jsonVD=Y&orgId=101&tblId={tbl}&prdSe=Q"
+         f"&startPrdDe=199901&endPrdDe={Y1}04&itmId={itm}&{q}")
+    r = subprocess.run(["curl", "-sS", "--max-time", "150", u], capture_output=True)
+    if r.returncode:
+        raise SystemExit("내려받기 실패: " + r.stderr.decode()[:120])
+    d = json.loads(r.stdout.decode("utf-8", "replace"))
+    if not isinstance(d, list):
+        raise SystemExit(f"{tbl} {itm} {obj} 분기 응답이 표가 아닙니다: {str(d)[:140]}")
+    out = {}
+    for x in d:
+        if x.get("DT") in (None, "", "-"):
+            continue
+        p = str(x["PRD_DE"])
+        out[f"{p[:4]}-Q{int(p[4:])}"] = float(x["DT"])
+    if not out:
+        raise SystemExit(f"{tbl} {itm} {obj} 분기 자료가 비었습니다.")
+    return out
+
+
+def qyears(*maps):
+    qs = set(maps[0])
+    for m in maps[1:]:
+        qs &= set(m)
+    return sorted(qs, key=lambda k: (int(k[:4]), int(k[-1])))
+
+
 # ── 1 연령대별 남성 경제활동참가율
 def chart_lfpr():
     T = "DT_1DA7012S"
@@ -209,6 +239,85 @@ def chart_edu_unemp():
     }
 
 
+# ── 2-2 학력별 청년 실업률(분기, 4분기 이동평균)
+def chart_edu_unemp_q():
+    T = "DT_1DA7105S"
+    E = [("전체", "00", "#4a4a4a"), ("대학교졸 이상", "42", "#c0322f"),
+         ("전문대졸", "41", "#2a5ca8"), ("고졸", "30", "#7f9fc7")]
+    got = {nm: pullq(T, "T80", ["75", c]) for nm, c, _ in E}
+    pub = pullq("DT_1DA7012S", "T80", ["0", "75"])
+    qs = qyears(*got.values(), pub)
+    bad = [(q, pub[q], got["전체"][q]) for q in qs if abs(pub[q] - got["전체"][q]) > 0.051]
+    if bad:
+        raise SystemExit(f"분기 청년 실업률 전체값이 다른 표와 어긋납니다: {bad[:4]}")
+    print(f"    검산 전체 실업률: {len(qs)}분기 두 표가 일치")
+
+    # 빠진 분기가 없어야 한다.
+    y, k = int(qs[0][:4]), int(qs[0][-1])
+    for q in qs:
+        if q != f"{y}-Q{k}":
+            raise SystemExit(f"분기가 빠졌습니다: {y}-Q{k}")
+        k += 1
+        if k == 5:
+            y, k = y + 1, 1
+
+    # 분기값을 해마다 평균한 것이 공표된 연간값과 맞아야 한다.
+    ann = pull(T, "T80", ["75", "00"])
+    for yy, a in sorted(ann.items()):
+        got4 = [got["전체"][q] for q in qs if q.startswith(str(yy))]
+        if len(got4) == 4 and abs(sum(got4) / 4 - a) > 0.16:
+            raise SystemExit(f"{yy}년 분기 평균({sum(got4) / 4:.2f})과 연간값({a})이 어긋납니다.")
+    print(f"    검산 분기 평균 대 연간값: {len(ann)}년 모두 0.16%p 안")
+
+    def ma4(v):
+        return [None if i < 3 else round(sum(v[i - 3:i + 1]) / 4, 2)
+                for i in range(len(v))]
+
+    ser = [ma4([got[nm][q] for q in qs]) for nm, _, _ in E]
+    u, c = ser[1], ser[3]
+    gap = [(qs[i], round(u[i] - c[i], 2)) for i in range(len(qs))
+           if u[i] is not None and c[i] is not None]
+    last = gap[-1]
+    return {
+        "slide": "manual-bok-youth-unemp-edu-q",
+        "category": "노동",
+        "title": "학력별 청년 실업률 추이(15~29세, 분기)",
+        "vizType": "line", "unit": "%",
+        "labels": qs, "series": ser,
+        "seriesNames": [nm for nm, _, _ in E],
+        "seriesColors": [col for _, _, col in E],
+        "source": (f"국가데이터처 경제활동인구조사 연령별 교육정도별 실업률, 15~29세. "
+                   f"{qs[0].replace('-Q', '년 ')}분기~{qs[-1].replace('-Q', '년 ')}분기. "
+                   f"4분기 이동평균. 단위: %."),
+        "sourceUrl": U + "DT_1DA7105S",
+        "notes": [
+            f"{qs[-1].replace('-Q', '년 ')}분기 기준 대학교졸 이상 {u[-1]}%, "
+            f"전문대졸 {ser[2][-1]}%, 고졸 {c[-1]}%, 전체 {ser[0][-1]}% 입니다. "
+            f"대학교졸 이상이 고졸보다 {last[1]}%포인트 높습니다.",
+            "4분기 이동평균입니다. 해당 분기와 앞의 세 분기를 평균한 값이라 "
+            "분기 하나하나의 실제 값과는 다릅니다. 청년 실업률은 졸업과 채용 "
+            "시기가 몰려 분기마다 크게 오르내리는데, 네 학력을 원자료로 겹쳐 "
+            "놓으면 계절성에 가려 추세가 보이지 않습니다. 그래서 네 분기를 한 "
+            "묶음으로 평균했습니다. 첫 세 분기는 평균을 낼 앞자료가 없어 "
+            "비어 있습니다.",
+            "학력이 높을수록 실업률이 낮다는 통념과 어긋나는 구간이 있습니다. "
+            "대졸자는 눈높이에 맞는 일자리를 찾는 동안 구직 상태로 남아 "
+            "실업자로 잡힙니다. 고졸자는 구직을 접고 비경제활동인구로 빠지면 "
+            "실업률 계산에서 아예 빠집니다. 실업률이 낮은 쪽이 사정이 나은 "
+            "것이 아닐 수 있습니다.",
+            "한국은행 이슈노트 2026-19호 「청년고용 위축, AI 탓인가」가 같은 "
+            "지표를 월별 12개월 이동평균으로 제시했습니다. 월별은 공표되지 "
+            "않습니다. 연령과 교육정도를 교차한 표는 분기까지만 있어 "
+            "한국은행은 원자료를 직접 돌렸습니다. 그래서 이 차트의 숫자는 "
+            "이슈노트의 그림과 눈금이 그대로 맞지 않습니다.",
+            "이슈노트는 '고졸이하' 로 묶었는데 공개 표는 초졸이하, 중졸, "
+            "고졸로 나뉘어 있습니다. 비율은 더할 수 없어 고졸만 넣었습니다.",
+            "연간값은 c2374 에 따로 있습니다. 2000년부터의 장기 추이는 그쪽이 "
+            "읽기 쉽습니다.",
+        ],
+    }
+
+
 # ── 3 수도권 취업자 비중
 def chart_capital_share():
     T = "DT_1DA7004S"
@@ -325,7 +434,8 @@ def main():
     ymd = datetime.datetime.now(KST).strftime("%Y-%m-%d %H:%M")
 
     out = []
-    for fn in (chart_lfpr, chart_edu_unemp, chart_capital_share, chart_parttime):
+    for fn in (chart_lfpr, chart_edu_unemp, chart_edu_unemp_q,
+               chart_capital_share, chart_parttime):
         print(f"  {fn.__name__}")
         it = fn()
         it["updated"] = ymd
