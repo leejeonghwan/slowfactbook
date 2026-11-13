@@ -105,7 +105,11 @@ def fetch_ratio():
 
 def fetch_trend(menu, field, wm="01"):
     """시장동향 지수. 메뉴코드 01 매수우위, 02 매매거래, 03 전세수급,
-    04 전세거래, 05 매매상승하락전망. 값은 날짜별 묶음 안에 field 로 들어 있다."""
+    04 전세거래, 05 매매상승하락전망. 값은 날짜별 묶음 안에 field 로 들어 있다.
+
+    월간주간구분코드 01 은 기준날짜가 YYYYMM 으로 오고 02 는 YYYYMMDD 로 온다.
+    주간을 달로 줄이면 한 달에 네다섯 개가 같은 열쇠로 겹쳐 하나만 남는다.
+    """
     import urllib.parse
     q = {"메뉴코드": menu, "월간주간구분코드": wm}
     url = TREND_API + "?" + "&".join(f"{urllib.parse.quote(k)}={urllib.parse.quote(v)}"
@@ -119,8 +123,12 @@ def fetch_trend(menu, field, wm="01"):
                 continue
             ym = str(row.get("기준날짜") or "")
             v = row.get(field)
-            if len(ym) >= 6 and v is not None:
+            if v is None:
+                continue
+            if wm == "01" and len(ym) >= 6:
                 m[f"{ym[:4]}-{ym[4:6]}"] = v
+            elif wm != "01" and len(ym) >= 8:
+                m[f"{ym[:4]}-{ym[4:6]}-{ym[6:8]}"] = v
         out[r["지역명"]] = m
     return out
 
@@ -155,8 +163,8 @@ def main():
         labels = [str(x) for x in it["labels"]]
         # 구별 최신값 차트는 라벨이 구 이름이다. 달 꼴 검사는 시계열에만 건다.
         if not (spec.get("kind") == "district" and spec.get("mode") == "latest") \
-           and not re.fullmatch(r"\d{4}-\d{2}", labels[-1]):
-            skips.append((cid, f"라벨이 월 꼴이 아닙니다: {labels[-1]}")); continue
+           and not re.fullmatch(r"\d{4}-\d{2}(-\d{2})?", labels[-1]):
+            skips.append((cid, f"라벨이 달이나 날짜 꼴이 아닙니다: {labels[-1]}")); continue
         sers = spec.get("series") or []
         sc = float(spec.get("scale", 1))
         if spec.get("kind") not in ("district", "ratio", "trend") and len(sers) != len(it["series"]):
@@ -165,11 +173,12 @@ def main():
         nd = int(spec.get("round", 4))
 
         if spec.get("kind") in ("ratio", "trend"):
-            key = ("R",) if spec["kind"] == "ratio" else ("T", spec["menu"], spec["field"])
+            wm = str(spec.get("wm", "01"))
+            key = ("R",) if spec["kind"] == "ratio" else ("T", spec["menu"], spec["field"], wm)
             if key not in cache:
                 try:
                     cache[key] = (fetch_ratio() if spec["kind"] == "ratio"
-                                  else fetch_trend(spec["menu"], spec["field"]))
+                                  else fetch_trend(spec["menu"], spec["field"], wm))
                 except Exception as e:
                     skips.append((cid, f"조회 실패: {e}")); continue
             reg = cache[key]
@@ -192,8 +201,15 @@ def main():
                 skips.append((cid, f"대조할 달이 부족합니다({seen}곳)")); continue
             if bad:
                 skips.append((cid, f"겹치는 구간 {len(bad)}곳 불일치 (예 {bad[0]})")); continue
+            # 아직 끝나지 않은 기간은 붙이지 않는다. 월간은 이번 달, 주간은
+            # 이번 주다(KB 주간은 월요일 기준으로 찍힌다).
+            if spec.get("kind") == "trend" and str(spec.get("wm", "01")) != "01":
+                mon = (now - datetime.timedelta(days=now.weekday())).strftime("%Y-%m-%d")
+                skipk = {mon}
+            else:
+                skipk = {cut}
             addk = [k for k in sorted(set.intersection(*[set(d) for d in got]))
-                    if k > labels[-1] and k != cut]
+                    if k > labels[-1] and k not in skipk]
             if not addk:
                 skips.append((cid, "이미 최신")); continue
             plans.append({"id": cid, "title": it["title"], "labels": labels + addk,
@@ -234,7 +250,17 @@ def main():
                 nl = [n for n, _ in rank]
                 ns = [[round(v, nd) for _, v in rank]]
             else:
-                names = sorted(reg, key=lambda n: -reg[n].get(months[-1], 0))
+                # 등록부에 pick 이 있으면 그 구만, 적은 순서 그대로 쓴다.
+                # 순서를 고정해야 overrides 의 seriesColors 가 계열과 어긋나지
+                # 않는다. pick 이 없으면 최신값이 큰 구부터 세운다.
+                pick = spec.get("pick")
+                if pick:
+                    miss = [n for n in pick if n not in reg]
+                    if miss:
+                        skips.append((cid, f"응답에 없는 구: {miss}")); continue
+                    names = list(pick)
+                else:
+                    names = sorted(reg, key=lambda n: -reg[n].get(months[-1], 0))
                 nl = months
                 ns = [[(round(reg[n][m] * sc, nd) if m in reg[n] else None) for m in months]
                       for n in names]
@@ -292,7 +318,7 @@ def main():
 
     print(f"등록 {len(mapping)}건 · 이어붙일 것 {len(plans)}건 · 건너뜀 {len(skips)}건\n")
     for p in plans:
-        print(f"  + {p['title'][:30]:32s} {p['from']} -> {p['to']}  ({p['n']}개월 추가)")
+        print(f"  + {p['title'][:30]:32s} {p['from']} -> {p['to']}  ({p['n']}개 추가)")
     for cid, why in skips:
         print(f"  - {cid}: {why}")
 
