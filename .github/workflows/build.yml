@@ -79,6 +79,7 @@ jobs:
           run "한국은행 고용"    python scripts/bok_employment.py --apply
           run "고용센터 구인구직" python scripts/jobcenter_vacancy.py --apply
           run "건강수명"        python scripts/hale_kdca.py --apply
+          run "오징어 어획량"    python scripts/squid_catch.py --apply
           run "한국거래소"          python scripts/krx_update.py --apply
           run "한국은행 ECOS"       python scripts/ecos_update.py --apply
           run "주택시총과 출산율"   python scripts/house_gdp_tfr.py --apply
