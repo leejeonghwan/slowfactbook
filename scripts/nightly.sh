@@ -75,6 +75,8 @@ run "KB부동산"            python3 scripts/kbapi_update.py --apply
 run "아파트 거래량"      python3 scripts/apt_transactions.py --apply
 run "노동 차트 보정"    python3 scripts/labor_fix.py --apply
 run "한국은행 고용"    python3 scripts/bok_employment.py --apply
+run "고용센터 구인구직" python3 scripts/jobcenter_vacancy.py --apply
+run "건강수명"        python3 scripts/hale_kdca.py --apply
 run "한국거래소"          python3 scripts/krx_update.py --apply
 run "한국은행 ECOS"       python3 scripts/ecos_update.py --apply
 run "주택시총과 출산율"   python3 scripts/house_gdp_tfr.py --apply
