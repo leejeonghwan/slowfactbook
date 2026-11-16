@@ -78,6 +78,10 @@ run "한국은행 고용"    python3 scripts/bok_employment.py --apply
 run "고용센터 구인구직" python3 scripts/jobcenter_vacancy.py --apply
 run "건강수명"        python3 scripts/hale_kdca.py --apply
 run "오징어 어획량"    python3 scripts/squid_catch.py --apply
+run "성장률과 실질임금" python3 scripts/growth_realwage.py --apply
+run "주택자산 분위"   python3 scripts/house_asset_decile.py --apply
+run "월간 음주율"     python3 scripts/drinking_rate.py --apply
+run "음주 위험지표"   python3 scripts/drinking_risk.py --apply
 run "한국거래소"          python3 scripts/krx_update.py --apply
 run "한국은행 ECOS"       python3 scripts/ecos_update.py --apply
 run "주택시총과 출산율"   python3 scripts/house_gdp_tfr.py --apply
