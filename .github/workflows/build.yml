@@ -85,6 +85,8 @@ jobs:
           run "월간 음주율"     python scripts/drinking_rate.py --apply
           run "음주 위험지표"   python scripts/drinking_risk.py --apply
           run "김장 의향"       python scripts/kimjang.py --apply
+          run "외래객 입국"     python scripts/visitors_cn_jp.py --apply
+          run "주류 판매액"     python scripts/liquor_sales.py --apply
           run "한국거래소"          python scripts/krx_update.py --apply
           run "한국은행 ECOS"       python scripts/ecos_update.py --apply
           run "주택시총과 출산율"   python scripts/house_gdp_tfr.py --apply

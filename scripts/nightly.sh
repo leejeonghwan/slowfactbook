@@ -83,6 +83,8 @@ run "주택자산 분위"   python3 scripts/house_asset_decile.py --apply
 run "월간 음주율"     python3 scripts/drinking_rate.py --apply
 run "음주 위험지표"   python3 scripts/drinking_risk.py --apply
 run "김장 의향"       python3 scripts/kimjang.py --apply
+run "외래객 입국"     python3 scripts/visitors_cn_jp.py --apply
+run "주류 판매액"     python3 scripts/liquor_sales.py --apply
 run "한국거래소"          python3 scripts/krx_update.py --apply
 run "한국은행 ECOS"       python3 scripts/ecos_update.py --apply
 run "주택시총과 출산율"   python3 scripts/house_gdp_tfr.py --apply
