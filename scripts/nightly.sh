@@ -99,6 +99,8 @@ run "한국공항공사"        python3 scripts/kac_update.py --apply
 run "인터넷트렌드"        python3 scripts/ittrend_update.py --apply
 run "역대 정부 누적 물가" python3 scripts/admin_cpi.py --apply
 run "역대 정부 코스피"   python3 scripts/kospi_terms.py --apply
+run "코스피와 S&P"    python3 scripts/kospi_sp500.py --apply
+run "엔비디아 분기"    python3 scripts/nvidia_quarters.py --apply
 run "FRED"                python3 scripts/fred_update.py --apply
 run "지수·시세"           python3 scripts/market_update.py --apply
 run "매그니피센트 7"      python3 scripts/mag7_marketcap.py --apply
