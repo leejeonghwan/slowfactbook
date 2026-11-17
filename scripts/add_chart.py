@@ -66,7 +66,12 @@ def main():
         src = f"{src}, 단위: {a.unit}" if src else f"단위: {a.unit}"
     doc = json.load(open(MANUAL, encoding="utf-8")) if os.path.exists(MANUAL) else \
         {"category": "새 데이터", "_origin": "manual", "items": []}
-    n = 1 + max([int(it["slide"].split("-")[1]) for it in doc["items"]] or [0])
+    # 슬라이드 이름이 m-NNNN 인 것만 번호로 센다. manual.json 에는 restored-NNNN,
+    # manual-<이름> 처럼 다른 꼴도 섞여 있어 전부 int 로 바꾸려 들면 터진다.
+    used = [int(m.group(1)) for m in
+            (re.fullmatch(r"m-(\d+)", str(it.get("slide", ""))) for it in doc["items"])
+            if m]
+    n = 1 + max(used or [0])
     slide = f"m-{n:04d}"
     today = datetime.date.today().isoformat()
     # 최근 업데이트 정렬용: 날짜만 쓰면 같은 날 바뀐 것들의 순서가 파일 순서로 밀린다.
