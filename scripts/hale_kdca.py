@@ -186,6 +186,47 @@ def main():
         "updated": ymd,
     }
 
+    # ── c0236 소득수준별 건강수명, 최신 연도 한 장(기존 차트 교체)
+    # 키노트에서 넘어온 2020년 한국건강증진개발원 판이 오래 남아 있었다.
+    # 같은 지표의 통계집 판으로 해마다 마지막 해를 다시 쓴다.
+    ks5 = ["1분위(하위)", "2분위", "3분위", "4분위", "5분위(상위)"]
+    snap_v = [round(Q[k][-1], 2) for k in ks5]
+    assert snap_v == sorted(snap_v), f"분위 순서가 뒤집혔다: {snap_v}"
+    g = round(snap_v[-1] - snap_v[0], 2)
+    assert g in GAP_LABELS, f"격차 {g} 가 통계집 라벨에 없다"
+    assert snap_v[0] < HALE[-1] < snap_v[-1], (
+        f"전체 {HALE[-1]} 가 분위 범위 밖이다")
+    snap = {
+        "id": "c0236",
+        "category": "건강과 보건",
+        "title": "소득수준별 건강수명.",
+        "vizType": "column", "unit": "세",
+        "labels": ["1분위(하위)", "2분위", "3분위", "4분위", "5분위(상위)"],
+        "series": [snap_v],
+        "seriesNames": ["건강수명"],
+        "seriesColors": ["#6a8f3c"],
+        "hideLegend": True,
+        "source": (f"{SRC}. {YS[-1]}년. 건강보험료 기준 소득 5분위. 단위: 세."),
+        "sourceUrl": URL,
+        "notes": [
+            f"{YS[-1]}년 기준입니다. 하위 20%가 {snap_v[0]}세, 상위 20%가 "
+            f"{snap_v[-1]}세로 {g}년 차이입니다. 전체는 {HALE[-1]}세입니다.",
+            "2분위부터 5분위까지는 서로 붙어 있고 1분위만 멀리 떨어져 "
+            "있습니다. 소득이 높을수록 고르게 좋아지는 모양이 아니라 "
+            "맨 아래가 따로 떨어져 있는 모양입니다.",
+            "한 해만 잘라 본 것이라 방향은 보이지 않습니다. 해마다의 움직임은 "
+            "c2378 소득수준별 건강수명에 있습니다.",
+            "전에는 2020년 한 해짜리였고 1분위 66.22세, 5분위 74.88세, 전체 "
+            "71.82세였습니다. 한국건강증진개발원 산출치였고 통계집의 2020년 "
+            "값(1분위 65.58세, 5분위 73.93세, 전체 70.93세)과 다릅니다. "
+            "산출 주체가 달라 섞어 읽으면 안 되고, 통계집 쪽으로 맞췄습니다. "
+            "남성과 여성 막대도 같은 옛 판이라 뺐습니다.",
+            "건강수명은 기대수명에서 질병으로 앓은 기간을 뺀 값입니다. "
+            "생명표의 '유병기간 제외 기대수명' 과는 다른 지표입니다.",
+        ],
+        "updated": ymd,
+    }
+
     # ── 1 소득수준별 건강수명 추이
     top, bot = Q["5분위(상위)"], Q["1분위(하위)"]
     pk = YS[top.index(max(top))]
@@ -258,6 +299,8 @@ def main():
 
     print(f"  {trend['title']:22s} {len(trend['labels'])}점 "
           f"{trend['labels'][0]}~{trend['labels'][-1]} (c0237, overrides)")
+    print(f"  {snap['title']:22s} {len(snap['labels'])}칸 "
+          f"{YS[-1]}년 격차 {g}년 (c0236, overrides)")
     for it in out:
         print(f"  {it['title']:22s} {len(it['labels'])}점 "
               f"{it['labels'][0]}~{it['labels'][-1]} 계열 {len(it['series'])} "
@@ -268,10 +311,11 @@ def main():
     ovp = os.path.join(DATA, "overrides.json")
     ov = json.load(open(ovp, encoding="utf-8"))
     ov.setdefault("c0237", {}).update(trend)
+    ov.setdefault("c0236", {}).update(snap)
     with open(ovp, "w", encoding="utf-8") as fh:
         json.dump(ov, fh, ensure_ascii=False, indent=1)
         fh.write("\n")
-    print("-> data/overrides.json 에 c0237 을 반영했습니다.")
+    print("-> data/overrides.json 에 c0237, c0236 을 반영했습니다.")
 
     p = os.path.join(DATA, "manual.json")
     doc = json.load(open(p, encoding="utf-8"))
