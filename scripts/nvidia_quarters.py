@@ -193,9 +193,10 @@ def main():
     rev = [round(rq[e] / 1e6) for e in ends]
     op = [round(oq[e] / 1e6) for e in ends]
     last, prev = labs[-1], labs[-5] if len(labs) > 5 else labs[0]
+    loss = [(l, v) for l, v in zip(labs, op) if v < 0]
     out = {"c1140": {
         "id": "c1140", "title": "엔비디아 매출과 영업이익",
-        "vizType": "column", "unit": "백만 달러",
+        "vizType": "column", "unit": "백만 달러", "yMin": 0,
         "labels": labs, "series": [rev, op],
         "seriesNames": ["매출", "영업이익"],
         "seriesColors": ["#2a5ca8", "#6a8f3c"],
@@ -214,6 +215,13 @@ def main():
             "영업이익(non-GAAP)은 이보다 큽니다. 순이익과도 다릅니다.",
             "회계연도 4분기는 따로 공시되지 않아 연간값에서 3분기 누계를 빼 "
             "되돌렸습니다.",
+            ("세로축 바닥을 0에 고정했습니다. 그래서 영업이익이 적자였던 "
+             f"{len(loss)}개 분기가 0으로 보입니다. "
+             + ", ".join(f"{l.replace('-Q', '년 ')}분기 {v:,}" for l, v in loss)
+             + "백만 달러였습니다. 지금 분기의 "
+             f"{op[-1]:,}과 견주면 화면에서 구분되지 않는 크기입니다."
+             ) if loss else
+            "세로축 바닥을 0에 고정했습니다.",
             "가장 최근 분기는 분기보고서가 아직 올라오지 않아 실적 발표 보도자료의 "
             "손익계산서에서 가져왔습니다. 보고서가 올라오면 공시값으로 바뀝니다.",
         ],

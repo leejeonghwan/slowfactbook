@@ -50,6 +50,16 @@ QCOL = ["#2a5ca8", "#8aa6c8", "#9a9a9a", "#c9a08f", "#c0322f"]
 GAP_LABELS = [8.35, 8.35, 8.04, 8.16, 8.21, 8.13, 7.94, 7.95,
               7.47, 7.44, 7.59, 7.55, 7.35, 7.08, 6.72, 7.14]
 
+# 건강수명과 기대수명 추이(통계집 9쪽 그림). 2008~2023년.
+# 그림의 값 표기를 그대로 옮겼고, 같은 그림에 적힌 격차로 해마다 검산한다.
+TREND_Y = list(range(2008, 2024))
+EXPECT = [79.60, 80.04, 80.24, 80.62, 80.87, 81.36, 81.80, 82.06,
+          82.36, 82.69, 82.74, 83.29, 83.48, 83.61, 82.74, 83.49]
+HALE = [68.89, 69.05, 69.16, 69.20, 68.97, 69.69, 70.10, 70.59,
+        70.56, 70.78, 70.43, 70.58, 70.93, 70.51, 69.89, 68.56]
+TREND_GAP = [10.71, 10.99, 11.08, 11.42, 11.90, 11.67, 11.70, 11.47,
+             11.80, 11.91, 12.31, 12.71, 12.55, 13.10, 12.85, 14.93]
+
 NAT23 = {"건강수명": 68.56, "기대수명": 83.49}
 
 # 2023년 시도별 건강위험요인. 열 순서는 아래 RISK_COLS 와 같다.
@@ -126,7 +136,56 @@ def main():
             raise SystemExit(f"{s} 에 비율 범위를 벗어난 값이 있습니다: {v}")
     print(f"    검산 시도별 표: 17개 시도 x {len(RISK_COLS)}개 지표 모두 정상")
 
+    # ── 검산 4. 기대수명과 건강수명 추이
+    if not (len(TREND_Y) == len(EXPECT) == len(HALE) == len(TREND_GAP) == 16):
+        raise SystemExit("추이 자료의 길이가 안 맞습니다.")
+    bad = [(y, round(e - h, 2), g) for y, e, h, g
+           in zip(TREND_Y, EXPECT, HALE, TREND_GAP) if abs(round(e - h, 2) - g) > 0.011]
+    if bad:
+        raise SystemExit(f"기대수명에서 건강수명을 뺀 값이 그림의 격차와 다릅니다: {bad[:4]}")
+    print(f"    검산 추이: {len(TREND_Y)}년 모두 격차가 기대수명 빼기 건강수명과 일치")
+    if abs(EXPECT[-1] - NAT23["기대수명"]) > 0.011 or abs(HALE[-1] - NAT23["건강수명"]) > 0.011:
+        raise SystemExit("2023년 값이 통계집 표지 수치와 다릅니다.")
+
     out = []
+    # ── 0 기대수명과 건강수명 추이
+    pk = TREND_Y[HALE.index(max(HALE))]
+    trend = {
+        "id": "c0237",
+        "title": "기대수명과 건강수명.",
+        "vizType": "column", "unit": "세",
+        "labels": [str(y) for y in TREND_Y],
+        "series": [EXPECT, HALE],
+        "seriesNames": ["기대수명", "건강수명"],
+        "seriesColors": ["#8a7f72", "#6a8f3c"],
+        "source": (f"{SRC}. {TREND_Y[0]}~{TREND_Y[-1]}년. 단위: 세."),
+        "sourceUrl": URL,
+        "notes": [
+            f"{TREND_Y[-1]}년 기대수명 {EXPECT[-1]}세, 건강수명 {HALE[-1]}세로 "
+            f"{TREND_GAP[-1]}년 차이입니다. {TREND_Y[0]}년에는 {TREND_GAP[0]}년 "
+            "차이였습니다. 아프지 않고 사는 기간보다 앓는 기간이 더 빨리 "
+            "늘었습니다.",
+            f"건강수명은 {pk}년 {max(HALE)}세가 가장 높았고 {TREND_Y[-1]}년 "
+            f"{HALE[-1]}세입니다. {TREND_Y[0]}년의 {HALE[0]}세보다도 낮습니다. "
+            "같은 기간 기대수명은 계속 늘었습니다.",
+            "건강수명은 아프지 않고 산 기간입니다. 기대수명에서 질병으로 앓은 "
+            "기간을 뺀 값이고, 설리반 방식으로 생명표와 건강손실년수를 합쳐 "
+            "계산합니다.",
+            "질병관리청 통계집 기준입니다. 국가데이터처 생명표의 '유병기간 제외 "
+            "기대수명' 과는 다른 지표라 같은 해에도 값이 크게 다릅니다. 그쪽은 "
+            "설문으로 물은 주관적 건강상태를 쓰고 이쪽은 질병 자료로 계산합니다. "
+            "섞어 읽으면 안 됩니다.",
+            "전에는 2년 간격 일곱 점이었고 2020년 값이 기대수명 84.55세, 건강수명 "
+            "71.82세로 적혀 있었습니다. 통계집의 2020년은 83.48세와 70.93세입니다. "
+            "해마다 모든 해를 넣고 통계집에 함께 적힌 격차로 열여섯 해를 "
+            "대조했습니다.",
+            "2023년에 건강수명이 1.33년 떨어졌습니다. 한 가지 이유로 설명할 수 "
+            "없습니다. 코로나 유행기의 의료 이용 변화, 진단과 등록이 늘어난 몫, "
+            "실제 건강 악화가 섞여 있습니다.",
+        ],
+        "updated": ymd,
+    }
+
     # ── 1 소득수준별 건강수명 추이
     top, bot = Q["5분위(상위)"], Q["1분위(하위)"]
     pk = YS[top.index(max(top))]
@@ -197,6 +256,8 @@ def main():
             "updated": ymd,
         })
 
+    print(f"  {trend['title']:22s} {len(trend['labels'])}점 "
+          f"{trend['labels'][0]}~{trend['labels'][-1]} (c0237, overrides)")
     for it in out:
         print(f"  {it['title']:22s} {len(it['labels'])}점 "
               f"{it['labels'][0]}~{it['labels'][-1]} 계열 {len(it['series'])} "
@@ -204,6 +265,14 @@ def main():
     if not a.apply:
         print("\n  (--apply 를 붙이면 data/manual.json 에 씁니다)")
         return 0
+    ovp = os.path.join(DATA, "overrides.json")
+    ov = json.load(open(ovp, encoding="utf-8"))
+    ov.setdefault("c0237", {}).update(trend)
+    with open(ovp, "w", encoding="utf-8") as fh:
+        json.dump(ov, fh, ensure_ascii=False, indent=1)
+        fh.write("\n")
+    print("-> data/overrides.json 에 c0237 을 반영했습니다.")
+
     p = os.path.join(DATA, "manual.json")
     doc = json.load(open(p, encoding="utf-8"))
     by = {i.get("slide"): i for i in doc["items"] if i.get("slide")}
