@@ -78,6 +78,7 @@ run "한국은행 고용"    python3 scripts/bok_employment.py --apply
 run "고용센터 구인구직" python3 scripts/jobcenter_vacancy.py --apply
 run "건강수명"        python3 scripts/hale_kdca.py --apply
 run "건강수명 기준비교" python3 scripts/hale_methods.py --apply
+run "비만율"          python3 scripts/obesity.py --apply
 run "오징어 어획량"    python3 scripts/squid_catch.py --apply
 run "성장률과 실질임금" python3 scripts/growth_realwage.py --apply
 run "주택자산 분위"   python3 scripts/house_asset_decile.py --apply
@@ -101,6 +102,7 @@ run "인터넷트렌드"        python3 scripts/ittrend_update.py --apply
 run "역대 정부 누적 물가" python3 scripts/admin_cpi.py --apply
 run "역대 정부 코스피"   python3 scripts/kospi_terms.py --apply
 run "코스피와 S&P"    python3 scripts/kospi_sp500.py --apply
+run "미국 주가"      python3 scripts/px_stocks.py --apply
 run "엔비디아 분기"    python3 scripts/nvidia_quarters.py --apply
 run "FRED"                python3 scripts/fred_update.py --apply
 run "지수·시세"           python3 scripts/market_update.py --apply
