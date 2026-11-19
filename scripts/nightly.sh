@@ -105,6 +105,7 @@ run "역대 정부 누적 물가" python3 scripts/admin_cpi.py --apply
 run "역대 정부 코스피"   python3 scripts/kospi_terms.py --apply
 run "코스피와 S&P"    python3 scripts/kospi_sp500.py --apply
 run "미국 주가"      python3 scripts/px_stocks.py --apply
+run "시스코와 엔비디아"  python3 scripts/cisco_nvidia.py --apply
 run "엔비디아 분기"    python3 scripts/nvidia_quarters.py --apply
 run "FRED"                python3 scripts/fred_update.py --apply
 run "지수·시세"           python3 scripts/market_update.py --apply
