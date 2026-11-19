@@ -80,6 +80,7 @@ run "건강수명"        python3 scripts/hale_kdca.py --apply
 run "건강수명 기준비교" python3 scripts/hale_methods.py --apply
 run "비만율"          python3 scripts/obesity.py --apply
 run "화장품 수출"      python3 scripts/cosmetics.py --apply
+run "핵탄두"          python3 scripts/nuclear.py --apply
 run "오징어 어획량"    python3 scripts/squid_catch.py --apply
 run "성장률과 실질임금" python3 scripts/growth_realwage.py --apply
 run "주택자산 분위"   python3 scripts/house_asset_decile.py --apply
