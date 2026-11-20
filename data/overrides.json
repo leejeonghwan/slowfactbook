@@ -1009,7 +1009,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1YL20531E",
   "title": "15~29세 실업률",
   "unit": "%",
-  "updated": "2026-11-20 14:20",
+  "updated": "2026-11-21 08:19",
   "vizType": "line"
  },
  "c0015": {
@@ -1419,7 +1419,7 @@
   "revised": "2026-10-10 08:40",
   "source": "고용노동부 근로실태 조사.",
   "unit": "만 명",
-  "updated": "2026-11-20 14:23"
+  "updated": "2026-11-21 08:22"
  },
  "c0017": {
   "labels": [
@@ -2725,7 +2725,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_LCE0002",
   "title": "남녀 노동시간 격차",
   "unit": "시간",
-  "updated": "2026-11-20 14:18"
+  "updated": "2026-11-21 08:16"
  },
  "c0027": {
   "id": "c0027",
@@ -2813,7 +2813,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_LCE0002",
   "title": "남녀 시간당 임금 총액",
   "unit": "원",
-  "updated": "2026-11-20 14:18"
+  "updated": "2026-11-21 08:16"
  },
  "c0028": {
   "source": "노동부 근로 실태 조사.",
@@ -7343,7 +7343,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DA7011S",
   "title": "취업시간별 취업자 수(월별)",
   "unit": "만 명",
-  "updated": "2026-11-20 14:20",
+  "updated": "2026-11-21 08:19",
   "vizType": "area"
  },
  "c0041": {
@@ -9669,7 +9669,7 @@
   "source": "고용노동부 고용센터 구인/구직 및 취업현황(워크넷, 고용정보통합분석시스템). 2002-01~2025-12. 월별 신규구인인원과 신규구직건수. 단위: 만 명.",
   "sourceUrl": "https://www.index.go.kr/unity/potal/main/EachDtlPageDetail.do?idx_cd=1505",
   "unit": "만 명",
-  "updated": "2026-11-20 14:23"
+  "updated": "2026-11-21 08:22"
  },
  "c0052": {
   "labels": [
@@ -11053,7 +11053,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_LCE0002",
   "title": "정규직과 비정규직 시간당 임금",
   "unit": "원",
-  "updated": "2026-11-20 14:18"
+  "updated": "2026-11-21 08:16"
  },
  "c0065": {
   "category": "노동",
@@ -11685,7 +11685,7 @@
   "source": "고용노동부",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_11806_N013",
   "unit": "명, 고용노동부",
-  "updated": "2026-11-20 14:18"
+  "updated": "2026-11-21 08:16"
  },
  "c0082": {
   "category": "노동",
@@ -11767,7 +11767,7 @@
   "source": "고용노동부.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_11806_N013",
   "unit": "명",
-  "updated": "2026-11-20 14:18"
+  "updated": "2026-11-21 08:16"
  },
  "c0084": {
   "category": "노동",
@@ -11836,7 +11836,7 @@
   "source": "고용노동부.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_11806_N013",
   "unit": "명",
-  "updated": "2026-11-20 14:18"
+  "updated": "2026-11-21 08:16"
  },
  "c0085": {
   "category": "건강과 보건",
@@ -15616,7 +15616,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_PAY0004 https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_PAY0004",
   "title": "50~54세 남녀 평균 근속 연수",
   "unit": "년",
-  "updated": "2026-11-20 14:17"
+  "updated": "2026-11-21 08:16"
  },
  "c0130": {
   "id": "c0130",
@@ -15745,7 +15745,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_PAY0004 https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_PAY0004",
   "title": "남녀 평균 근속 연수",
   "unit": "년",
-  "updated": "2026-11-20 14:17"
+  "updated": "2026-11-21 08:16"
  },
  "c0131": {
   "source": "OECD.",
@@ -18375,7 +18375,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_MON051",
   "title": "경제 성장률과 실질임금 상승률.",
   "unit": "%",
-  "updated": "2026-11-20 14:24",
+  "updated": "2026-11-21 08:23",
   "vizType": "column"
  },
  "c0157": {
@@ -18712,7 +18712,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EP_2005",
   "title": "성별 연도별 임금 격차",
   "unit": "만 원",
-  "updated": "2026-11-20 14:18"
+  "updated": "2026-11-21 08:17"
  },
  "c0185": {
   "id": "c0185",
@@ -18760,7 +18760,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EP_2012",
   "title": "대기업 성별 연도별 임금 격차",
   "unit": "만 원",
-  "updated": "2026-11-20 14:18"
+  "updated": "2026-11-21 08:17"
  },
  "c0186": {
   "id": "c0186",
@@ -18808,7 +18808,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EP_2012",
   "title": "중소기업 성별 연도별 임금 격차",
   "unit": "만 원",
-  "updated": "2026-11-20 14:18"
+  "updated": "2026-11-21 08:17"
  },
  "c0187": {
   "drop": true,
@@ -18868,7 +18868,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EP_2014",
   "title": "2024년 대기업과 중소기업 연령대별 임금 격차",
   "unit": "만 원",
-  "updated": "2026-11-20 14:18"
+  "updated": "2026-11-21 08:17"
  },
  "c0189": {
   "drop": true,
@@ -18936,7 +18936,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EP_2001",
   "title": "기업규모별 연도별 임금 격차",
   "unit": "만 원",
-  "updated": "2026-11-20 14:18"
+  "updated": "2026-11-21 08:17"
  },
  "c0192": {
   "id": "c0192",
@@ -18985,7 +18985,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EP_3021",
   "title": "2024년 종사자 규모별 남녀 일자리 수",
   "unit": "만 개",
-  "updated": "2026-11-20 14:18",
+  "updated": "2026-11-21 08:17",
   "vizType": "column"
  },
  "c0193": {
@@ -19351,7 +19351,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=117&tblId=DT_11777_N220",
   "title": "GDP 대비 공공사회복지지출",
   "unit": "%",
-  "updated": "2026-11-20 14:27"
+  "updated": "2026-11-21 08:27"
  },
  "c0232": {
   "source": "질병관리청 국민건강영양조사.",
@@ -19487,7 +19487,7 @@
   "sourceUrl": "https://www.kdca.go.kr/",
   "title": "소득수준별 건강수명.",
   "unit": "세",
-  "updated": "2026-11-20 14:23",
+  "updated": "2026-11-21 08:22",
   "vizType": "column"
  },
  "c0237": {
@@ -19570,7 +19570,7 @@
   "sourceUrl": "https://www.kdca.go.kr/",
   "title": "기대수명과 건강수명.",
   "unit": "세",
-  "updated": "2026-11-20 14:23",
+  "updated": "2026-11-21 08:22",
   "vizType": "column"
  },
  "c0238": {
@@ -20638,7 +20638,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=133&tblId=TX_13301_A075",
   "title": "국세 징수 현황",
   "unit": "조 원",
-  "updated": "2026-11-20 14:26",
+  "updated": "2026-11-21 08:26",
   "vizType": "stacked_bar"
  },
  "c0302": {
@@ -20725,7 +20725,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=133&tblId=TX_13301_A075",
   "title": "법인세 징수 현황",
   "unit": "조 원",
-  "updated": "2026-11-20 14:26",
+  "updated": "2026-11-21 08:26",
   "vizType": "column"
  },
  "c0303": {
@@ -20881,7 +20881,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=133&tblId=TX_13301_A075",
   "title": "법인세와 근로소득세",
   "unit": "조 원",
-  "updated": "2026-11-20 14:26",
+  "updated": "2026-11-21 08:26",
   "vizType": "line"
  },
  "c0307": {
@@ -21008,7 +21008,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=133&tblId=TX_13301_A075",
   "title": "법인세와 근로소득세",
   "unit": "조 원",
-  "updated": "2026-11-20 14:26",
+  "updated": "2026-11-21 08:26",
   "vizType": "column"
  },
  "c0308": {
@@ -21227,7 +21227,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=133&tblId=TX_13301_A075",
   "title": "국세 징수 현황",
   "unit": "조 원",
-  "updated": "2026-11-20 14:26",
+  "updated": "2026-11-21 08:26",
   "vizType": "stacked_bar"
  },
  "c0312": {
@@ -21329,7 +21329,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=133&tblId=TX_13301_A075",
   "title": "국세 징수 현황",
   "unit": "조 원",
-  "updated": "2026-11-20 14:26",
+  "updated": "2026-11-21 08:26",
   "vizType": "stacked_bar_h"
  },
  "c0325": {
@@ -21670,7 +21670,7 @@
   "sourceUrl": "https://www.kmta.or.kr/kr/data/stats_spend.php",
   "title": "1인당 육류 소비량",
   "unit": "kg",
-  "updated": "2026-11-20 14:25"
+  "updated": "2026-11-21 08:25"
  },
  "c0345": {
   "source": "",
@@ -21788,7 +21788,7 @@
   "source": "육류는 한국육류유통수출협회 소비현황, 쌀은 국가데이터처 양곡소비량조사. 1인당 연간 소비량. 단위: kg.",
   "sourceUrl": "https://www.kmta.or.kr/kr/data/stats_spend.php",
   "unit": "kg",
-  "updated": "2026-11-20 14:25"
+  "updated": "2026-11-21 08:25"
  },
  "c0347": {
   "source": "국가데이터처 양곡소비 조사. (.",
@@ -26661,7 +26661,7 @@
   ],
   "source": "국가데이터처 증권·파생상품시장통계.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=343&tblId=DT_343_2010_S0029",
-  "updated": "2026-11-20 14:28"
+  "updated": "2026-11-21 08:28"
  },
  "c0495": {
   "category": "주식",
@@ -28329,7 +28329,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=343&tblId=DT_343_2010_S0029",
   "title": "코스피 지수와 S&P 500 지수.",
   "unit": "",
-  "updated": "2026-11-20 14:28",
+  "updated": "2026-11-21 08:28",
   "vizType": "line"
  },
  "c0496": {
@@ -42950,7 +42950,7 @@
    "2026-06"
   ],
   "revised": "2026-10-10 08:40",
-  "updated": "2026-11-20 14:28"
+  "updated": "2026-11-21 08:28"
  },
  "c0687": {
   "id": "c0687",
@@ -43611,7 +43611,7 @@
   "sourceUrl": "https://ecos.bok.or.kr/#/Short/7a6d1c",
   "title": "역대 정부 코스피 지수",
   "unit": "p",
-  "updated": "2026-11-20 14:28"
+  "updated": "2026-11-21 08:28"
  },
  "c0689": {
   "labels": [
@@ -54007,7 +54007,7 @@
   "sourceUrl": "https://ecos.bok.or.kr/ https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B81A17",
   "title": "GDP 대비 주택 시가총액과 합계출산율",
   "unit": "배",
-  "updated": "2026-11-20 14:25",
+  "updated": "2026-11-21 08:24",
   "vizType": "combo"
  },
  "c0740": {
@@ -55057,7 +55057,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=408&tblId=DT_408_2006_S0064",
   "title": "아파트 매매 거래량(서울)",
   "unit": "호",
-  "updated": "2026-11-20 14:20",
+  "updated": "2026-11-21 08:19",
   "vizType": "line"
  },
  "c0753": {
@@ -55581,7 +55581,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=408&tblId=DT_408_2006_S0064",
   "title": "아파트 매매 거래량(전국)",
   "unit": "호",
-  "updated": "2026-11-20 14:20",
+  "updated": "2026-11-21 08:19",
   "vizType": "line"
  },
  "c0754": {
@@ -57206,7 +57206,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B04005N",
   "title": "연천군 청산면 연령대별 인구",
   "unit": "명",
-  "updated": "2026-11-20 14:27"
+  "updated": "2026-11-21 08:27"
  },
  "c0759": {
   "category": "지역",
@@ -63602,7 +63602,8 @@
    "2026-11-16",
    "2026-11-17",
    "2026-11-18",
-   "2026-11-19"
+   "2026-11-19",
+   "2026-11-20"
   ],
   "revised": "2026-10-11 02:57",
   "series": [
@@ -63898,7 +63899,8 @@
     1854.78,
     1854.8,
     1854.62,
-    1854.41
+    1854.41,
+    1854.43
    ],
    [
     1581.51,
@@ -64192,13 +64194,14 @@
     1841.67,
     1841.59,
     1841.49,
-    1841.38
+    1841.38,
+    1841.29
    ]
   ],
   "source": "오피넷.",
   "sourceUrl": "https://www.opinet.co.kr/user/dopospdrg/dopOsPdrgSelect.do",
   "unit": "원/리터",
-  "updated": "2026-11-20 08:16"
+  "updated": "2026-11-21 08:14"
  },
  "c0851": {
   "source": "국가데이터처 경제활동인구.",
@@ -78178,7 +78181,7 @@
    "2026-05"
   ],
   "revised": "2026-10-11 02:57",
-  "updated": "2026-11-20 14:28"
+  "updated": "2026-11-21 08:28"
  },
  "c1049": {
   "category": "주식",
@@ -78461,7 +78464,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=343&tblId=DT_343_2010_S0029",
   "title": "코스피 지수와 S&P 500 지수.",
   "unit": "",
-  "updated": "2026-11-20 14:28",
+  "updated": "2026-11-21 08:28",
   "vizType": "line"
  },
  "c1052": {
@@ -85957,7 +85960,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_2OEST001",
   "title": "GDP 대비 연구개발비, 나라 비교",
   "unit": "%",
-  "updated": "2026-11-20 14:27",
+  "updated": "2026-11-21 08:27",
   "vizType": "bar"
  },
  "c1120": {
@@ -86564,7 +86567,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=127&tblId=DT_KBA0001",
   "title": "GDP 대비 연구개발비, 재원별",
   "unit": "%",
-  "updated": "2026-11-20 14:27",
+  "updated": "2026-11-21 08:27",
   "vizType": "line"
  },
  "c1131": {
@@ -86858,7 +86861,7 @@
   "sourceUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001045810&type=8-K",
   "title": "엔비디아 매출과 영업이익",
   "unit": "백만 달러",
-  "updated": "2026-11-20 14:38",
+  "updated": "2026-11-21 08:28",
   "vizType": "column",
   "yMin": 0
  },
@@ -87935,7 +87938,7 @@
   "sourceUrl": "https://www.sipri.org/sites/default/files/YB26%2008%20World%20Nuclear%20Forces.pdf",
   "title": "핵탄두 보유량.",
   "unit": "개",
-  "updated": "2026-11-20 14:23",
+  "updated": "2026-11-21 08:23",
   "vizType": "bar"
  },
  "c1268": {
@@ -89724,7 +89727,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=314&tblId=DT_TRD_SEX_ENT_AGG_MONTH",
   "title": "중국과 일본 관광객 수.",
   "unit": "만 명",
-  "updated": "2026-11-20 14:24",
+  "updated": "2026-11-21 08:23",
   "vizType": "line"
  },
  "c1333": {
@@ -91725,7 +91728,7 @@
   "sourceUrl": "https://www.nytco.com/investors/",
   "title": "뉴욕타임스 디지털 구독자 분기 순증",
   "unit": "만 명",
-  "updated": "2026-11-20 14:26",
+  "updated": "2026-11-21 08:26",
   "vizType": "column"
  },
  "c1477": {
@@ -95441,7 +95444,7 @@
   "sourceUrl": "https://www.nytco.com/investors/",
   "title": "뉴욕타임스 유료 구독(분기)",
   "unit": "만 명",
-  "updated": "2026-11-20 14:26",
+  "updated": "2026-11-21 08:26",
   "vizType": "line"
  },
  "c1668": {
@@ -104123,7 +104126,7 @@
   "sourceUrl": "https://ecos.bok.or.kr/",
   "title": "역대 정부 누적 물가 상승률",
   "unit": "%",
-  "updated": "2026-11-20 14:28"
+  "updated": "2026-11-21 08:28"
  },
  "c1978": {
   "source": "2023년 기준.",
@@ -106239,7 +106242,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_PAY0004 https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_PAY0004",
   "title": "남녀 월 임금 총액",
   "unit": "만 원",
-  "updated": "2026-11-20 14:17"
+  "updated": "2026-11-21 08:16"
  },
  "c2047": {
   "category": "노동",
@@ -134266,7 +134269,8 @@
    "2026-11-13",
    "2026-11-16",
    "2026-11-17",
-   "2026-11-18"
+   "2026-11-18",
+   "2026-11-19"
   ],
   "revised": "2026-10-11 02:57",
   "series": [
@@ -134727,13 +134731,14 @@
     699.66,
     665.65,
     650.06,
-    662.81
+    662.81,
+    684.81
    ]
   ],
   "source": "야후 파이낸스.",
   "sourceUrl": "https://finance.yahoo.com/quote/%5EKQ11/",
   "unit": "",
-  "updated": "2026-11-19 14:46"
+  "updated": "2026-11-21 08:28"
  },
  "c2211": {
   "category": "주식",
@@ -134953,7 +134958,8 @@
    "2026-11-13",
    "2026-11-16",
    "2026-11-17",
-   "2026-11-18"
+   "2026-11-18",
+   "2026-11-19"
   ],
   "revised": "2026-10-11 02:57",
   "series": [
@@ -135172,13 +135178,14 @@
     699.66,
     665.65,
     650.06,
-    662.81
+    662.81,
+    684.81
    ]
   ],
   "source": "야후 파이낸스.",
   "sourceUrl": "https://finance.yahoo.com/quote/%5EKQ11/",
   "unit": "",
-  "updated": "2026-11-19 14:46"
+  "updated": "2026-11-21 08:28"
  },
  "c2212": {
   "category": "주식",
@@ -136675,7 +136682,8 @@
    "2026-11-16",
    "2026-11-17",
    "2026-11-18",
-   "2026-11-19"
+   "2026-11-19",
+   "2026-11-20"
   ],
   "revised": "2026-10-11 02:57",
   "series": [
@@ -137152,13 +137160,14 @@
     24509.76,
     24328.38,
     24429.88,
-    23879.2
+    23879.2,
+    22617.73
    ]
   ],
   "source": "야후 파이낸스.",
   "sourceUrl": "https://finance.yahoo.com/quote/%5EIXIC/",
   "unit": "",
-  "updated": "2026-11-20 08:34"
+  "updated": "2026-11-21 08:28"
  },
  "c2214": {
   "category": "주식",
@@ -137386,7 +137395,8 @@
    "2026-11-16",
    "2026-11-17",
    "2026-11-18",
-   "2026-11-19"
+   "2026-11-19",
+   "2026-11-20"
   ],
   "revised": "2026-10-11 02:57",
   "series": [
@@ -137613,13 +137623,14 @@
     24509.76,
     24328.38,
     24429.88,
-    23879.2
+    23879.2,
+    22617.73
    ]
   ],
   "source": "야후 파이낸스.",
   "sourceUrl": "https://finance.yahoo.com/quote/%5EIXIC/",
   "unit": "",
-  "updated": "2026-11-20 08:34"
+  "updated": "2026-11-21 08:28"
  },
  "c2215": {
   "category": "주식",
@@ -139116,7 +139127,8 @@
    "2026-11-16",
    "2026-11-17",
    "2026-11-18",
-   "2026-11-19"
+   "2026-11-19",
+   "2026-11-20"
   ],
   "revised": "2026-10-11 02:57",
   "series": [
@@ -139593,13 +139605,14 @@
     7416.59,
     7340.53,
     7323.63,
-    7175.83
+    7175.83,
+    6910.39
    ]
   ],
   "source": "야후 파이낸스.",
   "sourceUrl": "https://finance.yahoo.com/quote/%5EGSPC/",
   "unit": "",
-  "updated": "2026-11-20 08:34"
+  "updated": "2026-11-21 08:28"
  },
  "c2217": {
   "category": "주식",
@@ -139827,7 +139840,8 @@
    "2026-11-16",
    "2026-11-17",
    "2026-11-18",
-   "2026-11-19"
+   "2026-11-19",
+   "2026-11-20"
   ],
   "revised": "2026-10-11 02:57",
   "series": [
@@ -140054,13 +140068,14 @@
     7416.59,
     7340.53,
     7323.63,
-    7175.83
+    7175.83,
+    6910.39
    ]
   ],
   "source": "야후 파이낸스.",
   "sourceUrl": "https://finance.yahoo.com/quote/%5EGSPC/",
   "unit": "",
-  "updated": "2026-11-20 08:34"
+  "updated": "2026-11-21 08:28"
  },
  "c2218": {
   "category": "주식",
@@ -141389,7 +141404,8 @@
    "2026-11-16",
    "2026-11-17",
    "2026-11-18",
-   "2026-11-19"
+   "2026-11-19",
+   "2026-11-20"
   ],
   "revised": "2026-10-11 02:57",
   "series": [
@@ -141866,13 +141882,14 @@
     51608.17,
     50759.42,
     50198.17,
-    49097.06
+    49097.06,
+    48147.33
    ]
   ],
   "source": "야후 파이낸스.",
   "sourceUrl": "https://finance.yahoo.com/quote/%5EDJI/",
   "unit": "",
-  "updated": "2026-11-20 08:34"
+  "updated": "2026-11-21 08:28"
  },
  "c2220": {
   "category": "주식",
@@ -142100,7 +142117,8 @@
    "2026-11-16",
    "2026-11-17",
    "2026-11-18",
-   "2026-11-19"
+   "2026-11-19",
+   "2026-11-20"
   ],
   "revised": "2026-10-11 02:57",
   "series": [
@@ -142327,13 +142345,14 @@
     51608.17,
     50759.42,
     50198.17,
-    49097.06
+    49097.06,
+    48147.33
    ]
   ],
   "source": "야후 파이낸스.",
   "sourceUrl": "https://finance.yahoo.com/quote/%5EDJI/",
   "unit": "",
-  "updated": "2026-11-20 08:34"
+  "updated": "2026-11-21 08:28"
  },
  "c2228": {
   "labels": [
@@ -167300,7 +167319,8 @@
    "2026-11-16",
    "2026-11-17",
    "2026-11-18",
-   "2026-11-19"
+   "2026-11-19",
+   "2026-11-20"
   ],
   "series": [
    [
@@ -167776,11 +167796,12 @@
     352.78,
     351.91,
     352.45,
-    349.21
+    349.21,
+    342.56
    ]
   ],
   "sourceUrl": "https://finance.yahoo.com/quote/AAPL/",
-  "updated": "2026-11-20 08:34"
+  "updated": "2026-11-21 08:28"
  },
  "c2329": {
   "labels": [
@@ -168256,7 +168277,8 @@
    "2026-11-16",
    "2026-11-17",
    "2026-11-18",
-   "2026-11-19"
+   "2026-11-19",
+   "2026-11-20"
   ],
   "series": [
    [
@@ -168732,11 +168754,12 @@
     517.99,
     506.24,
     508.29,
-    498.3
+    498.3,
+    484.52
    ]
   ],
   "sourceUrl": "https://finance.yahoo.com/quote/MSFT/",
-  "updated": "2026-11-20 08:34"
+  "updated": "2026-11-21 08:28"
  },
  "c2331": {
   "labels": [
@@ -169212,7 +169235,8 @@
    "2026-11-16",
    "2026-11-17",
    "2026-11-18",
-   "2026-11-19"
+   "2026-11-19",
+   "2026-11-20"
   ],
   "series": [
    [
@@ -169688,11 +169712,12 @@
     283.72,
     280.2,
     282.44,
-    272.66
+    272.66,
+    265.29
    ]
   ],
   "sourceUrl": "https://finance.yahoo.com/quote/GOOGL/",
-  "updated": "2026-11-20 08:34"
+  "updated": "2026-11-21 08:28"
  },
  "c2333": {
   "labels": [
@@ -170168,7 +170193,8 @@
    "2026-11-16",
    "2026-11-17",
    "2026-11-18",
-   "2026-11-19"
+   "2026-11-19",
+   "2026-11-20"
   ],
   "series": [
    [
@@ -170644,11 +170670,12 @@
     257.75,
     257.89,
     267.74,
-    257.37
+    257.37,
+    246.82
    ]
   ],
   "sourceUrl": "https://finance.yahoo.com/quote/AMZN/",
-  "updated": "2026-11-20 08:34"
+  "updated": "2026-11-21 08:28"
  },
  "c2335": {
   "labels": [
@@ -171124,7 +171151,8 @@
    "2026-11-16",
    "2026-11-17",
    "2026-11-18",
-   "2026-11-19"
+   "2026-11-19",
+   "2026-11-20"
   ],
   "series": [
    [
@@ -171600,11 +171628,12 @@
     156.14,
     155.46,
     150.96,
-    145.98
+    145.98,
+    125.53
    ]
   ],
   "sourceUrl": "https://finance.yahoo.com/quote/NVDA/",
-  "updated": "2026-11-20 08:34"
+  "updated": "2026-11-21 08:28"
  },
  "c2337": {
   "labels": [
@@ -172080,7 +172109,8 @@
    "2026-11-16",
    "2026-11-17",
    "2026-11-18",
-   "2026-11-19"
+   "2026-11-19",
+   "2026-11-20"
   ],
   "series": [
    [
@@ -172556,11 +172586,12 @@
     626.41,
     618.87,
     616.38,
-    596.22
+    596.22,
+    560.84
    ]
   ],
   "sourceUrl": "https://finance.yahoo.com/quote/META/",
-  "updated": "2026-11-20 08:34"
+  "updated": "2026-11-21 08:28"
  },
  "c2339": {
   "labels": [
@@ -173036,7 +173067,8 @@
    "2026-11-16",
    "2026-11-17",
    "2026-11-18",
-   "2026-11-19"
+   "2026-11-19",
+   "2026-11-20"
   ],
   "series": [
    [
@@ -173512,10 +173544,11 @@
     379.74,
     380.11,
     383.72,
-    374.41
+    374.41,
+    345.82
    ]
   ],
   "sourceUrl": "https://finance.yahoo.com/quote/TSLA/",
-  "updated": "2026-11-20 08:34"
+  "updated": "2026-11-21 08:28"
  }
 }
