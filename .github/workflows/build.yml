@@ -85,6 +85,7 @@ jobs:
           run "핵탄두"          python scripts/nuclear.py --apply
           run "산업도시 성비"    python scripts/sexratio.py --apply
           run "주택담보대출"    python scripts/mortgage.py --apply
+          run "쌀값"            python scripts/rice.py --apply
           run "삼양식품과 엔비디아" python scripts/samyang_nvidia.py --apply
           run "오징어 어획량"    python scripts/squid_catch.py --apply
           run "성장률과 실질임금" python scripts/growth_realwage.py --apply
