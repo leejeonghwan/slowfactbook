@@ -1009,7 +1009,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1YL20531E",
   "title": "15~29세 실업률",
   "unit": "%",
-  "updated": "2026-11-22 08:21",
+  "updated": "2026-11-22 14:20",
   "vizType": "line"
  },
  "c0015": {
@@ -1419,7 +1419,7 @@
   "revised": "2026-10-10 08:40",
   "source": "고용노동부 근로실태 조사.",
   "unit": "만 명",
-  "updated": "2026-11-22 08:23"
+  "updated": "2026-11-22 14:22"
  },
  "c0017": {
   "labels": [
@@ -2725,7 +2725,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_LCE0002",
   "title": "남녀 노동시간 격차",
   "unit": "시간",
-  "updated": "2026-11-22 08:18"
+  "updated": "2026-11-22 14:17"
  },
  "c0027": {
   "id": "c0027",
@@ -2813,7 +2813,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_LCE0002",
   "title": "남녀 시간당 임금 총액",
   "unit": "원",
-  "updated": "2026-11-22 08:19"
+  "updated": "2026-11-22 14:17"
  },
  "c0028": {
   "source": "노동부 근로 실태 조사.",
@@ -7343,7 +7343,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1DA7011S",
   "title": "취업시간별 취업자 수(월별)",
   "unit": "만 명",
-  "updated": "2026-11-22 08:21",
+  "updated": "2026-11-22 14:20",
   "vizType": "area"
  },
  "c0041": {
@@ -9669,7 +9669,7 @@
   "source": "고용노동부 고용센터 구인/구직 및 취업현황(워크넷, 고용정보통합분석시스템). 2002-01~2025-12. 월별 신규구인인원과 신규구직건수. 단위: 만 명.",
   "sourceUrl": "https://www.index.go.kr/unity/potal/main/EachDtlPageDetail.do?idx_cd=1505",
   "unit": "만 명",
-  "updated": "2026-11-22 08:23"
+  "updated": "2026-11-22 14:22"
  },
  "c0052": {
   "labels": [
@@ -11053,7 +11053,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_LCE0002",
   "title": "정규직과 비정규직 시간당 임금",
   "unit": "원",
-  "updated": "2026-11-22 08:19"
+  "updated": "2026-11-22 14:17"
  },
  "c0065": {
   "category": "노동",
@@ -18375,7 +18375,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=118&tblId=DT_118N_MON051",
   "title": "경제 성장률과 실질임금 상승률.",
   "unit": "%",
-  "updated": "2026-11-21 14:31",
+  "updated": "2026-11-22 14:24",
   "vizType": "column"
  },
  "c0157": {
@@ -18712,7 +18712,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EP_2005",
   "title": "성별 연도별 임금 격차",
   "unit": "만 원",
-  "updated": "2026-11-22 08:19"
+  "updated": "2026-11-22 14:17"
  },
  "c0185": {
   "id": "c0185",
@@ -18760,7 +18760,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EP_2012",
   "title": "대기업 성별 연도별 임금 격차",
   "unit": "만 원",
-  "updated": "2026-11-22 08:19"
+  "updated": "2026-11-22 14:17"
  },
  "c0186": {
   "id": "c0186",
@@ -18808,7 +18808,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EP_2012",
   "title": "중소기업 성별 연도별 임금 격차",
   "unit": "만 원",
-  "updated": "2026-11-22 08:19"
+  "updated": "2026-11-22 14:17"
  },
  "c0187": {
   "drop": true,
@@ -18868,7 +18868,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EP_2014",
   "title": "2024년 대기업과 중소기업 연령대별 임금 격차",
   "unit": "만 원",
-  "updated": "2026-11-22 08:19"
+  "updated": "2026-11-22 14:17"
  },
  "c0189": {
   "drop": true,
@@ -18936,7 +18936,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1EP_2001",
   "title": "기업규모별 연도별 임금 격차",
   "unit": "만 원",
-  "updated": "2026-11-22 08:19"
+  "updated": "2026-11-22 14:17"
  },
  "c0192": {
   "id": "c0192",
@@ -19351,7 +19351,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=117&tblId=DT_11777_N220",
   "title": "GDP 대비 공공사회복지지출",
   "unit": "%",
-  "updated": "2026-11-22 09:12"
+  "updated": "2026-11-22 14:27"
  },
  "c0232": {
   "source": "질병관리청 국민건강영양조사.",
@@ -19487,7 +19487,7 @@
   "sourceUrl": "https://www.kdca.go.kr/",
   "title": "소득수준별 건강수명.",
   "unit": "세",
-  "updated": "2026-11-22 08:23",
+  "updated": "2026-11-22 14:22",
   "vizType": "column"
  },
  "c0237": {
@@ -19570,7 +19570,7 @@
   "sourceUrl": "https://www.kdca.go.kr/",
   "title": "기대수명과 건강수명.",
   "unit": "세",
-  "updated": "2026-11-22 08:23",
+  "updated": "2026-11-22 14:22",
   "vizType": "column"
  },
  "c0238": {
@@ -20638,7 +20638,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=133&tblId=TX_13301_A075",
   "title": "국세 징수 현황",
   "unit": "조 원",
-  "updated": "2026-11-22 09:12",
+  "updated": "2026-11-22 14:27",
   "vizType": "stacked_bar"
  },
  "c0302": {
@@ -20725,7 +20725,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=133&tblId=TX_13301_A075",
   "title": "법인세 징수 현황",
   "unit": "조 원",
-  "updated": "2026-11-22 09:12",
+  "updated": "2026-11-22 14:27",
   "vizType": "column"
  },
  "c0303": {
@@ -20881,7 +20881,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=133&tblId=TX_13301_A075",
   "title": "법인세와 근로소득세",
   "unit": "조 원",
-  "updated": "2026-11-22 09:12",
+  "updated": "2026-11-22 14:27",
   "vizType": "line"
  },
  "c0307": {
@@ -21008,7 +21008,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=133&tblId=TX_13301_A075",
   "title": "법인세와 근로소득세",
   "unit": "조 원",
-  "updated": "2026-11-22 09:12",
+  "updated": "2026-11-22 14:27",
   "vizType": "column"
  },
  "c0308": {
@@ -21227,7 +21227,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=133&tblId=TX_13301_A075",
   "title": "국세 징수 현황",
   "unit": "조 원",
-  "updated": "2026-11-22 09:12",
+  "updated": "2026-11-22 14:27",
   "vizType": "stacked_bar"
  },
  "c0312": {
@@ -21329,7 +21329,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=133&tblId=TX_13301_A075",
   "title": "국세 징수 현황",
   "unit": "조 원",
-  "updated": "2026-11-22 09:12",
+  "updated": "2026-11-22 14:27",
   "vizType": "stacked_bar_h"
  },
  "c0325": {
@@ -21670,7 +21670,7 @@
   "sourceUrl": "https://www.kmta.or.kr/kr/data/stats_spend.php",
   "title": "1인당 육류 소비량",
   "unit": "kg",
-  "updated": "2026-11-22 09:10"
+  "updated": "2026-11-22 14:26"
  },
  "c0345": {
   "source": "",
@@ -21788,7 +21788,7 @@
   "source": "육류는 한국육류유통수출협회 소비현황, 쌀은 국가데이터처 양곡소비량조사. 1인당 연간 소비량. 단위: kg.",
   "sourceUrl": "https://www.kmta.or.kr/kr/data/stats_spend.php",
   "unit": "kg",
-  "updated": "2026-11-22 09:10"
+  "updated": "2026-11-22 14:26"
  },
  "c0347": {
   "source": "국가데이터처 양곡소비 조사. (.",
@@ -22590,7 +22590,7 @@
   "sourceUrl": "https://www.kamis.or.kr/",
   "title": "한국의 소매 쌀값.",
   "unit": "원",
-  "updated": "2026-11-22 08:29",
+  "updated": "2026-11-22 14:24",
   "vizType": "line"
  },
  "c0360": {
@@ -27061,7 +27061,7 @@
   ],
   "source": "국가데이터처 증권·파생상품시장통계.",
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=343&tblId=DT_343_2010_S0029",
-  "updated": "2026-11-22 09:16"
+  "updated": "2026-11-22 14:28"
  },
  "c0495": {
   "category": "주식",
@@ -28729,7 +28729,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=343&tblId=DT_343_2010_S0029",
   "title": "코스피 지수와 S&P 500 지수.",
   "unit": "",
-  "updated": "2026-11-22 09:16",
+  "updated": "2026-11-22 14:28",
   "vizType": "line"
  },
  "c0496": {
@@ -42464,7 +42464,7 @@
   "sourceUrl": "https://ecos.bok.or.kr/",
   "title": "주택 담보 대출.",
   "unit": "조 원",
-  "updated": "2026-11-21 14:26",
+  "updated": "2026-11-22 14:24",
   "vizType": "line"
  },
  "c0674": {
@@ -43607,7 +43607,7 @@
    "2026-06"
   ],
   "revised": "2026-10-10 08:40",
-  "updated": "2026-11-22 09:16"
+  "updated": "2026-11-22 14:28"
  },
  "c0687": {
   "id": "c0687",
@@ -44268,7 +44268,7 @@
   "sourceUrl": "https://ecos.bok.or.kr/#/Short/7a6d1c",
   "title": "역대 정부 코스피 지수",
   "unit": "p",
-  "updated": "2026-11-21 14:36"
+  "updated": "2026-11-22 14:28"
  },
  "c0689": {
   "labels": [
@@ -54666,7 +54666,7 @@
   "sourceUrl": "https://ecos.bok.or.kr/ https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B81A17",
   "title": "GDP 대비 주택 시가총액과 합계출산율",
   "unit": "배",
-  "updated": "2026-11-21 14:33",
+  "updated": "2026-11-22 14:25",
   "vizType": "combo"
  },
  "c0740": {
@@ -55716,7 +55716,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=408&tblId=DT_408_2006_S0064",
   "title": "아파트 매매 거래량(서울)",
   "unit": "호",
-  "updated": "2026-11-22 08:21",
+  "updated": "2026-11-22 14:20",
   "vizType": "line"
  },
  "c0753": {
@@ -56240,7 +56240,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=408&tblId=DT_408_2006_S0064",
   "title": "아파트 매매 거래량(전국)",
   "unit": "호",
-  "updated": "2026-11-22 08:21",
+  "updated": "2026-11-22 14:20",
   "vizType": "line"
  },
  "c0754": {
@@ -57865,7 +57865,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B04005N",
   "title": "연천군 청산면 연령대별 인구",
   "unit": "명",
-  "updated": "2026-11-22 09:12"
+  "updated": "2026-11-22 14:27"
  },
  "c0759": {
   "category": "지역",
@@ -78843,7 +78843,7 @@
    "2026-05"
   ],
   "revised": "2026-10-11 02:57",
-  "updated": "2026-11-22 09:16"
+  "updated": "2026-11-22 14:28"
  },
  "c1049": {
   "category": "주식",
@@ -79126,7 +79126,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=343&tblId=DT_343_2010_S0029",
   "title": "코스피 지수와 S&P 500 지수.",
   "unit": "",
-  "updated": "2026-11-22 09:16",
+  "updated": "2026-11-22 14:28",
   "vizType": "line"
  },
  "c1052": {
@@ -86622,7 +86622,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_2OEST001",
   "title": "GDP 대비 연구개발비, 나라 비교",
   "unit": "%",
-  "updated": "2026-11-22 09:12",
+  "updated": "2026-11-22 14:27",
   "vizType": "bar"
  },
  "c1120": {
@@ -87229,7 +87229,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=127&tblId=DT_KBA0001",
   "title": "GDP 대비 연구개발비, 재원별",
   "unit": "%",
-  "updated": "2026-11-22 09:12",
+  "updated": "2026-11-22 14:27",
   "vizType": "line"
  },
  "c1131": {
@@ -87521,7 +87521,7 @@
   "sourceUrl": "https://finance.yahoo.com/quote/003230.KS/",
   "title": "삼양식품과 엔비디아 주가.",
   "unit": "2020-01=100",
-  "updated": "2026-11-22 08:30",
+  "updated": "2026-11-22 14:24",
   "vizType": "line"
  },
  "c1134": {
@@ -87798,7 +87798,7 @@
   "sourceUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001045810&type=8-K",
   "title": "엔비디아 매출과 영업이익",
   "unit": "백만 달러",
-  "updated": "2026-11-22 09:17",
+  "updated": "2026-11-22 14:28",
   "vizType": "column",
   "yMin": 0
  },
@@ -88875,7 +88875,7 @@
   "sourceUrl": "https://www.sipri.org/sites/default/files/YB26%2008%20World%20Nuclear%20Forces.pdf",
   "title": "핵탄두 보유량.",
   "unit": "개",
-  "updated": "2026-11-22 08:23",
+  "updated": "2026-11-22 14:22",
   "vizType": "bar"
  },
  "c1268": {
@@ -90664,7 +90664,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=314&tblId=DT_TRD_SEX_ENT_AGG_MONTH",
   "title": "중국과 일본 관광객 수.",
   "unit": "만 명",
-  "updated": "2026-11-22 08:32",
+  "updated": "2026-11-22 14:24",
   "vizType": "line"
  },
  "c1333": {
@@ -92707,7 +92707,7 @@
   "sourceUrl": "https://www.nytco.com/investors/",
   "title": "뉴욕타임스 디지털 구독자 분기 순증",
   "unit": "만 명",
-  "updated": "2026-11-22 09:11",
+  "updated": "2026-11-22 14:26",
   "vizType": "column"
  },
  "c1477": {
@@ -96423,7 +96423,7 @@
   "sourceUrl": "https://www.nytco.com/investors/",
   "title": "뉴욕타임스 유료 구독(분기)",
   "unit": "만 명",
-  "updated": "2026-11-22 09:11",
+  "updated": "2026-11-22 14:26",
   "vizType": "line"
  },
  "c1668": {
@@ -102095,7 +102095,7 @@
   "sourceUrl": "https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1IN1503",
   "title": "산업도시의 연령대별 남녀 성비",
   "unit": "여자 100명당 남자",
-  "updated": "2026-11-22 08:23",
+  "updated": "2026-11-22 14:22",
   "vizType": "line"
  },
  "c1963": {
@@ -105327,7 +105327,7 @@
   "sourceUrl": "https://ecos.bok.or.kr/",
   "title": "역대 정부 누적 물가 상승률",
   "unit": "%",
-  "updated": "2026-11-21 14:36"
+  "updated": "2026-11-22 14:28"
  },
  "c1978": {
   "source": "2023년 기준.",
