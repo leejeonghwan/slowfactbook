@@ -51,7 +51,11 @@ def issues():
     html = _get(LIST).decode("euc-kr", "replace")
     out = {}
     for seq, title in re.findall(r"fn_viewContents\('(\d+)'\);[^>]*>(.*?)</a>", html, re.S):
-        if "데일리 오피니언" not in re.sub("<[^>]+>", "", title):
+        # 한국갤럽이 2026년 11월(682호)부터 제목에서 '오피니언'을 뺐다.
+        # 681호까지는 '데일리 오피니언 제681호', 그 뒤는 '데일리 제682호'다.
+        # '오피니언'을 요구하면 새 호를 통째로 놓친다.
+        plain = re.sub("<[^>]+>", "", title)
+        if not re.search(r"데일리\s*(오피니언\s*)?제?\s*\d{3}\s*호", plain):
             continue
         page = _get(CONTENT % seq).decode("euc-kr", "replace")
         m = PDF_RE.search(page)
