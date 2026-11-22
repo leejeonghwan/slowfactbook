@@ -84,6 +84,8 @@ run "핵탄두"          python3 scripts/nuclear.py --apply
 run "산업도시 성비"    python3 scripts/sexratio.py --apply
 run "주택담보대출"    python3 scripts/mortgage.py --apply
 run "쌀값"            python3 scripts/rice.py --apply
+run "축산물 가격"     python3 scripts/livestock.py --apply
+run "의료기관 병상"    python3 scripts/beds.py --apply
 run "삼양식품과 엔비디아" python3 scripts/samyang_nvidia.py --apply
 run "오징어 어획량"    python3 scripts/squid_catch.py --apply
 run "성장률과 실질임금" python3 scripts/growth_realwage.py --apply
