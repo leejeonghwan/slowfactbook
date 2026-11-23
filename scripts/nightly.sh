@@ -88,6 +88,7 @@ run "축산물 가격"     python3 scripts/livestock.py --apply
 run "의료기관 병상"    python3 scripts/beds.py --apply
 run "투자자예탁금"     python3 scripts/deposit.py --apply
 run "비트코인"         python3 scripts/bitcoin.py --apply
+run "전기차 판매"      python3 scripts/ev.py --apply
 run "삼양식품과 엔비디아" python3 scripts/samyang_nvidia.py --apply
 run "오징어 어획량"    python3 scripts/squid_catch.py --apply
 run "성장률과 실질임금" python3 scripts/growth_realwage.py --apply
