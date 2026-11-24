@@ -86,6 +86,7 @@ run "주택담보대출"    python3 scripts/mortgage.py --apply
 run "쌀값"            python3 scripts/rice.py --apply
 run "축산물 가격"     python3 scripts/livestock.py --apply
 run "의료기관 병상"    python3 scripts/beds.py --apply
+run "혼인상태와 미혼율"  python3 scripts/marital.py --apply
 run "투자자예탁금"     python3 scripts/deposit.py --apply
 run "비트코인"         python3 scripts/bitcoin.py --apply
 run "전기차 판매"      python3 scripts/ev.py --apply

@@ -88,6 +88,7 @@ jobs:
           run "쌀값"            python scripts/rice.py --apply
           run "축산물 가격"     python scripts/livestock.py --apply
           run "의료기관 병상"    python scripts/beds.py --apply
+          run "혼인상태와 미혼율" python scripts/marital.py --apply
           run "투자자예탁금"     python scripts/deposit.py --apply
           run "비트코인"         python scripts/bitcoin.py --apply
           run "전기차 판매"      python scripts/ev.py --apply
