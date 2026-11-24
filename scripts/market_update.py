@@ -73,6 +73,10 @@ def fetch(symbol, interval, years=20):
         tz, shift = datetime.timezone.utc, off
     else:
         shift = 0
+    if not settled(res) and ts:
+        cut = max(ts)
+        ts, close = zip(*[(t, c) for t, c in zip(ts, close) if t != cut]) \
+            if len(ts) > 1 else ([], [])
     out = {}
     for t, c in zip(ts, close):
         if c is None:
@@ -80,6 +84,20 @@ def fetch(symbol, interval, years=20):
         d = datetime.datetime.fromtimestamp(t + shift, tz)
         out[key_of(d, interval)] = round(c, 2)
     return out
+
+
+def settled(res):
+    """정규장 마감 시각에 닿은 응답인가.
+
+    야후는 요청이 닿는 캐시에 따라 같은 주소로도 장중 스냅샷을 돌려줄 때가
+    있다. 2026-11-18 에 한쪽은 21:00 UTC 마감값 150.96, 다른 쪽은 15:52 UTC
+    장중값 152.821 을 줬다. 닿지 않았으면 마지막 봉을 통째로 버린다.
+    """
+    meta = res.get("meta") or {}
+    end = ((meta.get("currentTradingPeriod") or {}).get("regular")
+           or {}).get("end")
+    mt = meta.get("regularMarketTime")
+    return not (end and mt and mt < end)
 
 
 def key_of(d, interval):

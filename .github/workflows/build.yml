@@ -124,7 +124,6 @@ jobs:
           run "역대 정부 누적 물가" python scripts/admin_cpi.py --apply
           run "역대 정부 코스피"   python scripts/kospi_terms.py --apply
           run "코스피와 S&P"    python scripts/kospi_sp500.py --apply
-          run "미국 주가"      python scripts/px_stocks.py --apply
           run "시스코와 엔비디아"  python scripts/cisco_nvidia.py --apply
           run "엔비디아 분기"    python scripts/nvidia_quarters.py --apply
           run "BIS 총신용"          python scripts/bis_update.py --apply
