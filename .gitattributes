@@ -1,5 +1,7 @@
-# Optional: version source decks with Git LFS instead of ignoring them.
-# To use, remove source/*.key and source/*.pptx from .gitignore, then:
-#   git lfs install && git add .gitattributes
-*.key filter=lfs diff=lfs merge=lfs -text
-*.pptx filter=lfs diff=lfs merge=lfs -text
+# 차트 JSON 은 글자가 아니라 차트 단위로 합친다. 거는 법은
+# scripts/json_merge.py 의 머리말에 적어 뒀다. 설정을 걸지 않은
+# 저장소에서는 이 줄이 무시되고 깃이 평소대로 합친다.
+data/overrides.json merge=jsonchart
+data/manual.json    merge=jsonchart
+data/changelog.json merge=jsonchart
+data/ids.json       merge=jsonchart
