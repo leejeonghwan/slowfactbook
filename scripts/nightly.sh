@@ -88,6 +88,7 @@ run "축산물 가격"     python3 scripts/livestock.py --apply
 run "의료기관 병상"    python3 scripts/beds.py --apply
 run "혼인상태와 미혼율"  python3 scripts/marital.py --apply
 run "점유형태"          python3 scripts/housing_tenure.py --apply
+run "월별 출생과 혼인"  python3 scripts/vitals_month.py --apply
 run "투자자예탁금"     python3 scripts/deposit.py --apply
 run "비트코인"         python3 scripts/bitcoin.py --apply
 run "전기차 판매"      python3 scripts/ev.py --apply
