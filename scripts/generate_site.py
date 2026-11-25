@@ -346,14 +346,14 @@ main{flex:1;padding:20px 22px;}
 .embed-btn:hover{color:var(--blue);border-color:var(--blue);}
 #toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50;}
 #toast.show{opacity:.95;}
-.card h2{font-size:15px;line-height:1.3;margin:0 0 2px;font-weight:700;letter-spacing:-.3px;}
+.card h2{font-size:18px;line-height:1.3;margin:0 0 2px;font-weight:700;letter-spacing:-.3px;}
 .card h2 a{color:inherit;text-decoration:none;}
 .card h2 a:hover{color:var(--blue);text-decoration:underline;}
 .card:hover{box-shadow:0 4px 14px rgba(0,0,0,.09);transform:translateY(-1px);}
 .card .tag,.card h2 a,.card .legendbar .lg.pick{cursor:pointer;}
 .legendbar .lg.pick:empty,.legendbar .lg.pick i:only-child{min-width:14px;}
 .stamp{color:#bbb;white-space:nowrap;}
-.card .meta{font-size:11px;color:#999;margin-bottom:7px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.card .meta{font-size:12.5px;color:#999;margin-bottom:7px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .card .tag{display:inline-block;font-size:10px;color:var(--blue);background:#eaf1f9;padding:1px 7px;border-radius:20px;margin-bottom:5px;cursor:pointer;}
 .card .tag:hover{background:#d7e6fa;}
 .chartbox{position:relative;width:100%;min-width:0;aspect-ratio:16/9;}
@@ -375,7 +375,7 @@ footer{padding:18px 28px;color:#aaa;font-size:12px;border-top:1px solid var(--li
 <span class="sub">슬로우뉴스의 데이터 아카이브입니다.</span></header>
 <div class="scrim" id="scrim"></div>
 <div class="layout"><aside id="sidebar"></aside>
-<main><div class="toolbar"><input id="search" type="text" placeholder="제목·출처로 검색"><span class="count" id="count"></span></div>
+<main><div class="toolbar"><input id="search" type="text" placeholder="제목이나 출처로 검색"><span class="count" id="count"></span></div>
 <div class="grid" id="grid"></div></main></div>
 <footer id="foot"></footer>
 <script>
@@ -463,7 +463,7 @@ document.getElementById("scrim").onclick=closeNav;
 const _p=new URLSearchParams(location.search);
 if(_p.get("cat")&&CATEGORIES.includes(_p.get("cat")))activeCat=_p.get("cat");
 if(_p.get("q")){query=_p.get("q");searchEl.value=query;}
-document.getElementById("foot").innerHTML=`총 ${ITEMS.length}개 인포그래픽 · ${CATEGORIES.length}개 카테고리 · <a href="rights.html" style="color:#888">이용 범위</a>: 출처를 밝히면 자유롭게 쓸 수 있습니다(CC BY 4.0)`;
+document.getElementById("foot").innerHTML=`총 ${ITEMS.length}개 인포그래픽, ${CATEGORIES.length}개 카테고리. <a href="rights.html" style="color:#888">이용 범위</a>: 출처를 밝히면 자유롭게 쓸 수 있습니다(CC BY 4.0)`;
 render();
 </script></body></html>"""
 
@@ -624,7 +624,7 @@ function applyFocus(chart,idx){
     else if(stacked){ d.borderColor=d._c0; d.backgroundColor=d._b0;
                       d.borderWidth=d._w0; d.order=0; d.hidden=!me; }
     else if(me){ d.borderColor=d._c0; d.backgroundColor=d._b0;
-                 d.borderWidth=(d._w0||2)+1.5; d.order=-1; d.hidden=false; }
+                 d.borderWidth=(d._w0||3)+2; d.order=-1; d.hidden=false; }
     else { d.borderColor=base?fade(base,0.14):d._c0;
            d.backgroundColor=base?fade(base,0.10):d._b0;
            d.borderWidth=d._w0; d.order=1; d.hidden=false; }
@@ -829,7 +829,7 @@ function buildChart(canvas,it){
       const d={type:(k==="area"?"line":k),label:(it.seriesNames[i]||""),data:vals,borderColor:col,backgroundColor:(k==="bar"?col:hexA(col,0.5)),yAxisID:ax===2?"y2":(ax===1?"y1":"y")};
       // 쌓는 콤보에서 선까지 쌓이면 값이 뒤틀린다. 선은 저마다 다른 더미에 둔다.
       if(it.stacked && k!=="bar") d.stack="line"+i;
-      if(k!=="bar"){d.borderWidth=2;d.pointRadius=0;d.pointHoverRadius=4;d.tension=.25;d.fill=(k==="area");
+      if(k!=="bar"){d.borderWidth=3;d.pointRadius=0;d.pointHoverRadius=4;d.tension=.25;d.fill=(k==="area");
         // 2025·2035·2045… 처럼 띄엄띄엄 찍힌 전망선은 이어 그려야 슬라이드와 같아진다.
         // 점은 기본으로 찍지 않는다. 화면을 줄이면 점이 선을 뒤덮어 모양이 깨진다.
         // 다만 앞뒤가 모두 빈 값인 외톨이 점은 점을 안 찍으면 아예 보이지 않으므로
@@ -854,7 +854,7 @@ function buildChart(canvas,it){
   if(t==="line"||t==="area"||t==="two_axis"){
     const isArea=(t==="area");
     ds.forEach((d,i)=>{const col=CS[i];
-      d.borderColor=col;d.borderWidth=isArea?1.5:2;d.pointRadius=0;d.pointHoverRadius=4;d.tension=.25;
+      d.borderColor=col;d.borderWidth=isArea?2.25:3;d.pointRadius=0;d.pointHoverRadius=4;d.tension=.25;
       d.backgroundColor=isArea?hexA(col,0.55):col;
       d.fill=isArea?(i===0?"origin":"-1"):false;});
     const stackY=isArea&&multi;
@@ -918,8 +918,8 @@ html,body{margin:0;height:100%;overflow:hidden;background:transparent;
    임베드는 제목이 작게 남아 차트 영역을 뺏기지 않고 크게 넣은 임베드는
    제목이 같이 커진다. 고정 크기로 키우면 400px 짜리 임베드에서 그래프가
    눌린다. */
-#title{font-size:clamp(19px,4.6vh,26px);line-height:1.2;font-weight:800;margin:0 0 2px;letter-spacing:-.5px;}
-#meta{font-size:clamp(11px,2.2vh,12.5px);color:#999;margin-bottom:6px;}
+#title{font-size:clamp(23px,5.5vh,31px);line-height:1.2;font-weight:800;margin:0 0 2px;letter-spacing:-.5px;}
+#meta{font-size:clamp(12.5px,2.6vh,15px);color:#999;margin-bottom:6px;}
 .legendbar{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:3px 12px;height:22px;overflow:hidden;margin:0 0 4px;}
 
 .legendbar .lg.pick{cursor:pointer;}
@@ -1018,8 +1018,8 @@ a.home span{color:var(--blue);}
    폭이 곧 해상도다. 다만 높이가 같이 커지면 화면을 넘기므로 70vh 로 묶는다. */
 main{max-width:1680px;margin:0 auto;padding:26px 32px;}
 .tag{display:inline-block;font-size:12px;color:var(--blue);background:#eaf1f9;padding:3px 10px;border-radius:20px;margin-bottom:12px;}
-h1.title{font-size:45px;font-weight:800;margin:0 0 6px;letter-spacing:-1px;line-height:1.15;}
-.meta{font-size:13px;color:#999;margin-bottom:14px;}
+h1.title{font-size:54px;font-weight:800;margin:0 0 6px;letter-spacing:-1px;line-height:1.15;}
+.meta{font-size:15.5px;color:#999;margin-bottom:14px;}
 .legendbar{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:4px 14px;margin:0 0 6px;}
 
 .legendbar .lg.pick{cursor:pointer;}
@@ -1047,7 +1047,7 @@ h1.title{font-size:45px;font-weight:800;margin:0 0 6px;letter-spacing:-1px;line-
 #toast.show{opacity:.95;}
 .licnote{margin:14px 0 0;font-size:12.5px;color:#aaa;}
 .licnote a{color:#888;}
-@media(max-width:900px){ main{padding:18px 16px;} h1.title{font-size:34px;} .chartbox{aspect-ratio:4/3;max-height:none;min-height:0;} }
+@media(max-width:900px){ main{padding:18px 16px;} h1.title{font-size:41px;} .chartbox{aspect-ratio:4/3;max-height:none;min-height:0;} }
 @media(max-width:900px) and (orientation:landscape){ .chartbox{aspect-ratio:16/9;} }
 </style></head><body>
 <header>
@@ -1072,7 +1072,7 @@ h1.title{font-size:45px;font-weight:800;margin:0 0 6px;letter-spacing:-1px;line-
     <button class="embed-btn" id="srcBtn" hidden>🔗 출처 링크</button>
     <button class="embed-btn" id="embedBtn">⧉ 임베드 코드 복사</button>
   </div>
-  <p class="licnote">출처를 밝히면 영리 목적을 포함해 자유롭게 쓸 수 있습니다. <a href="rights.html">이용 범위</a> · CC BY 4.0</p>
+  <p class="licnote">출처를 밝히면 영리 목적을 포함해 자유롭게 쓸 수 있습니다. <a href="rights.html">이용 범위</a>, CC BY 4.0</p>
   <div class="datawrap" id="datawrap" hidden><div class="datascroll"><table id="datatable"></table></div></div>
   <div class="srcwrap" id="notewrap" hidden></div>
   <div class="srcwrap" id="srcwrap" hidden></div>
@@ -1268,7 +1268,7 @@ function creditLines(it){
     new URLSearchParams(location.search).get("id")||""), location.href).href;
   const q=t=>'"'+String(t||"").replace(/"/g,'""')+'"';
   return ["", q(it.title), q(it.source), q(url),
-          q("슬로우팩트북(슬로우뉴스) · CC BY 4.0 · 출처를 밝히면 자유롭게 쓸 수 있습니다")];
+          q("슬로우팩트북(슬로우뉴스), CC BY 4.0. 출처를 밝히면 자유롭게 쓸 수 있습니다")];
 }
 function tableRows(it){
   const names=it.series.map((s,i)=>it.seriesNames[i]||("계열 "+(i+1)));
