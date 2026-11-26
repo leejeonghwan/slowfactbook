@@ -92,6 +92,7 @@ run "월별 출생과 혼인"  python3 scripts/vitals_month.py --apply
 run "지구 기온(C3S)"    python3 scripts/climate_c3s.py --apply
 run "사이드카 일별"     python3 scripts/sidecar_daily.py --apply
 run "산업별 취업자 증감" python3 scripts/industry_jobs.py --apply
+run "주택분 종부세"     python3 scripts/jongbu.py --apply
 run "투자자예탁금"     python3 scripts/deposit.py --apply
 run "비트코인"         python3 scripts/bitcoin.py --apply
 run "전기차 판매"      python3 scripts/ev.py --apply

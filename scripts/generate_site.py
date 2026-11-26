@@ -102,10 +102,15 @@ def load_items(data_dir):
                 "notes": it.get("notes") or "",
             }
             # 다음 변경 때까지 값이 그대로 유지되는 지표(기준금리 같은 것)는
-            # 계단으로 그린다(overrides 의 "stepped": true). 비스듬히 이으면
-            # 중간에 없던 값이 있었던 것처럼 보인다. 켠 차트에만 키를 붙인다.
-            if it.get("stepped"):
+            # 계단으로 그린다. 비스듬히 이으면 중간에 없던 값이 있었던 것처럼
+            # 보인다. overrides 의 "stepped": true 면 모든 계열, [0, 2] 처럼
+            # 적으면 그 번호의 계열만. 한 차트에 정책금리와 시장금리가 같이
+            # 있으면 정책금리 계열만 켜야 한다. 켠 차트에만 키를 붙인다.
+            st = it.get("stepped")
+            if st is True:
                 item["stepped"] = True
+            elif isinstance(st, list) and st:
+                item["stepped"] = [int(x) for x in st]
             # 범례를 아예 감춘다(overrides 의 "hideLegend": true).
             # 켠 차트에만 키를 붙인다. 늘 붙이면 데이터 파일이 전부 다시 쓰인다.
             if it.get("hideLegend"):
@@ -864,7 +869,9 @@ function buildChart(canvas,it){
       d.fill=isArea?(i===0?"origin":"-1"):false;
       // 기준금리처럼 다음 변경 때까지 값이 그대로 유지되는 지표는 계단으로
       // 그린다. 비스듬히 이으면 중간에 없던 값이 있었던 것처럼 보인다.
-      if(it.stepped){d.stepped="after";d.tension=0;}});
+      const st=it.stepped;
+      if(st===true||(Array.isArray(st)&&st.indexOf(i)>=0)){
+        d.stepped="after";d.tension=0;}});
     const stackY=isArea&&multi;
     return mk(canvas,{type:"line",data:{labels,datasets:ds},
       options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
