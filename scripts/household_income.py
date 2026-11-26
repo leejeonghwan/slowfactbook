@@ -21,7 +21,8 @@
 섞으면 안 되는 것.
   c0207(소득 5분위 소득)은 가계금융복지조사의 연간 소득이다. 여기는
   가계동향조사의 분기별 월평균이다. 조사도 주기도 다르다.
-  실질 소득은 다른 표(DT_1L9U122)다. 여기는 명목이다.
+  실질 소득 표(DT_1L9U122)는 2020년 가격 기준으로 물가를 뺀 값이다.
+  명목과 실질을 한 선에 섞으면 안 된다. 따로 그린다.
 """
 import argparse
 import datetime
@@ -39,6 +40,7 @@ KST = datetime.timezone(datetime.timedelta(hours=9))
 
 ORG = "101"
 NEW, NEW_ITM = "DT_1L9U103", "T110"
+REAL, REAL_ITM = "DT_1L9U122", "T110"
 OLD, OLD_ITM = "DT_1L9E006", "T1"
 URL = ("https://kosis.kr/statHtml/statHtml.do?orgId=101"
        "&tblId=DT_1L9U103")
@@ -103,6 +105,8 @@ def main():
     ymd = datetime.datetime.now(KST).strftime("%Y-%m-%d %H:%M")
 
     new = pull(key, NEW, NEW_ITM, "201901")
+    time.sleep(0.4)
+    real = pull(key, REAL, REAL_ITM, "201901")
     time.sleep(0.4)
     old = pull(key, OLD, OLD_ITM, "200601")
     nq = sorted(new["Q0"])
@@ -229,6 +233,66 @@ def main():
             "표에는 그 구간이 있습니다.",
             "명목 소득입니다. 물가를 반영하지 않았으므로 오래 전 금액과 "
             "지금 금액의 구매력은 다릅니다.",
+        ],
+        "updated": ymd,
+    })
+
+    # 3. 명목과 실질
+    rq = sorted(real["Q0"])
+    if rq != nq:
+        print(f"  검산 실패: 실질 표의 분기가 명목과 다르다 "
+              f"({len(rq)} 대 {len(nq)})")
+        return 1
+    rchg = real["Q0"][end] / real["Q0"][prev] - 1
+    if abs(rchg + 0.021) > 0.002:
+        print(f"  검산 실패: 실질 전체가 {rchg:+.1%} 로 보도된 "
+              f"-2.1% 와 다르다")
+        return 1
+    print(f"    검산 실질: {lab(end)} 실질 전체 "
+          f"{real['Q0'][end]/10000:,.0f}만 원({rchg:+.1%}) 으로 보도와 일치")
+    # 실질은 2020년 가격 기준이다. 그 해에는 두 값이 거의 같고, 그 뒤로는
+    # 물가가 올랐으므로 실질이 명목보다 작아야 한다. 2020년 앞에서는 반대로
+    # 실질이 더 크다. 그 모양이 맞는지 본다.
+    base = [q for q in nq if q.startswith("2020")]
+    off = [(q, round(real["Q0"][q] / new["Q0"][q], 3)) for q in base
+           if abs(real["Q0"][q] / new["Q0"][q] - 1) > 0.015]
+    after = [q for q in nq if q > "202004" and
+             real["Q0"][q] > new["Q0"][q] * 1.001]
+    before = [q for q in nq if q < "202001" and
+              real["Q0"][q] < new["Q0"][q] * 0.999]
+    if off or after or before:
+        print(f"  검산 실패: 2020년 기준이 아닌 듯하다 "
+              f"(2020년 어긋남 {off}, 그 뒤 역전 {after[:3]}, "
+              f"그 앞 역전 {before[:3]})")
+        return 1
+    print(f"    검산 기준해: 2020년 네 분기에서 실질 = 명목, 그 뒤 "
+          f"{len(after) == 0 and '모두' or ''} 실질 < 명목, 그 앞은 반대")
+    out.append({
+        "slide": "manual-income-real", "category": "젠더와 격차",
+        "title": "가구 월평균 소득, 명목과 실질.",
+        "vizType": "line", "unit": "만 원",
+        "labels": [lab(q) for q in nq],
+        "series": [[round(new["Q0"][q] / 10000, 1) for q in nq],
+                   [round(real["Q0"][q] / 10000, 1) for q in nq]],
+        "seriesNames": ["명목 소득", "실질 소득"],
+        "seriesColors": ["#2a5ca8", "#c0322f"],
+        "source": (f"{SRC}(KOSIS 101/{NEW}, {REAL}). 전국 1인 이상 가구의 "
+                   f"월평균 소득, {lab(nq[0])}~{lab(end)}. 실질은 2020년 "
+                   "가격 기준입니다. 단위: 만 원."),
+        "sourceUrl": URL,
+        "notes": [
+            f"{lab(end)}에 명목 {new['Q0'][end]/10000:,.0f}만 원, 실질 "
+            f"{real['Q0'][end]/10000:,.0f}만 원입니다. 한 해 전과 견주면 "
+            f"명목은 {new['Q0'][end]/new['Q0'][prev]-1:+.1%}인데 실질은 "
+            f"{rchg:+.1%}입니다. 통장에 찍히는 돈은 늘었는데 "
+            "살 수 있는 양은 줄었다는 뜻입니다.",
+            "두 선의 간격이 물가입니다. 2020년을 기준으로 삼았기 때문에 "
+            "그 무렵에는 두 선이 겹치고, 뒤로 갈수록 벌어집니다.",
+            "실질은 2020년 가격 기준입니다. 기준 해가 바뀌면 실질 쪽 "
+            "숫자가 통째로 달라집니다.",
+            f"분위별로 보면 {lab(end)}에 실질 소득이 1분위 "
+            f"{real['Q1'][end]/real['Q1'][prev]-1:+.1%}, 5분위 "
+            f"{real['Q5'][end]/real['Q5'][prev]-1:+.1%}입니다.",
         ],
         "updated": ymd,
     })
