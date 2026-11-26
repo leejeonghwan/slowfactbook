@@ -46,6 +46,9 @@ import generate_site as g                            # noqa: E402
 import fred_update as fr                             # noqa: E402
 
 CID = "c2310"
+CID_EFF = "c1822"                  # 미국 실효 연방기금금리(FEDFUNDS)
+SLIDE_TGT = "manual-us-target-rate"  # 미국 목표금리 단독 차트
+TITLE_EFF = "미국 실효 연방기금금리"
 KST = datetime.timezone(datetime.timedelta(hours=9))
 SPLIT = "2008-12"          # 목표 한 값에서 목표 범위로 바뀐 달
 # 널리 알려진 목표금리로 거는 빗장
@@ -190,7 +193,58 @@ def main():
         "updated": ymd,
     }
 
+    # 미국 목표금리 단독 차트
+    uq = sorted(us)
+    tgt = {
+        "slide": SLIDE_TGT, "category": "세계 경제",
+        "title": "미국 연방기금금리 목표.",
+        "vizType": "line", "unit": "%", "stepped": True,
+        "labels": list(uq), "series": [[us[m] for m in uq]],
+        "seriesNames": ["연방기금금리 목표"], "hideLegend": True,
+        "seriesColors": ["#c0322f"],
+        "source": ("세인트루이스 연은 FRED 연방기금금리 목표. 월말 기준, "
+                   f"{uq[0]}~{uq[-1]}. 1982년 9월부터 2008년 12월까지는 "
+                   "단일 목표(DFEDTAR), 그 뒤로는 목표 범위의 위쪽 끝"
+                   "(DFEDTARU)입니다. 단위: 연 %."),
+        "sourceUrl": "https://fred.stlouisfed.org/series/DFEDTARU",
+        "notes": [
+            f"{uq[-1]} 기준 {us[uq[-1]]}%입니다. 가장 높았던 때는 "
+            f"{max(us, key=us.get)}의 {max(us.values())}%입니다.",
+            "연준이 정하는 목표금리입니다. 다음 결정 때까지 값이 그대로 "
+            "유지되므로 계단으로 그립니다.",
+            "2008년 12월부터 연준은 하나의 숫자가 아니라 범위를 정합니다. "
+            "여기서는 위쪽 끝을 씁니다. 아래쪽 끝은 보통 0.25%포인트 "
+            "낮습니다.",
+            "시장에서 실제로 거래된 실효 연방기금금리는 다른 차트입니다. "
+            "목표를 바꾸지 않은 달에도 조금씩 움직이고, 목표 범위 안에서 "
+            "오르내립니다.",
+            "월말 기준입니다. 달의 평균을 내면 금리를 바꾼 달에 실제로는 "
+            "없던 중간값이 생깁니다.",
+        ],
+        "updated": ymd,
+    }
+
+    # 실효 금리 차트는 제목만 바로잡는다. 값은 fred_update.py 가 맡는다.
+    eff = {
+        "title": TITLE_EFF,
+        "source": ("세인트루이스 연은 FRED 실효 연방기금금리"
+                   "(FEDFUNDS) 월평균. 1954년 7월부터. 단위: %."),
+        "sourceUrl": "https://fred.stlouisfed.org/series/FEDFUNDS",
+        "notes": [
+            "연준이 정한 목표가 아니라 은행들이 서로 하룻밤 돈을 빌릴 때 "
+            "실제로 거래된 금리의 월평균입니다. 목표를 바꾸지 않은 달에도 "
+            "조금씩 움직이고, 2008년 12월부터는 목표 범위 안에서 "
+            "오르내립니다.",
+            "연준이 정하는 목표금리는 따로 있습니다. 제목이 '미국 "
+            "기준금리'였는데 값은 실효 금리라서 제목을 바로잡았습니다.",
+            "월평균입니다. 금리를 바꾼 달에는 바꾸기 전과 뒤가 섞입니다.",
+        ],
+        "revised": ymd,
+    }
+
     print(f"\n  {CID} {len(months)}점 {months[0]}~{last}")
+    print(f"  {SLIDE_TGT} {len(uq)}점 {uq[0]}~{uq[-1]} (목표금리)")
+    print(f"  {CID_EFF} 제목 -> {TITLE_EFF}")
     if not a.apply:
         print("\n  (--apply 를 붙이면 씁니다)")
         return 0
@@ -199,11 +253,39 @@ def main():
     o = json.load(open(ovp, encoding="utf-8"))
     o.setdefault(CID, {}).update(out)
     o[CID].pop("revised", None)
+    o.setdefault(CID_EFF, {}).update(eff)
     with open(ovp, "w", encoding="utf-8") as fh:
         json.dump(o, fh, ensure_ascii=False, indent=1)
         fh.write("\n")
     json.load(open(ovp, encoding="utf-8"))
-    print(f"-> data/overrides.json 에 {CID} 를 반영했습니다.")
+
+    # 제목을 바꿔도 주소가 유지되도록 열쇠를 묶어 둔다
+    idp = os.path.join(DATA, "ids.json")
+    ids = json.load(open(idp, encoding="utf-8"))
+    for k in ("S\x1fslide-795\x1f" + TITLE_EFF,
+              "세계 경제\x1f" + TITLE_EFF):
+        ids[k] = CID_EFF
+    with open(idp, "w", encoding="utf-8") as fh:
+        json.dump(ids, fh, ensure_ascii=False, indent=1)
+        fh.write("\n")
+
+    mp = os.path.join(DATA, "manual.json")
+    doc = json.load(open(mp, encoding="utf-8"))
+    idx = {i.get("slide"): i for i in doc["items"] if i.get("slide")}
+    prev_it = idx.get(SLIDE_TGT)
+    if prev_it:
+        keep = {k: prev_it[k] for k in ("id",) if k in prev_it}
+        prev_it.clear()
+        prev_it.update(tgt)
+        prev_it.update(keep)
+    else:
+        doc["items"].append(tgt)
+    with open(mp, "w", encoding="utf-8") as fh:
+        json.dump(doc, fh, ensure_ascii=False, indent=1)
+        fh.write("\n")
+    json.load(open(mp, encoding="utf-8"))
+    print(f"-> {CID}, {CID_EFF} 제목, 그리고 목표금리 차트를 "
+          "반영했습니다.")
     return 0
 
 
