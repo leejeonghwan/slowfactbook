@@ -101,6 +101,11 @@ def load_items(data_dir):
                 # 문자열 하나 또는 ["...", "..."] 로 적는다.
                 "notes": it.get("notes") or "",
             }
+            # 다음 변경 때까지 값이 그대로 유지되는 지표(기준금리 같은 것)는
+            # 계단으로 그린다(overrides 의 "stepped": true). 비스듬히 이으면
+            # 중간에 없던 값이 있었던 것처럼 보인다. 켠 차트에만 키를 붙인다.
+            if it.get("stepped"):
+                item["stepped"] = True
             # 범례를 아예 감춘다(overrides 의 "hideLegend": true).
             # 켠 차트에만 키를 붙인다. 늘 붙이면 데이터 파일이 전부 다시 쓰인다.
             if it.get("hideLegend"):
@@ -856,7 +861,10 @@ function buildChart(canvas,it){
     ds.forEach((d,i)=>{const col=CS[i];
       d.borderColor=col;d.borderWidth=isArea?2.25:3;d.pointRadius=0;d.pointHoverRadius=4;d.tension=.25;
       d.backgroundColor=isArea?hexA(col,0.55):col;
-      d.fill=isArea?(i===0?"origin":"-1"):false;});
+      d.fill=isArea?(i===0?"origin":"-1"):false;
+      // 기준금리처럼 다음 변경 때까지 값이 그대로 유지되는 지표는 계단으로
+      // 그린다. 비스듬히 이으면 중간에 없던 값이 있었던 것처럼 보인다.
+      if(it.stepped){d.stepped="after";d.tension=0;}});
     const stackY=isArea&&multi;
     return mk(canvas,{type:"line",data:{labels,datasets:ds},
       options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
