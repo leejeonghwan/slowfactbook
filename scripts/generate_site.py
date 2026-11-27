@@ -106,6 +106,12 @@ def load_items(data_dir):
             # 보인다. overrides 의 "stepped": true 면 모든 계열, [0, 2] 처럼
             # 적으면 그 번호의 계열만. 한 차트에 정책금리와 시장금리가 같이
             # 있으면 정책금리 계열만 켜야 한다. 켠 차트에만 키를 붙인다.
+            # 어떤 계열을 다른 계열 위에 그릴지 (overrides 의
+            # "front": [1]). 막대와 선이 섞인 차트에서 선이 막대 뒤로
+            # 숨는 일을 막는다.
+            fr = it.get("front")
+            if isinstance(fr, list) and fr:
+                item["front"] = [int(x) for x in fr]
             st = it.get("stepped")
             if st is True:
                 item["stepped"] = True
@@ -620,7 +626,8 @@ function fade(h,a){const n=parseInt(String(h).slice(1),16);
 function applyFocus(chart,idx){
   if(!chart||!chart.data)return;
   const ds=chart.data.datasets;
-  ds.forEach(d=>{ if(d._c0===undefined){d._c0=d.borderColor;d._b0=d.backgroundColor;d._w0=d.borderWidth;} });
+  ds.forEach(d=>{ if(d._c0===undefined){d._c0=d.borderColor;d._b0=d.backgroundColor;d._w0=d.borderWidth;
+                   d._o0=(d.order||0);} });
   const on=(idx!==""&&idx!=null);
   // 누적 차트(누적 영역·누적 막대)는 옅게 만드는 방식이 통하지 않는다.
   // 고른 계열이 아래 계열들 높이만큼 떠 있어서 축에 대고 값을 읽을 수 없기 때문이다.
@@ -630,9 +637,10 @@ function applyFocus(chart,idx){
   ds.forEach((d,k)=>{
     const me=(k===Number(idx));
     const base=typeof d._c0==="string"&&d._c0[0]==="#"?d._c0:null;
-    if(!on){ d.borderColor=d._c0; d.backgroundColor=d._b0; d.borderWidth=d._w0; d.order=0; d.hidden=false; }
+    if(!on){ d.borderColor=d._c0; d.backgroundColor=d._b0; d.borderWidth=d._w0;
+             d.order=d._o0; d.hidden=false; }
     else if(stacked){ d.borderColor=d._c0; d.backgroundColor=d._b0;
-                      d.borderWidth=d._w0; d.order=0; d.hidden=!me; }
+                      d.borderWidth=d._w0; d.order=d._o0; d.hidden=!me; }
     else if(me){ d.borderColor=d._c0; d.backgroundColor=d._b0;
                  d.borderWidth=(d._w0||3)+2; d.order=-1; d.hidden=false; }
     else { d.borderColor=base?fade(base,0.14):d._c0;
@@ -850,6 +858,9 @@ function buildChart(canvas,it){
           if(lone.some(Boolean)) d.pointRadius=lone.map(x=>x?3:0);
         }}else{d.borderWidth=0;}
       return d;});
+    // 어떤 계열을 앞에 그릴지 (overrides 의 "front": [1]).
+    // Chart.js 는 order 가 작을수록 나중에, 곧 위에 그린다.
+    if(Array.isArray(it.front)) it.front.forEach(i=>{ if(dsets[i]) dsets[i].order=-1; });
     return mk(canvas,{type:"bar",data:{labels,datasets:dsets},
       options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
         scales:{x:{grid:{display:false},stacked:!!it.stacked,ticks:{autoSkip:false,maxRotation:0,callback:sparseTick(it),font:tickFont}},
@@ -871,7 +882,8 @@ function buildChart(canvas,it){
       // 그린다. 비스듬히 이으면 중간에 없던 값이 있었던 것처럼 보인다.
       const st=it.stepped;
       if(st===true||(Array.isArray(st)&&st.indexOf(i)>=0)){
-        d.stepped="after";d.tension=0;}});
+        d.stepped="after";d.tension=0;}
+      if(Array.isArray(it.front)&&it.front.indexOf(i)>=0) d.order=-1;});
     const stackY=isArea&&multi;
     return mk(canvas,{type:"line",data:{labels,datasets:ds},
       options:{responsive:true,maintainAspectRatio:false,interaction,plugins:{legend:{display:false},tooltip:tip},
